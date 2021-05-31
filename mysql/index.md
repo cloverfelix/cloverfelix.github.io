@@ -2,6 +2,5 @@
 
 
 
-学习狂神的mysql
-
+study
 
