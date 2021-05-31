@@ -3,7 +3,14 @@
         <title>所有文章 - clover</title>
         <link>http://localhost:1313/posts/</link>
         <description>所有文章 | clover</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 31 May 2021 19:24:08 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 31 May 2021 20:35:01 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Linux</title>
+    <link>http://localhost:1313/linux/</link>
+    <pubDate>Mon, 31 May 2021 20:35:01 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://localhost:1313/linux/</guid>
+    <description><![CDATA[Linux 基本使用 /bin: bin是Binary的缩写，这个目录存放着最经常使用的命令。 /boot: 这里存放的是启动Linux是使用的一些核心文件，包括一些连接文件以]]></description>
+</item><item>
     <title>First</title>
     <link>http://localhost:1313/first/</link>
     <pubDate>Mon, 31 May 2021 19:24:08 &#43;0800</pubDate>
