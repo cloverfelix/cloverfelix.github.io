@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Javaweb - clover</title><meta name="Description" content="javaweb"><meta property="og:title" content="Javaweb" />
+<meta property="og:description" content="javaweb" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cloverfelix.github.io/javaweb/" /><meta property="og:image" content="https://cloverfelix.github.io/RW.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-06-01T10:48:25&#43;08:00" />
+<meta property="article:modified_time" content="2021-06-01T10:48:25&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://cloverfelix.github.io/RW.png"/>
+
+<meta name="twitter:title" content="Javaweb"/>
+<meta name="twitter:description" content="javaweb"/>
+<meta name="application-name" content="Clover">
+<meta name="apple-mobile-web-app-title" content="Clover"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://cloverfelix.github.io/javaweb/" /><link rel="prev" href="https://cloverfelix.github.io/mysql/" /><link rel="next" href="https://cloverfelix.github.io/spring/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Javaweb",
+        "inLanguage": "zh-cn",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/cloverfelix.github.io\/javaweb\/"
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  1293 ,
+        "url": "https:\/\/cloverfelix.github.io\/javaweb\/","datePublished": "2021-06-01T10:48:25+08:00","dateModified": "2021-06-01T10:48:25+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
+                "@type": "Person",
+                "name": "Clover"
+            },"description": "javaweb"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="clover"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>Clover</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/cloverfelix" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="clover"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>Clover</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/cloverfelix" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Javaweb</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/javaweb/"><i class="far fa-folder fa-fw"></i>JavaWeb</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1293 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#11静态web">1.1、静态web</a></li>
+    <li><a href="#12动态web">1.2、动态web</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#21技术讲解">2.1、技术讲解</a></li>
+    <li><a href="#22web服务器">2.2、web服务器</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#31安装tomcat">3.1、安装Tomcat</a></li>
+    <li><a href="#32tomcat启动和配置">3.2、Tomcat启动和配置</a></li>
+    <li><a href="#33配置">3.3、配置</a></li>
+    <li><a href="#34发布一个web网站">3.4、发布一个web网站</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#41什么是http">4.1、什么是Http</a></li>
+    <li><a href="#42两个时代">4.2、两个时代</a></li>
+    <li><a href="#43http请求">4.3、HTTP请求</a></li>
+    <li><a href="#44http响应">4.4、HTTP响应</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="1基本概念">1、基本概念</h1>
+<h2 id="11静态web">1.1、静态web</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601193856.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601193856.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601193856.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601193856.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601193856.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601193856.png" /></p>
+<p>静态web存在的缺点</p>
+<ul>
+<li>
+<p>web页面无法更新</p>
+</li>
+<li>
+<p>它无法和数据库交互（数据无法持久化，用户无法交互）</p>
+</li>
+</ul>
+<h2 id="12动态web">1.2、动态web</h2>
+<p>页面会动态展示：“web的页面展示的效果因人而异”</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194340.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194340.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194340.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194340.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194340.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194340.png" /></p>
+<p>动态web存在的缺点：</p>
+<ul>
+<li>假如服务器的动态web资源出现了错误，我们需要重新编写我们的<strong>后台程序</strong>，重新发布；</li>
+</ul>
+<p>动态web的优点：</p>
+<ul>
+<li>
+<p>Web页面可以动态更新，所有用户看到的都不是同一个页面</p>
+</li>
+<li>
+<p>它可以与数据库交互</p>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194653.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194653.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194653.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194653.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194653.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194653.png" /></p>
+<h1 id="2web服务器">2、web服务器</h1>
+<h2 id="21技术讲解">2.1、技术讲解</h2>
+<p>PHP：</p>
+<ul>
+<li>
+<p>PHP开发速度很快，功能很强大，跨平台，代码很简单</p>
+</li>
+<li>
+<p>无法承载大量访问的情况</p>
+</li>
+</ul>
+<p>JSP/Servlet：</p>
+<pre><code>B/S：浏览器和服务器
+
+C/S：客户端和服务器
+</code></pre>
+<ul>
+<li>
+<p>sun公司主推的B/S架构</p>
+</li>
+<li>
+<p>基于Java语言（所有的大公司，或者一些开源的组件，都是用Java写的）</p>
+</li>
+<li>
+<p>可以承载三高问题带来的影响</p>
+<ul>
+<li>
+<p>高可用</p>
+</li>
+<li>
+<p>高并发</p>
+</li>
+<li>
+<p>高性能</p>
+</li>
+</ul>
+</li>
+<li>
+<p>语法像ASP</p>
+</li>
+</ul>
+<h2 id="22web服务器">2.2、web服务器</h2>
+<p>服务器是一种被动的操作，用来处理用户的一些请求和给用户一些响应信息</p>
+<p><strong>IIS</strong></p>
+<p>微软的：ASP&hellip;&hellip;.，Windows中自带的</p>
+<p><strong>Tomcat</strong></p>
+<p>下载tomcat：</p>
+<ol>
+<li>
+<p>解压 or 安装</p>
+</li>
+<li>
+<p>了解配置文件以及目录结构</p>
+</li>
+<li>
+<p>这个东西的作用</p>
+</li>
+</ol>
+<h1 id="3tomcat">3、Tomcat</h1>
+<h2 id="31安装tomcat">3.1、安装Tomcat</h2>
+<p><a href="https://tomcat.apache.org/" target="_blank" rel="noopener noreffer">Tomcat官网</a></p>
+<h2 id="32tomcat启动和配置">3.2、Tomcat启动和配置</h2>
+<p>文件夹的作用</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601201908.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601201908.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601201908.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601201908.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601201908.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601201908.png" /></p>
+<p>访问测试：<a href="https://localhost:8080" target="_blank" rel="noopener noreffer">Tomcat测试</a></p>
+<p>可能遇到的问题：</p>
+<ol>
+<li>
+<p>Java环境变量没有配置</p>
+</li>
+<li>
+<p>闪退问题：需要配置兼容性</p>
+</li>
+<li>
+<p>乱码问题：配置文件中设置</p>
+</li>
+</ol>
+<h2 id="33配置">3.3、配置</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601202139.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601202139.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601202139.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601202139.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601202139.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601202139.png" /></p>
+<p>可以配置启动的端口号</p>
+<ul>
+<li>tomcat的默认端口是：8080</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;Connector</span> <span class="na">port=</span><span class="s">&#34;8080&#34;</span> <span class="na">protocol=</span><span class="s">&#34;HTTP/1.1&#34;</span>
+               <span class="na">connectionTimeout=</span><span class="s">&#34;20000&#34;</span>
+               <span class="na">redirectPort=</span><span class="s">&#34;8443&#34;</span> <span class="nt">/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以配置主机的名称</p>
+<ul>
+<li>
+<p>默认主机名为：localhost&mdash;&gt;127.0.0.1</p>
+</li>
+<li>
+<p>默认网站应用存放的位置：webapps</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;Host</span> <span class="na">name=</span><span class="s">&#34;localhost&#34;</span>  <span class="na">appBase=</span><span class="s">&#34;webapps&#34;</span>
+            <span class="na">unpackWARs=</span><span class="s">&#34;true&#34;</span> <span class="na">autoDeploy=</span><span class="s">&#34;true&#34;</span><span class="nt">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>高难度面试题：</strong></p>
+<pre><code>请你谈谈网站是如何进行访问的！
+1. 输入一个域名；回车
+2. 检查本机的C:\Windows\System32\drivers\etc\hosts配置文件下有没有这个域名映射；
+	1. 有：直接返回对应的IP地址，这个地址中，有我们需要访问的web程序，可以直接访问
+	2. 没有：去DNS服务器找，找到的话就返回，找不到就返回找不到
+</code></pre>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601210836.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601210836.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601210836.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601210836.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601210836.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601210836.png" /></p>
+<h2 id="34发布一个web网站">3.4、发布一个web网站</h2>
+<p><a href="http://localhost:8080/examples/servlets/" target="_blank" rel="noopener noreffer">查看Tomcat自带的一些样例</a></p>
+<ul>
+<li>
+<p>将自己写的网站，放到服务器（Tomcat）中指定的web应用的文件夹（webapps）下，就可以访问了</p>
+</li>
+<li>
+<p>网站应有的结构</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">--webapps ：Tomcat服务器的web目录
+		--ROOT
+		--clover ： 网站的目录名
+			- WEB-INF
+				- classes ： Java程序
+				- lib ：web应用所有依赖的jar包
+				- web.xml ：网站配置文件
+			- index.html  默认的首页
+			- static
+				-css
+					-style.css
+				-js
+				-img
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="4http">4、Http</h1>
+<h2 id="41什么是http">4.1、什么是Http</h2>
+<p>HTTP（超文本传输协议）是一个简单的请求-响应协议，它通常运行在TCP之上</p>
+<ul>
+<li>
+<p>文本：html，字符串</p>
+</li>
+<li>
+<p>超文本： 图片，音乐，视频，定位，地图。。。。。</p>
+</li>
+<li>
+<p>默认端口：80</p>
+</li>
+</ul>
+<p>HTTPS：安全的</p>
+<ul>
+<li>默认端口：443</li>
+</ul>
+<h2 id="42两个时代">4.2、两个时代</h2>
+<ul>
+<li>
+<p>http1.0</p>
+<ul>
+<li>HTTP/1.0：客户端可以与web服务器连接后，只能获得一个web资源，就断开连接。</li>
+</ul>
+</li>
+<li>
+<p>http2.0</p>
+<ul>
+<li>HTTP/2.0：客户端可以与web服务器连接后，可以获得多个web资源。</li>
+</ul>
+</li>
+</ul>
+<h2 id="43http请求">4.3、HTTP请求</h2>
+<ul>
+<li>客户端&mdash;发请求&ndash;服务器</li>
+</ul>
+<h2 id="44http响应">4.4、HTTP响应</h2>
+<ul>
+<li>服务器&mdash;响应&mdash;客户端</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-06-01</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/javaweb/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://cloverfelix.github.io/javaweb/" data-title="Javaweb" data-hashtags="JavaWeb"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://cloverfelix.github.io/javaweb/" data-hashtag="JavaWeb"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://cloverfelix.github.io/javaweb/" data-title="Javaweb"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://cloverfelix.github.io/javaweb/" data-title="Javaweb"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://cloverfelix.github.io/javaweb/" data-title="Javaweb"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/javaweb/">JavaWeb</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/mysql/" class="prev" rel="prev" title="Mysql"><i class="fas fa-angle-left fa-fw"></i>Mysql</a>
+            <a href="/spring/" class="next" rel="next" title="Spring">Spring<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Clover</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"YWTL89SVYC","algoliaIndex":"blog","algoliaSearchKey":"2cb3f95e7193d38260ef06bc3d5fc608","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
