@@ -1,0 +1,2359 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Spring - clover</title><meta name="Description" content="spring"><meta property="og:title" content="Spring" />
+<meta property="og:description" content="spring" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cloverfelix.github.io/spring/" /><meta property="og:image" content="https://cloverfelix.github.io/RW.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-06-01T10:49:16&#43;08:00" />
+<meta property="article:modified_time" content="2021-06-01T10:49:16&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://cloverfelix.github.io/RW.png"/>
+
+<meta name="twitter:title" content="Spring"/>
+<meta name="twitter:description" content="spring"/>
+<meta name="application-name" content="Clover">
+<meta name="apple-mobile-web-app-title" content="Clover"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://cloverfelix.github.io/spring/" /><link rel="prev" href="https://cloverfelix.github.io/javaweb/" /><link rel="next" href="https://cloverfelix.github.io/springboot/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Spring",
+        "inLanguage": "zh-cn",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/cloverfelix.github.io\/spring\/"
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Spring","wordcount":  9987 ,
+        "url": "https:\/\/cloverfelix.github.io\/spring\/","datePublished": "2021-06-01T10:49:16+08:00","dateModified": "2021-06-01T10:49:16+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
+                "@type": "Person",
+                "name": "Clover"
+            },"description": "spring"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="clover"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>Clover</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/cloverfelix" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="clover"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>Clover</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/cloverfelix" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Spring</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/spring/"><i class="far fa-folder fa-fw"></i>Spring</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 9987 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 20 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#11-简介">1.1 简介</a></li>
+    <li><a href="#12-优点">1.2 优点</a></li>
+    <li><a href="#13-组成">1.3 组成</a></li>
+    <li><a href="#14-学习路线">1.4 学习路线</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#31-理论推导依赖注入set注入">3.1 理论推导（依赖注入：set注入）</a></li>
+    <li><a href="#32-ioc本质">3.2 IOC本质</a></li>
+    <li><a href="#33-ioc容器控制反转">3.3 IOC容器(控制反转)</a></li>
+    <li><a href="#34-ioc综合">3.4 IOC综合</a></li>
+    <li><a href="#35-ioc创建对象的方式依赖注入构造器注入">3.5 IOC创建对象的方式（依赖注入：构造器注入）</a></li>
+    <li><a href="#36-ioc初始化对象的时间">3.6 IOC初始化对象的时间</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#101-autowired">10.1 @Autowired</a></li>
+    <li><a href="#102-nullable拓展">10.2 @Nullable(拓展)</a></li>
+    <li><a href="#103-qualifier">10.3 @Qualifier</a></li>
+    <li><a href="#104-resource">10.4 @Resource</a></li>
+    <li><a href="#105-component">10.5 @Component</a></li>
+    <li><a href="#106-scope">10.6 @Scope</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#121-用configuration配置过程">12.1 用@Configuration配置过程</a></li>
+    <li><a href="#122-configuration扫描">12.2 @Configuration扫描</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#131-代理模式">13.1 代理模式</a></li>
+    <li><a href="#132-静态代理">13.2 静态代理</a></li>
+    <li><a href="#133-静态代理再理解">13.3 静态代理再理解</a></li>
+    <li><a href="#134-聊聊aop">13.4 聊聊AOP</a></li>
+    <li><a href="#135-动态代理详解">13.5 动态代理详解</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#141-了解">14.1 了解</a></li>
+    <li><a href="#142-使用spring实现aop">14.2 使用Spring实现Aop</a>
+      <ul>
+        <li><a href="#1421-方法一使用原生spring-api接口jdk默认">14.2.1 方法一：使用原生Spring API接口（JDK）默认</a></li>
+        <li><a href="#1422-方法二使用自定义类cglib">14.2.2 方法二：使用自定义类（cglib）</a></li>
+        <li><a href="#1423-方法三注解实现">14.2.3 方法三：注解实现</a></li>
+        <li><a href="#1424-小结">14.2.4 小结</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#151-回顾mybatis">15.1 回顾Mybatis</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#161-回顾事务">16.1 回顾事务</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="1spring">1.Spring</h1>
+<h2 id="11-简介">1.1 简介</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170509.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170509.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170509.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170509.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170509.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170509.png" /></p>
+<ul>
+<li>
+<p>下载spring所有版本信息的地址入口：https://docs.spring.io/spring-framework/docs/4.3.9.RELEASE/spring-framework-reference/</p>
+</li>
+<li>
+<p>下载spring所有版本信息的地址：http://repo.spring.io/release/org/springframework/spring</p>
+</li>
+<li>
+<p>github：https://github.com/spring-projects/spring-framework</p>
+</li>
+<li>
+<p>导入spring-webmvc，可以快速一次性导入所有java包）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+    &lt;version&gt;5.2.0.RELEASE&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>导入spring web jdbc</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc --&gt;
+&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;
+  &lt;version&gt;5.3.3&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="12-优点">1.2 优点</h2>
+<ul>
+<li>开源的免费容器</li>
+<li>轻量级，非入侵式的框架（引入不会对原来的代码产生任何影响）</li>
+<li>控制反转(IOC)，面向切面编程(AOP)</li>
+<li>支持事务的处理，对框架整合的支持</li>
+</ul>
+<p>spring就是一个轻量级的控制反转和面向切面编程的框架</p>
+<h2 id="13-组成">1.3 组成</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170742.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170742.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170742.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170742.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170742.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170742.png" /></p>
+<h2 id="14-学习路线">1.4 学习路线</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170757.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170757.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170757.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170757.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170757.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170757.png" /></p>
+<p>SpringBoot</p>
+<ul>
+<li>一个快速开发的脚手架</li>
+<li>基于SpringBoot可以快速的开发单个微服务</li>
+<li>约定大于配置</li>
+<li>要先学Spring和SpringMVC</li>
+</ul>
+<p>SpringCloud</p>
+<ul>
+<li>基于SpringBoot实现的</li>
+</ul>
+<h1 id="2坑">2.坑</h1>
+<ul>
+<li>
+<p>多态父类实现子类独有的方法需要向下强转</p>
+</li>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以由快捷键psvm加回车打出来</p>
+</li>
+<li>
+<p>无参构造函数，只要一new就会执行</p>
+</li>
+<li>
+<p>只要有new一定要写在main方法里</p>
+</li>
+</ul>
+<h1 id="3ioc-di">3.IOC DI</h1>
+<h2 id="31-理论推导依赖注入set注入">3.1 理论推导（依赖注入：set注入）</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//利用set进行动态实现值的注入
+</span><span class="c1"></span><span class="kd">private</span> <span class="n">UserDao</span> <span class="n">userDao</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUserDao</span><span class="o">(</span><span class="n">UserDao</span> <span class="n">userDao</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">userDao</span> <span class="o">=</span> <span class="n">userDao</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>之前程序是主动创建对象！控制权在程序员手上</li>
+<li>使用set注入后，程序不再具有主动性，而是变成了被动的接受对象</li>
+<li>这种思想从本质上解决了问题，我们程序员不用再去管理对象的创建了</li>
+</ul>
+<h2 id="32-ioc本质">3.2 IOC本质</h2>
+<p>是一种通过描述（XML或注解）并通过第三方生产或获取特定对象的方式，在spring中实现控制反转的是Ioc容器，其实现方法是依赖注入（DI）</p>
+<h2 id="33-ioc容器控制反转">3.3 IOC容器(控制反转)</h2>
+<ul>
+<li>
+<p>配置文件</p>
+<ul>
+<li>xml中的bean标签就是一个对象，把类用bean标签添加在配置文件中，就相当于：类名 变量名=new 类名()，而标签中的id就是变量名，class就等于new的对象。所以myHello就是一个Hello类对象。这里的对象是由spring创建的，而不是java new出来的。</li>
+<li>property相当于给对象中的基本数据类型的属性设置一个值（<strong>注意！！！，类中一定要有：set属性名(参数类型 参数值){this.属性名=参数值}   这个方法</strong></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">&#34;myHello&#34;</span> <span class="n">class</span><span class="o">=</span><span class="s">&#34;com.kua.pojo.Hello&#34;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&#34;str&#34;</span> <span class="n">value</span><span class="o">=</span><span class="s">&#34;spring&#34;</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>property如果要给对象中的对象数据设置值，那就是<code>&lt;property name=&quot;userDao&quot; ref=&quot;mySql&quot;/&gt;</code>其中name表示对象属性名，表示引用spring中创建好的对象</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">&#34;myServiceImpl&#34;</span> <span class="n">class</span><span class="o">=</span><span class="s">&#34;com.kuang.service.UserServiceImpl&#34;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&#34;userDao&#34;</span> <span class="n">ref</span><span class="o">=</span><span class="s">&#34;mySql&#34;</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>初始化时，先读取配置文件，获得spring的上下文对象（固定语句不可变）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">ApplicationContext</span> <span class="n">context</span><span class="o">=</span><span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">&#34;bean.xml&#34;</span><span class="o">);</span><span class="c1">//这里的bean.xml是配置文件名
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>通过上下文对象context的getBean方法从Ioc容器中直接取出对象</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">Hello</span> <span class="n">myHello</span><span class="o">=(</span><span class="n">Hello</span><span class="o">)</span><span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">&#34;hello&#34;</span><span class="o">);</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="34-ioc综合">3.4 IOC综合</h2>
+<ul>
+<li>
+<p>控制：谁来控制对象的创建，传统的应用程序是由程序本身来控制创建的，使用Spring后，对象是由Spring创建的</p>
+</li>
+<li>
+<p>反转：程序本身不创建对象，而变成被动的接收对象</p>
+</li>
+<li>
+<p>依赖注入：利用set方法进行注入</p>
+</li>
+<li>
+<p>IOC编程思想：由主动编程，变成被动接收，对象由Spring来创建，管理，装配</p>
+</li>
+</ul>
+<h2 id="35-ioc创建对象的方式依赖注入构造器注入">3.5 IOC创建对象的方式（依赖注入：构造器注入）</h2>
+<p>使用构造器方式注入可以不写set</p>
+<ul>
+<li>
+<p>使用无参构造创建对象（默认的）</p>
+</li>
+<li>
+<p>如果要用有参构造函数创建对象</p>
+<p>方式一：下标赋值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">&#34;user&#34;</span> <span class="n">class</span><span class="o">=</span><span class="s">&#34;com.kuang.pojo.User&#34;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">constructor</span><span class="o">-</span><span class="n">arg</span> <span class="n">index</span><span class="o">=</span><span class="s">&#34;0&#34;</span> <span class="n">value</span><span class="o">=</span><span class="s">&#34;renzuoweishihanhan&#34;</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>index表示参数的下标，value表示给参数赋值</p>
+<p>方式二：匹配参数类型（不建议使用）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">&#34;user&#34;</span> <span class="n">class</span><span class="o">=</span><span class="s">&#34;com.kuang.pojo.User&#34;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">constructor</span><span class="o">-</span><span class="n">arg</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;java.lang.String&#34;</span> <span class="n">value</span><span class="o">=</span><span class="s">&#34;renzuoweishihanhan&#34;</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>注意：基本类型可以直接写，但是引用类型如：String得写全名</p>
+<p>方式三：直接通过参数名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">&#34;user&#34;</span> <span class="n">class</span><span class="o">=</span><span class="s">&#34;com.kuang.pojo.User&#34;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">constructor</span><span class="o">-</span><span class="n">arg</span> <span class="n">name</span><span class="o">=</span><span class="s">&#34;name&#34;</span> <span class="n">value</span><span class="o">=</span><span class="s">&#34;renzuoweishihanhan&#34;</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="36-ioc初始化对象的时间">3.6 IOC初始化对象的时间</h2>
+<p>在new ClassPathXmlApplicationContext，即加载完配置文件后就已经初始化好了<strong>所有bean</strong>对象，然后你需要getBean谁就取谁</p>
+<h1 id="4spring配置">4.spring配置</h1>
+<ul>
+<li>
+<p>alias，给bean对象取别名（一对一）</p>
+<p>给容器中的东西取别名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;alias</span> <span class="na">name=</span><span class="s">&#34;user&#34;</span> <span class="na">alias=</span><span class="s">&#34;user2&#34;</span><span class="nt">/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>bean配置</p>
+<ul>
+<li>
+<p>id：bean的唯一标识符</p>
+</li>
+<li>
+<p>class：bean对象所对应的全限定名（包+类）</p>
+</li>
+<li>
+<p>name：给bean对象取别名，可以同时取多个别名，中间可以用逗号、空格、分号隔开</p>
+</li>
+<li>
+<p>import：一般用于团队开发使用，他可以将多个文件导入合并为一个</p>
+<p>用import可以导入这个模块的其他bean文件，合并为一个总的，然后通过总的xml文件可以取到所有导入的bean里面的东西，如果不同bean中有相同的配置，但是配置的值不同，则下面的xml文件会覆盖上面的</p>
+<import resource="bean4.xml"/>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="5di依赖注入之set注入">5.DI依赖注入之set注入</h1>
+<p>依赖：bean对象的创建依赖于容器</p>
+<p>注入：bean对象的所有属性值由容器注入</p>
+<p>复杂类型：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Address</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">address</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getAddress</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">address</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setAddress</span><span class="o">(</span><span class="n">String</span> <span class="n">address</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">address</span> <span class="o">=</span> <span class="n">address</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>真实测试对象：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Address</span> <span class="n">address</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span><span class="o">[]</span> <span class="n">books</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">hobbies</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">card</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">games</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">wife</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Properties</span> <span class="n">info</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>bean4.xml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;adress&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.Address&#34;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;student&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.Student&#34;</span><span class="nt">&gt;</span>
+<span class="c">&lt;!--        普通值注入,value--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;name&#34;</span> <span class="na">value=</span><span class="s">&#34;yzq&#34;</span><span class="nt">/&gt;</span>
+<span class="c">&lt;!--        bean注入，ref--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;address&#34;</span> <span class="na">ref=</span><span class="s">&#34;adress&#34;</span><span class="nt">/&gt;</span>
+<span class="c">&lt;!--        数组注入--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;books&#34;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;array&gt;</span>
+                <span class="nt">&lt;value&gt;</span>西游记<span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;value&gt;</span>水浒传<span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;value&gt;</span>红楼梦<span class="nt">&lt;/value&gt;</span>
+            <span class="nt">&lt;/array&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+<span class="c">&lt;!--        List注入--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;hobbies&#34;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;list&gt;</span>
+                <span class="nt">&lt;value&gt;</span>打篮球<span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;value&gt;</span>看剧<span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;value&gt;</span>敲代码<span class="nt">&lt;/value&gt;</span>
+            <span class="nt">&lt;/list&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+<span class="c">&lt;!--        Map注入--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;card&#34;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;map&gt;</span>
+                <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&#34;学号&#34;</span> <span class="na">value=</span><span class="s">&#34;2918378&#34;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&#34;身份证&#34;</span> <span class="na">value=</span><span class="s">&#34;2917321&#34;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/map&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+<span class="c">&lt;!--        Set注入--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;games&#34;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;set&gt;</span>
+                <span class="nt">&lt;value&gt;</span>lol<span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;value&gt;</span>找你妹<span class="nt">&lt;/value&gt;</span>
+            <span class="nt">&lt;/set&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+<span class="c">&lt;!--        null--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;wife&#34;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;null/&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+<span class="c">&lt;!--        Properties配置类型--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;info&#34;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;props&gt;</span>
+                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">&#34;学号&#34;</span><span class="nt">&gt;</span>21342<span class="nt">&lt;/prop&gt;</span>
+                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">&#34;性别&#34;</span><span class="nt">&gt;</span>女<span class="nt">&lt;/prop&gt;</span>
+            <span class="nt">&lt;/props&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>测试类：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">ApplicationContext</span> <span class="n">context</span><span class="o">=</span><span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">&#34;bean4.xml&#34;</span><span class="o">);</span>
+<span class="n">Student</span> <span class="n">student</span><span class="o">=(</span><span class="n">Student</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">&#34;student&#34;</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">student</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="6导入test测试包junit">6.导入test测试包（junit）</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.junit.vintage<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>junit-vintage-engine<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>5.7.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>然后在测试类中@Test，这样在测试类中写出的方法，会自动被执行</p>
+<h1 id="7c命名和p命名空间注入">7.c命名和p命名空间注入</h1>
+<p>p命名空间的注入，可以直接注入属性的值：property（本质还是set注入）</p>
+<ol>
+<li>
+<p>前提：</p>
+<ul>
+<li>导入约束xmlns:p=&ldquo;<a href="http://www.springframework.org/schema/p%22">http://www.springframework.org/schema/p&quot;</a></li>
+<li>要有set方法</li>
+</ul>
+</li>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;user&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.User&#34;</span> <span class="na">p:age=</span><span class="s">&#34;18&#34;</span> <span class="na">p:name=</span><span class="s">&#34;yzq&#34;</span><span class="nt">/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以直接在bean标签内注入属性的值</p>
+<p>如果是注入对象则：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170944.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170944.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170944.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170944.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170944.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170944.png" /></p>
+</li>
+<li>
+<p>导入junit，并在测试文件中@Test（插曲）</p>
+<p>c命名空间（本质是构造器注入）</p>
+</li>
+<li>
+<p>前提：</p>
+<ul>
+<li>导入约束</li>
+<li>要有set方法</li>
+<li>必须要有无参构造函数和有参构造函数两种</li>
+</ul>
+</li>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;user&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.User&#34;</span> <span class="na">c:age=</span><span class="s">&#34;18&#34;</span> <span class="na">c:name=</span><span class="s">&#34;nihao&#34;</span><span class="nt">/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>测试：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">test2</span><span class="o">(){</span>
+    <span class="n">ApplicationContext</span> <span class="n">context</span><span class="o">=</span><span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">&#34;beans4.xml&#34;</span><span class="o">);</span>
+    <span class="n">User</span> <span class="n">user</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">&#34;user&#34;</span><span class="o">,</span><span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+<span class="o">};</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h1 id="8bean-scopesbean作用域">8.Bean Scopes（bean作用域）</h1>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171233.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171233.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171233.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171233.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171233.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171233.png" /></p>
+<ul>
+<li>单例模式singleton（Spring默认机制）</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171248.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171248.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171248.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171248.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171248.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171248.png" /></p>
+<p>对象只有一个，不管从相同的bean对象中getBean多少个对象，都是表示同一个对象，如下：输出true</p>
+<p>用法：在bean的后面加上scope=&ldquo;singleton&rdquo;，也可以不加，因为这种作用域是spring默认的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;user&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.User&#34;</span> <span class="na">c:age=</span><span class="s">&#34;18&#34;</span> <span class="na">c:name=</span><span class="s">&#34;nihao&#34;</span> <span class="na">scope=</span><span class="s">&#34;singleton&#34;</span><span class="nt">/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">User</span> <span class="n">user</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">&#34;user&#34;</span><span class="o">,</span><span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">User</span> <span class="n">user1</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">&#34;user&#34;</span><span class="o">,</span><span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user</span><span class="o">==</span><span class="n">user1</span><span class="o">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>原型模式prototype</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171320.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171320.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171320.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171320.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171320.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171320.png" /></p>
+<p>用法：scope=&ldquo;prototype&rdquo;</p>
+<p>每次从容器中get时都会产生新对象，每个对象都不一样</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">User</span> <span class="n">user</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">&#34;user&#34;</span><span class="o">,</span><span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">User</span> <span class="n">user1</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">&#34;user&#34;</span><span class="o">,</span><span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user</span><span class="o">==</span><span class="n">user1</span><span class="o">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>输入false</p>
+<ul>
+<li>其他四个只能在web开发中使用</li>
+</ul>
+<h1 id="9bean的自动装配autowired">9.bean的自动装配（Autowired）</h1>
+<p>Spring会在上下文中自动寻找，并自动给bean装配属性，<strong>只针对bean对象</strong></p>
+<p>在Spring中有三种装配方式：</p>
+<ol>
+<li>在xml中显示的配置</li>
+<li>在java中显示的配置</li>
+<li>隐式的自动装配bean（重要）</li>
+</ol>
+<p>自动装配就是：可以不用在bean中自己手动装备bean对象的属性</p>
+<p>用法：<strong>用autowired=&ldquo;&ldquo;实现</strong></p>
+<p>People.java</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCat</span><span class="o">(</span><span class="n">Cat</span> <span class="n">cat</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">cat</span> <span class="o">=</span> <span class="n">cat</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDog</span><span class="o">(</span><span class="n">Dog</span> <span class="n">dog</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dog</span> <span class="o">=</span> <span class="n">dog</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>bean5.xml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;cat&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.Cat&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;dog&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.Dog&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;people&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.People&#34;</span> <span class="na">autowire=</span><span class="s">&#34;byName&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;name&#34;</span> <span class="na">value=</span><span class="s">&#34;yzq&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>byName表示在容器上下文中查找和自己set方法后面的值对应的beanid，弊端：名字必须相同
+
+byType表示在容器上下文中查找和自己set方法中对象类型相同的对应的beanid，都可以省略id。弊端：容器中所有bean的class唯一，即只有一个对象，如下就会报错
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;dog&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.Dog&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;dog1&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.Dog&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;people&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.People&#34;</span> <span class="na">autowire=</span><span class="s">&#34;byType&#34;</span><span class="nt">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="10使用注解实现自动装配">10.使用注解实现自动装配</h1>
+<h2 id="101-autowired">10.1 @Autowired</h2>
+<p><em><strong>可以删掉set方法，但是需要get方法！！！</strong></em></p>
+<p>前提：<strong>只针对bean对象</strong>，通过byType方式实现，如果有多个对象，就通过byName方式实现</p>
+<ul>
+<li>
+<p>导入约束</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">xmlns:context=&#34;http://www.springframework.org/schema/context&#34;
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>配置注解的支持</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--所有注解驱动--&gt;</span>
+<span class="nt">&lt;context:annotation-config/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>容器中和.java中的名字要相同</p>
+</li>
+</ul>
+<p>使用：</p>
+<pre><code>在配置文件中注入所有你要自动装配的对象，然后直接在属性上面或者set方法上面使用@Autowired
+</code></pre>
+<p>bean5.xml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;cat&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.Cat&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;dog&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.Dog&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;people&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.People&#34;</span><span class="nt">/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>People.java</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Autowired</span>
+<span class="kd">private</span> <span class="n">Cat</span> <span class="n">cat</span><span class="o">;</span>
+<span class="nd">@Autowired</span>
+<span class="kd">private</span> <span class="n">Dog</span> <span class="n">dog</span><span class="o">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>也可以放在set方法上面</p>
+<h2 id="102-nullable拓展">10.2 @Nullable(拓展)</h2>
+<p>如果显示定义@Autowired的require属性为false，那么那个对象的属性值为null也不会报错（但是完全没有定义，只有声明，就会报错）</p>
+<p>与这有相同效果的是@Nullable，用法：在构造函数的形参前面</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">People</span><span class="o">(</span><span class="nd">@Nullable</span> <span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="103-qualifier">10.3 @Qualifier</h2>
+<p>当容器中和.java中的对象名字和类型都不匹配时，这时@Autowired就没办法用，但如果又想要自动匹配，就可以使用@Qualifier(value=&quot;&quot;)实现名字匹配</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;dog2&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.Dog&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;dog1&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.pojo.Dog&#34;</span><span class="nt">/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Autowired</span>
+<span class="nd">@Qualifier</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">&#34;dog1&#34;</span><span class="o">)</span>
+<span class="kd">private</span> <span class="n">Dog</span> <span class="n">dog</span><span class="o">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>但是可能在运行前要去maven里clean一下，再运行</p>
+<h2 id="104-resource">10.4 @Resource</h2>
+<p>以上三种都是Spring注解，这一个是java注解</p>
+<p>@Resource与@Autowired用法一样，但是@Resource先通过byName，再通过byType</p>
+<p>当名字和类型都不匹配时：加一个name属性可以指定名字匹配</p>
+<p>@Resource(name=&quot;&quot;)</p>
+<h2 id="105-component">10.5 @Component</h2>
+<p>见11的第2条的方法二</p>
+<h2 id="106-scope">10.6 @Scope</h2>
+<p>见11的第5条</p>
+<h1 id="11使用注解开发">11.使用注解开发</h1>
+<ul>
+<li>在Spring4之后，要使用注解开发，必须保证aop的包导入，所以出错时检查这个包有没有问题</li>
+<li>导入约束</li>
+<li>增加支持</li>
+</ul>
+<ol>
+<li>
+<p>bean</p>
+</li>
+<li>
+<p>属性如何注入（开启注解的支持）</p>
+<p>方法一：</p>
+<p>注解驱动</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;context:annotation-config/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>方法二：</p>
+<p>指定包中的全部注解都生效</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;context:component-scan</span> <span class="na">base-package=</span><span class="s">&#34;com.kuang.pojo&#34;</span><span class="nt">/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>用@Component注解：</p>
+<p>放在类上面，表示 这个类被Spring管理了，就是一个bean，而@Value就相当于bean中的property，给属性注入值，@Value也可以放在set方法上面</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//相当于在配置文件中
+</span><span class="c1">//&lt;bean id=&#34;user&#34; class=&#34;com.kuang.pojo.User&#34; /&gt;
+</span><span class="c1"></span><span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="o">{</span>
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;yzq&#34;</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>衍生的注解</p>
+<p>@Component有几个衍生注解，在web开发中，会按照mvc三层架构分层</p>
+<ul>
+<li>
+<p>poji层：@Component</p>
+</li>
+<li>
+<p>dao层：@Repository</p>
+</li>
+<li>
+<p>service层：@Service</p>
+</li>
+<li>
+<p>controller层：@Controller</p>
+<p>这四个注解功能一样，都是讲某个类注入到容器中</p>
+</li>
+</ul>
+</li>
+<li>
+<p>自动装配置</p>
+<p>以上所有注解</p>
+</li>
+<li>
+<p>作用域</p>
+<p>也可以使用注解：@Scope(&ldquo;作用域类型&rdquo;)，也是放在类上面的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Component</span>
+<span class="nd">@Scope</span><span class="o">(</span><span class="s">&#34;prototype&#34;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span><span class="o">{</span>
+       
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>小结</p>
+<p>xml和注解：</p>
+<ul>
+<li>xml更加万能，适用于任何场所|维护简单方便</li>
+<li>注解：不是自己的类使用不了，维护复杂，因为每个不同的类的注解是独立的</li>
+</ul>
+<p>xml与注解最佳实践</p>
+<ul>
+<li>
+<p>xml用来管理bean</p>
+</li>
+<li>
+<p>注解只负责完成属性的注入</p>
+</li>
+<li>
+<p>注意：一定要开启注解的支持</p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="12使用java方式配置spring">12.使用java方式配置Spring</h1>
+<h2 id="121-用configuration配置过程">12.1 用@Configuration配置过程</h2>
+<ul>
+<li>
+<p>写一个类作为配置类，将@Configuration放在类上面，@Bean放在一个返回类的方法里面</p>
+<p>@Configuration代表最这是一个配置类，和之前的bean.xml是一样的，本身也会被spring容器托管，注册到容器中，因为他本来就是一个@Component</p>
+<p>@Bean代表bean，哪个类的bean就写一个返回类的方法，然后bean的id就是方法的方法名</p>
+<p>配置类：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">myConfig</span> <span class="o">{</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">User</span> <span class="nf">getUser</span><span class="o">(){</span>
+        <span class="c1">//返回要注入到bean中的对象
+</span><span class="c1"></span>        <span class="k">return</span> <span class="k">new</span> <span class="n">User</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>给bean中的属性注入值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;yzq&#34;</span><span class="o">)</span>
+<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+  
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>测试类：注意是用的AnnotationConfigApplicationContext实现类，因为没有配置文件xml了，完全是用java+注解配置的，实参是写的配置类，bean的id名是配置类中的方法名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AnnotationConfigApplicationContext</span><span class="o">(</span><span class="n">myConfig</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">User</span> <span class="n">getUser</span><span class="o">=(</span><span class="n">User</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">&#34;getUser&#34;</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getUser</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="122-configuration扫描">12.2 @Configuration扫描</h2>
+<ul>
+<li>也可以显示的扫描包</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Configuration</span>
+<span class="c1">//包中所有注解都生效
+</span><span class="c1"></span><span class="nd">@ComponentScan</span><span class="o">(</span><span class="s">&#34;com.kuang.pojo&#34;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">myConfig</span> <span class="o">{</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">User</span> <span class="nf">getUser</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">User</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>因为肯定有多个bean，所以就根据几个bean创建几个java配置类，然后每个类上面都加上@Configuration，代表这是一个配置类但是要把这么多bean整合到一起，就要使用@Import(其他配置类名.class)</li>
+</ul>
+<h1 id="13代理模式">13.代理模式</h1>
+<h2 id="131-代理模式">13.1 代理模式</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171534.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171534.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171534.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171534.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171534.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171534.png" /></p>
+<p>​	为什么学习代理模式？</p>
+<p>​	因为这是SpringAOP的底层</p>
+<h2 id="132-静态代理">13.2 静态代理</h2>
+<p>角色分析：</p>
+<ul>
+<li>
+<p>抽象角色（租房）：一般会使用接口或者抽象类来解决</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">rent</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">rent</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>真实角色（房东）：被代理的角色</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">rent</span><span class="o">(){</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;房东要出租房子&#34;</span><span class="o">);</span>
+<span class="o">};</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>代理角色（中介）：代理真实角色，代理真实角色后，一般会做一些附属操作（代理角色自己的方法）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Proxy</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Host</span> <span class="n">host</span><span class="o">;</span>
+  
+    <span class="kd">public</span> <span class="nf">Proxy</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+  
+    <span class="kd">public</span> <span class="nf">Proxy</span><span class="o">(</span><span class="n">Host</span> <span class="n">host</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">host</span> <span class="o">=</span> <span class="n">host</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">rent</span><span class="o">(){</span>
+        <span class="n">host</span><span class="o">.</span><span class="na">rent</span><span class="o">();</span>
+        <span class="n">hetong</span><span class="o">();</span>
+        <span class="n">see</span><span class="o">();</span>
+        <span class="n">fee</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">hetong</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;中介带你签合同&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">see</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;中介带你看房&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fee</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;中介带你付费&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>客户（我）：访问代理对象的人</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//房东只租房子
+</span><span class="c1"></span>        <span class="n">Host</span> <span class="n">host</span> <span class="o">=</span><span class="k">new</span> <span class="n">Host</span><span class="o">();</span>
+        <span class="c1">//代理出来租房子还有一些附属操作
+</span><span class="c1"></span>        <span class="n">Proxy</span> <span class="n">proxy</span><span class="o">=</span><span class="k">new</span> <span class="n">Proxy</span><span class="o">(</span><span class="n">host</span><span class="o">);</span>
+        <span class="c1">//不用面对房东，直接找中介即可
+</span><span class="c1"></span>        <span class="n">proxy</span><span class="o">.</span><span class="na">rent</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>好处：</p>
+<ul>
+<li>可以使真实角色操作更纯粹，不用去关注一些公共的业务</li>
+<li>公共也就交给代理角色！实现了业务的分工</li>
+<li>公共业务发生拓展时，方便集中管理</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>一个真实角色就会产生一个代理角色，代码量会翻倍，开发效率低</li>
+</ul>
+<h2 id="133-静态代理再理解">13.3 静态代理再理解</h2>
+<ul>
+<li>
+<p>抽象角色</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">query</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>真实角色，实现增删改查四个方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">public class UserServiceImpl implements UserService{
+    public void add(){
+        System.out.println(&#34;增&#34;);
+    };
+    public void delete(){
+        System.out.println(&#34;删&#34;);
+    };
+    public void update(){
+        System.out.println(&#34;改&#34;);
+    };
+    public void query(){
+        System.out.println(&#34;查&#34;);
+    };
+}
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>代理角色：现有客户需要在每次实现什么方法的时候，能够输出实现了什么方法，称为日志功能，这个时候如果去在真实角色的代码里面添加，就违反了”改动原有代码，在公司中是大忌“，所以这时候就需要代理去实现</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">public class UserServiceProxy {
+    private UserServiceImpl userServiceImpl;
+  
+    public void setUserServiceImpl(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
+    }
+  
+    public void add(){
+        log(&#34;add&#34;);
+        userServiceImpl.add();
+    }
+    public void delete(){
+        log(&#34;delete&#34;);
+        userServiceImpl.delete();
+    }
+    public void update(){
+        log(&#34;update&#34;);
+        userServiceImpl.update();
+    }
+    public void query(){
+        log(&#34;query&#34;);
+        userServiceImpl.query();
+    }
+    public void log(String a){
+        System.out.println(&#34;实现了&#34;+a+&#34;方法&#34;);
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>客户：只需要跟代理角色接触，让代理角色去调用真实角色的各种方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">UserServiceImpl</span> <span class="n">userServiceImpl</span><span class="o">=</span><span class="k">new</span> <span class="n">UserServiceImpl</span><span class="o">();</span>
+        <span class="n">UserServiceProxy</span> <span class="n">userServiceProxy</span><span class="o">=</span><span class="k">new</span> <span class="n">UserServiceProxy</span><span class="o">();</span>
+        <span class="n">userServiceProxy</span><span class="o">.</span><span class="na">setUserServiceImpl</span><span class="o">(</span><span class="n">userServiceImpl</span><span class="o">);</span>
+        <span class="n">userServiceProxy</span><span class="o">.</span><span class="na">add</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="134-聊聊aop">13.4 聊聊AOP</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171607.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171607.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171607.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171607.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171607.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171607.png" /></p>
+<p>AOP实现机制，就是不改变原有代码，增加代理角色，面向切面编程</p>
+<h2 id="135-动态代理详解">13.5 动态代理详解</h2>
+<ul>
+<li>动态代理和静态代理角色一样</li>
+<li>动态代理的代理类是动态生成的，不是我们直接写好的</li>
+<li>动态代理分为两大类：基于接口的动态代理，基于类的动态代理
+<ul>
+<li>基于接口：JDK的动态代理</li>
+<li>基于类：cglib</li>
+<li>java字节码实现（现在用的多的）：javassist，javassist是一个开源的分析、编辑和创建java字节码的类库</li>
+</ul>
+</li>
+</ul>
+<p>前提：了解两个类</p>
+<p><strong>Proxy类</strong>：生成动态代理实例的，提供动态代理类和实例的静态方法</p>
+<p><strong>InvocationHandle</strong>：调用处理程序并返回一个结果的（调用处理程序实现的接口）</p>
+<p>接口：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">query</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>真实角色：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserServiceImpl</span> <span class="kd">implements</span> <span class="n">UserService</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;增&#34;</span><span class="o">);</span>
+    <span class="o">};</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;删&#34;</span><span class="o">);</span>
+    <span class="o">};</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;改&#34;</span><span class="o">);</span>
+    <span class="o">};</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">query</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;查&#34;</span><span class="o">);</span>
+    <span class="o">};</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>创建代理对象的类，ProxyInvocationHandle.java：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//使用这个类动态生成代理类，这个类本身不是代理类，只是处理代理过程的一个类
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProxyInvocationHandle</span> <span class="kd">implements</span> <span class="n">InvocationHandler</span> <span class="o">{</span>
+    <span class="c1">//设置被代理的接口
+</span><span class="c1"></span>    <span class="c1">//实际上就是设置实现接口的真实角色对象
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Object</span> <span class="n">target</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTarget</span><span class="o">(</span><span class="n">Object</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//生成得到代理类
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">getProxy</span><span class="o">(){</span>
+        <span class="c1">//参数1：实现接口的真实类的位置
+</span><span class="c1"></span>        <span class="c1">//参数2：真实类
+</span><span class="c1"></span>        <span class="c1">//参数3：通过什么调用的
+</span><span class="c1"></span>        <span class="k">return</span> <span class="n">Proxy</span><span class="o">.</span><span class="na">newProxyInstance</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getClassLoader</span><span class="o">(),</span><span class="n">target</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getInterfaces</span><span class="o">(),</span><span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="c1">//处理代理实例，并返回结果，这个invoke方法是通过反射自动调用的，在getProxy时传了一个this，里面调用了invoke。每次当代理对象调用方法时都会经过这个方法，这个方法包含了所有代理对象需要处理的业务
+</span><span class="c1"></span>    <span class="c1">//参数1：动态生成的代理对象的实例
+</span><span class="c1"></span>    <span class="c1">//参数2：接口的方法，和真实角色接口方法一致
+</span><span class="c1"></span>    <span class="c1">//代表调用接口方法对应的Object参数数组
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">invoke</span><span class="o">(</span><span class="n">Object</span> <span class="n">o</span><span class="o">,</span> <span class="n">Method</span> <span class="n">method</span><span class="o">,</span> <span class="n">Object</span><span class="o">[]</span> <span class="n">objects</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+        <span class="c1">//因为method是接口的方法，所以getName就可以得到方法名
+</span><span class="c1"></span>        <span class="n">log</span><span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+        <span class="n">Object</span> <span class="n">result</span><span class="o">=</span><span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">target</span><span class="o">,</span><span class="n">objects</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">//如果想要增加代理类自己的方法，就直接在下面写，下面是一个实现日志功能的方法
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">log</span><span class="o">(</span><span class="n">String</span> <span class="n">msg</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;实现了&#34;</span><span class="o">+</span><span class="n">msg</span><span class="o">+</span><span class="s">&#34;方法&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>客户：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//真实角色
+</span><span class="c1"></span>        <span class="n">UserServiceImpl</span> <span class="n">userService</span><span class="o">=</span><span class="k">new</span> <span class="n">UserServiceImpl</span><span class="o">();</span>
+        <span class="c1">//处理和生成代理角色的类
+</span><span class="c1"></span>        <span class="n">ProxyInvocationHandle</span> <span class="n">pih</span><span class="o">=</span><span class="k">new</span> <span class="n">ProxyInvocationHandle</span><span class="o">();</span>
+        <span class="c1">//设置要代理的对象，实际上就是真实角色对象
+</span><span class="c1"></span>        <span class="n">pih</span><span class="o">.</span><span class="na">setTarget</span><span class="o">(</span><span class="n">userService</span><span class="o">);</span>
+        <span class="c1">//生成代理类,要强转成接口类型，因为动态代理的是接口
+</span><span class="c1"></span>        <span class="n">UserService</span> <span class="n">proxy</span><span class="o">=(</span><span class="n">UserService</span><span class="o">)</span> <span class="n">pih</span><span class="o">.</span><span class="na">getProxy</span><span class="o">();</span>
+        <span class="c1">//现在就可以让代理类处理业务了
+</span><span class="c1"></span>        <span class="n">proxy</span><span class="o">.</span><span class="na">add</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>输出：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171638.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171638.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171638.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171638.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171638.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171638.png" /></p>
+<p>好处：</p>
+<ul>
+<li>静态代理的优点全有</li>
+<li>一个动态代理类代理的是一个接口，一般就是对应的一些业务</li>
+<li>一个动态代理类可以代理多个类，只要实现了同一个接口就可以</li>
+</ul>
+<h1 id="14aop">14.AOP</h1>
+<h2 id="141-了解">14.1 了解</h2>
+<p>面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的技术，在不改变原来代码的基础上实现动态的增强</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171655.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171655.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171655.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171655.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171655.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171655.png" /></p>
+<h2 id="142-使用spring实现aop">14.2 使用Spring实现Aop</h2>
+<p>前提：使用AOP织入，需要导入一个依赖包</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.aspectj<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>aspectjweaver<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.9.4<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="1421-方法一使用原生spring-api接口jdk默认">14.2.1 方法一：使用原生Spring API接口（JDK）默认</h3>
+<p>UserService接口</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">search</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>UserServiceImpl实现类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserServiceImpl</span> <span class="kd">implements</span> <span class="n">UserService</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;增&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;删&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;改&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">search</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;查&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Log类：实现日志功能</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Log</span> <span class="kd">implements</span> <span class="n">MethodBeforeAdvice</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="c1">//参数method：要执行的目标对象的方法
+</span><span class="c1"></span>    <span class="c1">//参数args：参数
+</span><span class="c1"></span>    <span class="c1">//参数target：目标对象
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="o">(</span><span class="n">Method</span> <span class="n">method</span><span class="o">,</span> <span class="n">Object</span><span class="o">[]</span> <span class="n">args</span><span class="o">,</span> <span class="n">Object</span> <span class="n">target</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">target</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span><span class="s">&#34;类,实现了&#34;</span><span class="o">+</span><span class="n">method</span><span class="o">.</span><span class="na">getName</span><span class="o">()+</span><span class="s">&#34;方法&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>AfterLog类：实现方法执行后，得知返回值功能</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AfterLog</span> <span class="kd">implements</span> <span class="n">AfterReturningAdvice</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="c1">//参数returnValue:返回值
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterReturning</span><span class="o">(</span><span class="n">Object</span> <span class="n">returnValue</span><span class="o">,</span> <span class="n">Method</span> <span class="n">method</span><span class="o">,</span> <span class="n">Object</span><span class="o">[]</span> <span class="n">args</span><span class="o">,</span> <span class="n">Object</span> <span class="n">target</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;执行了&#34;</span><span class="o">+</span><span class="n">method</span><span class="o">.</span><span class="na">getName</span><span class="o">()+</span><span class="s">&#34;方法，返回结果为：&#34;</span><span class="o">+</span><span class="n">returnValue</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>bean9.xml配置类</p>
+<p>切入点表示要切入到哪里去，即实现接口的类中的方法要在哪里执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--    注册bean--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;log&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.log.Log&#34;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;afterLog&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.log.AfterLog&#34;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;userServiceImpl&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.service.UserServiceImpl&#34;</span><span class="nt">/&gt;</span>
+
+
+<span class="c">&lt;!--    方法一:使用原生Spring API接口--&gt;</span>
+
+<span class="c">&lt;!--    配置aop：要在上面导入aop约束--&gt;</span>
+    <span class="nt">&lt;aop:config&gt;</span>
+<span class="c">&lt;!--        切入点:expression=&#34;execution(修饰符，返回值，类名，方法名，参数)&#34;--&gt;</span>
+<span class="c">&lt;!--        *  代表任意修饰符返回值--&gt;</span>
+<span class="c">&lt;!--        com.kuang.service.UserServiceImpl.*  表示这个类下的所有方法--&gt;</span>
+<span class="c">&lt;!--        com.kuang.service.UserServiceImpl.*(..)  表示所有方法，(..)代表方法的任意参数--&gt;</span>
+        <span class="nt">&lt;aop:pointcut</span> <span class="na">id=</span><span class="s">&#34;pointcut&#34;</span> <span class="na">expression=</span><span class="s">&#34;execution(* com.kuang.service.UserServiceImpl.*(..))&#34;</span><span class="nt">/&gt;</span>
+
+<span class="c">&lt;!--        执行环绕增加:表示把log,afterLog类切入到上面切入点的所有方法中--&gt;</span>
+        <span class="nt">&lt;aop:advisor</span> <span class="na">advice-ref=</span><span class="s">&#34;log&#34;</span> <span class="na">pointcut-ref=</span><span class="s">&#34;pointcut&#34;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;aop:advisor</span> <span class="na">advice-ref=</span><span class="s">&#34;afterLog&#34;</span> <span class="na">pointcut-ref=</span><span class="s">&#34;pointcut&#34;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/aop:config&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>测试类Test9.java</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test9</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ApplicationContext</span> <span class="n">context</span><span class="o">=</span><span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">&#34;bean9.xml&#34;</span><span class="o">);</span>
+<span class="c1">//        因为动态代理代理的是接口
+</span><span class="c1"></span>        <span class="n">UserService</span> <span class="n">userService</span><span class="o">=(</span><span class="n">UserService</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">&#34;userServiceImpl&#34;</span><span class="o">);</span>
+        <span class="n">userService</span><span class="o">.</span><span class="na">add</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="1422-方法二使用自定义类cglib">14.2.2 方法二：使用自定义类（cglib）</h3>
+<p>切面表示引用哪个类，即哪个类里面有自定义的特定功能的方法，它就是一个类。切面中还要还要定义切入点（切面要引用到哪里去）和通知（是要切入切面类中的哪个方法，且切入到哪里去）</p>
+<p>自定义切面类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DivPointCut</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;函数执行之前&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">after</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;函数执行之后&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>bean9.xml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--    方法二:使用自定义类--&gt;</span>
+<span class="c">&lt;!--    注入自定义切面类--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;divPointCut&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.divPointCut.DivPointCut&#34;</span><span class="nt">/&gt;</span>
+    
+    <span class="nt">&lt;aop:config&gt;</span>
+<span class="c">&lt;!--        自定义切面,ref要引用的类--&gt;</span>
+        <span class="nt">&lt;aop:aspect</span> <span class="na">ref=</span><span class="s">&#34;divPointCut&#34;</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!--        切入点--&gt;</span>
+            <span class="nt">&lt;aop:pointcut</span> <span class="na">id=</span><span class="s">&#34;pointcut&#34;</span> <span class="na">expression=</span><span class="s">&#34;execution(* com.kuang.service.UserServiceImpl.*(..))&#34;</span><span class="nt">/&gt;</span>
+<span class="c">&lt;!--            通知:即自定义切面中的方法,且要指定在哪里调用--&gt;</span>
+            <span class="nt">&lt;aop:before</span> <span class="na">method=</span><span class="s">&#34;before&#34;</span> <span class="na">pointcut-ref=</span><span class="s">&#34;pointcut&#34;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;aop:after</span> <span class="na">method=</span><span class="s">&#34;after&#34;</span> <span class="na">pointcut-ref=</span><span class="s">&#34;pointcut&#34;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/aop:aspect&gt;</span>
+    <span class="nt">&lt;/aop:config&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="1423-方法三注解实现">14.2.3 方法三：注解实现</h3>
+<p>与方法二原理一模一样，只是将xml换成注解</p>
+<p>AnnotationPointCut自定义切面类：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171732.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171732.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171732.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171732.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171732.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171732.png" /></p>
+<p>注意选的是上面那个Before注解</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//此注解表示这个类是一个切面
+</span><span class="c1"></span><span class="nd">@Aspect</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AnnotationPointCut</span> <span class="o">{</span>
+    <span class="c1">//此注解表示这个方法是一个通知,切入点就写在@Before内
+</span><span class="c1"></span>    <span class="nd">@Before</span><span class="o">(</span><span class="s">&#34;execution(* com.kuang.service.UserServiceImpl.*(..))&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;函数执行前&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+    
+    
+    <span class="nd">@After</span><span class="o">(</span><span class="s">&#34;execution(* com.kuang.service.UserServiceImpl.*(..))&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">after</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;函数执行后&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    
+    <span class="nd">@Around</span><span class="o">(</span><span class="s">&#34;execution(* com.kuang.service.UserServiceImpl.*(..))&#34;</span><span class="o">)</span>
+    <span class="c1">//这里的joinPoint是指连接点,和切入点类似,但是它可以从切入地方拿东西，是必要的参数
+</span><span class="c1"></span>    <span class="c1">//记得一定要抛出异常
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">around</span><span class="o">(</span><span class="n">ProceedingJoinPoint</span> <span class="n">jp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span><span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;环绕前&#34;</span><span class="o">);</span>
+        <span class="c1">//代表执行方法
+</span><span class="c1"></span>        <span class="n">Object</span> <span class="n">proceed</span><span class="o">=</span><span class="n">jp</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;环绕后&#34;</span><span class="o">);</span>
+
+        <span class="c1">//连接点还可以获得签名(实际上就是执行了哪个方法)等信息
+</span><span class="c1"></span>        <span class="n">Signature</span> <span class="n">signature</span><span class="o">=</span><span class="n">jp</span><span class="o">.</span><span class="na">getSignature</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;签名:&#34;</span><span class="o">+</span><span class="n">signature</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>配置文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--    方法三:使用注解--&gt;</span>
+<span class="c">&lt;!--    注入自定义切面--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;annotationPointCut&#34;</span> <span class="na">class=</span><span class="s">&#34;com.kuang.divPointCut.AnnotationPointCut&#34;</span><span class="nt">/&gt;</span>
+<span class="c">&lt;!--    注解支持--&gt;</span>
+    <span class="nt">&lt;aop:aspectj-autoproxy/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>运行：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171748.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171748.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171748.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171748.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171748.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171748.png" /></p>
+<h3 id="1424-小结">14.2.4 小结</h3>
+<p>后面设置为false，使用JDK支持，这也是默认的</p>
+<p>设置为true，使用cglib支持</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--    注解支持--&gt;</span>
+<span class="nt">&lt;apo:aspectj-autoproxy</span> <span class="na">proxy-target-class=</span><span class="s">&#34;false&#34;</span><span class="nt">/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="15整合mybatis">15.整合mybatis</h1>
+<h2 id="151-回顾mybatis">15.1 回顾Mybatis</h2>
+<p>Mybatis过程：</p>
+<ol>
+<li>导入相关jar包</li>
+</ol>
+<ul>
+<li>
+<p>junit</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>4.12<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>mysql</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>5.1.47<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>mybatis</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.mybatis<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>mybatis<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>3.5.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>spring-webmvc</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-webmvc<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>5.1.9.RELEASE<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>spring-jdbc</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--        spring操作数据库的话,需要一个spring-jdbc--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-jdbc<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>5.1.9.RELEASE<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>aspectjweaver：aop必导的包</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.aspectj<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>aspectjweaver<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.8.13<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>mybatis-spring</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.mybatis<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>mybatis-spring<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.0.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<ol start="2">
+<li>
+<p>编写配置文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE configuration
+</span><span class="cp">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span><span class="cp">        &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt;</span>
+<span class="nt">&lt;configuration&gt;</span>
+    <span class="nt">&lt;environments</span> <span class="na">default=</span><span class="s">&#34;development&#34;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;environment</span> <span class="na">id=</span><span class="s">&#34;development&#34;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;transactionManager</span> <span class="na">type=</span><span class="s">&#34;JDBC&#34;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;dataSource</span> <span class="na">type=</span><span class="s">&#34;POOLED&#34;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;driver&#34;</span> <span class="na">value=</span><span class="s">&#34;com.mysql.jdbc.Driver&#34;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;url&#34;</span> <span class="na">value=</span><span class="s">&#34;jdbc:mysql://127.0.0.1:3306/nfmall?useUnicode=true&amp;amp;characterEncoding=UTF-8&#34;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;username&#34;</span> <span class="na">value=</span><span class="s">&#34;root&#34;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;password&#34;</span> <span class="na">value=</span><span class="s">&#34;uchr@123&#34;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/dataSource&gt;</span>
+        <span class="nt">&lt;/environment&gt;</span>
+    <span class="nt">&lt;/environments&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>测试</p>
+</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171826.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171826.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171826.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171826.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171826.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171826.png" /></p>
+<p>看到视频23的15:00</p>
+<h1 id="16声明式事务">16.声明式事务</h1>
+<h2 id="161-回顾事务">16.1 回顾事务</h2>
+<ul>
+<li>把一组业务当成一个业务来做，要么都成功要么都失败</li>
+<li>涉及到数据的一致性问题</li>
+<li>确保完整性和一致性</li>
+</ul>
+<p>事务ACID原则</p>
+<ul>
+<li>原子性：确保事务要么都成功要么都失败</li>
+<li>一致性：事务完成后，要么都提交，要么就都不行，资源状态都要保持一致性</li>
+<li>隔离性：多个业务操作同一个资源，防止数据损坏</li>
+<li>持久性：事务一旦提交，无论系统发生什么问题，结果都不会被影响，被持久化的写到存储器中</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-06-01</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/spring/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://cloverfelix.github.io/spring/" data-title="Spring" data-hashtags="Spring"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://cloverfelix.github.io/spring/" data-hashtag="Spring"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://cloverfelix.github.io/spring/" data-title="Spring"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://cloverfelix.github.io/spring/" data-title="Spring"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://cloverfelix.github.io/spring/" data-title="Spring"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/spring/">Spring</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/javaweb/" class="prev" rel="prev" title="Javaweb"><i class="fas fa-angle-left fa-fw"></i>Javaweb</a>
+            <a href="/springboot/" class="next" rel="next" title="Springboot">Springboot<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Clover</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"YWTL89SVYC","algoliaIndex":"blog","algoliaSearchKey":"2cb3f95e7193d38260ef06bc3d5fc608","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
