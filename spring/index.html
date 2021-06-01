@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/spring\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Spring","wordcount":  9987 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Spring","wordcount":  10054 ,
         "url": "https:\/\/cloverfelix.github.io\/spring\/","datePublished": "2021-06-01T10:49:16+08:00","dateModified": "2021-06-01T10:49:16+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Spring</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/spring/"><i class="far fa-folder fa-fw"></i>Spring</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 9987 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 20 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10054 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 21 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -128,6 +128,30 @@
     <li><a href="#34-ioc综合">3.4 IOC综合</a></li>
     <li><a href="#35-ioc创建对象的方式依赖注入构造器注入">3.5 IOC创建对象的方式（依赖注入：构造器注入）</a></li>
     <li><a href="#36-ioc初始化对象的时间">3.6 IOC初始化对象的时间</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#41-spring配置">4.1 Spring配置</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#51依赖注入之set注入">5.1、依赖注入之set注入</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#61导入test测试包">6.1、导入test测试包</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#71命名空间">7.1、命名空间</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#81bean作用域">8.1、bean作用域</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#91bean自动装配">9.1、bean自动装配</a></li>
   </ul>
 
   <ul>
@@ -455,7 +479,8 @@
 </ul>
 <h2 id="36-ioc初始化对象的时间">3.6 IOC初始化对象的时间</h2>
 <p>在new ClassPathXmlApplicationContext，即加载完配置文件后就已经初始化好了<strong>所有bean</strong>对象，然后你需要getBean谁就取谁</p>
-<h1 id="4spring配置">4.spring配置</h1>
+<h1 id="4spring配置">4.Spring配置</h1>
+<h2 id="41-spring配置">4.1 Spring配置</h2>
 <ul>
 <li>
 <p>alias，给bean对象取别名（一对一）</p>
@@ -490,6 +515,7 @@
 </li>
 </ul>
 <h1 id="5di依赖注入之set注入">5.DI依赖注入之set注入</h1>
+<h2 id="51依赖注入之set注入">5.1、依赖注入之set注入</h2>
 <p>依赖：bean对象的创建依赖于容器</p>
 <p>注入：bean对象的所有属性值由容器注入</p>
 <p>复杂类型：</p>
@@ -665,6 +691,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><h1 id="6导入test测试包junit">6.导入test测试包（junit）</h1>
+<h2 id="61导入test测试包">6.1、导入test测试包</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -685,6 +712,7 @@
 </div>
 </div><p>然后在测试类中@Test，这样在测试类中写出的方法，会自动被执行</p>
 <h1 id="7c命名和p命名空间注入">7.c命名和p命名空间注入</h1>
+<h2 id="71命名空间">7.1、命名空间</h2>
 <p>p命名空间的注入，可以直接注入属性的值：property（本质还是set注入）</p>
 <ol>
 <li>
@@ -759,6 +787,7 @@
 </div></li>
 </ol>
 <h1 id="8bean-scopesbean作用域">8.Bean Scopes（bean作用域）</h1>
+<h2 id="81bean作用域">8.1、bean作用域</h2>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -830,6 +859,7 @@
 <li>其他四个只能在web开发中使用</li>
 </ul>
 <h1 id="9bean的自动装配autowired">9.bean的自动装配（Autowired）</h1>
+<h2 id="91bean自动装配">9.1、bean自动装配</h2>
 <p>Spring会在上下文中自动寻找，并自动给bean装配属性，<strong>只针对bean对象</strong></p>
 <p>在Spring中有三种装配方式：</p>
 <ol>
