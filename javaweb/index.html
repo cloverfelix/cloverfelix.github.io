@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/javaweb\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  4562 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  4560 ,
         "url": "https:\/\/cloverfelix.github.io\/javaweb\/","datePublished": "2021-06-01T10:48:25+08:00","dateModified": "2021-06-02T21:33:53+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Javaweb</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/javaweb/"><i class="far fa-folder fa-fw"></i>JavaWeb</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4562 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4560 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -855,7 +855,7 @@ C/S：客户端和服务器
      <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
      <span class="nt">&lt;servlet-class&gt;</span>com.clover.servlet.HelloServlet<span class="nt">&lt;/servlet-class&gt;</span>  
 <span class="nt">&lt;/servlet&gt;</span>  
-<span class="c">&lt;!--    Servlet的请求路径\--&gt;</span>  
+<span class="c">&lt;!--    Servlet的请求路径--&gt;</span>  
 <span class="nt">&lt;servlet-mapping&gt;</span>  
      <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
      <span class="nt">&lt;url-pattern&gt;</span>/hello<span class="nt">&lt;/url-pattern&gt;</span>  
@@ -1023,6 +1023,8 @@ C/S：客户端和服务器
 <p>优先级问题</p>
 <pre><code> 指定了固有的映射路径优先级最高，如果找不到就会走默认的处理请求了
 </code></pre>
+</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -1036,25 +1038,22 @@ C/S：客户端和服务器
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--404--&gt;</span>  
-<span class="nt">&lt;servlet&gt;</span>  
-     <span class="nt">&lt;servlet-name&gt;</span>error<span class="nt">&lt;/servlet-name&gt;</span>  
-     <span class="nt">&lt;servlet-class&gt;</span>com.clover.servlet.ErrorServlet<span class="nt">&lt;/servlet-class&gt;</span>  
-<span class="nt">&lt;/servlet&gt;</span>  
-<span class="nt">&lt;servlet-mapping&gt;</span>  
-     <span class="nt">&lt;servlet-name&gt;</span>error<span class="nt">&lt;/servlet-name&gt;</span>  
-     <span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>  
-<span class="nt">&lt;/servlet-mapping&gt;</span>
+<pre class="chroma"><code class="language-xml" data-lang="xml">	<span class="c">&lt;!--404--&gt;</span>  
+	<span class="nt">&lt;servlet&gt;</span>  
+		 <span class="nt">&lt;servlet-name&gt;</span>error<span class="nt">&lt;/servlet-name&gt;</span>  
+		 <span class="nt">&lt;servlet-class&gt;</span>com.clover.servlet.ErrorServlet<span class="nt">&lt;/servlet-class&gt;</span>  
+	<span class="nt">&lt;/servlet&gt;</span>  
+	<span class="nt">&lt;servlet-mapping&gt;</span>  
+		 <span class="nt">&lt;servlet-name&gt;</span>error<span class="nt">&lt;/servlet-name&gt;</span>  
+		 <span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>  
+	<span class="nt">&lt;/servlet-mapping&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<pre><code> 注意：在使用IDEA创建多个webapps工程时，在第二个运行可能会出现404找不到资源问题
-            这里是因为新创建的webapps文件上没有带蓝色点点,需要自己手动去加上，然后运行才会成功。
-            如若创建新的工程的pom.xml中没有parent那一行，重新创建即可
-            另外在创建新文件时应当先创建java跟resources两个文件夹，并且要标记，否则无法创建package
+</div><pre><code>    注意：在使用IDEA创建多个webapps工程时，在第二个运行可能会出现404找不到资源问题
+               这里是因为新创建的webapps文件上没有带蓝色点点,需要自己手动去加上，然后运行才会成功。
+               如若创建新的工程的pom.xml中没有parent那一行，重新创建即可
+               另外在创建新文件时应当先创建java跟resources两个文件夹，并且要标记，否则无法创建package
 </code></pre>
-</li>
-</ol>
 <h2 id="64servletcontext">6.4、ServletContext</h2>
 <p>web容器在启动的时候，它会为每个web应用程序都创建一个对应的ServletContext对象，它代</p>
 <p>表了当前的web应用；</p>
