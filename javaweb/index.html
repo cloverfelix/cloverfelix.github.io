@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/javaweb\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  4560 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  4584 ,
         "url": "https:\/\/cloverfelix.github.io\/javaweb\/","datePublished": "2021-06-01T10:48:25+08:00","dateModified": "2021-06-02T21:33:53+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Javaweb</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/javaweb/"><i class="far fa-folder fa-fw"></i>JavaWeb</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4560 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4584 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -169,6 +169,8 @@
         <li><a href="#4读取资源文件">4、读取资源文件</a></li>
       </ul>
     </li>
+    <li><a href="#65request">6.5、Request</a></li>
+    <li><a href="#66response">6.6、Response</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="1基本概念">1、基本概念</h1>
@@ -743,6 +745,8 @@ C/S：客户端和服务器
 <li>
 <p>关于Maven父子工程的理解：</p>
 <p>父项目中会有</p>
+</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -750,12 +754,13 @@ C/S：客户端和服务器
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;modules&gt;</span>  
-	<span class="nt">&lt;module&gt;</span>servlet-01<span class="nt">&lt;/module&gt;</span>  
-<span class="nt">&lt;/modules&gt;</span>
+<pre class="chroma"><code class="language-xml" data-lang="xml">	<span class="nt">&lt;modules&gt;</span>  
+		<span class="nt">&lt;module&gt;</span>servlet-01<span class="nt">&lt;/module&gt;</span>  
+	<span class="nt">&lt;/modules&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>子项目会有</p>
+</div><pre><code>子项目会有
+</code></pre>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -765,15 +770,16 @@ C/S：客户端和服务器
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;parent&gt;</span>  
-     <span class="nt">&lt;artifactId&gt;</span>javaweb-03-servlet<span class="nt">&lt;/artifactId&gt;</span>  
-     <span class="nt">&lt;groupId&gt;</span>com.clover<span class="nt">&lt;/groupId&gt;</span>  
-     <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>  
-<span class="nt">&lt;/parent&gt;</span>
+<pre class="chroma"><code class="language-xml" data-lang="xml">	<span class="nt">&lt;parent&gt;</span>  
+		 <span class="nt">&lt;artifactId&gt;</span>javaweb-03-servlet<span class="nt">&lt;/artifactId&gt;</span>  
+		 <span class="nt">&lt;groupId&gt;</span>com.clover<span class="nt">&lt;/groupId&gt;</span>  
+		 <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>  
+	<span class="nt">&lt;/parent&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>父项目中的Jar包子项目可以直接使用，而子项目中的jar包父项目不可以使用</p>
-</li>
+</div><pre><code>父项目中的Jar包子项目可以直接使用，而子项目中的jar包父项目不可以使用
+</code></pre>
+<ol start="3">
 <li>
 <p>Maven环境优化</p>
 <ol>
@@ -784,11 +790,11 @@ C/S：客户端和服务器
 <li>
 <p>编写一个Servlet程序</p>
 <ol>
-<li>
-<p>编写一个普通类</p>
+<li>编写一个普通类</li>
+<li>实现Servlet接口，这里我们直接继承HttpServlet</li>
+</ol>
 </li>
-<li>
-<p>实现Servlet接口，这里我们直接继承HttpServlet</p>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -805,26 +811,21 @@ C/S：客户端和服务器
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>  
-    <span class="nd">@Override</span>  
-     <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
-            <span class="n">PrintWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>  
-            <span class="n">writer</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&#34;Hello,Servlet&#34;</span><span class="o">);</span>  
-     <span class="o">}</span>  
+<pre class="chroma"><code class="language-java" data-lang="java">		<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>  
+			<span class="nd">@Override</span>  
+			 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
+					<span class="n">PrintWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>  
+					<span class="n">writer</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&#34;Hello,Servlet&#34;</span><span class="o">);</span>  
+			 <span class="o">}</span>  
 
-    <span class="nd">@Override</span>  
-     <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
-            <span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>  
-     <span class="o">}</span>  
-<span class="o">}</span>	
+			<span class="nd">@Override</span>  
+			 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
+					<span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>  
+			 <span class="o">}</span>  
+		<span class="o">}</span>	
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
-</ol>
-</li>
-</ol>
-<p><img
+</div><p><img
         class="lazyload"
         src="/svg/loading.min.svg"
         data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603203836.png"
@@ -836,6 +837,8 @@ C/S：客户端和服务器
 <li>
 <p>编写Servlet映射</p>
 <p>为什么需要映射：我们写的是Java程序，但是要通过浏览器访问，而浏览器需要连接web服务器，所有我们需要在web服务器中注册我们写的Servlet，还需要给他一个浏览器能够访问的路径；</p>
+</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -850,27 +853,19 @@ C/S：客户端和服务器
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--注册Servlet--&gt;</span>  
-<span class="nt">&lt;servlet&gt;</span>  
-     <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
-     <span class="nt">&lt;servlet-class&gt;</span>com.clover.servlet.HelloServlet<span class="nt">&lt;/servlet-class&gt;</span>  
-<span class="nt">&lt;/servlet&gt;</span>  
-<span class="c">&lt;!--    Servlet的请求路径--&gt;</span>  
-<span class="nt">&lt;servlet-mapping&gt;</span>  
-     <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
-     <span class="nt">&lt;url-pattern&gt;</span>/hello<span class="nt">&lt;/url-pattern&gt;</span>  
-<span class="nt">&lt;/servlet-mapping&gt;</span>
+<pre class="chroma"><code class="language-xml" data-lang="xml">		<span class="c">&lt;!--注册Servlet--&gt;</span>  
+		<span class="nt">&lt;servlet&gt;</span>  
+			 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+			 <span class="nt">&lt;servlet-class&gt;</span>com.clover.servlet.HelloServlet<span class="nt">&lt;/servlet-class&gt;</span>  
+		<span class="nt">&lt;/servlet&gt;</span>  
+		<span class="c">&lt;!--    Servlet的请求路径--&gt;</span>  
+		<span class="nt">&lt;servlet-mapping&gt;</span>  
+			 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+			 <span class="nt">&lt;url-pattern&gt;</span>/hello<span class="nt">&lt;/url-pattern&gt;</span>  
+		<span class="nt">&lt;/servlet-mapping&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">   
-</code></pre></td></tr></table>
-</div>
-</div></li>
+</div><ol start="6">
 <li>
 <p>配置tomcat</p>
 <p>注意：配置项目的发布路径就可以了</p>
@@ -891,8 +886,8 @@ C/S：客户端和服务器
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603210339.png" /></p>
 <h2 id="63mapping">6.3、Mapping</h2>
 <ol>
-<li>
-<p>一个Servlet请求可以指定一个映射路径</p>
+<li>一个Servlet请求可以指定一个映射路径</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -901,16 +896,15 @@ C/S：客户端和服务器
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;servlet-mapping&gt;</span>  
-     <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
-     <span class="nt">&lt;url-pattern&gt;</span>/hello<span class="nt">&lt;/url-pattern&gt;</span>  
-<span class="nt">&lt;/servlet-mapping&gt;</span>
+<pre class="chroma"><code class="language-xml" data-lang="xml">	<span class="nt">&lt;servlet-mapping&gt;</span>  
+		 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+		 <span class="nt">&lt;url-pattern&gt;</span>/hello<span class="nt">&lt;/url-pattern&gt;</span>  
+	<span class="nt">&lt;/servlet-mapping&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
-<li>
-<p>一个Servlet请求可以指定多个映射路径</p>
+</div><ol start="2">
+<li>一个Servlet请求可以指定多个映射路径</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -935,32 +929,31 @@ C/S：客户端和服务器
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;servlet-mapping&gt;</span>  
-     <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
-     <span class="nt">&lt;url-pattern&gt;</span>/hello<span class="nt">&lt;/url-pattern&gt;</span>  
-<span class="nt">&lt;/servlet-mapping&gt;</span>  
-<span class="nt">&lt;servlet-mapping&gt;</span>  
-     <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
-     <span class="nt">&lt;url-pattern&gt;</span>/hello2<span class="nt">&lt;/url-pattern&gt;</span>  
-<span class="nt">&lt;/servlet-mapping&gt;</span>  
-<span class="nt">&lt;servlet-mapping&gt;</span>  
-     <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
-     <span class="nt">&lt;url-pattern&gt;</span>/hello3<span class="nt">&lt;/url-pattern&gt;</span>  
-<span class="nt">&lt;/servlet-mapping&gt;</span>  
-<span class="nt">&lt;servlet-mapping&gt;</span>  
-     <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
-     <span class="nt">&lt;url-pattern&gt;</span>/hello4<span class="nt">&lt;/url-pattern&gt;</span>  
-<span class="nt">&lt;/servlet-mapping&gt;</span>  
-<span class="nt">&lt;servlet-mapping&gt;</span>  
-     <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
-     <span class="nt">&lt;url-pattern&gt;</span>/hello5<span class="nt">&lt;/url-pattern&gt;</span>  
-<span class="nt">&lt;/servlet-mapping&gt;</span>
+<pre class="chroma"><code class="language-xml" data-lang="xml">	<span class="nt">&lt;servlet-mapping&gt;</span>  
+		 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+		 <span class="nt">&lt;url-pattern&gt;</span>/hello<span class="nt">&lt;/url-pattern&gt;</span>  
+	<span class="nt">&lt;/servlet-mapping&gt;</span>  
+	<span class="nt">&lt;servlet-mapping&gt;</span>  
+		 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+		 <span class="nt">&lt;url-pattern&gt;</span>/hello2<span class="nt">&lt;/url-pattern&gt;</span>  
+	<span class="nt">&lt;/servlet-mapping&gt;</span>  
+	<span class="nt">&lt;servlet-mapping&gt;</span>  
+		 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+		 <span class="nt">&lt;url-pattern&gt;</span>/hello3<span class="nt">&lt;/url-pattern&gt;</span>  
+	<span class="nt">&lt;/servlet-mapping&gt;</span>  
+	<span class="nt">&lt;servlet-mapping&gt;</span>  
+		 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+		 <span class="nt">&lt;url-pattern&gt;</span>/hello4<span class="nt">&lt;/url-pattern&gt;</span>  
+	<span class="nt">&lt;/servlet-mapping&gt;</span>  
+	<span class="nt">&lt;servlet-mapping&gt;</span>  
+		 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+		 <span class="nt">&lt;url-pattern&gt;</span>/hello5<span class="nt">&lt;/url-pattern&gt;</span>  
+	<span class="nt">&lt;/servlet-mapping&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
-<li>
-<p>一个Servlet请求可以指定通用映射路径</p>
+</div><ol start="3">
+<li>一个Servlet请求可以指定通用映射路径</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -969,16 +962,15 @@ C/S：客户端和服务器
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;servlet-mapping&gt;</span>  
-     <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
-     <span class="nt">&lt;url-pattern&gt;</span>/hello\*<span class="nt">&lt;/url-pattern&gt;</span>  
-<span class="nt">&lt;/servlet-mapping&gt;</span>
+<pre class="chroma"><code class="language-xml" data-lang="xml">	<span class="nt">&lt;servlet-mapping&gt;</span>  
+		 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+		 <span class="nt">&lt;url-pattern&gt;</span>/hello\*<span class="nt">&lt;/url-pattern&gt;</span>  
+	<span class="nt">&lt;/servlet-mapping&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
-<li>
-<p>默认请求路径</p>
+</div><ol start="4">
+<li>默认请求路径</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -987,16 +979,15 @@ C/S：客户端和服务器
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;servlet-mapping&gt;</span>  
-     <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
-     <span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>  
-<span class="nt">&lt;/servlet-mapping&gt;</span>
+<pre class="chroma"><code class="language-xml" data-lang="xml">	<span class="nt">&lt;servlet-mapping&gt;</span>  
+		 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+		 <span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>  
+	<span class="nt">&lt;/servlet-mapping&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
-<li>
-<p>指定一些后缀或者前缀等等</p>
+</div><ol start="5">
+<li>指定一些后缀或者前缀等等</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -1008,17 +999,16 @@ C/S：客户端和服务器
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--可以自定义后缀实现请求映射  
-</span><span class="c">        注意点：*前面不能加项目映射的路径  
-</span><span class="c">--&gt;</span>  
-<span class="nt">&lt;servlet-mapping&gt;</span>  
-     <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
-     <span class="nt">&lt;url-pattern&gt;</span>*.clover<span class="nt">&lt;/url-pattern&gt;</span>  
-<span class="nt">&lt;/servlet-mapping&gt;</span>
+<pre class="chroma"><code class="language-xml" data-lang="xml">	<span class="c">&lt;!--可以自定义后缀实现请求映射  
+</span><span class="c">			注意点：*前面不能加项目映射的路径  
+</span><span class="c">	--&gt;</span>  
+	<span class="nt">&lt;servlet-mapping&gt;</span>  
+		 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+		 <span class="nt">&lt;url-pattern&gt;</span>*.clover<span class="nt">&lt;/url-pattern&gt;</span>  
+	<span class="nt">&lt;/servlet-mapping&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div><ol start="6">
 <li>
 <p>优先级问题</p>
 <pre><code> 指定了固有的映射路径优先级最高，如果找不到就会走默认的处理请求了
@@ -1405,6 +1395,10 @@ password=123456
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604220055.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604220055.png" /></p>
+<h2 id="65request">6.5、Request</h2>
+<p>明日任务</p>
+<h2 id="66response">6.6、Response</h2>
+<p>明日任务</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
