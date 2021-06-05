@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Spring - 分类 - clover</title>
+        <link>https://cloverfelix.github.io/categories/spring/</link>
+        <description>Spring - 分类 - clover</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 01 Jun 2021 10:49:16 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/categories/spring/" rel="self" type="application/rss+xml" /><item>
+    <title>Spring</title>
+    <link>https://cloverfelix.github.io/spring/</link>
+    <pubDate>Tue, 01 Jun 2021 10:49:16 &#43;0800</pubDate>
+    <author>Clover</author>
+    <guid>https://cloverfelix.github.io/spring/</guid>
+    <description><![CDATA[1.Spring 1.1 简介 下载spring所有版本信息的地址入口：https://docs.spring.io/spring-framework/docs/4]]></description>
+</item></channel>
+</rss>

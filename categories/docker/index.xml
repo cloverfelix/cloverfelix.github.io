@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Docker - 分类 - clover</title>
+        <link>https://cloverfelix.github.io/categories/docker/</link>
+        <description>Docker - 分类 - clover</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 01 Jun 2021 10:49:43 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/categories/docker/" rel="self" type="application/rss+xml" /><item>
+    <title>Docker</title>
+    <link>https://cloverfelix.github.io/docker/</link>
+    <pubDate>Tue, 01 Jun 2021 10:49:43 &#43;0800</pubDate>
+    <author>Clover</author>
+    <guid>https://cloverfelix.github.io/docker/</guid>
+    <description><![CDATA[Docker 参考资料 官方文档：https://docs.docker.com/docker-for-windows/ 【官方文档超级详细】 仓库地址：ht]]></description>
+</item></channel>
+</rss>
