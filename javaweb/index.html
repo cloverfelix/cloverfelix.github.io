@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Javaweb - clover</title><meta name="Description" content="javaweb"><meta property="og:title" content="Javaweb" />
+<meta property="og:description" content="javaweb" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cloverfelix.github.io/javaweb/" /><meta property="og:image" content="https://cloverfelix.github.io/RW.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-06-01T10:48:25&#43;08:00" />
+<meta property="article:modified_time" content="2021-06-01T10:48:25&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://cloverfelix.github.io/RW.png"/>
+
+<meta name="twitter:title" content="Javaweb"/>
+<meta name="twitter:description" content="javaweb"/>
+<meta name="application-name" content="Clover">
+<meta name="apple-mobile-web-app-title" content="Clover"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://cloverfelix.github.io/javaweb/" /><link rel="prev" href="https://cloverfelix.github.io/mysql/" /><link rel="next" href="https://cloverfelix.github.io/spring/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Javaweb",
+        "inLanguage": "zh-cn",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/cloverfelix.github.io\/javaweb\/"
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  4584 ,
+        "url": "https:\/\/cloverfelix.github.io\/javaweb\/","datePublished": "2021-06-01T10:48:25+08:00","dateModified": "2021-06-01T10:48:25+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
+                "@type": "Person",
+                "name": "Clover"
+            },"description": "javaweb"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="clover"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>Clover</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/cloverfelix" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="clover"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>Clover</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/cloverfelix" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Javaweb</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/javaweb/"><i class="far fa-folder fa-fw"></i>JavaWeb</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4584 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#11静态web">1.1、静态web</a></li>
+    <li><a href="#12动态web">1.2、动态web</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#21技术讲解">2.1、技术讲解</a></li>
+    <li><a href="#22web服务器">2.2、web服务器</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#31安装tomcat">3.1、安装Tomcat</a></li>
+    <li><a href="#32tomcat启动和配置">3.2、Tomcat启动和配置</a></li>
+    <li><a href="#33配置">3.3、配置</a></li>
+    <li><a href="#34发布一个web网站">3.4、发布一个web网站</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#41什么是http">4.1、什么是Http</a></li>
+    <li><a href="#42两个时代">4.2、两个时代</a></li>
+    <li><a href="#43http请求">4.3、HTTP请求</a>
+      <ul>
+        <li><a href="#1请求行">1、请求行</a></li>
+        <li><a href="#2消息头">2、消息头</a></li>
+      </ul>
+    </li>
+    <li><a href="#44http响应">4.4、HTTP响应</a>
+      <ul>
+        <li><a href="#1响应体">1、响应体</a></li>
+        <li><a href="#2相应状态码">2、相应状态码</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#51maven项目架构管理工具">5.1、Maven项目架构管理工具</a></li>
+    <li><a href="#52配置环境变量">5.2、配置环境变量</a></li>
+    <li><a href="#53阿里云镜像">5.3、阿里云镜像</a></li>
+    <li><a href="#54本地仓库">5.4、本地仓库</a></li>
+    <li><a href="#55idea使用maven">5.5、IDEA使用Maven</a></li>
+    <li><a href="#56配置tomcat的问题">5.6、配置Tomcat的问题</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#61hellosevlet">6.1、HelloSevlet</a></li>
+    <li><a href="#62servlet原理">6.2、Servlet原理</a></li>
+    <li><a href="#63mapping">6.3、Mapping</a></li>
+    <li><a href="#64servletcontext">6.4、ServletContext</a>
+      <ul>
+        <li><a href="#1共享数据">1、共享数据</a></li>
+        <li><a href="#2获取初始化参数">2、获取初始化参数</a></li>
+        <li><a href="#3请求转发">3、请求转发</a></li>
+        <li><a href="#4读取资源文件">4、读取资源文件</a></li>
+      </ul>
+    </li>
+    <li><a href="#65request">6.5、Request</a></li>
+    <li><a href="#66response">6.6、Response</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="1基本概念">1、基本概念</h1>
+<h2 id="11静态web">1.1、静态web</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601193856.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601193856.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601193856.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601193856.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601193856.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601193856.png" /></p>
+<p>静态web存在的缺点</p>
+<ul>
+<li>
+<p>web页面无法更新</p>
+</li>
+<li>
+<p>它无法和数据库交互（数据无法持久化，用户无法交互）</p>
+</li>
+</ul>
+<h2 id="12动态web">1.2、动态web</h2>
+<p>页面会动态展示：“web的页面展示的效果因人而异”</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194340.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194340.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194340.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194340.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194340.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194340.png" /></p>
+<p>动态web存在的缺点：</p>
+<ul>
+<li>假如服务器的动态web资源出现了错误，我们需要重新编写我们的<strong>后台程序</strong>，重新发布；</li>
+</ul>
+<p>动态web的优点：</p>
+<ul>
+<li>
+<p>Web页面可以动态更新，所有用户看到的都不是同一个页面</p>
+</li>
+<li>
+<p>它可以与数据库交互</p>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194653.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194653.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194653.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194653.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194653.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601194653.png" /></p>
+<h1 id="2web服务器">2、web服务器</h1>
+<h2 id="21技术讲解">2.1、技术讲解</h2>
+<p>PHP：</p>
+<ul>
+<li>
+<p>PHP开发速度很快，功能很强大，跨平台，代码很简单</p>
+</li>
+<li>
+<p>无法承载大量访问的情况</p>
+</li>
+</ul>
+<p>JSP/Servlet：</p>
+<pre><code>B/S：浏览器和服务器
+
+C/S：客户端和服务器
+</code></pre>
+<ul>
+<li>
+<p>sun公司主推的B/S架构</p>
+</li>
+<li>
+<p>基于Java语言（所有的大公司，或者一些开源的组件，都是用Java写的）</p>
+</li>
+<li>
+<p>可以承载三高问题带来的影响</p>
+<ul>
+<li>
+<p>高可用</p>
+</li>
+<li>
+<p>高并发</p>
+</li>
+<li>
+<p>高性能</p>
+</li>
+</ul>
+</li>
+<li>
+<p>语法像ASP</p>
+</li>
+</ul>
+<h2 id="22web服务器">2.2、web服务器</h2>
+<p>服务器是一种被动的操作，用来处理用户的一些请求和给用户一些响应信息</p>
+<p><strong>IIS</strong></p>
+<p>微软的：ASP&hellip;&hellip;.，Windows中自带的</p>
+<p><strong>Tomcat</strong></p>
+<p>下载tomcat：</p>
+<ol>
+<li>
+<p>解压 or 安装</p>
+</li>
+<li>
+<p>了解配置文件以及目录结构</p>
+</li>
+<li>
+<p>这个东西的作用</p>
+</li>
+</ol>
+<h1 id="3tomcat">3、Tomcat</h1>
+<h2 id="31安装tomcat">3.1、安装Tomcat</h2>
+<p><a href="https://tomcat.apache.org/" target="_blank" rel="noopener noreffer">Tomcat官网</a></p>
+<h2 id="32tomcat启动和配置">3.2、Tomcat启动和配置</h2>
+<p>文件夹的作用</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601201908.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601201908.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601201908.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601201908.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601201908.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601201908.png" /></p>
+<p>访问测试：<a href="https://localhost:8080" target="_blank" rel="noopener noreffer">Tomcat测试</a></p>
+<p>可能遇到的问题：</p>
+<ol>
+<li>
+<p>Java环境变量没有配置</p>
+</li>
+<li>
+<p>闪退问题：需要配置兼容性</p>
+</li>
+<li>
+<p>乱码问题：配置文件中设置</p>
+</li>
+</ol>
+<h2 id="33配置">3.3、配置</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601202139.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601202139.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601202139.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601202139.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601202139.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601202139.png" /></p>
+<p>可以配置启动的端口号</p>
+<ul>
+<li>tomcat的默认端口是：8080</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;Connector</span> <span class="na">port=</span><span class="s">&#34;8080&#34;</span> <span class="na">protocol=</span><span class="s">&#34;HTTP/1.1&#34;</span>
+               <span class="na">connectionTimeout=</span><span class="s">&#34;20000&#34;</span>
+               <span class="na">redirectPort=</span><span class="s">&#34;8443&#34;</span> <span class="nt">/&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以配置主机的名称</p>
+<ul>
+<li>
+<p>默认主机名为：localhost&mdash;&gt;127.0.0.1</p>
+</li>
+<li>
+<p>默认网站应用存放的位置：webapps</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;Host</span> <span class="na">name=</span><span class="s">&#34;localhost&#34;</span>  <span class="na">appBase=</span><span class="s">&#34;webapps&#34;</span>
+            <span class="na">unpackWARs=</span><span class="s">&#34;true&#34;</span> <span class="na">autoDeploy=</span><span class="s">&#34;true&#34;</span><span class="nt">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>高难度面试题：</strong></p>
+<pre><code>请你谈谈网站是如何进行访问的！
+1. 输入一个域名；回车
+2. 检查本机的C:\Windows\System32\drivers\etc\hosts配置文件下有没有这个域名映射；
+	1. 有：直接返回对应的IP地址，这个地址中，有我们需要访问的web程序，可以直接访问
+	2. 没有：去DNS服务器找，找到的话就返回，找不到就返回找不到
+</code></pre>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601210836.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601210836.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601210836.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601210836.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601210836.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601210836.png" /></p>
+<h2 id="34发布一个web网站">3.4、发布一个web网站</h2>
+<p><a href="http://localhost:8080/examples/servlets/" target="_blank" rel="noopener noreffer">查看Tomcat自带的一些样例</a></p>
+<ul>
+<li>
+<p>将自己写的网站，放到服务器（Tomcat）中指定的web应用的文件夹（webapps）下，就可以访问了</p>
+</li>
+<li>
+<p>网站应有的结构</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">--webapps ：Tomcat服务器的web目录
+		--ROOT
+		--clover ： 网站的目录名
+			- WEB-INF
+				- classes ： Java程序
+				- lib ：web应用所有依赖的jar包
+				- web.xml ：网站配置文件
+			- index.html  默认的首页
+			- static
+				-css
+					-style.css
+				-js
+				-img
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="4http">4、Http</h1>
+<h2 id="41什么是http">4.1、什么是Http</h2>
+<p>HTTP（超文本传输协议）是一个简单的请求-响应协议，它通常运行在TCP之上</p>
+<ul>
+<li>
+<p>文本：html，字符串</p>
+</li>
+<li>
+<p>超文本： 图片，音乐，视频，定位，地图。。。。。</p>
+</li>
+<li>
+<p>默认端口：80</p>
+</li>
+</ul>
+<p>HTTPS：安全的</p>
+<ul>
+<li>默认端口：443</li>
+</ul>
+<h2 id="42两个时代">4.2、两个时代</h2>
+<ul>
+<li>
+<p>http1.0</p>
+<ul>
+<li>HTTP/1.0：客户端可以与web服务器连接后，只能获得一个web资源，就断开连接。</li>
+</ul>
+</li>
+<li>
+<p>http2.0</p>
+<ul>
+<li>HTTP/2.0：客户端可以与web服务器连接后，可以获得多个web资源。</li>
+</ul>
+</li>
+</ul>
+<h2 id="43http请求">4.3、HTTP请求</h2>
+<ul>
+<li>客户端&mdash;发请求&ndash;服务器</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">1</span><span class="o">.</span>  <span class="n">Request</span> <span class="n">URL</span><span class="o">:</span> <span class="n">https</span><span class="o">:</span><span class="c1">//www.baidu.com/				请求地址
+</span><span class="c1"></span>    
+<span class="n">2</span><span class="o">.</span>  <span class="n">Request</span> <span class="n">Method</span><span class="o">:</span> <span class="n">GET</span>										   <span class="n">get方法</span><span class="o">/</span><span class="n">post方法</span>
+    
+<span class="n">3</span><span class="o">.</span>  <span class="n">Status</span> <span class="n">Code</span><span class="o">:</span> <span class="n">200</span> <span class="n">OK</span>											<span class="n">状态码</span><span class="err">：</span><span class="n">200</span>
+    
+<span class="n">4</span><span class="o">.</span>  <span class="n">Remote</span> <span class="n">Address</span><span class="o">:</span> <span class="n">14</span><span class="o">.</span><span class="na">215</span><span class="o">.</span><span class="na">177</span><span class="o">.</span><span class="na">39</span><span class="o">:</span><span class="n">443</span>				<span class="n">远程地址</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="1请求行">1、请求行</h3>
+<ul>
+<li>
+<p>请求行中的请求方式：GET</p>
+</li>
+<li>
+<p>请求方式：Get，Post，HEAD，DELETE，PUT，TRACT</p>
+<ul>
+<li>
+<p>get：一次请求能够携带的参数比较少，大小有限制，会在浏览器的URL地址栏显示数据内容，不安全，但高效。</p>
+</li>
+<li>
+<p>post：一次请求能够携带的参数没有限制，大小没有限制，不会在浏览器的URL地址栏显示数据内容，安全，但不高效。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2消息头">2、消息头</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nl">Accept:</span>  <span class="n">告诉浏览器</span><span class="err">，</span><span class="n">它所支持的数据类型</span>
+    
+<span class="n">Accept</span><span class="o">-</span><span class="n">Encoding</span><span class="o">:</span>  <span class="n">支持那种编码格式GBK</span>  <span class="n">UTF</span><span class="o">-</span><span class="n">8</span> <span class="n">GB2312</span>  <span class="n">ISO8859</span><span class="o">-</span><span class="n">1</span>
+    
+<span class="n">Accept</span><span class="o">-</span><span class="n">Language</span><span class="o">:</span>  <span class="n">告诉浏览器</span><span class="err">，</span><span class="n">它的语言环境</span>
+    
+<span class="n">Cache</span><span class="o">-</span><span class="n">Control</span><span class="err">：</span><span class="n">缓存控制</span>
+
+<span class="n">Connection</span><span class="err">：</span> <span class="n">告诉浏览器</span><span class="err">，</span><span class="n">请求完成时断开还是保持连接</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="44http响应">4.4、HTTP响应</h2>
+<ul>
+<li>服务器&mdash;响应&mdash;客户端</li>
+</ul>
+<p>百度：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Cache</span><span class="o">-</span><span class="n">Control</span><span class="o">:</span>  <span class="kd">private</span>					  <span class="n">缓存控制</span>
+    
+<span class="nl">Connection:</span> <span class="n">keep</span><span class="o">-</span><span class="n">alive</span>					 <span class="n">连接</span>	
+    
+<span class="n">Content</span><span class="o">-</span><span class="n">Encoding</span><span class="o">:</span> <span class="n">gzip</span>					<span class="n">编码</span>
+    
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="o">:</span> <span class="n">ext</span><span class="o">/</span><span class="n">html</span>					<span class="n">类型</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="1响应体">1、响应体</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nl">Accept:</span>  <span class="n">告诉浏览器</span><span class="err">，</span><span class="n">它所支持的数据类型</span>
+    
+<span class="n">Accept</span><span class="o">-</span><span class="n">Encoding</span><span class="o">:</span>  <span class="n">支持那种编码格式GBK</span>  <span class="n">UTF</span><span class="o">-</span><span class="n">8</span> <span class="n">GB2312</span>  <span class="n">ISO8859</span><span class="o">-</span><span class="n">1</span>
+    
+<span class="n">Accept</span><span class="o">-</span><span class="n">Language</span><span class="o">:</span>  <span class="n">告诉浏览器</span><span class="err">，</span><span class="n">它的语言环境</span>
+    
+<span class="n">Cache</span><span class="o">-</span><span class="n">Control</span><span class="err">：</span><span class="n">缓存控制</span>
+
+<span class="n">Connection</span><span class="err">：</span> <span class="n">告诉浏览器</span><span class="err">，</span><span class="n">请求完成时断开还是保持连接</span>
+    
+<span class="n">Refrush</span><span class="err">：</span><span class="n">告诉客户端多久刷新一次</span>
+
+<span class="n">Location</span><span class="err">：</span> <span class="n">让网页重新定位</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2相应状态码">2、相应状态码</h3>
+<p>200：代表请求响应成功</p>
+<p>3**：请求重定向</p>
+<ul>
+<li>重定向：你重新到我给你的新位置去</li>
+</ul>
+<p>4xx：找不到资源</p>
+<ul>
+<li>资源不存在</li>
+</ul>
+<p>5xx：服务器代码错误    502：网关错误</p>
+<p><strong>常见面试题：</strong></p>
+<pre><code>当你的浏览器中地址栏输入地址并回车的一瞬间到页面能够展示回来，经历了什么！
+</code></pre>
+<h1 id="5maven">5、Maven</h1>
+<h2 id="51maven项目架构管理工具">5.1、Maven项目架构管理工具</h2>
+<p>我们目前用来就是方便导入Jar包的！</p>
+<p>Maven的核心思想：<strong>约定大于配置</strong></p>
+<ul>
+<li>有约束就不要去违反</li>
+</ul>
+<p>Maven会规定好你该如何去编写我们的Java代码，必须按照这个规定来</p>
+<h2 id="52配置环境变量">5.2、配置环境变量</h2>
+<p>在系统环境变量中配置如下配置：</p>
+<ul>
+<li>
+<p>M2_HOME maven 目录下的bin目录</p>
+</li>
+<li>
+<p>MAVEN_HOME　maven的目录</p>
+</li>
+<li>
+<p>在系统的path中配置  %MAVEN_HOME%\bin</p>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603111722.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603111722.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603111722.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603111722.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603111722.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603111722.png" /></p>
+<p>测试maven是否安装成功，必须配置完毕</p>
+<h2 id="53阿里云镜像">5.3、阿里云镜像</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;mirror&gt;</span>
+	<span class="nt">&lt;id&gt;</span>alimaven<span class="nt">&lt;/id&gt;</span>
+	<span class="nt">&lt;name&gt;</span>aliyun maven<span class="nt">&lt;/name&gt;</span>
+	<span class="nt">&lt;url&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="nt">&lt;/url&gt;</span>
+	<span class="nt">&lt;mirrorOf&gt;</span>central<span class="nt">&lt;/mirrorOf&gt;</span>       
+<span class="nt">&lt;/mirror&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="54本地仓库">5.4、本地仓库</h2>
+<p>有本地仓库，就有远程仓库！</p>
+<p><strong>建立一个本地仓库</strong>：localRepository</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;localRepository&gt;</span>E:\maven repository\.m2\repository<span class="nt">&lt;/localRepository&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="55idea使用maven">5.5、IDEA使用Maven</h2>
+<p>Maven官网：https://mvnrepository.com/</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603112623.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603112623.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603112623.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603112623.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603112623.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603112623.png" /></p>
+<p>IDEAMaven自动配置问题</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603114305.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603114305.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603114305.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603114305.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603114305.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603114305.png" /></p>
+<p>在IDEA中标记文件夹功能</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603113845.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603113845.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603113845.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603113845.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603113845.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603113845.png" /></p>
+<h2 id="56配置tomcat的问题">5.6、配置Tomcat的问题</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603192041.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603192041.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603192041.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603192041.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603192041.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603192041.png" /></p>
+<p>解决警告问题</p>
+<p>必须要的配置：<strong>为什么会有这个问题：我们访问一个网站，需要指定一个文件夹的名字</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603192456.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603192456.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603192456.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603192456.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603192456.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603192456.png" /></p>
+<pre><code>maven由于它的约定大于配置，我们之后可能遇到我们写的配置文件，无法被导出或者生效的问题。
+</code></pre>
+<p>解决方案：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--在build中配置resources，来防止我们资源导出失败的问题--&gt;</span>  
+<span class="nt">&lt;build&gt;</span>  
+	 <span class="nt">&lt;resources&gt;</span> 
+		 <span class="nt">&lt;resource&gt;</span> 
+			 <span class="nt">&lt;directory&gt;</span>src/main/resources<span class="nt">&lt;/directory&gt;</span>  
+			 <span class="nt">&lt;includes&gt;</span> 
+					<span class="nt">&lt;include&gt;</span>**/*.properties<span class="nt">&lt;/include&gt;</span>  
+					<span class="nt">&lt;include&gt;</span>**/*.xml<span class="nt">&lt;/include&gt;</span>  
+			<span class="nt">&lt;/includes&gt;</span>
+		 <span class="nt">&lt;/resource&gt;</span> 
+		 <span class="nt">&lt;resource&gt;</span> 
+			 <span class="nt">&lt;directory&gt;</span>src/main/java<span class="nt">&lt;/directory&gt;</span>  
+				 <span class="nt">&lt;includes&gt;</span> 
+					 <span class="nt">&lt;include&gt;</span>**/*.properties<span class="nt">&lt;/include&gt;</span>  
+					 <span class="nt">&lt;include&gt;</span>**/*.xml<span class="nt">&lt;/include&gt;</span>  
+				 <span class="nt">&lt;/includes&gt;</span>
+			 <span class="nt">&lt;filtering&gt;</span>true<span class="nt">&lt;/filtering&gt;</span>  
+		 <span class="nt">&lt;/resource&gt;</span>
+	<span class="nt">&lt;/resources&gt;</span>
+<span class="nt">&lt;/build&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="6servlet">6、Servlet</h1>
+<h2 id="61hellosevlet">6.1、HelloSevlet</h2>
+<p>Servlet接口Sun公司有两个默认的实现类：HttpServlet，GenericServlet</p>
+<ol>
+<li>
+<p>构建一个普通的Maven项目，删掉里面的src目录，以后我们的学习就在这个项目里面建议Moudel；这个空的工程就是Maven主工程</p>
+</li>
+<li>
+<p>关于Maven父子工程的理解：</p>
+<p>父项目中会有</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;modules&gt;</span>  
+	<span class="nt">&lt;module&gt;</span>servlet-01<span class="nt">&lt;/module&gt;</span>  
+<span class="nt">&lt;/modules&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>子项目会有
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;parent&gt;</span>  
+	 <span class="nt">&lt;artifactId&gt;</span>javaweb-03-servlet<span class="nt">&lt;/artifactId&gt;</span>  
+	 <span class="nt">&lt;groupId&gt;</span>com.clover<span class="nt">&lt;/groupId&gt;</span>  
+	 <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>  
+<span class="nt">&lt;/parent&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>父项目中的Jar包子项目可以直接使用，而子项目中的jar包父项目不可以使用
+</code></pre>
+<ol start="3">
+<li>
+<p>Maven环境优化</p>
+<ol>
+<li>修改web.xml为最新版本（可以去tomcat中的webapps里面找到）</li>
+<li>将Maven的结构搭建完整</li>
+</ol>
+</li>
+<li>
+<p>编写一个Servlet程序</p>
+<ol>
+<li>编写一个普通类</li>
+<li>实现Servlet接口，这里我们直接继承HttpServlet</li>
+</ol>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java">	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>  
+		<span class="nd">@Override</span>  
+		 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
+				<span class="n">PrintWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>  
+				<span class="n">writer</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&#34;Hello,Servlet&#34;</span><span class="o">);</span>  
+		 <span class="o">}</span>  
+
+		<span class="nd">@Override</span>  
+		 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
+				<span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>  
+		 <span class="o">}</span>  
+	<span class="o">}</span>	
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603203836.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603203836.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603203836.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603203836.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603203836.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603203836.png" /></p>
+<ol start="5">
+<li>
+<p>编写Servlet映射</p>
+<p>为什么需要映射：我们写的是Java程序，但是要通过浏览器访问，而浏览器需要连接web服务器，所有我们需要在web服务器中注册我们写的Servlet，还需要给他一个浏览器能够访问的路径；</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--注册Servlet--&gt;</span>  
+<span class="nt">&lt;servlet&gt;</span>  
+	 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+	 <span class="nt">&lt;servlet-class&gt;</span>com.clover.servlet.HelloServlet<span class="nt">&lt;/servlet-class&gt;</span>  
+<span class="nt">&lt;/servlet&gt;</span>  
+<span class="c">&lt;!--    Servlet的请求路径--&gt;</span>  
+<span class="nt">&lt;servlet-mapping&gt;</span>  
+	 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+	 <span class="nt">&lt;url-pattern&gt;</span>/hello<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="6">
+<li>
+<p>配置tomcat</p>
+<p>注意：配置项目的发布路径就可以了</p>
+</li>
+<li>
+<p>启动测试</p>
+</li>
+</ol>
+<h2 id="62servlet原理">6.2、Servlet原理</h2>
+<p>Servlet是由Web服务器调用，web服务器在收到浏览器请求之后，会有如下操作：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603210339.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603210339.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603210339.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603210339.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603210339.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210603210339.png" /></p>
+<h2 id="63mapping">6.3、Mapping</h2>
+<ol>
+<li>一个Servlet请求可以指定一个映射路径</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;servlet-mapping&gt;</span>  
+	<span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+	<span class="nt">&lt;url-pattern&gt;</span>/hello<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>一个Servlet请求可以指定多个映射路径</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;servlet-mapping&gt;</span>  
+	<span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+	<span class="nt">&lt;url-pattern&gt;</span>/hello<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>  
+<span class="nt">&lt;servlet-mapping&gt;</span>  
+	<span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+	<span class="nt">&lt;url-pattern&gt;</span>/hello2<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>  
+<span class="nt">&lt;servlet-mapping&gt;</span>  
+	<span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+	<span class="nt">&lt;url-pattern&gt;</span>/hello3<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>  
+<span class="nt">&lt;servlet-mapping&gt;</span>  
+	<span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+	<span class="nt">&lt;url-pattern&gt;</span>/hello4<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>  
+<span class="nt">&lt;servlet-mapping&gt;</span>  
+	<span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+	<span class="nt">&lt;url-pattern&gt;</span>/hello5<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>一个Servlet请求可以指定通用映射路径</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;servlet-mapping&gt;</span>  
+	<span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+	<span class="nt">&lt;url-pattern&gt;</span>/hello\*<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>默认请求路径</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;servlet-mapping&gt;</span>  
+	 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+	 <span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="5">
+<li>指定一些后缀或者前缀等等</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--可以自定义后缀实现请求映射  
+</span><span class="c">	   注意点：*前面不能加项目映射的路径  
+</span><span class="c">--&gt;</span>  
+<span class="nt">&lt;servlet-mapping&gt;</span>  
+	<span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+	<span class="nt">&lt;url-pattern&gt;</span>*.clover<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="6">
+<li>
+<p>优先级问题</p>
+<pre><code> 指定了固有的映射路径优先级最高，如果找不到就会走默认的处理请求了
+</code></pre>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--404--&gt;</span>  
+<span class="nt">&lt;servlet&gt;</span>  
+	<span class="nt">&lt;servlet-name&gt;</span>error<span class="nt">&lt;/servlet-name&gt;</span>  
+	<span class="nt">&lt;servlet-class&gt;</span>com.clover.servlet.ErrorServlet<span class="nt">&lt;/servlet-class&gt;</span>  
+<span class="nt">&lt;/servlet&gt;</span>  
+<span class="nt">&lt;servlet-mapping&gt;</span>  
+	<span class="nt">&lt;servlet-name&gt;</span>error<span class="nt">&lt;/servlet-name&gt;</span>  
+	<span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>    注意：在使用IDEA创建多个webapps工程时，在第二个运行可能会出现404找不到资源问题
+               这里是因为新创建的webapps文件上没有带蓝色点点,需要自己手动去加上，然后运行才会成功。
+               如若创建新的工程的pom.xml中没有parent那一行，重新创建即可
+               另外在创建新文件时应当先创建java跟resources两个文件夹，并且要标记，否则无法创建package
+</code></pre>
+<h2 id="64servletcontext">6.4、ServletContext</h2>
+<p>web容器在启动的时候，它会为每个web应用程序都创建一个对应的ServletContext对象，它代</p>
+<p>表了当前的web应用；</p>
+<h3 id="1共享数据">1、共享数据</h3>
+<p>我在这个Servlet中保存的数据，可以在另外一个servlet中拿到</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>  
+    <span class="nd">@Override</span>  
+	 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
+
+	<span class="c1">//        this.getInitParameter() 初始化参数     很少用  
+</span><span class="c1"></span>	<span class="c1">//        this.getServletConfig()   Servlet参数    很少用  
+</span><span class="c1"></span>	<span class="c1">//        this.getServletContext()  Servlet上下文  
+</span><span class="c1"></span>
+	 <span class="n">ServletContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">();</span>  
+
+	 <span class="n">String</span> <span class="n">username</span> <span class="o">=</span> <span class="s">&#34;韋&#34;</span><span class="o">;</span>  
+	 <span class="n">context</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&#34;username&#34;</span><span class="o">,</span><span class="n">username</span><span class="o">);</span><span class="c1">//将一个数据保存在了ServletContext中，名字为：username，值为：username  
+</span><span class="c1"></span>
+	 <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;hello&#34;</span><span class="o">);</span>  
+	 <span class="o">}</span>  
+  
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GetServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>  
+  
+    <span class="nd">@Override</span>  
+	 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
+			 <span class="n">ServletContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">();</span>  
+			 <span class="n">String</span> <span class="n">username</span> <span class="o">=</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&#34;username&#34;</span><span class="o">);</span>  
+
+			 <span class="c1">//设置显示页面不乱码问题  
+</span><span class="c1"></span>			 <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&#34;text/html&#34;</span><span class="o">);</span>  
+			 <span class="n">resp</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">&#34;utf-8&#34;</span><span class="o">);</span>  
+			 <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">().</span><span class="na">print</span><span class="o">(</span><span class="s">&#34;名字为：&#34;</span><span class="o">+</span><span class="n">username</span><span class="o">);</span>  
+	 <span class="o">}</span>  
+
+		<span class="nd">@Override</span>  
+	 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
+			<span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>  
+	 <span class="o">}</span>  
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;servlet&gt;</span>  
+	 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+	 <span class="nt">&lt;servlet-class&gt;</span>com.clover.servlet.HelloServlet<span class="nt">&lt;/servlet-class&gt;</span>  
+<span class="nt">&lt;/servlet&gt;</span>  
+<span class="nt">&lt;servlet-mapping&gt;</span>  
+	 <span class="nt">&lt;servlet-name&gt;</span>hello<span class="nt">&lt;/servlet-name&gt;</span>  
+	 <span class="nt">&lt;url-pattern&gt;</span>/hello2<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>  
+  
+<span class="nt">&lt;servlet&gt;</span>  
+	 <span class="nt">&lt;servlet-name&gt;</span>getc<span class="nt">&lt;/servlet-name&gt;</span>  
+	 <span class="nt">&lt;servlet-class&gt;</span>com.clover.servlet.GetServlet<span class="nt">&lt;/servlet-class&gt;</span>  
+<span class="nt">&lt;/servlet&gt;</span>  
+<span class="nt">&lt;servlet-mapping&gt;</span>  
+	 <span class="nt">&lt;servlet-name&gt;</span>getc<span class="nt">&lt;/servlet-name&gt;</span>  
+	 <span class="nt">&lt;url-pattern&gt;</span>/getc<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>测试结果：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604203557.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604203557.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604203557.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604203557.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604203557.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604203557.png" /></p>
+<h3 id="2获取初始化参数">2、获取初始化参数</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;context-param&gt;</span>  
+	 <span class="nt">&lt;param-name&gt;</span>url<span class="nt">&lt;/param-name&gt;</span>  
+	 <span class="nt">&lt;param-value&gt;</span>jdbc:mysql//localhost:3306/mybatis<span class="nt">&lt;/param-value&gt;</span>  
+<span class="nt">&lt;/context-param&gt;</span>
+
+<span class="nt">&lt;servlet&gt;</span>  
+	 <span class="nt">&lt;servlet-name&gt;</span>sd3<span class="nt">&lt;/servlet-name&gt;</span>  
+	 <span class="nt">&lt;servlet-class&gt;</span>com.clover.servlet.ServletDemo03<span class="nt">&lt;/servlet-class&gt;</span>  
+<span class="nt">&lt;/servlet&gt;</span>  
+<span class="nt">&lt;servlet-mapping&gt;</span>  
+	 <span class="nt">&lt;servlet-name&gt;</span>sd3<span class="nt">&lt;/servlet-name&gt;</span>  
+	 <span class="nt">&lt;url-pattern&gt;</span>/sd3<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ServletDemo03</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>  
+    <span class="nd">@Override</span>  
+	 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
+			 <span class="n">ServletContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">();</span>
+			 <span class="c1">//此处获取上下文对象，获取初始化参数对应web.xml中的context-param中的参数，当你访问这个路径的时候，页面进行跳转的时候，就会获取到该路径对应的值
+</span><span class="c1"></span>			 <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getInitParameter</span><span class="o">(</span><span class="s">&#34;url&#34;</span><span class="o">);</span>  
+			 <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">().</span><span class="na">print</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>  
+	 <span class="o">}</span>  
+
+		<span class="nd">@Override</span>  
+	 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
+			<span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>  
+	 <span class="o">}</span>  
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3请求转发">3、请求转发</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604214223.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604214223.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604214223.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604214223.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604214223.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604214223.png" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ServletDemo04</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>  
+		<span class="nd">@Override</span>  
+		 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
+				 <span class="n">ServletContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">();</span>  
+				 <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;进入demo4&#34;</span><span class="o">);</span>  
+<span class="c1">//        		RequestDispatcher requestDispatcher = context.getRequestDispatcher(&#34;/sd3&#34;);//转发的请求路径 
+</span><span class="c1">//        		requestDispatcher.forward(req,resp);//调用forward实现转发请求
+</span><span class="c1"></span>				 <span class="n">context</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">&#34;/sd3&#34;</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>  
+		 <span class="o">}</span>  
+
+		<span class="nd">@Override</span>  
+		 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
+				<span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>  
+		 <span class="o">}</span>  
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;servlet&gt;</span>  
+	 <span class="nt">&lt;servlet-name&gt;</span>sd4<span class="nt">&lt;/servlet-name&gt;</span>  
+	 <span class="nt">&lt;servlet-class&gt;</span>com.clover.servlet.ServletDemo04<span class="nt">&lt;/servlet-class&gt;</span>  
+<span class="nt">&lt;/servlet&gt;</span>  
+<span class="nt">&lt;servlet-mapping&gt;</span>  
+	 <span class="nt">&lt;servlet-name&gt;</span>sd4<span class="nt">&lt;/servlet-name&gt;</span>  
+	 <span class="nt">&lt;url-pattern&gt;</span>/sd4<span class="nt">&lt;/url-pattern&gt;</span>  
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4读取资源文件">4、读取资源文件</h3>
+<p>Properties</p>
+<ul>
+<li>
+<p>在Java目录下新建一个properties</p>
+</li>
+<li>
+<p>在resources目录下新建一个properties</p>
+</li>
+</ul>
+<p>发现：都打包到了同一个路径下：<code>classes</code>；我们俗称这个路径为<code>classpath</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604213420.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604213420.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604213420.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604213420.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604213420.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604213420.png" /></p>
+<p>思路：需要一个文件流</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">username=root  
+password=123456
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ServletDemo05</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>  
+    <span class="nd">@Override</span>  
+	 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
+			 <span class="n">InputStream</span> <span class="n">is</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&#34;/WEB-INF/classes/db.properties&#34;</span><span class="o">);</span>  
+
+			 <span class="n">Properties</span> <span class="n">properties</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Properties</span><span class="o">();</span>  
+			 <span class="n">properties</span><span class="o">.</span><span class="na">load</span><span class="o">(</span><span class="n">is</span><span class="o">);</span>  
+			 <span class="n">String</span> <span class="n">user</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&#34;username&#34;</span><span class="o">);</span>  
+			 <span class="n">String</span> <span class="n">pwd</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&#34;password&#34;</span><span class="o">);</span>  
+
+			 <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">().</span><span class="na">print</span><span class="o">(</span><span class="n">user</span><span class="o">+</span><span class="s">&#34;:&#34;</span><span class="o">+</span><span class="n">pwd</span><span class="o">);</span>  
+	 <span class="o">}</span>  
+
+		<span class="nd">@Override</span>  
+		 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
+				<span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>  
+		 <span class="o">}</span>  
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>访问测试结果：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604220055.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604220055.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604220055.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604220055.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604220055.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604220055.png" /></p>
+<h2 id="65request">6.5、Request</h2>
+<p>明日任务</p>
+<h2 id="66response">6.6、Response</h2>
+<p>明日任务</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-06-01</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/javaweb/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://cloverfelix.github.io/javaweb/" data-title="Javaweb" data-hashtags="JavaWeb"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://cloverfelix.github.io/javaweb/" data-hashtag="JavaWeb"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://cloverfelix.github.io/javaweb/" data-title="Javaweb"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://cloverfelix.github.io/javaweb/" data-title="Javaweb"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://cloverfelix.github.io/javaweb/" data-title="Javaweb"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/javaweb/">JavaWeb</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/mysql/" class="prev" rel="prev" title="Mysql"><i class="fas fa-angle-left fa-fw"></i>Mysql</a>
+            <a href="/spring/" class="next" rel="next" title="Spring">Spring<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Clover</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"YWTL89SVYC","algoliaIndex":"blog","algoliaSearchKey":"2cb3f95e7193d38260ef06bc3d5fc608","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
