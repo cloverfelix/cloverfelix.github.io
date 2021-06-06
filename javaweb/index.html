@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/javaweb\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  4584 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  5919 ,
         "url": "https:\/\/cloverfelix.github.io\/javaweb\/","datePublished": "2021-06-01T10:48:25+08:00","dateModified": "2021-06-01T10:48:25+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Javaweb</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/javaweb/"><i class="far fa-folder fa-fw"></i>JavaWeb</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4584 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5919 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -169,8 +169,14 @@
         <li><a href="#4读取资源文件">4、读取资源文件</a></li>
       </ul>
     </li>
-    <li><a href="#65request">6.5、Request</a></li>
-    <li><a href="#66response">6.6、Response</a></li>
+    <li><a href="#65httpservletresponse">6.5、HttpServletResponse</a>
+      <ul>
+        <li><a href="#1简单分类">1、简单分类</a></li>
+        <li><a href="#2常见应用">2、常见应用</a></li>
+        <li><a href="#验证码功能">验证码功能</a></li>
+      </ul>
+    </li>
+    <li><a href="#66httpservletrequest">6.6、HttpServletRequest</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="1基本概念">1、基本概念</h1>
@@ -1395,9 +1401,338 @@ password=123456
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604220055.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604220055.png" /></p>
-<h2 id="65request">6.5、Request</h2>
-<p>明日任务</p>
-<h2 id="66response">6.6、Response</h2>
+<h2 id="65httpservletresponse">6.5、HttpServletResponse</h2>
+<p>web服务器接受到客户端的http请求，针对这个请求，分别创建一个代表请求的
+HttpServletRequest对象，</p>
+<p>代表一个响应的HttpServletResponse；</p>
+<ul>
+<li>
+<p>如果要获取客户端请求过来的参数：找HttpServletRequest</p>
+</li>
+<li>
+<p>如果要给客户端响应一些信息：找HttpServletResponse</p>
+</li>
+</ul>
+<h3 id="1简单分类">1、简单分类</h3>
+<p>负责向浏览器发送数据的方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">ServletOutputStream</span> <span class="nf">getOutputStream</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">;</span>  
+  
+<span class="n">PrintWriter</span> <span class="nf">getWriter</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>负责向浏览器发送响应头的方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kt">void</span> <span class="nf">setCharacterEncoding</span><span class="o">(</span><span class="n">String</span> <span class="n">var1</span><span class="o">);</span>  
+  
+<span class="kt">void</span> <span class="nf">setContentLength</span><span class="o">(</span><span class="kt">int</span> <span class="n">var1</span><span class="o">);</span>  
+  
+<span class="kt">void</span> <span class="nf">setContentLengthLong</span><span class="o">(</span><span class="kt">long</span> <span class="n">var1</span><span class="o">);</span>  
+  
+<span class="kt">void</span> <span class="nf">setContentType</span><span class="o">(</span><span class="n">String</span> <span class="n">var1</span><span class="o">);</span>
+
+<span class="kt">void</span> <span class="nf">addDateHeader</span><span class="o">(</span><span class="n">String</span> <span class="n">var1</span><span class="o">,</span> <span class="kt">long</span> <span class="n">var2</span><span class="o">);</span>
+
+<span class="kt">void</span> <span class="nf">setHeader</span><span class="o">(</span><span class="n">String</span> <span class="n">var1</span><span class="o">,</span> <span class="n">String</span> <span class="n">var2</span><span class="o">);</span>
+
+<span class="kt">void</span> <span class="nf">addHeader</span><span class="o">(</span><span class="n">String</span> <span class="n">var1</span><span class="o">,</span> <span class="n">String</span> <span class="n">var2</span><span class="o">);</span>
+
+<span class="kt">void</span> <span class="nf">setIntHeader</span><span class="o">(</span><span class="n">String</span> <span class="n">var1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">var2</span><span class="o">);</span>
+
+<span class="kt">void</span> <span class="nf">addIntHeader</span><span class="o">(</span><span class="n">String</span> <span class="n">var1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">var2</span><span class="o">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2常见应用">2、常见应用</h3>
+<ol>
+<li>
+<p>向浏览器输出消息</p>
+</li>
+<li>
+<p>下载文件</p>
+<ol>
+<li>
+<p>要获取下载文件的路径</p>
+</li>
+<li>
+<p>下载的文件名时什么？</p>
+</li>
+<li>
+<p>想办法让浏览器能够支持下载我们需要的东西</p>
+</li>
+<li>
+<p>获取下载文件的输入流</p>
+</li>
+<li>
+<p>创建缓冲区</p>
+</li>
+<li>
+<p>获取OutputStream对象</p>
+</li>
+<li>
+<p>将FileOutputStream流写入到buffer缓冲区</p>
+</li>
+<li>
+<p>使用OutputStream将缓冲区中的数据输出到客户端！</p>
+</li>
+</ol>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FileServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="c1">//1. 要获取下载文件的路径
+</span><span class="c1"></span>        <span class="n">String</span> <span class="n">realPath</span> <span class="o">=</span> <span class="s">&#34;G:\\IDEADocument\\javaweb\\javaweb-03-servlet\\response\\target\\classes\\韋.png&#34;</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;下载文件的路径：&#34;</span><span class="o">+</span><span class="n">realPath</span><span class="o">);</span>
+        <span class="c1">//2. 下载的文件名时什么？如果有/则需要进行转义
+</span><span class="c1"></span>        <span class="n">String</span> <span class="n">fileName</span> <span class="o">=</span> <span class="n">realPath</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">realPath</span><span class="o">.</span><span class="na">lastIndexOf</span><span class="o">(</span><span class="s">&#34;\\&#34;</span><span class="o">)</span> <span class="o">+</span> <span class="n">1</span><span class="o">);</span>
+        <span class="c1">//3. 想办法让浏览器能够支持下载我们需要的东西,下载我们需要的东西，中文文件名，则使用URLEncoder.encode编码，否则有可能乱码
+</span><span class="c1"></span>        <span class="n">resp</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">&#34;Content-Disposition&#34;</span><span class="o">,</span><span class="s">&#34;attachment;filename=&#34;</span><span class="o">+</span> <span class="n">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">fileName</span><span class="o">,</span><span class="s">&#34;UTF-8&#34;</span><span class="o">));</span>
+        <span class="c1">//4. 获取下载文件的输入流
+</span><span class="c1"></span>        <span class="n">FileInputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">realPath</span><span class="o">);</span>
+        <span class="c1">//5. 创建缓冲区
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="kt">byte</span><span class="o">[]</span> <span class="n">buffer</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">1024</span><span class="o">];</span>
+        <span class="c1">//6. 获取OutputStream对象
+</span><span class="c1"></span>        <span class="n">ServletOutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">();</span>
+        <span class="c1">//7. 将FileOutputStream流写入到buffer缓冲区 使用OutputStream将缓冲区中的数据输出到客户端！
+</span><span class="c1"></span>        <span class="k">while</span><span class="o">((</span><span class="n">len</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buffer</span><span class="o">))&gt;</span><span class="n">0</span><span class="o">){</span>
+            <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">buffer</span><span class="o">,</span><span class="n">0</span><span class="o">,</span><span class="n">len</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210606161628.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210606161628.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210606161628.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210606161628.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210606161628.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210606161628.png" /></p>
+<pre><code>注意：如果图片采用中文名字命名，则需要将其转化，使用URLEncoder.encoder编码，有可能会乱码
+</code></pre>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210606162027.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210606162027.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210606162027.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210606162027.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210606162027.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210606162027.png" /></p>
+<h3 id="验证码功能">验证码功能</h3>
+<p>验证怎么来的？</p>
+<ul>
+<li>
+<p>前端实现</p>
+</li>
+<li>
+<p>后端实现，需要用到Java的图片类，生成一个图片</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ImageServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="c1">//如何让一个浏览器3秒自动刷新一次
+</span><span class="c1"></span>        <span class="n">resp</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">&#34;refresh&#34;</span><span class="o">,</span><span class="s">&#34;3&#34;</span><span class="o">);</span>
+
+        <span class="c1">//在内存中创建一个图片
+</span><span class="c1"></span>        <span class="n">BufferedImage</span> <span class="n">image</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedImage</span><span class="o">(</span><span class="n">80</span><span class="o">,</span> <span class="n">20</span><span class="o">,</span> <span class="n">BufferedImage</span><span class="o">.</span><span class="na">TYPE_INT_RGB</span><span class="o">);</span>
+
+        <span class="c1">//得到图片
+</span><span class="c1"></span>        <span class="n">Graphics2D</span> <span class="n">g</span> <span class="o">=</span> <span class="o">(</span><span class="n">Graphics2D</span><span class="o">)</span> <span class="n">image</span><span class="o">.</span><span class="na">getGraphics</span><span class="o">();</span><span class="c1">//笔
+</span><span class="c1"></span>
+        <span class="c1">//设置图片的背景颜色
+</span><span class="c1"></span>        <span class="n">g</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="n">Color</span><span class="o">.</span><span class="na">white</span><span class="o">);</span>
+        <span class="n">g</span><span class="o">.</span><span class="na">fillRect</span><span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">0</span><span class="o">,</span><span class="n">80</span><span class="o">,</span><span class="n">20</span><span class="o">);</span>
+
+        <span class="c1">//给图片写数据
+</span><span class="c1"></span>        <span class="n">g</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="n">Color</span><span class="o">.</span><span class="na">red</span><span class="o">);</span>
+        <span class="n">g</span><span class="o">.</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="n">Font</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span><span class="n">Font</span><span class="o">.</span><span class="na">BOLD</span><span class="o">,</span><span class="n">20</span><span class="o">));</span>
+        <span class="n">g</span><span class="o">.</span><span class="na">drawString</span><span class="o">(</span><span class="n">makeNum</span><span class="o">(),</span><span class="n">0</span><span class="o">,</span><span class="n">20</span><span class="o">);</span>
+
+        <span class="c1">//告诉浏览器，这个请求用图片的方式打开
+</span><span class="c1"></span>        <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&#34;image/jpeg&#34;</span><span class="o">);</span>
+
+        <span class="c1">//网站存在缓存，不让浏览器缓存
+</span><span class="c1"></span>        <span class="n">resp</span><span class="o">.</span><span class="na">setDateHeader</span><span class="o">(</span><span class="s">&#34;expires&#34;</span><span class="o">,-</span><span class="n">1</span><span class="o">);</span>
+        <span class="n">resp</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">&#34;Cache-Control&#34;</span><span class="o">,</span><span class="s">&#34;no-cache&#34;</span><span class="o">);</span>
+        <span class="n">resp</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">&#34;Pragma&#34;</span><span class="o">,</span><span class="s">&#34;no-cache&#34;</span><span class="o">);</span>
+
+        <span class="c1">//把图片写给浏览器
+</span><span class="c1"></span>        <span class="n">ImageIO</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">image</span><span class="o">,</span><span class="s">&#34;jpg&#34;</span><span class="o">,</span><span class="n">resp</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="c1">//生成随机数
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">String</span> <span class="nf">makeNum</span><span class="o">(){</span>
+        <span class="n">Random</span> <span class="n">random</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">();</span>
+        <span class="n">String</span> <span class="n">num</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="na">nextInt</span><span class="o">(</span><span class="n">999999</span><span class="o">)</span> <span class="o">+</span> <span class="s">&#34;&#34;</span><span class="o">;</span>
+        <span class="n">StringBuffer</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span>
+        <span class="c1">//如果num产生的长度为4，这里就让其空下来的地方填充0，保证其数字长度为6
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span><span class="n">6</span> <span class="o">-</span> <span class="n">num</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&#34;0&#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span> <span class="o">+</span> <span class="n">num</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">num</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;servlet&gt;</span>
+	<span class="nt">&lt;servlet-name&gt;</span>image<span class="nt">&lt;/servlet-name&gt;</span>
+	<span class="nt">&lt;servlet-class&gt;</span>com.clover.servlet.ImageServlet<span class="nt">&lt;/servlet-class&gt;</span>
+<span class="nt">&lt;/servlet&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+	<span class="nt">&lt;servlet-name&gt;</span>image<span class="nt">&lt;/servlet-name&gt;</span>
+	<span class="nt">&lt;url-pattern&gt;</span>/img<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>关于<code>expries</code>一些简单的简介：https://www.jianshu.com/p/f331d5f0b979</p>
+<h2 id="66httpservletrequest">6.6、HttpServletRequest</h2>
 <p>明日任务</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
