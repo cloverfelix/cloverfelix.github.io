@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/javaweb\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  5919 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  6812 ,
         "url": "https:\/\/cloverfelix.github.io\/javaweb\/","datePublished": "2021-06-01T10:48:25+08:00","dateModified": "2021-06-01T10:48:25+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Javaweb</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/javaweb/"><i class="far fa-folder fa-fw"></i>JavaWeb</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5919 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6812 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 14 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -173,10 +173,15 @@
       <ul>
         <li><a href="#1简单分类">1、简单分类</a></li>
         <li><a href="#2常见应用">2、常见应用</a></li>
-        <li><a href="#验证码功能">验证码功能</a></li>
+        <li><a href="#3验证码功能">3、验证码功能</a></li>
+        <li><a href="#4实现重定向">4、实现重定向</a></li>
       </ul>
     </li>
-    <li><a href="#66httpservletrequest">6.6、HttpServletRequest</a></li>
+    <li><a href="#66httpservletrequest">6.6、HttpServletRequest</a>
+      <ul>
+        <li><a href="#1获取参数请求转发">1、获取参数,请求转发</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="1基本概念">1、基本概念</h1>
@@ -1591,7 +1596,7 @@ HttpServletRequest对象，</p>
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210606162027.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210606162027.png" /></p>
-<h3 id="验证码功能">验证码功能</h3>
+<h3 id="3验证码功能">3、验证码功能</h3>
 <p>验证怎么来的？</p>
 <ul>
 <li>
@@ -1732,9 +1737,261 @@ HttpServletRequest对象，</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>关于<code>expries</code>一些简单的简介：https://www.jianshu.com/p/f331d5f0b979</p>
+<h3 id="4实现重定向">4、实现重定向</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607214803.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607214803.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607214803.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607214803.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607214803.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607214803.png" /></p>
+<p>B一个web资源收到客户端A请求后，B它会通知A客户端去访问另外一个web资源C，这个过程叫重定向</p>
+<p>常见场景：</p>
+<ul>
+<li>用户登录</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kt">void</span> <span class="nf">sendRedirect</span><span class="o">(</span><span class="n">String</span> <span class="n">var1</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607201917.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607201917.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607201917.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607201917.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607201917.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607201917.png" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+	<span class="c1">//重定向
+</span><span class="c1"></span>	 <span class="cm">/*
+</span><span class="cm">	 resp.setHeader(&#34;Location&#34;,&#34;/r/img&#34;);
+</span><span class="cm">	 resp.setStatus(302);
+</span><span class="cm">	 * */</span>
+	<span class="n">resp</span><span class="o">.</span><span class="na">sendRedirect</span><span class="o">(</span><span class="s">&#34;/r/img&#34;</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;body&gt;
+&lt;h2&gt;Hello World!&lt;/h2&gt;
+&lt;%--这里提交的路径，需要寻找到项目的路径--%&gt;
+&lt;%--${pageContext.request.contextPath()}代表当前项目的路径--%&gt;
+&lt;form action=&#34;${pageContext.request.contextPath}/login&#34; method=&#34;get&#34;&gt;
+    用户名：&lt;input type=&#34;text&#34; name=&#34;username&#34;&gt;&lt;br&gt;
+    密码：&lt;input type=&#34;password&#34; name=&#34;password&#34;&gt;&lt;br&gt;
+    &lt;input type=&#34;submit&#34;&gt;
+&lt;/form&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>面试题：请你聊聊重定向和转发的区别？.</p>
+<ul>
+<li>
+<p>相同点</p>
+<ul>
+<li>页面都会实现跳转</li>
+</ul>
+</li>
+<li>
+<p>不同点</p>
+<ul>
+<li>
+<p>请求转发的时候，url不会产生变化</p>
+</li>
+<li>
+<p>重定向的时候，url地址栏会发生变化</p>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="66httpservletrequest">6.6、HttpServletRequest</h2>
-<p>明日任务</p>
-</div><div class="post-footer" id="post-footer">
+<p>HttpServletRequest代表客户端的请求，用户通过Http协议访问服务器，HTTP请求中的所有信息会被封装</p>
+<p>到HttpServletRequest，通过这个HttpServletRequest的方法，获得客户端的所有信息</p>
+<h3 id="1获取参数请求转发">1、获取参数,请求转发</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607212542.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607212542.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607212542.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607212542.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607212542.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607212542.png" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//通过请求转发
+</span><span class="c1">//这里的 / 代表当前的web应用
+</span><span class="c1"></span><span class="n">req</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">&#34;/r/success.jsp&#34;</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607212915.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607212915.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607212915.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607212915.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607212915.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607212915.png" /></p>
+<pre><code>注意：如果这里使用`/`它会默认的找不到路径资源，因为这里的`/`就代表着当前的web应用
+
+重定向的时候需要写全路径
+
+而转发的时候时不需要写全路径的
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;h1&gt;</span>登录<span class="nt">&lt;/h1&gt;</span>
+
+<span class="nt">&lt;div&gt;</span>
+<span class="err">&lt;</span>%--    这里表单表示的依视：以post方式提交表单，提交到我们的login请求--%&gt;
+    <span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&#34;${pageContext.request.contextPath}/login&#34;</span> <span class="na">method=</span><span class="s">&#34;post&#34;</span><span class="nt">&gt;</span>
+        用户名：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;text&#34;</span> <span class="na">name=</span><span class="s">&#34;username&#34;</span><span class="nt">&gt;&lt;br&gt;</span>
+        密码：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;password&#34;</span> <span class="na">name=</span><span class="s">&#34;password&#34;</span><span class="nt">&gt;&lt;br&gt;</span>
+        爱好：
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;checkbox&#34;</span> <span class="na">name=</span><span class="s">&#34;hobbys&#34;</span> <span class="na">value=</span><span class="s">&#34;女孩&#34;</span><span class="nt">&gt;</span>女孩
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;checkbox&#34;</span> <span class="na">name=</span><span class="s">&#34;hobbys&#34;</span> <span class="na">value=</span><span class="s">&#34;代码&#34;</span><span class="nt">&gt;</span>代码
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;checkbox&#34;</span> <span class="na">name=</span><span class="s">&#34;hobbys&#34;</span> <span class="na">value=</span><span class="s">&#34;唱歌&#34;</span><span class="nt">&gt;</span>唱歌
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;checkbox&#34;</span> <span class="na">name=</span><span class="s">&#34;hobbys&#34;</span> <span class="na">value=</span><span class="s">&#34;电影&#34;</span><span class="nt">&gt;</span>电影
+
+        <span class="nt">&lt;br&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;submit&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoginServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">req</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">&#34;utf-8&#34;</span><span class="o">);</span>
+        <span class="n">resp</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">&#34;utf-8&#34;</span><span class="o">);</span>
+
+        <span class="n">String</span> <span class="n">username</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&#34;username&#34;</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">password</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&#34;password&#34;</span><span class="o">);</span>
+
+        <span class="n">String</span><span class="o">[]</span> <span class="n">hobbys</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameterValues</span><span class="o">(</span><span class="s">&#34;hobbys&#34;</span><span class="o">);</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;====================&#34;</span><span class="o">);</span>
+        <span class="c1">//后台接受中文乱码问题
+</span><span class="c1"></span>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">username</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">password</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">hobbys</span><span class="o">));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;====================&#34;</span><span class="o">);</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">());</span>
+        <span class="c1">//通过请求转发
+</span><span class="c1"></span>        <span class="c1">//这里的 / 代表当前的web应用
+</span><span class="c1"></span>        <span class="n">req</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">&#34;/r/success.jsp&#34;</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+
+
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
