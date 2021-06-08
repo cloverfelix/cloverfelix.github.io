@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/javaweb\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  6812 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  7919 ,
         "url": "https:\/\/cloverfelix.github.io\/javaweb\/","datePublished": "2021-06-01T10:48:25+08:00","dateModified": "2021-06-01T10:48:25+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Javaweb</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/javaweb/"><i class="far fa-folder fa-fw"></i>JavaWeb</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6812 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 14 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 7919 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 16 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -182,6 +182,12 @@
         <li><a href="#1获取参数请求转发">1、获取参数,请求转发</a></li>
       </ul>
     </li>
+  </ul>
+
+  <ul>
+    <li><a href="#71会话">7.1、会话</a></li>
+    <li><a href="#72保存会话的两种技术">7.2、保存会话的两种技术</a></li>
+    <li><a href="#73cookie">7.3、Cookie</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="1基本概念">1、基本概念</h1>
@@ -751,7 +757,10 @@ C/S：客户端和服务器
 <p>Servlet接口Sun公司有两个默认的实现类：HttpServlet，GenericServlet</p>
 <ol>
 <li>
-<p>构建一个普通的Maven项目，删掉里面的src目录，以后我们的学习就在这个项目里面建议Moudel；这个空的工程就是Maven主工程</p>
+<p>构建一个普通的Maven项目，删掉里面的src目录，以后我们的学习就在这个项目里面建议Moudel；</p>
+</li>
+<li>
+<p>这个空的工程就是Maven主工程</p>
 </li>
 <li>
 <p>关于Maven父子工程的理解：</p>
@@ -847,7 +856,8 @@ C/S：客户端和服务器
 <ol start="5">
 <li>
 <p>编写Servlet映射</p>
-<p>为什么需要映射：我们写的是Java程序，但是要通过浏览器访问，而浏览器需要连接web服务器，所有我们需要在web服务器中注册我们写的Servlet，还需要给他一个浏览器能够访问的路径；</p>
+<p>为什么需要映射：我们写的是Java程序，但是要通过浏览器访问，而浏览器需要连接web服务器，所</p>
+<p>有我们需要在web服务器中注册我们写的Servlet，还需要给他一个浏览器能够访问的路径；</p>
 </li>
 </ol>
 <div class="highlight"><div class="chroma">
@@ -1051,8 +1061,11 @@ C/S：客户端和服务器
 </code></pre></td></tr></table>
 </div>
 </div><pre><code>    注意：在使用IDEA创建多个webapps工程时，在第二个运行可能会出现404找不到资源问题
+	
                这里是因为新创建的webapps文件上没有带蓝色点点,需要自己手动去加上，然后运行才会成功。
+			   
                如若创建新的工程的pom.xml中没有parent那一行，重新创建即可
+			   
                另外在创建新文件时应当先创建java跟resources两个文件夹，并且要标记，否则无法创建package
 </code></pre>
 <h2 id="64servletcontext">6.4、ServletContext</h2>
@@ -1408,8 +1421,8 @@ password=123456
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210604220055.png" /></p>
 <h2 id="65httpservletresponse">6.5、HttpServletResponse</h2>
 <p>web服务器接受到客户端的http请求，针对这个请求，分别创建一个代表请求的
-HttpServletRequest对象，</p>
-<p>代表一个响应的HttpServletResponse；</p>
+HttpServletRequest对</p>
+<p>象，代表一个响应的HttpServletResponse；</p>
 <ul>
 <li>
 <p>如果要获取客户端请求过来的参数：找HttpServletRequest</p>
@@ -1877,9 +1890,9 @@ HttpServletRequest对象，</p>
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210607212915.png" /></p>
 <pre><code>注意：如果这里使用`/`它会默认的找不到路径资源，因为这里的`/`就代表着当前的web应用
 
-重定向的时候需要写全路径
+          重定向的时候需要写全路径
 
-而转发的时候时不需要写全路径的
+          而转发的时候时不需要写全路径的
 </code></pre>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1989,6 +2002,191 @@ HttpServletRequest对象，</p>
         <span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="7cookiesession">7、Cookie、Session</h1>
+<h2 id="71会话">7.1、会话</h2>
+<p><strong>会话</strong>：用户打开一个浏览器，点击了很多超链接，访问web资源，关闭浏览器，这个过程可以称之为会话</p>
+<p><strong>有状态会话：</strong> 一个同学来过教室，下次再来教室，我们会指定这个同学，曾经来过，称之为有状态会话</p>
+<p><strong>一个网站怎么证明你来过？</strong></p>
+<p>客户端（自己）                   服务端（网站）</p>
+<ol>
+<li>
+<p>服务端给客户端一个信件，客户端下次访问服务端带上信件就可以了；cookie</p>
+</li>
+<li>
+<p>服务器登记你来过了，下次你来的时候我来匹配你；session</p>
+</li>
+</ol>
+<h2 id="72保存会话的两种技术">7.2、保存会话的两种技术</h2>
+<p><strong>cookie</strong></p>
+<ul>
+<li>客户端技术（响应，请求）</li>
+</ul>
+<p><strong>session</strong></p>
+<ul>
+<li>服务器技术，利用这个技术，可以保存用户的会话信息？我们可以把信息或者数据存放在session中！</li>
+</ul>
+<p>常见例子：网站登录之后，你下次就不用在登录了，可以直接进去</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608123319.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608123319.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608123319.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608123319.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608123319.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608123319.png" /></p>
+<h2 id="73cookie">7.3、Cookie</h2>
+<pre><code>注意：使用谷歌浏览器解决浏览器显示中文乱码，要多设置一个resp.setContentType(&quot;text/html;charset=utf-8&quot;);
+</code></pre>
+<ol>
+<li>
+<p>从请求中拿到cookie信息</p>
+</li>
+<li>
+<p>服务器响应给客户端cookie</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Cookie</span><span class="o">[]</span> <span class="n">cookies</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getCookies</span><span class="o">();</span><span class="c1">//获得cookie
+</span><span class="c1"></span><span class="n">cookie</span><span class="o">.</span><span class="na">getName</span><span class="o">();</span><span class="c1">//获得cookie中的key
+</span><span class="c1"></span><span class="n">cookie</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span><span class="c1">//获得cookie中的value
+</span><span class="c1"></span><span class="k">new</span> <span class="n">Cookie</span><span class="o">(</span><span class="s">&#34;lastLoginTime&#34;</span><span class="o">,</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;&#34;</span><span class="o">);</span><span class="c1">//新建一个cookie
+</span><span class="c1"></span><span class="n">loginTime</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="n">24</span><span class="o">*</span><span class="n">60</span><span class="o">*</span><span class="n">60</span><span class="o">);</span><span class="c1">//设置cookie的有效期
+</span><span class="c1"></span><span class="n">resp</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">loginTime</span><span class="o">);</span><span class="c1">//响应给客户端一个cookie
+</span></code></pre></td></tr></table>
+</div>
+</div><p>数据之间的转化</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//获取cookie中的值![[Pasted image 20210608115423.png]]
+</span><span class="c1"></span><span class="n">cookie</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span>
+<span class="c1">//将cookie中的值转化为Long型
+</span><span class="c1"></span><span class="kt">long</span> <span class="n">lastLoginTime</span> <span class="o">=</span> <span class="n">Long</span><span class="o">.</span><span class="na">parseLong</span><span class="o">(</span><span class="n">cookie</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+<span class="c1">//以时间格式显示
+</span><span class="c1"></span><span class="n">Date</span> <span class="n">date</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Date</span><span class="o">(</span><span class="n">lastLoginTime</span><span class="o">);</span>
+<span class="c1">//以字符串的形式输出
+</span><span class="c1"></span><span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">date</span><span class="o">.</span><span class="na">toLocaleString</span><span class="o">());</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>cookie：一般会保存在本地的用户目录下的AppData</strong></p>
+<p>一个网站的cookie是否存在上限！</p>
+<ul>
+<li>
+<p>一个cookie只能保存一个信息</p>
+</li>
+<li>
+<p>一个web站点可以给浏览器发送多个cookie，最多存放20个cookie</p>
+</li>
+<li>
+<p>cookie大小有限制4kb</p>
+</li>
+<li>
+<p>300个cookie浏览器上限</p>
+</li>
+</ul>
+<p><strong>删除Cookie</strong></p>
+<ul>
+<li>
+<p>不设置有效期，关闭浏览器，自动失效</p>
+</li>
+<li>
+<p>设置有效期为0</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CookieDemo02</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+
+        <span class="c1">//创建一个Cookie，名字必须要和删除的名字一致
+</span><span class="c1"></span>        <span class="n">Cookie</span> <span class="n">cookie</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cookie</span><span class="o">(</span><span class="s">&#34;lastLoginTime&#34;</span><span class="o">,</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;&#34;</span><span class="o">);</span>
+
+        <span class="c1">//设置Cookie的有效期为0，立马过期
+</span><span class="c1"></span>        <span class="n">cookie</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+
+        <span class="c1">//给客户端响应一个cookie
+</span><span class="c1"></span>        <span class="n">resp</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">cookie</span><span class="o">);</span>
+
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608173329.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608173329.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608173329.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608173329.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608173329.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608173329.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608173351.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608173351.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608173351.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608173351.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608173351.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608173351.png" /></p>
+<p>传递中文数据的时候，可能会出现乱码</p>
+<p>所以可以采用<strong>编码、解码</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">&#34;韋&#34;</span><span class="o">,</span><span class="s">&#34;utf-8&#34;</span><span class="o">)</span>
+<span class="n">URLDecoder</span><span class="o">.</span><span class="na">decode</span><span class="o">(</span><span class="n">cookie</span><span class="o">.</span><span class="na">getValue</span><span class="o">(),</span><span class="s">&#34;utf-8&#34;</span><span class="o">)</span>
 </code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">
