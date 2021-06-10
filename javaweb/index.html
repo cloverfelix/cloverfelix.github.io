@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/javaweb\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  9187 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  10336 ,
         "url": "https:\/\/cloverfelix.github.io\/javaweb\/","datePublished": "2021-06-01T10:48:25+08:00","dateModified": "2021-06-01T10:48:25+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Javaweb</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/javaweb/"><i class="far fa-folder fa-fw"></i>JavaWeb</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 9187 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 19 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10336 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 21 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -194,6 +194,9 @@
   <ul>
     <li><a href="#81什么是jsp">8.1、什么是JSP</a></li>
     <li><a href="#82jsp原理">8.2、JSP原理</a></li>
+    <li><a href="#83jsp基础语法">8.3、JSP基础语法</a></li>
+    <li><a href="#84jsp指令">8.4、JSP指令</a></li>
+    <li><a href="#85九大内置对象">8.5、九大内置对象</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="1基本概念">1、基本概念</h1>
@@ -2507,6 +2510,336 @@ HttpServletRequest对</p>
 </li>
 </ul>
 <h2 id="82jsp原理">8.2、JSP原理</h2>
+<p>思路：JSP到底是怎么执行的？</p>
+<ul>
+<li>
+<p>代码层面没有任何问题</p>
+</li>
+<li>
+<p>服务器内部工作</p>
+<p>tomcat有一个work目录</p>
+<p><strong>IDEA中使用Tomcat会在IDEA的tomcat中产生一个work目录</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210609200836.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210609200836.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210609200836.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210609200836.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210609200836.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210609200836.png" /></p>
+<p>我电脑的地址：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">C:\Users\REN\.IntelliJIdea2019.3\system\tomcat\Tomcat_9_0_411_javaweb-session-cookie\work\Catalina\localhost\ROOT\org\apache\jsp
+</code></pre></td></tr></table>
+</div>
+</div><p>发现页面转变成了Java程序！</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610101610.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610101610.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610101610.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610101610.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610101610.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610101610.png" /></p>
+<p><strong>浏览器向服务器发送请求，不管访问什么资源，其实都是在访问Servlet</strong></p>
+<p>JSP最终也会被转换成为一个Java类！</p>
+<p><strong>JSP本质上就是一个Servlet</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//初始化
+</span><span class="c1"></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">_jspInit</span><span class="o">()</span> <span class="o">{</span>
+  <span class="o">}</span>
+<span class="c1">//销毁
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">_jspDestroy</span><span class="o">()</span> <span class="o">{</span>
+  <span class="o">}</span>
+<span class="c1">//JSPServlet
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">_jspService</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>判断请求</li>
+<li>内置一些对象</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">final</span> <span class="n">javax</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">jsp</span><span class="o">.</span><span class="na">PageContext</span> <span class="n">pageContext</span><span class="o">;</span>											<span class="c1">//页面上下文
+</span><span class="c1"></span><span class="n">javax</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">HttpSession</span> <span class="n">session</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>													<span class="c1">//session
+</span><span class="c1"></span><span class="kd">final</span> <span class="n">javax</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">ServletContext</span> <span class="n">application</span><span class="o">;</span>													<span class="c1">//applicationContext
+</span><span class="c1"></span><span class="kd">final</span> <span class="n">javax</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">ServletConfig</span> <span class="n">config</span><span class="o">;</span>														   <span class="c1">//配置
+</span><span class="c1"></span><span class="n">javax</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">jsp</span><span class="o">.</span><span class="na">JspWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>															    <span class="c1">//输出对象
+</span><span class="c1"></span><span class="kd">final</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Object</span> <span class="n">page</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>																	 <span class="c1">//当前页
+</span><span class="c1"></span><span class="n">HttpServletRequest</span> <span class="n">request</span>									         								<span class="c1">//请求
+</span><span class="c1"></span><span class="n">HttpServletResponse</span> <span class="n">response</span>							  										<span class="c1">//响应
+</span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>输出页面前增加的代码</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">response</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&#34;text/html&#34;</span><span class="o">);</span>				<span class="c1">//设置响应的页面类型
+</span><span class="c1"></span>      <span class="n">pageContext</span> <span class="o">=</span> <span class="n">_jspxFactory</span><span class="o">.</span><span class="na">getPageContext</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">,</span>
+      			<span class="kc">null</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="n">8192</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+      <span class="n">_jspx_page_context</span> <span class="o">=</span> <span class="n">pageContext</span><span class="o">;</span>
+      <span class="n">application</span> <span class="o">=</span> <span class="n">pageContext</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">();</span>
+      <span class="n">config</span> <span class="o">=</span> <span class="n">pageContext</span><span class="o">.</span><span class="na">getServletConfig</span><span class="o">();</span>
+      <span class="n">session</span> <span class="o">=</span> <span class="n">pageContext</span><span class="o">.</span><span class="na">getSession</span><span class="o">();</span>
+      <span class="n">out</span> <span class="o">=</span> <span class="n">pageContext</span><span class="o">.</span><span class="na">getOut</span><span class="o">();</span>
+      <span class="n">_jspx_out</span> <span class="o">=</span> <span class="n">out</span><span class="o">;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>以上的这些个对象，我们可以在JSP页面中直接使用</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610103853.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610103853.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610103853.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610103853.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610103853.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610103853.png" /></p>
+<p>在JSP页面中；只要是JAVA代码就会原封不动的输出；如果是HTML代码就会被转化为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">out.write(&#34;<span class="nt">&lt;html&gt;</span>\n&#34;);
+</code></pre></td></tr></table>
+</div>
+</div><p>这样的格式，输出到前端！</p>
+<h2 id="83jsp基础语法">8.3、JSP基础语法</h2>
+<p><strong>JSP表达式</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%--  JSP表达式
+作用：用来将程序的输出，输出到客户端
+&lt;%= 变量或者表达式%&gt;
+--%&gt;
+&lt;%= new java.util.Date()%&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>JSP脚本片段</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%--  jsp脚本片段--%&gt;
+  &lt;%
+    int sum = 0;
+    for (int i = 1; i &lt;= 100; i++) {
+      sum+=i;
+    }
+    out.println(&#34;&lt;h1&gt;Sum=&#34;+sum+&#34;&lt;/h1&gt;&#34;);
+  %&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>脚本片段的再实现</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%
+    int x = 10;
+    out.println(x);
+  %&gt;
+  &lt;p&gt;这是一个JSP文档&lt;/p&gt;
+  &lt;%
+    int y = 20;
+    out.println(x);
+    out.println(y);
+  %&gt;
+
+&lt;%--  在代码中嵌入HTML元素--%&gt;
+  &lt;%
+    for (int i = 0; i &lt; 5; i++) {
+  %&gt;
+    &lt;h1&gt;hello,world&lt;%= i%&gt;&lt;/h1&gt;
+  &lt;%
+    }
+  %&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>JSP声明</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%!
+    static {
+      System.out.println(&#34;Loading servlet&#34;);
+    }
+
+    private int globalvar = 0;
+
+    public void clover(){
+      System.out.println(&#34;进入了clover方法&#34;);
+    }
+  %&gt;
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>注意：这里使用的&lt;&gt;里面有一个感叹号存在
+</code></pre>
+<p>JSP声明：会被编译到JSP生成的Java类中！其他的，就会被生成到<code>_jspService</code>方法中！</p>
+<p>JSP的注释，不会在客户端显示，HTML就会！</p>
+<h2 id="84jsp指令">8.4、JSP指令</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%@page args......%&gt;
+&lt;%@include file=&#34;&#34;%&gt;
+
+&lt;%--@include会将两个页面合二为一--%&gt;
+    &lt;%@include file=&#34;common/header.jsp&#34;%&gt;
+    &lt;h1&gt;网页主体&lt;/h1&gt;
+    &lt;%@include file=&#34;common/footer.jsp&#34;%&gt;
+
+    &lt;hr&gt;
+    
+    &lt;%--jsp标签
+    jsp:include：拼接页面，本质上还是三个
+    --%&gt;
+    &lt;jsp:include page=&#34;/common/header.jsp&#34;/&gt;
+    &lt;h1&gt;网页主体&lt;/h1&gt;
+    &lt;jsp:include page=&#34;/common/footer.jsp&#34;/&gt;
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>注意：使用 jsp:include，其中的page代表当web页面，所以需要在common前面加一个/
+           而两者也是有区别，使用@include，如果同时定义一个名字相同的变量，则会报错
+           使用 jsp:include则不会报错
+</code></pre>
+<h2 id="85九大内置对象">8.5、九大内置对象</h2>
+<ul>
+<li>
+<p>PageContext	存东西</p>
+</li>
+<li>
+<p>Request	存东西</p>
+</li>
+<li>
+<p>Response</p>
+</li>
+<li>
+<p>Session		存东西</p>
+</li>
+<li>
+<p>Application  【ServletContext】存东西</p>
+</li>
+<li>
+<p>config 【ServletConfig】</p>
+</li>
+<li>
+<p>out</p>
+</li>
+<li>
+<p>page</p>
+</li>
+<li>
+<p>exception</p>
+</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
