@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/javaweb\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  10336 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  12565 ,
         "url": "https:\/\/cloverfelix.github.io\/javaweb\/","datePublished": "2021-06-01T10:48:25+08:00","dateModified": "2021-06-01T10:48:25+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Javaweb</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/javaweb/"><i class="far fa-folder fa-fw"></i>JavaWeb</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10336 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 21 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 12565 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 26 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -197,6 +197,7 @@
     <li><a href="#83jsp基础语法">8.3、JSP基础语法</a></li>
     <li><a href="#84jsp指令">8.4、JSP指令</a></li>
     <li><a href="#85九大内置对象">8.5、九大内置对象</a></li>
+    <li><a href="#86jsp标签jstl标签el表达式">8.6、JSP标签、JSTL标签，EL表达式</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="1基本概念">1、基本概念</h1>
@@ -2840,7 +2841,583 @@ HttpServletRequest对</p>
 <p>exception</p>
 </li>
 </ul>
-</div><div class="post-footer" id="post-footer">
+<ol>
+<li>在pageContextDemo01中测试</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;%--内置对象--%&gt;
+&lt;%
+    pageContext.setAttribute(&#34;name1&#34;,&#34;clover一号&#34;);//保存的数据只在一个页面中有效
+    request.setAttribute(&#34;name2&#34;,&#34;clover二号&#34;);//保存的数据只在一次请求中有效，请求转发会携带这个数据
+    session.setAttribute(&#34;name3&#34;,&#34;clover三号&#34;);//保存的数据只在一次会话中有效，从打开浏览器到关闭浏览器
+    application.setAttribute(&#34;name4&#34;,&#34;clover四号&#34;);//保存的数据只在服务器中有效，从打开服务器到关闭服务器
+%&gt;
+
+&lt;%--脚本片段中的代码，会被原封不动生成到.JSP.java
+要求：这里面的代码，必须保证Java语法的正确性
+--%&gt;
+&lt;%
+    //从pageContext取出，我们通过寻找的方式来
+    //从底层到高层（作用域）:page--&gt;request--&gt;session--&gt;application
+    String name1 = (String) pageContext.findAttribute(&#34;name1&#34;);
+    String name2 = (String) pageContext.findAttribute(&#34;name2&#34;);
+    String name3 = (String) pageContext.findAttribute(&#34;name3&#34;);
+    String name4 = (String) pageContext.findAttribute(&#34;name4&#34;);
+    String name5 = (String) pageContext.findAttribute(&#34;name5&#34;);
+%&gt;
+
+&lt;%--使用EL表达式输出   ${} --%&gt;
+&lt;h1&gt;取出的值为：&lt;/h1&gt;
+&lt;h3&gt;${name1}&lt;/h3&gt;
+&lt;h3&gt;${name2}&lt;/h3&gt;
+&lt;h3&gt;${name3}&lt;/h3&gt;
+&lt;h3&gt;${name4}&lt;/h3&gt;
+&lt;h3&gt;&lt;%=name5%&gt;&lt;/h3&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610204732.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610204732.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610204732.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610204732.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610204732.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610204732.png" /></p>
+<p>2.在pageContextDemo02中测试</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+    //从pageContext取出，我们通过寻找的方式来
+    //从底层到高层（作用域）:
+    String name1 = (String) pageContext.findAttribute(&#34;name1&#34;);
+    String name2 = (String) pageContext.findAttribute(&#34;name2&#34;);
+    String name3 = (String) pageContext.findAttribute(&#34;name3&#34;);
+    String name4 = (String) pageContext.findAttribute(&#34;name4&#34;);
+    String name5 = (String) pageContext.findAttribute(&#34;name5&#34;);
+%&gt;
+
+&lt;%--使用EL表达式输出   ${} --%&gt;
+&lt;h1&gt;取出的值为：&lt;/h1&gt;
+&lt;h3&gt;${name1}&lt;/h3&gt;
+&lt;h3&gt;${name2}&lt;/h3&gt;
+&lt;h3&gt;${name3}&lt;/h3&gt;
+&lt;h3&gt;${name4}&lt;/h3&gt;
+&lt;h3&gt;&lt;%=name5%&gt;&lt;/h3&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>这里由于时在另外一个页面访问，也没有请求转发，所以一号与二号就消亡了
+</code></pre>
+<p>测试结果：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610204845.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610204845.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610204845.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610204845.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610204845.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610204845.png" /></p>
+<p>3.在pageContextDemo03中测试</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;%
+    pageContext.forward(&#34;/index.jsp&#34;);
+    //就相当于执行了request.getRequestDispatcher(&#34;/index.jsp&#34;).forward(request,response);
+%&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre></td></tr></table>
+</div>
+</div><p>测试结果：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610205230.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610205230.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610205230.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610205230.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610205230.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610205230.png" /></p>
+<p>request：客户端向服务器发送请求，产生的数据，用户看完就没用了，比如：新闻，用户看完没用了的！</p>
+<p>session：客户端向服务器发送请求，产生的数据，用户用完一会还有用，比如：购物车</p>
+<p>application：客户端向服务器发送请求，产生的数据，一个用户用完了，其它用户还可能使用，比如：聊天数据</p>
+<h2 id="86jsp标签jstl标签el表达式">8.6、JSP标签、JSTL标签，EL表达式</h2>
+<p>所需依赖</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>javax.servlet.jsp.jstl<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>jstl-api<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;version&gt;</span>1.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>taglibs<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>standard<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;version&gt;</span>1.1.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>EL表达式：${}</p>
+<ul>
+<li>
+<p><strong>获取数据</strong></p>
+</li>
+<li>
+<p><strong>执行运算</strong></p>
+</li>
+<li>
+<p><strong>获取web开发常用对象</strong></p>
+</li>
+</ul>
+<p><strong>JSP标签</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;%--jsp:include--%&gt;
+&lt;%--
+http://localhost:8080/jsptag.jsp?name=clover$age=3
+--%&gt;
+
+&lt;jsp:forward page=&#34;jsptag2.jsp&#34;&gt;
+    &lt;jsp:param name=&#34;name&#34; value=&#34;clover&#34;/&gt;
+    &lt;jsp:param name=&#34;age&#34; value=&#34;3&#34;/&gt;
+&lt;/jsp:forward&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%--取出参数--%&gt;
+名字：&lt;%=request.getParameter(&#34;name&#34;)%&gt;
+年龄：&lt;%=request.getParameter(&#34;age&#34;)%&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre></td></tr></table>
+</div>
+</div><p>测试结果：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610215709.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610215709.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610215709.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610215709.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610215709.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610215709.png" /></p>
+<p><strong>JSTL表达式</strong></p>
+<p>JSTL标签库的使用就是为了弥补HTML标签的不足，它自定义许多标签，可以供我们使用，标签的功能和Java代码一样</p>
+<p><strong>核心标签</strong>（掌握部分）</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610210652.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610210652.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610210652.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610210652.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610210652.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610210652.png" /></p>
+<p><strong>JSTL标签使用步骤</strong></p>
+<ul>
+<li>
+<p>引入对应的taglib</p>
+</li>
+<li>
+<p>使用其中的方法</p>
+<pre><code>  注意：在Tomcat也需要引入jstl的包，否则会报错，JSTL解析错误
+</code></pre>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+&lt;%@ taglib prefix=&#34;c&#34; uri=&#34;http://java.sun.com/jsp/jstl/core&#34; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h4&gt;if测试&lt;/h4&gt;
+
+&lt;hr&gt;
+
+&lt;form action=&#34;coreif.jsp&#34; method=&#34;get&#34;&gt;
+&lt;%--    EL表达式获取表单中的数据
+        ${param.参数名}
+--%&gt;
+    &lt;input type=&#34;text&#34; name=&#34;username&#34; value=&#34;${param.username}&#34;&gt;
+    &lt;input type=&#34;submit&#34; value=&#34;登录&#34;&gt;
+&lt;/form&gt;
+
+&lt;%--判断如果提交的用户名是管理员，则登录成功--%&gt;
+&lt;c:if test=&#34;${param.username==&#39;admin&#39;}&#34; var=&#34;isAdmin&#34;&gt;
+    &lt;c:out value=&#34;管理员欢迎您！&#34;/&gt;
+&lt;/c:if&gt;
+
+&lt;%--自闭和标签--%&gt;
+&lt;c:out value=&#34;${isAdmin}&#34;/&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>登录账户不为admin时的结果：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610220039.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610220039.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610220039.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610220039.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610220039.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610220039.png" /></p>
+<p>登录账户为admin时的结果：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610220022.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610220022.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610220022.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610220022.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610220022.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210610220022.png" /></p>
+<p><strong>corechoose 与 corewhen</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> &lt;%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+ &lt;%@ taglib prefix=&#34;c&#34; uri=&#34;http://java.sun.com/jsp/jstl/core&#34; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;%--定义一个变量score，值为85--%&gt;
+&lt;c:set var=&#34;score&#34; value=&#34;90&#34;/&gt;
+
+&lt;c:choose&gt;
+   &lt;c:when test=&#34;${score&gt;=90}&#34;&gt;
+       你的成绩为优秀
+   &lt;/c:when&gt;
+    &lt;c:when test=&#34;${score&gt;=80}&#34;&gt;
+        你的成绩为良好
+    &lt;/c:when&gt;
+    &lt;c:when test=&#34;${score&gt;=70}&#34;&gt;
+        你的成绩为一般
+    &lt;/c:when&gt;
+    &lt;c:when test=&#34;${score&lt;=60}&#34;&gt;
+        你的成绩为不及格
+    &lt;/c:when&gt;
+&lt;/c:choose&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>注意：如果有一个值满足多个条件，它会按照顺序去执行
+</code></pre>
+<p>**coreforeach	**</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%@ page import=&#34;java.util.ArrayList&#34; %&gt;
+&lt;%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+&lt;%@ taglib prefix=&#34;c&#34; uri=&#34;http://java.sun.com/jsp/jstl/core&#34; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+    ArrayList&lt;String&gt; people = new ArrayList&lt;&gt;();
+    people.add(0,&#34;张三&#34;);
+    people.add(1,&#34;李四&#34;);
+    people.add(2,&#34;王五&#34;);
+    people.add(3,&#34;张六&#34;);
+    people.add(4,&#34;田七&#34;);
+    request.setAttribute(&#34;list&#34;,people);
+%&gt;
+&lt;%--
+var,每一次遍历出来的变量
+item，要遍历的对象
+begin，从哪开始
+end，到哪结束
+step，每一次执行的步长
+--%&gt;
+&lt;c:forEach var=&#34;people&#34; items=&#34;${list}&#34;&gt;
+    &lt;c:out value=&#34;${people}&#34;/&gt;&lt;br&gt;
+&lt;/c:forEach&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
