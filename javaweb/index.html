@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/javaweb\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  12565 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "JavaWeb","wordcount":  14088 ,
         "url": "https:\/\/cloverfelix.github.io\/javaweb\/","datePublished": "2021-06-01T10:48:25+08:00","dateModified": "2021-06-01T10:48:25+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Javaweb</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/javaweb/"><i class="far fa-folder fa-fw"></i>JavaWeb</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 12565 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 26 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 14088 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 29 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -198,6 +198,11 @@
     <li><a href="#84jsp指令">8.4、JSP指令</a></li>
     <li><a href="#85九大内置对象">8.5、九大内置对象</a></li>
     <li><a href="#86jsp标签jstl标签el表达式">8.6、JSP标签、JSTL标签，EL表达式</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#101原来的操作模式">10.1、原来的操作模式</a></li>
+    <li><a href="#102mvc三层架构">10.2、MVC三层架构</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="1基本概念">1、基本概念</h1>
@@ -1764,11 +1769,11 @@ HttpServletRequest对</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608193114.png"
-        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608193114.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608193114.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608193114.png 2x"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616213234.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616213234.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616213234.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616213234.png 2x"
         data-sizes="auto"
-        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608193114.png"
-        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210608193114.png" /></p>
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616213234.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616213234.png" /></p>
 <p>B一个web资源收到客户端A请求后，B它会通知A客户端去访问另外一个web资源C，这个过程叫重定向</p>
 <p>常见场景：</p>
 <ul>
@@ -3350,7 +3355,15 @@ http://localhost:8080/jsptag.jsp?name=clover$age=3
 </div>
 </div><pre><code>注意：如果有一个值满足多个条件，它会按照顺序去执行
 </code></pre>
-<p>**coreforeach	**</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210611173033.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210611173033.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210611173033.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210611173033.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210611173033.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210611173033.png" /></p>
+<p><strong>coreforeach</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -3383,6 +3396,11 @@ http://localhost:8080/jsptag.jsp?name=clover$age=3
 </span><span class="lnt">28
 </span><span class="lnt">29
 </span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%@ page import=&#34;java.util.ArrayList&#34; %&gt;
@@ -3412,9 +3430,375 @@ step，每一次执行的步长
 &lt;c:forEach var=&#34;people&#34; items=&#34;${list}&#34;&gt;
     &lt;c:out value=&#34;${people}&#34;/&gt;&lt;br&gt;
 &lt;/c:forEach&gt;
+
+&lt;br&gt;
+
+&lt;c:forEach var=&#34;people&#34; items=&#34;${list}&#34; begin=&#34;1&#34; end=&#34;3&#34; step=&#34;2&#34;&gt;
+    &lt;c:out value=&#34;${people}&#34; /&gt;
+&lt;/c:forEach&gt;
 &lt;/body&gt;
 &lt;/html&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>使用了begin end 变量后的情况</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210611173415.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210611173415.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210611173415.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210611173415.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210611173415.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210611173415.png" /></p>
+<h1 id="9javabean">9、JavaBean</h1>
+<p>JavaBean有特定的写法：</p>
+<ul>
+<li>
+<p>必须要有一个无参构造</p>
+</li>
+<li>
+<p>属性必须私有化</p>
+</li>
+<li>
+<p>必须有对应的get/set方法</p>
+</li>
+</ul>
+<p>一般用来和数据库的字段做映射</p>
+<p>ORM：对象关系映射</p>
+<h1 id="10mvc三层架构">10、MVC三层架构</h1>
+<h2 id="101原来的操作模式">10.1、原来的操作模式</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616194918.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616194918.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616194918.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616194918.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616194918.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616194918.png" /></p>
+<p>用户直接访问控制层，控制层就可以直接操作数据库</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">servlet</span><span class="o">---</span><span class="n">CRUD</span><span class="o">---</span><span class="n">数据库</span>
+<span class="n">弊端</span><span class="err">：</span><span class="n">程序十分臃肿</span><span class="err">，</span><span class="n">不利于维护</span><span class="err">（</span><span class="n">在servlet中加入了处理jdbc的代码</span><span class="err">）</span>
+<span class="n">Servlet的代码中</span><span class="err">：</span><span class="n">处理请求</span><span class="err">、</span><span class="n">响应</span><span class="err">、</span><span class="n">视图跳转</span><span class="err">、</span><span class="n">处理JDBC</span><span class="err">、</span><span class="n">处理业务代码</span><span class="err">、</span><span class="n">处理逻辑代码</span>
 
+<span class="n">架构思想</span><span class="err">：</span><span class="n">没有什么是加一层解决不了的</span><span class="err">！</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="102mvc三层架构">10.2、MVC三层架构</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616195412.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616195412.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616195412.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616195412.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616195412.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616195412.png" /></p>
+<p>Model</p>
+<ul>
+<li>
+<p>业务处理：业务逻辑（Service）</p>
+</li>
+<li>
+<p>数据持久层：CRUD（Dao）</p>
+</li>
+</ul>
+<p>View</p>
+<ul>
+<li>
+<p>展示数据</p>
+</li>
+<li>
+<p>提供连接发起Servlet请求</p>
+</li>
+</ul>
+<p>Controller</p>
+<ul>
+<li>
+<p>接受用户的请求：（req：请求参数、session信息）</p>
+</li>
+<li>
+<p>交给业务层处理对应的代码</p>
+</li>
+<li>
+<p>控制视图的跳转</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">登录</span><span class="o">---&gt;</span><span class="n">接受用户的登录请求</span><span class="o">---&gt;</span><span class="n">处理用户的请求</span><span class="err">（</span><span class="n">获取用户登录的参数</span><span class="err">，</span><span class="n">username</span><span class="err">，</span><span class="n">password</span><span class="err">）</span><span class="o">---&gt;</span><span class="n">交给业务层处理登录业务</span><span class="err">（</span><span class="n">判断用户名密码是否正确</span><span class="err">：</span><span class="n">事务</span><span class="err">）</span><span class="o">---&gt;</span><span class="n">Dao层查询用户名和密码是否正确</span><span class="o">---&gt;</span><span class="n">数据库</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="11filter重点">11、Filter（重点）</h1>
+<p>Filter：过滤器，用来过滤网站的数据</p>
+<ul>
+<li>
+<p>处理中文乱码</p>
+</li>
+<li>
+<p>登录验证</p>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616200630.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616200630.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616200630.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616200630.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616200630.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616200630.png" /></p>
+<p>Filter开发步骤：</p>
+<ol>
+<li>导包</li>
+<li>编写过滤器
+<ol>
+<li>
+<p>导包不能导入错误</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616201236.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616201236.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616201236.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616201236.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616201236.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210616201236.png" /></p>
+</li>
+<li>
+<p>编写过滤器，实现Filter接口，重写对应的方法</p>
+</li>
+</ol>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.filter</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.servlet.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CharacterEncodingFilter</span> <span class="kd">implements</span> <span class="n">Filter</span> <span class="o">{</span>
+
+    <span class="c1">//初始化：web服务器启动，就已经初始化了，随时等待过滤对象出现！
+</span><span class="c1"></span>    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">(</span><span class="n">FilterConfig</span> <span class="n">filterConfig</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;CharacterEncodingFilter初始化&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">//Chain：链
+</span><span class="c1"></span>    <span class="cm">/*
+</span><span class="cm">    * 1.过滤器中的所有代码，再过滤特定请求的时候都会执行
+</span><span class="cm">    * 2.必须要让过滤器继续执行（因为可能存在多个过滤器，所以要继续执行下去）
+</span><span class="cm">    * */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doFilter</span><span class="o">(</span><span class="n">ServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">ServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="n">FilterChain</span> <span class="n">chain</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">ServletException</span> <span class="o">{</span>
+
+        <span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">&#34;UTF-8&#34;</span><span class="o">);</span>
+        <span class="n">response</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">&#34;UTF-8&#34;</span><span class="o">);</span>
+        <span class="n">response</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&#34;text/html;charset=utf-8&#34;</span><span class="o">);</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;CharacterEncodingFilter执行前.........&#34;</span><span class="o">);</span>
+        <span class="n">chain</span><span class="o">.</span><span class="na">doFilter</span><span class="o">(</span><span class="n">request</span><span class="o">,</span><span class="n">response</span><span class="o">);</span><span class="c1">//让我们的请求继续走，如果不屑，程序执行到这里就会被拦截停止！
+</span><span class="c1"></span>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;CharacterEncodingFilter执行后.........&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">//销毁
+</span><span class="c1"></span>    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">destroy</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;CharacterEncodingFilter销毁&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>3.编写web.xml配置Filter</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;filter&gt;</span>
+    <span class="nt">&lt;filter-name&gt;</span>CharacterEncodingFilter<span class="nt">&lt;/filter-name&gt;</span>
+    <span class="nt">&lt;filter-class&gt;</span>com.clover.filter.CharacterEncodingFilter<span class="nt">&lt;/filter-class&gt;</span>
+  <span class="nt">&lt;/filter&gt;</span>
+  <span class="nt">&lt;filter-mapping&gt;</span>
+    <span class="nt">&lt;filter-name&gt;</span>CharacterEncodingFilter<span class="nt">&lt;/filter-name&gt;</span>
+<span class="c">&lt;!--    只要是 /servlet下的任何请求，都会经过这个过滤器--&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/servlet/*<span class="nt">&lt;/url-pattern&gt;</span>
+  <span class="nt">&lt;/filter-mapping&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="12监听器">12、监听器</h1>
+<ol>
+<li>
+<p>编写一个监听器</p>
+<p>实现一个监听器的接口</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.listener</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.servlet.ServletContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpSessionEvent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpSessionListener</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OnlineCountListener</span> <span class="kd">implements</span> <span class="n">HttpSessionListener</span> <span class="o">{</span>
+    <span class="c1">//创建session监听：查看你的一举一动
+</span><span class="c1"></span>    <span class="c1">//一旦创建Session就会出发一次这个事件！
+</span><span class="c1"></span>    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sessionCreated</span><span class="o">(</span><span class="n">HttpSessionEvent</span> <span class="n">se</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ServletContext</span> <span class="n">context</span> <span class="o">=</span> <span class="n">se</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getServletContext</span><span class="o">();</span>
+        <span class="n">Integer</span> <span class="n">onlineCount</span> <span class="o">=</span> <span class="o">(</span><span class="n">Integer</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&#34;OnlineCount&#34;</span><span class="o">);</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">onlineCount</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="n">onlineCount</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">onlineCount</span><span class="o">.</span><span class="na">intValue</span><span class="o">();</span>
+            <span class="n">onlineCount</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">count</span><span class="o">+</span><span class="n">1</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">context</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&#34;OnlineCount&#34;</span><span class="o">,</span><span class="n">onlineCount</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">//销毁Session监听
+</span><span class="c1"></span>    <span class="c1">//一旦销毁Session就会出发一次这个事件！
+</span><span class="c1"></span>    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sessionDestroyed</span><span class="o">(</span><span class="n">HttpSessionEvent</span> <span class="n">se</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ServletContext</span> <span class="n">context</span> <span class="o">=</span> <span class="n">se</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getServletContext</span><span class="o">();</span>
+        <span class="n">Integer</span> <span class="n">onlineCount</span> <span class="o">=</span> <span class="o">(</span><span class="n">Integer</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&#34;OnlineCount&#34;</span><span class="o">);</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">onlineCount</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="n">onlineCount</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">onlineCount</span><span class="o">.</span><span class="na">intValue</span><span class="o">();</span>
+            <span class="n">onlineCount</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">count</span><span class="o">-</span><span class="n">1</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">context</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&#34;OnlineCount&#34;</span><span class="o">,</span><span class="n">onlineCount</span><span class="o">);</span>
+    <span class="o">}</span>
+	
+	<span class="cm">/*
+</span><span class="cm">	* 销毁session有两种方法
+</span><span class="cm">	*1.自动销毁  getSession().invalidate();
+</span><span class="cm">	*2.手动销毁  在web.xml中设置session存活时间
+</span><span class="cm">	*/</span>
+<span class="o">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>在web.xml中注册监听器</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--注册监听器--&gt;</span>
+  <span class="nt">&lt;listener&gt;</span>
+    <span class="nt">&lt;listener-class&gt;</span>com.clover.listener.OnlineCountListener<span class="nt">&lt;/listener-class&gt;</span>
+  <span class="nt">&lt;/listener&gt;</span>
 </code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">
