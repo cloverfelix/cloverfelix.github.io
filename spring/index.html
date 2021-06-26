@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/spring\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Spring","wordcount":  10054 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Spring","wordcount":  10236 ,
         "url": "https:\/\/cloverfelix.github.io\/spring\/","datePublished": "2021-06-01T10:49:16+08:00","dateModified": "2021-06-01T10:49:16+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Spring</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/spring/"><i class="far fa-folder fa-fw"></i>Spring</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10054 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-01">2021-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10236 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 21 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -181,7 +181,7 @@
     <li><a href="#142-使用spring实现aop">14.2 使用Spring实现Aop</a>
       <ul>
         <li><a href="#1421-方法一使用原生spring-api接口jdk默认">14.2.1 方法一：使用原生Spring API接口（JDK）默认</a></li>
-        <li><a href="#1422-方法二使用自定义类cglib">14.2.2 方法二：使用自定义类（cglib）</a></li>
+        <li><a href="#1422-方法二使用自定义类cglib">14.2.2 方法二：使用自定义类（CGLIB）</a></li>
         <li><a href="#1423-方法三注解实现">14.2.3 方法三：注解实现</a></li>
         <li><a href="#1424-小结">14.2.4 小结</a></li>
       </ul>
@@ -434,7 +434,7 @@
 </li>
 <li>
 <p>如果要用有参构造函数创建对象</p>
-<p>方式一：下标赋值</p>
+<p>方式一：<strong>下标</strong>赋值</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -448,7 +448,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><p>index表示参数的下标，value表示给参数赋值</p>
-<p>方式二：匹配参数类型（不建议使用）</p>
+<p>方式二：匹配<strong>参数类型</strong>（不建议使用）</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -461,7 +461,9 @@
 <span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>注意：基本类型可以直接写，但是引用类型如：String得写全名</p>
+</div></li>
+</ul>
+<p><strong>注意：基本类型可以直接写，但是引用类型如：String得写全名</strong></p>
 <p>方式三：直接通过参数名</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -475,9 +477,7 @@
 <span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div></li>
-</ul>
-<h2 id="36-ioc初始化对象的时间">3.6 IOC初始化对象的时间</h2>
+</div><h2 id="36-ioc初始化对象的时间">3.6 IOC初始化对象的时间</h2>
 <p>在new ClassPathXmlApplicationContext，即加载完配置文件后就已经初始化好了<strong>所有bean</strong>对象，然后你需要getBean谁就取谁</p>
 <h1 id="4spring配置">4.Spring配置</h1>
 <h2 id="41-spring配置">4.1 Spring配置</h2>
@@ -750,10 +750,22 @@
 <p>前提：</p>
 <ul>
 <li>导入约束</li>
-<li>要有set方法</li>
-<li>必须要有无参构造函数和有参构造函数两种</li>
 </ul>
 </li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">xmlns:c=&#34;http://www.springframework.org/schema/c&#34;
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>要有set方法</li>
+<li><strong>必须要有无参构造函数和有参构造函数两种</strong></li>
+</ul>
+<ol start="5">
 <li>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -867,7 +879,7 @@
 <li>在java中显示的配置</li>
 <li>隐式的自动装配bean（重要）</li>
 </ol>
-<p>自动装配就是：可以不用在bean中自己手动装备bean对象的属性</p>
+<p>自动装配就是：可以不用在bean中自己<strong>手动装备bean对象的对象属性</strong>，<strong>也就是不用property来为对象中的对象引用赋值，但是只针对对象属性</strong></p>
 <p>用法：<strong>用autowired=&ldquo;&ldquo;实现</strong></p>
 <p>People.java</p>
 <div class="highlight"><div class="chroma">
@@ -878,9 +890,15 @@
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCat</span><span class="o">(</span><span class="n">Cat</span> <span class="n">cat</span><span class="o">)</span> <span class="o">{</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCat</span><span class="o">(</span><span class="n">Cat</span> <span class="n">cat</span><span class="o">)</span> <span class="o">{</span>
     <span class="k">this</span><span class="o">.</span><span class="na">cat</span> <span class="o">=</span> <span class="n">cat</span><span class="o">;</span>
 <span class="o">}</span>
 <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDog</span><span class="o">(</span><span class="n">Dog</span> <span class="n">dog</span><span class="o">)</span> <span class="o">{</span>
@@ -907,7 +925,9 @@
 </div>
 </div><pre><code>byName表示在容器上下文中查找和自己set方法后面的值对应的beanid，弊端：名字必须相同
 
-byType表示在容器上下文中查找和自己set方法中对象类型相同的对应的beanid，都可以省略id。弊端：容器中所有bean的class唯一，即只有一个对象，如下就会报错
+byType表示在容器上下文中查找和自己set方法中对象类型相同的对应的beanid，都可以省略id。弊
+
+端：容器中所有bean的class唯一，即只有一个对象，如下就会报错
 </code></pre>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1068,7 +1088,7 @@ byType表示在容器上下文中查找和自己set方法中对象类型相同�
 </code></pre></td></tr></table>
 </div>
 </div><p>用@Component注解：</p>
-<p>放在类上面，表示 这个类被Spring管理了，就是一个bean，而@Value就相当于bean中的property，给属性注入值，@Value也可以放在set方法上面</p>
+<p>放在类上面，表示 这个类被Spring管理了，就是一个bean，而@Value就相当于bean中的property，给属性（<strong>这里的属性，不只是对象，还包含基本数据类型的属性</strong>）注入值，@Value也可以放在set方法上面</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -1142,15 +1162,9 @@ byType表示在容器上下文中查找和自己set方法中对象类型相同�
 </ul>
 <p>xml与注解最佳实践</p>
 <ul>
-<li>
-<p>xml用来管理bean</p>
-</li>
-<li>
-<p>注解只负责完成属性的注入</p>
-</li>
-<li>
-<p>注意：一定要开启注解的支持</p>
-</li>
+<li>xml用来管理bean</li>
+<li>注解只负责完成属性的注入</li>
+<li>注意：一定要开启注解的支持</li>
 </ul>
 </li>
 </ol>
@@ -1458,7 +1472,7 @@ byType表示在容器上下文中查找和自己set方法中对象类型相同�
 </div>
 </div></li>
 <li>
-<p>代理角色：现有客户需要在每次实现什么方法的时候，能够输出实现了什么方法，称为日志功能，这个时候如果去在真实角色的代码里面添加，就违反了”改动原有代码，在公司中是大忌“，所以这时候就需要代理去实现</p>
+<p>代理角色：现有客户需要在每次实现什么方法的时候，能够输出实现了什么方法，称为日志功能，这个时候如果去在真实角色的代码里面添加，就违反了”<strong>改动原有代码，在公司中是大忌</strong>“，所以这时候就需要代理去实现</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -1782,6 +1796,9 @@ byType表示在容器上下文中查找和自己set方法中对象类型相同�
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="1421-方法一使用原生spring-api接口jdk默认">14.2.1 方法一：使用原生Spring API接口（JDK）默认</h3>
+<ul>
+<li>此方法特点是，切入一个方法就要对应一个类</li>
+</ul>
 <p>UserService接口</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1886,6 +1903,7 @@ byType表示在容器上下文中查找和自己set方法中对象类型相同�
 </div>
 </div><p>bean9.xml配置类</p>
 <p>切入点表示要切入到哪里去，即实现接口的类中的方法要在哪里执行</p>
+<p>执行环绕：表示把自定义类与切入点连接起来，对应起来，表示自定义类中的方法在对应的切入点处执行</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -1955,7 +1973,10 @@ byType表示在容器上下文中查找和自己set方法中对象类型相同�
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="1422-方法二使用自定义类cglib">14.2.2 方法二：使用自定义类（cglib）</h3>
+</div><h3 id="1422-方法二使用自定义类cglib">14.2.2 方法二：使用自定义类（CGLIB）</h3>
+<ul>
+<li>此方法的特点是：切入的所有方法都存在于一个类中，切入 多少个方法就对应多少个函数</li>
+</ul>
 <p>切面表示引用哪个类，即哪个类里面有自定义的特定功能的方法，它就是一个类。切面中还要还要定义切入点（切面要引用到哪里去）和通知（是要切入切面类中的哪个方法，且切入到哪里去）</p>
 <p>自定义切面类</p>
 <div class="highlight"><div class="chroma">
