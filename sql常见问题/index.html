@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/sql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SQL常见问题","wordcount":  2 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SQL常见问题","wordcount":  523 ,
         "url": "https:\/\/cloverfelix.github.io\/sql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98\/","datePublished": "2021-07-03T18:47:05+08:00","dateModified": "2021-07-03T18:47:05+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,16 +106,73 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">SQL常见问题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/sql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"><i class="far fa-folder fa-fw"></i>SQL常见问题</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-03">2021-07-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-03">2021-07-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 523 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
-            </div><div class="content" id="content"><p>11111111111111111111111111</p>
-<p>22222222222222222222222222</p>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#sql常见问题">SQL常见问题</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="sql常见问题">SQL常见问题</h2>
+<ol>
+<li>
+<p>建立新连接时报错：can&rsquo;t connect to mysql server on ‘localhost’</p>
+<p>原因：是因为本地服务器没开启</p>
+<p>解决：用系统管理员打开命令行，输入net start mysql57启动服务器（这里如果是启动8.0服务器就是net start mysql80）</p>
+</li>
+<li>
+<p>双数据库情况下，在普通命令行不输入密码直接进到mysql下服务器下</p>
+<ul>
+<li>先进入mysql安装目录下的bin目录下</li>
+<li>再输入mysql -uroot -P 3306 -p命令</li>
+<li>直接回车，不需要输入密码</li>
+</ul>
+</li>
+<li>
+<p>解决数据库建立新连接时<strong>报错access denied for user &lsquo;root&rsquo;@&lsquo;localhost&rsquo;<strong>以及</strong>mysql命令行工具闪退问题</strong></p>
+<p>解决：</p>
+<ul>
+<li>
+<p>到安装的MySQL的目录下，找my.ini文件，在[mysqld]后添加skip-grant-tables，保存退出</p>
+</li>
+<li>
+<p>在命令行中进入mysql安装目录下的bin目录</p>
+</li>
+<li>
+<p>输入mysql -uroot -P 3306 -p命令（这里端口号要对应）（作用：使其登录时跳过权限检查）</p>
+</li>
+<li>
+<p>直接回车，不用输入密码</p>
+</li>
+<li>
+<p>输入ALTER USER &lsquo;root&rsquo;@&lsquo;localhost&rsquo; IDENTIFIED BY &lsquo;123456&rsquo;; 修改密码</p>
+<p>报错：<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703184813.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703184813.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703184813.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703184813.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703184813.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703184813.png" /></p>
+</li>
+<li>
+<p>flush privileges; 刷新权限</p>
+</li>
+<li>
+<p>再修改密码ALTER USER &lsquo;root&rsquo;@&lsquo;localhost&rsquo; IDENTIFIED BY &lsquo;123456&rsquo;;</p>
+</li>
+<li>
+<p>成功</p>
+</li>
+</ul>
+<p>参考博客：https://blog.csdn.net/weixin_43589074/article/details/107728819</p>
+</li>
+</ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
