@@ -686,7 +686,7 @@ OK
 127.0.0.1:6379&gt; keys *
 1<span class="o">)</span> <span class="s2">&#34;age&#34;</span>
 2<span class="o">)</span> <span class="s2">&#34;name&#34;</span>
-127.0.0.1:6379&gt; expire name 10			<span class="c1"># 蛇者key的过期时间，单位是秒</span>
+127.0.0.1:6379&gt; expire name 10			<span class="c1"># 设置key的过期时间，单位是秒</span>
 <span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
 127.0.0.1:6379&gt; ttl name						<span class="c1"># 查看当前key 的剩余时间</span>
 <span class="o">(</span>integer<span class="o">)</span> <span class="m">6</span>
