@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>JavaWeb - 标签 - clover</title>
+        <link>https://cloverfelix.github.io/tags/javaweb/</link>
+        <description>JavaWeb - 标签 - clover</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 04 Jul 2021 16:29:43 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/tags/javaweb/" rel="self" type="application/rss+xml" /><item>
+    <title>Javaweb</title>
+    <link>https://cloverfelix.github.io/javaweb/</link>
+    <pubDate>Sun, 04 Jul 2021 16:29:43 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/javaweb/</guid>
+    <description><![CDATA[1、基本概念 1.1、静态web 静态web存在的缺点 web页面无法更新 它无法和数据库交互（数据无法持久化，用户无法交互） 1.2、动态web 页面]]></description>
+</item></channel>
+</rss>
