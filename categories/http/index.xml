@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>HTTP - 分类 - clover</title>
+        <link>https://cloverfelix.github.io/categories/http/</link>
+        <description>HTTP - 分类 - clover</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 04 Jul 2021 16:25:45 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/categories/http/" rel="self" type="application/rss+xml" /><item>
+    <title>Http</title>
+    <link>https://cloverfelix.github.io/http/</link>
+    <pubDate>Sun, 04 Jul 2021 16:25:45 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/http/</guid>
+    <description><![CDATA[网络编程 1.1、概述 计算机网络： 是指将地理位置不同的具有独立功能的多台计算机及其外部设备，通过通信线路连接起来，在网络操作系统，网络管理软件]]></description>
+</item></channel>
+</rss>
