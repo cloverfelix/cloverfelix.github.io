@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>MutiNodeLinux - clover</title><meta name="Description" content="Linux部署"><meta property="og:title" content="MutiNodeLinux" />
+<meta property="og:description" content="Linux部署" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cloverfelix.github.io/mutinodelinux/" /><meta property="og:image" content="https://cloverfelix.github.io/RW.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-07-04T16:35:24&#43;08:00" />
+<meta property="article:modified_time" content="2021-07-04T16:35:24&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://cloverfelix.github.io/RW.png"/>
+
+<meta name="twitter:title" content="MutiNodeLinux"/>
+<meta name="twitter:description" content="Linux部署"/>
+<meta name="application-name" content="Clover">
+<meta name="apple-mobile-web-app-title" content="Clover"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://cloverfelix.github.io/mutinodelinux/" /><link rel="prev" href="https://cloverfelix.github.io/sql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" /><link rel="next" href="https://cloverfelix.github.io/redis/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "MutiNodeLinux",
+        "inLanguage": "zh-cn",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/cloverfelix.github.io\/mutinodelinux\/"
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Linux部署","wordcount":  2162 ,
+        "url": "https:\/\/cloverfelix.github.io\/mutinodelinux\/","datePublished": "2021-07-04T16:35:24+08:00","dateModified": "2021-07-04T16:35:24+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
+                "@type": "Person",
+                "name": "Clover"
+            },"description": "Linux部署"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="clover"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>Clover</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/cloverfelix" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="clover"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>Clover</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/cloverfelix" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">MutiNodeLinux</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux%E9%83%A8%E7%BD%B2/"><i class="far fa-folder fa-fw"></i>Linux部署</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2162 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#使用的是ruoyi进行试验">使用的是ruoyi进行试验</a></li>
+    <li><a href="#第一步">第一步</a></li>
+    <li><a href="#然后开始进行前端的打包操作">然后开始进行前端的打包操作</a></li>
+    <li><a href="#现在对后端进行打jar包">现在对后端进行打jar包</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="部署项目到服务器">部署项目到服务器</h1>
+<h2 id="使用的是ruoyi进行试验">使用的是ruoyi进行试验</h2>
+<h2 id="第一步">第一步</h2>
+<p>首先将项目后端的数据库以及一些配置文件配置好</p>
+<ol>
+<li><strong>数据库配置：</strong></li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702193507.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702193507.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702193507.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702193507.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702193507.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702193507.png" /></p>
+<ul>
+<li>
+<p>对于这里的数据库必须使用远程的数据库，本地数据库是不起作用的</p>
+</li>
+<li>
+<p>其次就是需要在服务器上创建对应的数据库，填写相关的信息</p>
+</li>
+<li>
+<p>如果你有多台服务器的话你也可以架设到不同的服务器上（但我受限只有一台服务器，就在一台服务器上实验了）</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>修改redis配置</strong></li>
+</ol>
+<p>由于我们的项目全部是部署在服务器上的，所以我们所依赖的环境全部是存在于服务器上</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194801.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194801.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194801.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194801.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194801.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194801.png" /></p>
+<p>由于我们服务器上的redis是没有设置密码的，所以默认为空</p>
+<ol start="3">
+<li>
+<p><strong>修改pom.xml文件中字符集的设置</strong></p>
+<p><code>注意：由于我采用的是ruoyi的项目，不同的项目对应不同的要求，ruoyi这个项目需要你改动一下pom.xml的配置文件</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194011.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194011.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194011.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194011.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194011.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194011.png" /></p>
+<p>将<strong>encoder</strong>对应的地方的字符集编码改为<code>UTF-8</code></p>
+</li>
+</ol>
+<p>4.<strong>修改pom.xml文件中的日志文件logs</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194245.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194245.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194245.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194245.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194245.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702194245.png" /></p>
+<p>如果是第一次运行的话是不存在改路径的，就需要改为自己日志文件存放的路径了</p>
+<p>如果是以及运行过的，可以忽略不看</p>
+<p>将一些环境配置修改好后就可以运行起来了，当你运行成功后，就可以先将前端打包传送到服务器上</p>
+<p>使用terminus工具进行上传</p>
+<pre><code>注意：不要使用文件夹拖拽的形式，有可能存在一些隐藏的文件夹没有传递过去
+</code></pre>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195046.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195046.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195046.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195046.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195046.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195046.png" /></p>
+<p>传到服务器上的home目录下自己创建的文件夹中，然后在进行文件的解压</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195205.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195205.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195205.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195205.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195205.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195205.png" /></p>
+<p>上传成功后，就对该文件夹进行解压**（前端）**</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195339.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195339.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195339.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195339.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195339.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195339.png" /></p>
+<p>这就是解压后的文件</p>
+<p>解压成功后，也把后端运行好的项目压缩上传到服务器</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195446.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195446.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195446.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195446.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195446.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702195446.png" /></p>
+<h2 id="然后开始进行前端的打包操作">然后开始进行前端的打包操作</h2>
+<ol>
+<li>安装依赖</li>
+</ol>
+<p>由于我们使用的是root权限所以我们在前面加上<code>--unsafe-perm</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">npm install --unsafe-perm --registry<span class="o">=</span>https://registry.npm.taobao.org
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702203203.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702203203.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702203203.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702203203.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702203203.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702203203.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702203220.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702203220.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702203220.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702203220.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702203220.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702203220.png" /></p>
+<pre><code>注意：如果你没有安装node的话是执行不了的，那你就必须得先去安装node后才可以执行，Linux上安装node的教程可以参考codesheep给的pdf上安装node的教程，只是，他最后配置node环境变量时，那个profile文件夹是存在于/etc下的profile文件夹中进行配置，而不是他pdf上所给的指令，使用pdf上的指令会提示我们没有权限
+</code></pre>
+<p>安装完依赖后就可以使用<code>npm run build:prod</code>打生产环境前端的包就可以了</p>
+<p>但是在运行的过程中出现了错误信息提示</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702205825.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702205825.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702205825.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702205825.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702205825.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702205825.png" /></p>
+<p>于是，我将node_modules模块删除掉了，再次运行npm install时，又有新的错误信息出现了</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702205942.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702205942.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702205942.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702205942.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702205942.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702205942.png" /></p>
+<p>然后我找到一个博客找寻到了解决方法：https://blog.csdn.net/Jserm/article/details/105997504</p>
+<p>原因是因为：<code>For security reasons, if you run npm install as root, npm will set the user to “nobody” when running postinstall scripts, which does not have access to the project directory, thus the error message.</code></p>
+<pre><code>出于安全原因，如果您以 root 身份运行 npm install，npm 将在运行 postinstall 脚本时将用户设置为“nobody”，该脚本无权访问项目目录，因此会出现错误消息。
+</code></pre>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702215214.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702215214.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702215214.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702215214.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702215214.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702215214.png" /></p>
+<p><strong>总结：出现这么多错误的原因是：因为之前我上传到服务器上的代码都是我之前已经运行好了，并且配置好了环境变量，已经依赖的，所以导致我上传至服务器后重复安装依赖出现错误。
+所以刚才我是重新下载的一个源码直接上传到服务器上去后就直接打jar包成功了</strong></p>
+<p><strong>但是，这也可能只是我的片面看法，有可能是其它的原因，是我目前所没有想到的，我暂且就将这个错误认为是我之前已经运行好的代码中有依赖环境存在，是我反复的运行没有成功，这个错误，我会在后期中再次进行验证</strong></p>
+<h2 id="现在对后端进行打jar包">现在对后端进行打jar包</h2>
+<p>前提：是服务器上装有maven环境</p>
+<p>先去下载一个maven安装包，寻找一个3.6.x版本的maven，找到一个历史地址：<a href="https://archive.apache.org/dist/maven/maven-3/" target="_blank" rel="noopener noreffer">https://archive.apache.org/dist/maven/maven-3/</a></p>
+<p>安装完成以后按照codesheep给的安装教程去配置环境变量，注意自己文件夹的命名与codesheep是不一样的</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702221943.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702221943.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702221943.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702221943.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702221943.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702221943.png" /></p>
+<p><strong>注意：为什么需要打<code>jar包</code>与<code>war包</code>，因为使用jar包是因为SpringBoot内置了Tomcat服务器，就可以不适用服务器上的Tomcat，而使用内置的Tomcat就行；而打war包就是不使用SpringBoot内置的Tomcat，而是使用服务器自己搭配的Tomcat服务器</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702223145.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702223145.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702223145.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702223145.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702223145.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702223145.png" /></p>
+<blockquote>
+<p>将前后端打包好后，就可以将前端部署到Nginx</p>
+</blockquote>
+<ol>
+<li>
+<p>修改nginx配置文件</p>
+<p>先将<code>user</code>改为root，以防止出现不必要的权限错误（<strong>这里指的是如果你的项目放在root目录下</strong>）</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703110320.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703110320.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703110320.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703110320.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703110320.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703110320.png" /></p>
+<p>然后修改根目录下的代理，改为<code>dist</code>文件夹所在位置</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703110645.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703110645.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703110645.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703110645.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703110645.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703110645.png" /></p>
+</li>
+<li>
+<p>修改配置文件夹后，切记一定要重新加载Nginx，让其重新加载配置文件，否则你就会一直报错</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703113858.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703113858.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703113858.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703113858.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703113858.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703113858.png" /></p>
+<p>注意：修改完配置文件后，一定要记得将配置文件中的<code>pid</code>注释去掉，否则重新加载配置文件的时候就会报错，找不到pid文件</p>
+</li>
+<li>
+<p>如果出现了报错就去配置文件中去除该注释，然后再次重新运行Nginx即可</p>
+<p>如果不放心，可以使用命令行去查看进程号，出现这个就代表Nginx启动成功了</p>
+</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703114403.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703114403.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703114403.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703114403.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703114403.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703114403.png" /></p>
+<blockquote>
+<p>前端部署起来后就可以开始部署后端了</p>
+</blockquote>
+<p>使用命令<code>nohup java -jar ruoyi.jar &amp;</code>  直接运行jar包使用后台运行的方式</p>
+<p>但是现在前后端都运行起来了，但是没有对接起来，出现如图所示情况</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703151212.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703151212.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703151212.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703151212.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703151212.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210703151212.png" /></p>
+<p>所以，我们就得去nginx中的配置文件进行配置请求路径，将它的请求路径转到后端上，与之对应</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">location /prod-api/ <span class="o">{</span>
+		proxy_set_header Host <span class="nv">$http_host</span><span class="p">;</span>
+		proxy_set_header X-Real-IP <span class="nv">$remote_addr</span><span class="p">;</span>
+		proxy_set_header REMOTE-HOST <span class="nv">$remote_addr</span><span class="p">;</span>
+		proxy_set_header X-Forwarded-For <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+		proxy_pass http://121.89.242.18:8081/<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>由于我部署的服务器部署到最后的时候前端连接后端一直超时，没有找到解决问题的原因，所以我暂时放置在这一步了</p>
+<p>后续想法：搭载两台虚拟机进行再次搭建</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-07-04</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://cloverfelix.github.io/mutinodelinux/" data-title="MutiNodeLinux" data-hashtags="Linux部署"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://cloverfelix.github.io/mutinodelinux/" data-hashtag="Linux部署"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://cloverfelix.github.io/mutinodelinux/" data-title="MutiNodeLinux"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://cloverfelix.github.io/mutinodelinux/" data-title="MutiNodeLinux"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://cloverfelix.github.io/mutinodelinux/" data-title="MutiNodeLinux"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/linux%E9%83%A8%E7%BD%B2/">Linux部署</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/sql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" class="prev" rel="prev" title="SQL常见问题"><i class="fas fa-angle-left fa-fw"></i>SQL常见问题</a>
+            <a href="/redis/" class="next" rel="next" title="Redis">Redis<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Clover</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"search":{"algoliaAppID":"QEH6MSAUGD","algoliaIndex":"blog","algoliaSearchKey":"83e0e9a01bb86efaff215298300450e1","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

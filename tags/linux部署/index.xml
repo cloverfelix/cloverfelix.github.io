@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Linux部署 - 标签 - clover</title>
+        <link>https://cloverfelix.github.io/tags/linux%E9%83%A8%E7%BD%B2/</link>
+        <description>Linux部署 - 标签 - clover</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 04 Jul 2021 16:35:24 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/tags/linux%E9%83%A8%E7%BD%B2/" rel="self" type="application/rss+xml" /><item>
+    <title>MutiNodeLinux</title>
+    <link>https://cloverfelix.github.io/mutinodelinux/</link>
+    <pubDate>Sun, 04 Jul 2021 16:35:24 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/mutinodelinux/</guid>
+    <description><![CDATA[部署项目到服务器 使用的是ruoyi进行试验 第一步 首先将项目后端的数据库以及一些配置文件配置好 数据库配置： 对于这里的数据库必须使用远程的数据库]]></description>
+</item></channel>
+</rss>

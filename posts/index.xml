@@ -3,7 +3,35 @@
         <title>所有文章 - clover</title>
         <link>https://cloverfelix.github.io/posts/</link>
         <description>所有文章 | clover</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 04 Jul 2021 16:32:14 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 04 Jul 2021 16:36:09 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Redis</title>
+    <link>https://cloverfelix.github.io/redis/</link>
+    <pubDate>Sun, 04 Jul 2021 16:36:09 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/redis/</guid>
+    <description><![CDATA[NoSQL概述 1、单机Mysql的年代 90年代，一个基本的网站访问量不会太大，单个数据库完全足够 那个时候，更多的去使用静态网页HTML~ 服务]]></description>
+</item><item>
+    <title>MutiNodeLinux</title>
+    <link>https://cloverfelix.github.io/mutinodelinux/</link>
+    <pubDate>Sun, 04 Jul 2021 16:35:24 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/mutinodelinux/</guid>
+    <description><![CDATA[部署项目到服务器 使用的是ruoyi进行试验 第一步 首先将项目后端的数据库以及一些配置文件配置好 数据库配置： 对于这里的数据库必须使用远程的数据库]]></description>
+</item><item>
+    <title>SQL常见问题</title>
+    <link>https://cloverfelix.github.io/sql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Sun, 04 Jul 2021 16:34:29 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/sql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[SQL常见问题 建立新连接时报错：can&rsquo;t connect to mysql server on ‘localhost’ 原因：是因为本地服务器没开启 解决：用系统管理员打开命令]]></description>
+</item><item>
+    <title>Mysql</title>
+    <link>https://cloverfelix.github.io/mysql/</link>
+    <pubDate>Sun, 04 Jul 2021 16:33:35 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/mysql/</guid>
+    <description><![CDATA[study]]></description>
+</item><item>
     <title>Mybatis</title>
     <link>https://cloverfelix.github.io/mybatis/</link>
     <pubDate>Sun, 04 Jul 2021 16:32:14 &#43;0800</pubDate>
@@ -45,19 +73,5 @@
     <author>作者</author>
     <guid>https://cloverfelix.github.io/gui/</guid>
     <description><![CDATA[GUI编程 1.简介 Gui的核心技术：Swing，AWT。 不流行的原因： 1.因为界面不美观 2.需要jre环境 为什么我们要学习？ 1. 是MVC架构的]]></description>
-</item><item>
-    <title>Docker</title>
-    <link>https://cloverfelix.github.io/docker/</link>
-    <pubDate>Sun, 04 Jul 2021 16:23:44 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://cloverfelix.github.io/docker/</guid>
-    <description><![CDATA[Docker 参考资料 官方文档：https://docs.docker.com/docker-for-windows/ 【官方文档超级详细】 仓库地址：ht]]></description>
-</item><item>
-    <title>Ajax-Json</title>
-    <link>https://cloverfelix.github.io/ajax-json/</link>
-    <pubDate>Sun, 04 Jul 2021 16:17:16 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://cloverfelix.github.io/ajax-json/</guid>
-    <description><![CDATA[Json和Ajax 需要掌握的知识 早期网站：如登录功能，需要刷新页面，才能重新登录；不点击提交按钮，就不知道自己密码输错了； 现在大多数的网站，]]></description>
 </item></channel>
 </rss>
