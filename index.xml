@@ -3,9 +3,30 @@
         <title>clover</title>
         <link>https://cloverfelix.github.io/</link>
         <description>记录笔记</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 04 Jul 2021 16:36:09 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 04 Jul 2021 16:44:07 &#43;0800</lastBuildDate>
             <atom:link href="https://cloverfelix.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Netty</title>
+    <link>https://cloverfelix.github.io/netty/</link>
+    <pubDate>Sun, 04 Jul 2021 16:44:07 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/netty/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Spring</title>
+    <link>https://cloverfelix.github.io/spring/</link>
+    <pubDate>Sun, 04 Jul 2021 16:41:33 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/spring/</guid>
+    <description><![CDATA[1.Spring 1.1 简介 下载spring所有版本信息的地址入口：https://docs.spring.io/spring-framework/docs/4]]></description>
+</item><item>
+    <title>Springboot</title>
+    <link>https://cloverfelix.github.io/springboot/</link>
+    <pubDate>Sun, 04 Jul 2021 16:38:24 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/springboot/</guid>
+    <description><![CDATA[study]]></description>
+</item><item>
     <title>Redis</title>
     <link>https://cloverfelix.github.io/redis/</link>
     <pubDate>Sun, 04 Jul 2021 16:36:09 &#43;0800</pubDate>
@@ -54,26 +75,5 @@
     <author>作者</author>
     <guid>https://cloverfelix.github.io/javaweb/</guid>
     <description><![CDATA[1、基本概念 1.1、静态web 静态web存在的缺点 web页面无法更新 它无法和数据库交互（数据无法持久化，用户无法交互） 1.2、动态web 页面]]></description>
-</item><item>
-    <title>Thread</title>
-    <link>https://cloverfelix.github.io/thread/</link>
-    <pubDate>Sun, 04 Jul 2021 16:27:49 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://cloverfelix.github.io/thread/</guid>
-    <description><![CDATA[线程简介 Process：进程 程序是指令和数据的有效集合，其本身没有任何运行的含义，是一个静态的概念。而进程则是执行程序的一次执行过程，它是一]]></description>
-</item><item>
-    <title>Http</title>
-    <link>https://cloverfelix.github.io/http/</link>
-    <pubDate>Sun, 04 Jul 2021 16:25:45 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://cloverfelix.github.io/http/</guid>
-    <description><![CDATA[网络编程 1.1、概述 计算机网络： 是指将地理位置不同的具有独立功能的多台计算机及其外部设备，通过通信线路连接起来，在网络操作系统，网络管理软件]]></description>
-</item><item>
-    <title>GUI</title>
-    <link>https://cloverfelix.github.io/gui/</link>
-    <pubDate>Sun, 04 Jul 2021 16:25:05 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://cloverfelix.github.io/gui/</guid>
-    <description><![CDATA[GUI编程 1.简介 Gui的核心技术：Swing，AWT。 不流行的原因： 1.因为界面不美观 2.需要jre环境 为什么我们要学习？ 1. 是MVC架构的]]></description>
 </item></channel>
 </rss>
