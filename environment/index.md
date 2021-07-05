@@ -60,7 +60,9 @@ javac
 
 ## 2、安装Node
 
-先去官网下载node
+先去官网下载node：https://nodejs.org/en/
+
+历史版本链接：https://nodejs.org/dist/
 
 先在`/usr/local`下创建一个node文件，然后将root目录下的node解压到当前node目录下
 
@@ -95,7 +97,9 @@ npx -v
 
 ## 3、安装Maven
 
-去官网下载Maven
+去官网下载Maven：[http://maven.apache.org/](http://maven.apache.org/)  
+maven 下载地址：[http://maven.apache.org/download.cgi](http://maven.apache.org/download.cgi)  
+maven 历史版本：[https://archive.apache.org/dist/maven/maven-3/](https://archive.apache.org/dist/maven/maven-3/)
 
 先去`/opt`目录下创建一个maven文件，然后将roo目录下的maven其解压到该文件中
 
@@ -143,7 +147,9 @@ mvn -v
 
 ## 4、安装Redis
 
-去官网下载Redis
+去官网下载Redis：https://redis.io/download
+
+历史版本：http://download.redis.io/releases/
 
 先去`/usr/local`下创建一个redis文件，然后将root目录下的redis解压到该文件中
 
@@ -231,7 +237,7 @@ systemctl restart redis_6379.service
 
 ## 5、安装Nginx
 
-先去官网下载Nginx
+先去官网下载Nginx：http://nginx.org/en/download.html
 
 先去`/usr/local`下创建一个nginx文件，然后将root目录下的nginx解压到该文件中
 
