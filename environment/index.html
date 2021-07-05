@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/environment\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Environment","wordcount":  1977 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Environment","wordcount":  2991 ,
         "url": "https:\/\/cloverfelix.github.io\/environment\/","datePublished": "2021-07-05T16:55:21+08:00","dateModified": "2021-07-05T16:55:21+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Environment</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/environment/"><i class="far fa-folder fa-fw"></i>Environment</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-05">2021-07-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1977 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-05">2021-07-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2991 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -120,6 +120,7 @@
     <li><a href="#3安装maven">3、安装Maven</a></li>
     <li><a href="#4安装redis">4、安装Redis</a></li>
     <li><a href="#5安装nginx">5、安装Nginx</a></li>
+    <li><a href="#6安装mysql">6、安装Mysql</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="linux编程环境和软件安装">Linux编程环境和软件安装</h1>
@@ -675,113 +676,331 @@ firewall-cmd：是Linux提供的操作firewall的一个工具
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705200439.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705200439.png" /></p>
+<h2 id="6安装mysql">6、安装Mysql</h2>
+<p>先去官网下载Mysql：<a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="noopener noreffer">https://dev.mysql.com/downloads/mysql/</a></p>
+<p>如果系统之前⾃带 Mariadb ，可以先卸载之。</p>
+<p>⾸先查询已安装的 Mariadb 安装包:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">rpm -qa<span class="p">|</span>grep mariadb
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705215633.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705215633.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705215633.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705215633.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705215633.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705215633.png" /></p>
+<p>将其均卸载之</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 使用该四条命令可删除全部</span>
+yum -y remove mariadb-server-5.5.56-2.el7.x86_64 
+yum -y remove mariadb-5.5.56-2.el7.x86_64 
+yum -y remove mariadb-devel-5.5.56-2.el7.x86_64 
+yum -y remove mariadb-libs-5.5.56-2.el7.x86_64
+
+<span class="c1"># 但是用该条命令可以直接删除完毕</span>
+yum -y remove mariadb-libs.x86_64
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p>先去<code>/usr/local</code>下创建一个mysql文件，然后将root目录下的mysql解压到该文件中</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /usr/local
+mkdir mysql
+<span class="nb">cd</span> mysql
+
+tar -zxvf /root/mysql-5.7.34-linux-glibc2.12-x86_64.tar.gz -C ./
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><blockquote>
+<p>创建MYSQL⽤户和⽤户组</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">groupadd mysql 
+useradd -g mysql mysql
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p>同时新建<code>/usr/local/mysql/data</code>⽬录，后续备⽤</p>
+<blockquote>
+<p>修改MYSQL⽬录的归属⽤户</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">chown -R mysql:mysql ./
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><blockquote>
+<p>准备MYSQL的配置⽂件</p>
+</blockquote>
+<p>在<code>/etc</code>⽬录下新建<code>my.cnf</code>⽂件</p>
+<p>写入如下简化配置</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>mysql<span class="o">]</span>
+<span class="c1"># 设置mysql客户端默认字符集</span>
+default-character-set<span class="o">=</span>utf8
+<span class="nv">socket</span><span class="o">=</span>/var/lib/mysql/mysql.sock
+<span class="o">[</span>mysqld<span class="o">]</span>
+skip-name-resolve
+<span class="c1">#设置3306端⼝</span>
+<span class="nv">port</span> <span class="o">=</span> <span class="m">3306</span>
+<span class="nv">socket</span><span class="o">=</span>/var/lib/mysql/mysql.sock
+<span class="c1"># 设置mysql的安装⽬录</span>
+<span class="nv">basedir</span><span class="o">=</span>/usr/local/mysql
+<span class="c1"># 设置mysql数据库的数据的存放⽬录</span>
+<span class="nv">datadir</span><span class="o">=</span>/usr/local/mysql/data
+<span class="c1"># 允许最⼤连接数</span>
+<span class="nv">max_connections</span><span class="o">=</span><span class="m">200</span>
+<span class="c1"># 服务端使⽤的字符集默认为8⽐特编码的latin1字符集</span>
+character-set-server<span class="o">=</span>utf8
+<span class="c1"># 创建新表时将使⽤的默认存储引擎</span>
+default-storage-engine<span class="o">=</span>INNODB
+<span class="nv">lower_case_table_names</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">max_allowed_packet</span><span class="o">=</span>16M
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p>同时使⽤如下命令创建<code>/var/lib/mysql</code>⽬录，并修改权限：</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">mkdir /var/lib/mysql 
+chmod <span class="m">777</span> /var/lib/mysql
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><blockquote>
+<p>正式开始安装MYSQL</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /usr/local/mysql 
+./bin/mysqld --initialize --user<span class="o">=</span>mysql --basedir<span class="o">=</span>/usr/local/mysql -- <span class="nv">datadir</span><span class="o">=</span>/usr/local/mysql/data
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231038.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231038.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231038.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231038.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231038.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231038.png" /></p>
+<p><strong>注意：记住上⾯打印出来的<code>root</code>的密码，后⾯⾸次登陆需要使用</strong></p>
+<blockquote>
+<p>复制启动脚本到资源⽬录</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">cp ./support-files/mysql.server /etc/init.d/mysqld
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p>并修改<code>/etc/init.d/mysqld</code> ，修改其 <code>basedir</code> 和 <code>datadir</code> 为实际对应⽬录：</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">basedir</span><span class="o">=</span>/usr/local/mysql 
+<span class="nv">datadir</span><span class="o">=</span>/usr/local/mysql/data
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><blockquote>
+<p>设置MYSQL系统服务并开启⾃启</p>
+</blockquote>
+<p>首先增加<code>mysqld</code>服务控制脚本执⾏权限：</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">chmod +x /etc/init.d/mysqld
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p>同时将<code>mysqld</code>服务加⼊到系统服务：</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">chkconfig --add mysqld
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p>最后检查<code>mysqld</code>服务是否已经⽣效即可：</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">chkconfig --list mysqld
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705222254.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705222254.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705222254.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705222254.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705222254.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705222254.png" /></p>
+<p>这样就表明<code>mysqld</code>服务已经⽣效了，在2、3、4、5运⾏级别随系统启动⽽⾃动启动，以后可以直接使 ⽤<code>service</code>命令控制<code>mysql</code>的启停.</p>
+<p>直接执行</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">service mysqld start
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231424.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231424.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231424.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231424.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231424.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231424.png" /></p>
+<blockquote>
+<p>将Mysql的BIN目录加入到PATH环境变量</p>
+</blockquote>
+<p>这样方便以后任意目录上都可以使用mysql提供的命令</p>
+<p>编辑<code>/etc/profile</code>文件，在文件末尾处追加如下信息</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/local/mysql/bin
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p>最后执行如下命令使环境变量生效</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">source</span> /etc/profile
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><blockquote>
+<p>首次登录Mysql</p>
+</blockquote>
+<p>以root账户登录Mysql，使用上文安装完成提示的密码进行登入</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">mysql -u root -p
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231852.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231852.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231852.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231852.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231852.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231852.png" /></p>
+<blockquote>
+<p>接下来修改ROOT账户密码</p>
+</blockquote>
+<p>在mysql的命令执行如下命令即可，密码可以换成你想设置的密码即可</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">alter user user<span class="o">()</span> identified by <span class="s2">&#34;xn123456&#34;</span><span class="p">;</span>
+
+flush privileges<span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>设置远程主机登录</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">use mysql<span class="p">;</span>
+
+update user <span class="nb">set</span> user.Host<span class="o">=</span><span class="s1">&#39;%&#39;</span> where user.User<span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">;</span>
+
+flush privileges<span class="p">;</span>
+</code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
