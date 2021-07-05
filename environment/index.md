@@ -5,7 +5,7 @@
 
 ## 1、安装JDK
 
-去官网地址下载JDK：https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html
+去官网地址下载JDK：[https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
 
 第一步，先卸载掉服务器自带的openJDK，通过命令查看已安装的openJDK
 
@@ -60,9 +60,9 @@ javac
 
 ## 2、安装Node
 
-先去官网下载node：https://nodejs.org/en/
+先去官网下载node：[https://nodejs.org/en/](https://nodejs.org/en/)
 
-历史版本链接：https://nodejs.org/dist/
+历史版本链接：[https://nodejs.org/dist/](https://nodejs.org/dist/)
 
 先在`/usr/local`下创建一个node文件，然后将root目录下的node解压到当前node目录下
 
@@ -147,9 +147,9 @@ mvn -v
 
 ## 4、安装Redis
 
-去官网下载Redis：https://redis.io/download
+去官网下载Redis：[https://redis.io/download](https://redis.io/download)
 
-历史版本：http://download.redis.io/releases/
+历史版本：[http://download.redis.io/releases/](http://download.redis.io/releases/)
 
 先去`/usr/local`下创建一个redis文件，然后将root目录下的redis解压到该文件中
 
@@ -237,7 +237,7 @@ systemctl restart redis_6379.service
 
 ## 5、安装Nginx
 
-先去官网下载Nginx：http://nginx.org/en/download.html
+先去官网下载Nginx：[http://nginx.org/en/download.html](http://nginx.org/en/download.html)
 
 先去`/usr/local`下创建一个nginx文件，然后将root目录下的nginx解压到该文件中
 
