@@ -28,7 +28,7 @@ yum -y remove javapackages-tools.noarch
 然后将/root目录下的jdk解压到`/usr/local/java`路径下，java文件夹是你自己创建的
 
 ~~~bash
-cd /etc/local
+cd /usr/local
 mkdir java
 tar -zxvf /root/jdk-8u161-linux-x64.tar.gz -C ./
 ~~~
