@@ -256,18 +256,18 @@ yum -y install pcre-devel
 yum -y install openssl openssl-devel
 ~~~
 
-安装完成后，Nginx的可执⾏⽂件位置位于
-
-~~~bash
-/usr/local/nginx/sbin/nginx
-~~~
-
 >编译安装Nginx
 
 ~~~bash
 cd nginx-1.17.10 
 ./configure 
 make && make install
+~~~
+
+安装完成后，Nginx的可执⾏⽂件位置位于
+
+~~~bash
+/usr/local/nginx/sbin/nginx
 ~~~
 
 >启动Nginx
