@@ -525,6 +525,8 @@ update user set user.Host='%' where user.User='root';
 flush privileges;
 ~~~
 
+## 6、安装Tomcat
+
 ~~~bash
 ~~~
 
