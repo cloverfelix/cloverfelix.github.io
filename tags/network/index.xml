@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Network - 标签 - clover</title>
+        <link>https://cloverfelix.github.io/tags/network/</link>
+        <description>Network - 标签 - clover</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 07 Jul 2021 11:38:26 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/tags/network/" rel="self" type="application/rss+xml" /><item>
+    <title>Network</title>
+    <link>https://cloverfelix.github.io/network/</link>
+    <pubDate>Wed, 07 Jul 2021 11:38:26 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/network/</guid>
+    <description><![CDATA[计算机网络的概念 计算机网络：是一个将分散的、具有独立功能的计算机系统，通过通信设备与线路连接起来，由功能完善 的软件实现资源共享和信息传递的系]]></description>
+</item></channel>
+</rss>

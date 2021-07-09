@@ -729,3 +729,830 @@ OK
 - 在两边插入或者改动值，效率最高！中间元素，相对来说效率会低一点！
 
 可以当作**消息队列（Lpush，Rpop）**，也可以作为**栈（Lpush，Lpop）**
+
+## Set（集合）
+
+**set中的值是不能重复的！且插入值是随机分布的，并不是有序集合** 
+
+~~~bash
+127.0.0.1:6379> sadd myset "hello"					# sadd => set add set集合中添加元素
+(integer) 1
+127.0.0.1:6379> sadd myset "clover"
+(integer) 1
+127.0.0.1:6379> sadd myset "cloverfelix"
+(integer) 1
+127.0.0.1:6379> SMEMBERS myset					 # smembers => set members 查看指定set的所有值
+1) "hello"
+2) "clover"
+3) "cloverfelix"
+127.0.0.1:6379> sismember myset "felix"			# sismember => set exist member 判断某一个值是不是在set集合中
+(integer) 0
+127.0.0.1:6379> sismember myset "clover"	  # 存在集合中就返回0，不存在就返回值为1
+(integer) 1
+
+######################################
+127.0.0.1:6379> scard myset								# 获取set集合中元素的个数
+(integer) 3
+
+#####################################
+srem
+
+127.0.0.1:6379> srem myset "hello"				   # 移除set集合中的指定的元素
+(integer) 1
+127.0.0.1:6379> scard myset
+(integer) 2
+127.0.0.1:6379> SMEMBERS myset
+1) "clover"
+2) "cloverfelix"
+
+#####################################
+set 是无序不重复集合。抽随机！
+
+127.0.0.1:6379> SRANDMEMBER myset		# 随机抽选出一个元素
+"felix"
+127.0.0.1:6379> SRANDMEMBER myset
+"clover"
+127.0.0.1:6379> SRANDMEMBER myset
+"test"
+127.0.0.1:6379> SRANDMEMBER myset
+"clover"
+127.0.0.1:6379> SRANDMEMBER myset
+"felix"	
+127.0.0.1:6379> SRANDMEMBER myset 2		# 随机抽取指定个数的元素
+1) "felix"
+2) "test"
+127.0.0.1:6379> SRANDMEMBER myset 2
+1) "cloverfelix"
+2) "test"
+127.0.0.1:6379> SRANDMEMBER myset 2
+1) "felix"
+2) "test"
+
+#####################################
+删除指定的key，随机删除key
+
+127.0.0.1:6379> SMEMBERS myset
+1) "clover"
+2) "test"
+3) "felix"
+4) "cloverfelix"
+127.0.0.1:6379> spop myset					# 随机删除一些set集合中的元素
+"test"
+127.0.0.1:6379> spop myset
+"clover"
+127.0.0.1:6379> spop myset
+"cloverfelix"
+127.0.0.1:6379> SMEMBERS myset
+1) "felix"
+
+#####################################
+将一个指定的值，移动到另外一个set集合中！
+127.0.0.1:6379> sadd myset "hello"
+(integer) 1
+127.0.0.1:6379> sadd myset "world"
+(integer) 1
+127.0.0.1:6379> sadd myset "clover"
+(integer) 1
+127.0.0.1:6379> sadd myset2 "felix"
+(integer) 1
+127.0.0.1:6379> SMEMBERS myset
+1) "hello"
+2) "clover"
+3) "world"
+127.0.0.1:6379> SMOVE myset myset2 "clover"    # 将一个指定的值，移动到另外一个set集合中！，第一个参数是源地址，第二个参数是目的地址
+(integer) 1
+127.0.0.1:6379> SMEMBERS myset
+1) "hello"
+2) "world"
+127.0.0.1:6379> SMEMBERS myset2
+1) "clover"
+2) "felix"
+127.0.0.1:6379> 
+
+#####################################
+微博，B站，公共关注（并集）
+数字集合类：
+	- 差集
+	- 交集
+	- 并集
+	
+127.0.0.1:6379> sadd key1 a
+(integer) 1
+127.0.0.1:6379> sadd key1 b
+(integer) 1
+127.0.0.1:6379> sadd key1 c
+(integer) 1
+127.0.0.1:6379> sadd key2 c
+(integer) 1
+127.0.0.1:6379> sadd key2 d
+(integer) 1
+127.0.0.1:6379> sadd key2 e
+(integer) 1
+127.0.0.1:6379> SDIFF key1 key2						# 差集
+1) "a"
+2) "b"
+127.0.0.1:6379> SINTER key1 key2				  # 交集
+1) "c"
+127.0.0.1:6379> SUNION key1 key2			    # 并集
+1) "c"
+2) "b"
+3) "a"
+4) "d"
+5) "e"
+127.0.0.1:6379> 
+~~~
+
+## Hash（哈希）
+
+**Hash插入值是顺序插入，并且是可重复的！**
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210708104832.png)
+
+可以将其想象成一个Map集合！之前我们用的都是`Key-Value`，而我们这里是将`Value`换成`Map`，也就是
+
+`key-map`的形式，Map中存放的又是一个`key-value`，所以这个时候这个值是一个`Map`集合
+
+Hash本质和String类型没有太大区别，还是一个简单的key-value
+
+~~~bash
+127.0.0.1:6379> hset myhash test1 felix							# set一个具体的key-value
+OK
+127.0.0.1:6379> hset myhash test2 ryan
+OK
+127.0.0.1:6379> hget myhash test1								# 获取一个字段值
+"felix"
+127.0.0.1:6379> hget myhash test2
+"ryan"
+127.0.0.1:6379> hmset myhash test1 clover test2 cosy		# set多个具体的key-value
+OK
+127.0.0.1:6379> hmget myhash test1 test2							# 获取多个字段值
+1) "clover"
+2) "cosy"
+127.0.0.1:6379> hgetall myhash									# 获取全部数据，展示是key-value形式
+1) "test1"
+2) "clover"
+3) "test2"
+4) "cosy"
+127.0.0.1:6379> hdel myhash test2							# 删除指定key字段！对应的value值也就消失了！
+(integer) 1
+127.0.0.1:6379> hgetall myhash
+1) "test1"
+2) "clover"
+127.0.0.1:6379>
+########################################
+
+hlen  获取hash的长度
+127.0.0.1:6379> hmset myhash test2 felix
+OK
+127.0.0.1:6379> HGETALL myhash
+1) "test1"
+2) "clover"
+3) "test2"
+4) "felix"
+127.0.0.1:6379> HLEN myhash				# 获取hash表的字段数量
+(integer) 2
+127.0.0.1:6379> 
+
+########################################
+
+127.0.0.1:6379> HEXISTS myhash test0			# 判断hash中指定字段是否存在！
+(integer) 1
+127.0.0.1:6379> HEXISTS myhash test4
+(integer) 0
+127.0.0.1:6379> 
+
+########################################
+# 只获得所有filed
+# 只获得所有value
+127.0.0.1:6379> hkeys myhash
+1) "test1"
+2) "test2"
+3) "test3"
+4) "test0"
+127.0.0.1:6379> hvals myhash					# 这个地方使用的是简写
+1) "clover"
+2) "felix"
+3) "clover"
+4) "clover"
+127.0.0.1:6379> 
+
+######################################## 
+incr 自增	  decr	自减
+
+127.0.0.1:6379> hset myhash test4 5
+(integer) 1
+127.0.0.1:6379> HINCRBY myhash test4 1			# 自增加1
+(integer) 6
+127.0.0.1:6379> HINCRBY myhash test4 -1			# 这就相当于执行自减了
+(integer) 5
+127.0.0.1:6379> hsetnx myhash test5 clover		# 判断某一个值是否存在，不存在就创建一个，存在就返回0且不能设置
+(integer) 1
+127.0.0.1:6379> hsetnx myhash test5 felix
+(integer) 0
+127.0.0.1:6379> 
+~~~
+
+hash用来保存变更的数据，尤其是用户信息之类的，经常变更的信息！hash更适合于对象的存储，String
+
+更加适合字符串存储！
+ 
+ ## Zset（有序集合）
+ 
+ 在set基础上，增加了一个值
+ 
+ ~~~bash
+127.0.0.1:6379> zadd myset 1 one						# 添加一个值
+(integer) 1
+127.0.0.1:6379> zadd myset 2 two 3 three			# 添加多个值
+(integer) 2
+127.0.0.1:6379> ZRANGE myset 0 -1
+1) "one"
+2) "two"
+3) "three"
+127.0.0.1:6379> 
+
+##########################################
+排序是如何实现的呢
+
+127.0.0.1:6379> zadd salary 2500 xiaohong			# 添加三个用户	
+(integer) 1
+127.0.0.1:6379> zadd salary 5000 zhangsan
+(integer) 1
+127.0.0.1:6379> zadd salary 500 clover
+(integer) 1
+127.0.0.1:6379> ZRANGEBYSCORE salary -inf +inf		# 显示全部的用户！  从小到大排序
+1) "clover"
+2) "xiaohong"
+3) "zhangsan"
+127.0.0.1:6379> ZRANGEBYSCORE salary -inf +inf withscores		# 显示全部用户并且附带成绩
+1) "clover"
+2) "500"
+3) "xiaohong"
+4) "2500"
+5) "zhangsan"
+6) "5000"
+127.0.0.1:6379> ZRANGEBYSCORE salary -inf 2500 withscores		# 显示工资小于2500员工的升序排序
+1) "clover"
+2) "500"
+3) "xiaohong"
+4) "2500"
+
+# 此处 狂神将得由问题：RANGE命令是指从小到大，不能用于去执行从大到小，要执行从大到小，得使用ZREVRANGE
+127.0.0.1:6379> ZREVRANGE salary 0 -1
+1) "zhangsan"
+2) "xiaohong"
+3) "clover"
+127.0.0.1:6379> 
+
+########################################
+# 移除指定的元素rem
+
+127.0.0.1:6379> zrange salary 0 -1
+1) "clover"
+2) "xiaohong"
+3) "zhangsan"
+127.0.0.1:6379> zrem salary xiaohong			# 移除有序集合中指定的元素
+(integer) 1
+127.0.0.1:6379> zrange salary 0 -1
+1) "clover"
+2) "zhangsan"
+127.0.0.1:6379> zcard salary					# 获取有序集合中的个数
+(integer) 2
+
+#######################################
+ 127.0.0.1:6379> zadd myset 1 one 2 two 3 three
+(integer) 3
+127.0.0.1:6379> ZCOUNT myset 1 3				# 获取指定区间的成员数量
+(integer) 3
+127.0.0.1:6379> ZCOUNT myset 1 2
+(integer) 2
+127.0.0.1:6379> 
+~~~
+
+# 三种特殊数据类型
+
+## geospatial地理位置
+
+Redis的Geo在Redis3.2版本就推出了！这个功能可以推算地理位置的信息，两地之间的距离，方圆几里的人！
+
+只有六个命令
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709110013.png)
+
+>getadd
+
+~~~bash
+# getadd 添加地理位置
+# 规则：两级无法直接添加，我们一般会下载城市数据，直接通过java程序一次性导入！
+# 有效的经度从-180度到180度。
+# 有效的纬度从-85.05112878度到85.05112878度。
+# 当坐标位置超出上述指定范围时，该命令将会返回一个错误。
+    # 127.0.0.1:6379> geoadd china:city 39.90 116.40 beijin
+(error) ERR invalid longitude,latitude pair 39.900000,116.400000
+# 参数 key  值（）
+127.0.0.1:6379> geoadd china:city 116.40 39.90 beijing
+(integer) 1
+127.0.0.1:6379> geoadd china:city 121.47 31.23 shanghai
+(integer) 1
+127.0.0.1:6379> geoadd china:city 106.50 29.53 chongqing 114.05 22.52 shengzhen
+(integer) 2
+127.0.0.1:6379> geoadd china:city 120.16 30.24 hangzhou 108.96 34.26 xian
+(integer) 2
+~~~
+
+>getpos
+
+获得当前定位：一定是一个坐标值！
+
+~~~bash
+127.0.0.1:6379> GEOPOS china:city beijing  # 获取指定的城市的经度和纬度！
+1) 1) "116.39999896287918091"
+   2) "39.90000009167092543"
+127.0.0.1:6379> GEOPOS china:city beijing chongqi
+1) 1) "116.39999896287918091"
+   2) "39.90000009167092543"
+2) 1) "106.49999767541885376"
+   2) "29.52999957900659211"
+~~~
+
+>GEODIST
+
+两人之间的距离！
+
+单位：
+- m 表示单位为米。
+- km 表示单位为千米。
+- mi 表示单位为英里。
+- ft 表示单位为英尺。
+
+~~~bash
+127.0.0.1:6379> GEODIST china:city beijing shanghai km  # 查看上海到北京的直线距离
+"1067.3788"
+127.0.0.1:6379> GEODIST china:city beijing chongqi km   # 查看重庆到北京的直线距离
+"1464.0708"
+~~~
+
+>georadius以给定的经纬度为中心， 找出某一半径内的元素
+
+我附近的人？ （获得所有附近的人的地址，定位！）通过半径来查询！
+
+获得指定数量的人，200
+
+所有数据应该都录入：china:city ，才会让结果更加清晰！
+
+~~~bash
+127.0.0.1:6379> GEORADIUS china:city 110 30 1000 km  # 以110，30 这个经纬度为中心，寻
+找方圆1000km内的城市
+1) "chongqi"
+2) "xian"
+3) "shengzhen"
+4) "hangzhou"
+127.0.0.1:6379> GEORADIUS china:city 110 30 500 km
+1) "chongqi"
+2) "xian"
+127.0.0.1:6379> GEORADIUS china:city 110 30 500 km withdist  # 显示到中间距离的位置
+1) 1) "chongqi"
+   2) "341.9374"
+2) 1) "xian"
+   2) "483.8340"
+127.0.0.1:6379> GEORADIUS china:city 110 30 500 km withcoord  # 显示他人的定位信息
+1) 1) "chongqi"
+   2) 1) "106.49999767541885376"
+      2) "29.52999957900659211"
+2) 1) "xian"
+   2) 1) "108.96000176668167114"
+      2) "34.25999964418929977"
+127.0.0.1:6379> GEORADIUS china:city 110 30 500 km withdist withcoord count 1  # 筛选出指定的结果！
+1) 1) "chongqi"
+   2) "341.9374"
+   3) 1) "106.49999767541885376"
+      2) "29.52999957900659211"
+127.0.0.1:6379> GEORADIUS china:city 110 30 500 km withdist withcoord count 2
+1) 1) "chongqi"
+   2) "341.9374"
+   3) 1) "106.49999767541885376"
+      2) "29.52999957900659211"
+2) 1) "xian"
+   2) "483.8340"
+   3) 1) "108.96000176668167114"
+      2) "34.25999964418929977"
+~~~
+
+>GEORADIUSBYMEMBER 
+
+~~~bash
+# 找出位于指定元素周围的其他元素！
+127.0.0.1:6379> GEORADIUSBYMEMBER china:city beijing 1000 km
+1) "beijing"
+2) "xian"
+127.0.0.1:6379> GEORADIUSBYMEMBER china:city shanghai 400 km
+1) "hangzhou"
+2) "shanghai"
+~~~
+
+>GEOHASH 命令 - 返回一个或多个位置元素的 Geohash 表示
+
+该命令将返回11个字符的Geohash字符串!
+
+~~~bash
+# 将二维的经纬度转换为一维的字符串，如果两个字符串越接近，那么则距离越近！
+127.0.0.1:6379> geohash china:city beijing chongqi
+1) "wx4fbxxfke0"
+2) "wm5xzrybty0"
+~~~
+
+>GEO 底层的实现原理其实就是 `Zset`！我们可以使用`Zset`命令来操作geo！
+
+~~~bash
+127.0.0.1:6379> ZRANGE china:city 0 -1  # 查看地图中全部的元素
+1) "chongqi"
+2) "xian"
+3) "shengzhen"
+4) "hangzhou"
+5) "shanghai"
+6) "beijing"
+127.0.0.1:6379> zrem china:city beijing  # 移除指定元素！
+(integer) 1
+127.0.0.1:6379> ZRANGE china:city 0 -1
+1) "chongqi"
+2) "xian"
+3) "shengzhen"
+4) "hangzhou"
+5) "shanghai"
+~~~
+
+## Hyperloglog
+
+>什么是基数？
+
+A {1,3,5,7,8,7} 
+
+B{1,3,5,7,8}
+
+基数（是指一个集合中不重复的元素）= 5 可以接受误差！
+
+>简介
+
+Redis 2.8.9 版本就更新了 Hyperloglog 数据结构！
+
+Redis Hyperloglog  基数统计的算法！
+
+优点：占用的内存是固定，2^64 不同的元素的基数，只需要废 12KB内存！如果要从内存角度来比较的
+
+话 Hyperloglog 首选！
+
+**网页的 UV （一个人访问一个网站多次，但是还是算作一个人！）**
+
+传统的方式， set 保存用户的id，然后就可以统计 set 中的元素数量作为标准判断 !
+
+这个方式如果保存大量的用户id，就会比较麻烦！我们的目的是为了计数，而不是保存用户id；
+
+0.81% 错误率！ 统计UV任务，可以忽略不计的！
+
+>测试使用
+
+~~~bash
+127.0.0.1:6379> PFadd mykey a b c d e f g h i j   # 创建第一组元素 mykey
+(integer) 1
+127.0.0.1:6379> PFCOUNT mykey  # 统计 mykey 元素的基数数量
+(integer) 10
+127.0.0.1:6379> PFadd mykey2 i j z x c v b n m   # 创建第二组元素 mykey2
+(integer) 1
+127.0.0.1:6379> PFCOUNT mykey2
+(integer) 9
+127.0.0.1:6379> PFMERGE mykey3 mykey mykey2  # 合并两组 mykey mykey2 => mykey3 并集
+OK
+127.0.0.1:6379> PFCOUNT mykey3  # 看并集的数量！
+(integer) 15
+~~~
+
+如果允许容错，那么一定可以使用 Hyperloglog  ！
+
+如果不允许容错，就使用 set 或者自己的数据类型即可！
+
+## Bitmap
+
+为什么其他教程都不喜欢讲这些？这些在生活中或者开发中，都有十分多的应用场景，学习了，就是就是
+
+多一个思路！
+
+技多不压身！
+
+>位存储
+
+统计用户信息，活跃，不活跃！  登录 、 未登录！ 打卡，365打卡！ 两个状态的，都可以使用 
+Bitmap！
+
+Bitmap 位图，数据结构！ 都是操作二进制位来进行记录，就只有0 和 1 两个状态！
+365 天 = 365 bit   
+
+1字节 = 8bit    46 个字节左右！
+
+>测试
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709173121.png)
+
+一个方框代表一天，来统计一个星期的打卡情况
+
+使用bitmap 来记录 周一到周日的打卡！
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709173206.png)
+
+查看某一天是否打卡
+
+~~~bash
+127.0.0.1:6379> getbit sign 3
+(integer) 1
+127.0.0.1:6379> getbit sign 6
+(integer) 0
+~~~
+
+统计操作，统计 打卡的天数！
+
+~~~bash
+127.0.0.1:6379> bitcount sign  # 统计这周的打卡记录，就可以看到是否有全勤！
+(integer) 3
+~~~
+
+# 事务
+
+	要么同时成功，要么同时失败，原子性！
+
+Redis事务本质：一组命令的集合！一个事务中的所有命令都会被序列化，在事务执行过程中，会按照顺序
+
+执行！
+
+一次性（队列中的命令一次执行完）、顺序性、排他性（不允许别人干扰）！执行一系列命令！
+
+~~~bash
+-----------------  队列  set（命令）set（命令） set（命令）执行----------------------
+
+命令执行的过程中是不允许被打断的，出现了错误会去执行处理错误的机制
+~~~
+
+**Redis事务没有隔离级别的概念**
+
+所有的命令在事务中，并没有直接被执行！只有发起执行命令的时候才会执行！Exec（执行命令）
+
+**Redis单条命令是保存原子性的，但是redis事务不保证原子性！**
+
+redis的事务：
+
+- 开启事务（multi）
+
+- 命令入队（）
+
+- 执行命令（exec）
+
+>正常执行事务！
+
+~~~bash
+127.0.0.1:6379> multi    # 开启事务
+OK
+# 命令入队
+127.0.0.1:6379> set k1 v1
+QUEUED
+127.0.0.1:6379> set k2 v2
+QUEUED
+127.0.0.1:6379> get k2
+QUEUED
+127.0.0.1:6379> set k3 v3
+QUEUED
+127.0.0.1:6379> exec  # 执行事务
+1) OK
+2) OK
+3) "v2"
+4) OK
+127.0.0.1:6379> multi    # 开启事务
+OK
+# 命令入队
+127.0.0.1:6379> set k1 v1
+
+~~~
+
+> 放弃事务！
+
+~~~bash
+127.0.0.1:6379> multi   # 开启事务
+OK
+127.0.0.1:6379> set k1 v1
+QUEUED
+127.0.0.1:6379> set k2 v2
+QUEUED
+127.0.0.1:6379> set k4 v4
+QUEUED
+127.0.0.1:6379> DISCARD   # 取消事务
+OK
+127.0.0.1:6379> get k4  # 事务队列中命令都不会被执行！
+(nil)
+~~~
+
+>编译型异常（代码有问题！ 命令有错！） ，事务中所有的命令都不会被执行！
+
+~~~bash
+127.0.0.1:6379> multi
+OK
+127.0.0.1:6379> set k1 v1
+QUEUED
+127.0.0.1:6379> set k2 v2
+QUEUED
+127.0.0.1:6379> set k3 v3
+QUEUED
+127.0.0.1:6379> getset k3    # 错误的命令
+(error) ERR wrong number of arguments for 'getset' command
+127.0.0.1:6379> set k4 v4
+QUEUED
+127.0.0.1:6379> set k5 v5
+QUEUED
+127.0.0.1:6379> exec  # 执行事务报错！
+(error) EXECABORT Transaction discarded because of previous errors.
+127.0.0.1:6379> get k5  # 所有的命令都不会被执行！
+(nil)
+~~~
+
+>运行时异常（1/0）， 如果事务队列中存在语法性错误，那么执行命令的时候，其他命令是可以正常执行的，错误命令抛出异常！
+
+~~~bash
+127.0.0.1:6379> set k1 "v1"
+OK
+127.0.0.1:6379> multi
+OK
+127.0.0.1:6379> incr k1  # 会执行的时候失败！
+QUEUED
+127.0.0.1:6379> set k2 v2
+QUEUED
+127.0.0.1:6379> set k3 v3
+QUEUED
+127.0.0.1:6379> get k3
+QUEUED
+127.0.0.1:6379> exec
+1) (error) ERR value is not an integer or out of range  # 虽然第一条命令报错了，但是依旧正常执行成功了！
+2) OK
+3) OK
+4) "v3"
+127.0.0.1:6379> get k2
+"v2"
+127.0.0.1:6379> get k3
+"v3"
+~~~
+
+>监控！ Watch  （面试常问！）
+
+悲观锁：
+
+- 很悲观，认为什么时候都会出问题，无论做什么都会加锁！
+
+乐观锁：
+
+- 很乐观，认为什么时候都不会出问题，所以不会上锁！ 更新数据的时候去判断一下，在此期间是否
+有人修改过这个数据，
+
+- 获取version
+
+- 更新的时候比较 version
+
+>Redis测监视测试
+
+正常执行成功！
+
+~~~bash
+127.0.0.1:6379> set money 100
+OK
+127.0.0.1:6379> set out 0
+OK
+127.0.0.1:6379> watch money   # 监视 money 对象
+OK
+127.0.0.1:6379> multi     
+OK
+127.0.0.1:6379> DECRBY money 20
+QUEUED
+127.0.0.1:6379> INCRBY out 20
+QUEUED
+127.0.0.1:6379> exec		# 事务正常结束，数据期间没有发生变动，这个时候就正常执行成功！
+1) (integer) 80
+2) (integer) 20
+~~~
+
+测试多线程修改值 , 使用watch 可以当做redis的乐观锁操作！
+
+	Watch的生命周期，只是和事务关联的，一个事务执行完毕（执行了exec命令），相应的Watch的生命周期即将结束
+
+~~~bash
+127.0.0.1:6379> watch money   # 监视  money
+OK
+127.0.0.1:6379> multi
+OK
+127.0.0.1:6379> DECRBY money 10
+QUEUED
+127.0.0.1:6379> INCRBY out 10
+QUEUED
+127.0.0.1:6379> exec  # 执行之前，另外一个线程，修改了我们的值，这个时候，就会导致事务执行失败！
+(nil)
+
+
+################################
+这是第二条线程，在还没执行exec时，第二条线程插队修改了值
+127.0.0.1:6379> get money
+"80"
+127.0.0.1:6379> set money 1000
+OK
+~~~
+
+如果修改失败，获取最新的值就好
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709214828.png)
+
+# Jedis
+
+我们要使用 Java 来操作 Redis
+
+>什么是Jedis  是 Redis 官方推荐的 java连接开发工具！ 使用Java 操作Redis 中间件！如果你要使用 
+java操作redis，那么一定要对Jedis 十分的熟悉！
+
+>测试
+
+1、导入对应的依赖
+
+~~~bash
+<!--导入jedis包-->
+<dependencies>
+	<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+	<dependency>
+		<groupId>redis.clients</groupId>
+		<artifactId>jedis</artifactId>
+		<version>3.3.0</version>
+	</dependency>
+	<!--fastjson-->
+	<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+	<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>fastjson</artifactId>
+		<version>1.2.75</version>
+	</dependency>
+</dependencies>
+~~~
+
+2、编码测试：
+
+-连接数据库
+
+- 操作命令
+
+- 断开连接！
+
+~~~bash
+package com.clover;
+
+import redis.clients.jedis.Jedis;
+
+public class TestPing {
+    public static void main(String[] args) {
+        //1、new Jedis()对象即可
+        Jedis jedis = new Jedis("127.0.0.1",6379);
+        //jedis所有的命令就是我们之前学习的所有指令！所以之前的指令学习很重要
+
+        System.out.println(jedis.ping());
+    }
+}
+~~~
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709222245.png)
+
+## 常用的API
+
+String
+
+List
+
+Set
+
+Hash
+
+Zset
+
+~~~bash
+~~~
+
+~~~bash
+~~~
+
+~~~bash
+~~~
+
+~~~bash
+~~~
+
+~~~bash
+~~~
+
+~~~bash
+~~~
+
+~~~bash
+~~~
+
+~~~bash
+~~~
+
+~~~bash
+~~~

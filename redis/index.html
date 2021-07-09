@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/redis\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Redis","wordcount":  5399 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Redis","wordcount":  10414 ,
         "url": "https:\/\/cloverfelix.github.io\/redis\/","datePublished": "2021-07-04T16:36:09+08:00","dateModified": "2021-07-04T16:36:09+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>Redis</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5399 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10414 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 21 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -130,6 +130,19 @@
   <ul>
     <li><a href="#string字符串">String（字符串）</a></li>
     <li><a href="#list">List</a></li>
+    <li><a href="#set集合">Set（集合）</a></li>
+    <li><a href="#hash哈希">Hash（哈希）</a></li>
+    <li><a href="#zset有序集合">Zset（有序集合）</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#geospatial地理位置">geospatial地理位置</a></li>
+    <li><a href="#hyperloglog">Hyperloglog</a></li>
+    <li><a href="#bitmap">Bitmap</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#常用的api">常用的API</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="nosql概述">NoSQL概述</h1>
@@ -1332,7 +1345,1439 @@ OK
 </li>
 </ul>
 <p>可以当作<strong>消息队列（Lpush，Rpop）</strong>，也可以作为<strong>栈（Lpush，Lpop）</strong></p>
-</div><div class="post-footer" id="post-footer">
+<h2 id="set集合">Set（集合）</h2>
+<p><strong>set中的值是不能重复的！且插入值是随机分布的，并不是有序集合</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; sadd myset <span class="s2">&#34;hello&#34;</span>					<span class="c1"># sadd =&gt; set add set集合中添加元素</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; sadd myset <span class="s2">&#34;clover&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; sadd myset <span class="s2">&#34;cloverfelix&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; SMEMBERS myset					 <span class="c1"># smembers =&gt; set members 查看指定set的所有值</span>
+1<span class="o">)</span> <span class="s2">&#34;hello&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;cloverfelix&#34;</span>
+127.0.0.1:6379&gt; sismember myset <span class="s2">&#34;felix&#34;</span>			<span class="c1"># sismember =&gt; set exist member 判断某一个值是不是在set集合中</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">0</span>
+127.0.0.1:6379&gt; sismember myset <span class="s2">&#34;clover&#34;</span>	  <span class="c1"># 存在集合中就返回0，不存在就返回值为1</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+
+<span class="c1">######################################</span>
+127.0.0.1:6379&gt; scard myset								<span class="c1"># 获取set集合中元素的个数</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+
+<span class="c1">#####################################</span>
+srem
+
+127.0.0.1:6379&gt; srem myset <span class="s2">&#34;hello&#34;</span>				   <span class="c1"># 移除set集合中的指定的元素</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; scard myset
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; SMEMBERS myset
+1<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;cloverfelix&#34;</span>
+
+<span class="c1">#####################################</span>
+<span class="nb">set</span> 是无序不重复集合。抽随机！
+
+127.0.0.1:6379&gt; SRANDMEMBER myset		<span class="c1"># 随机抽选出一个元素</span>
+<span class="s2">&#34;felix&#34;</span>
+127.0.0.1:6379&gt; SRANDMEMBER myset
+<span class="s2">&#34;clover&#34;</span>
+127.0.0.1:6379&gt; SRANDMEMBER myset
+<span class="s2">&#34;test&#34;</span>
+127.0.0.1:6379&gt; SRANDMEMBER myset
+<span class="s2">&#34;clover&#34;</span>
+127.0.0.1:6379&gt; SRANDMEMBER myset
+<span class="s2">&#34;felix&#34;</span>	
+127.0.0.1:6379&gt; SRANDMEMBER myset 2		<span class="c1"># 随机抽取指定个数的元素</span>
+1<span class="o">)</span> <span class="s2">&#34;felix&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;test&#34;</span>
+127.0.0.1:6379&gt; SRANDMEMBER myset <span class="m">2</span>
+1<span class="o">)</span> <span class="s2">&#34;cloverfelix&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;test&#34;</span>
+127.0.0.1:6379&gt; SRANDMEMBER myset <span class="m">2</span>
+1<span class="o">)</span> <span class="s2">&#34;felix&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;test&#34;</span>
+
+<span class="c1">#####################################</span>
+删除指定的key，随机删除key
+
+127.0.0.1:6379&gt; SMEMBERS myset
+1<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;test&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;felix&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;cloverfelix&#34;</span>
+127.0.0.1:6379&gt; spop myset					<span class="c1"># 随机删除一些set集合中的元素</span>
+<span class="s2">&#34;test&#34;</span>
+127.0.0.1:6379&gt; spop myset
+<span class="s2">&#34;clover&#34;</span>
+127.0.0.1:6379&gt; spop myset
+<span class="s2">&#34;cloverfelix&#34;</span>
+127.0.0.1:6379&gt; SMEMBERS myset
+1<span class="o">)</span> <span class="s2">&#34;felix&#34;</span>
+
+<span class="c1">#####################################</span>
+将一个指定的值，移动到另外一个set集合中！
+127.0.0.1:6379&gt; sadd myset <span class="s2">&#34;hello&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; sadd myset <span class="s2">&#34;world&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; sadd myset <span class="s2">&#34;clover&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; sadd myset2 <span class="s2">&#34;felix&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; SMEMBERS myset
+1<span class="o">)</span> <span class="s2">&#34;hello&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;world&#34;</span>
+127.0.0.1:6379&gt; SMOVE myset myset2 <span class="s2">&#34;clover&#34;</span>    <span class="c1"># 将一个指定的值，移动到另外一个set集合中！，第一个参数是源地址，第二个参数是目的地址</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; SMEMBERS myset
+1<span class="o">)</span> <span class="s2">&#34;hello&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;world&#34;</span>
+127.0.0.1:6379&gt; SMEMBERS myset2
+1<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;felix&#34;</span>
+127.0.0.1:6379&gt; 
+
+<span class="c1">#####################################</span>
+微博，B站，公共关注（并集）
+数字集合类：
+	- 差集
+	- 交集
+	- 并集
+	
+127.0.0.1:6379&gt; sadd key1 a
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; sadd key1 b
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; sadd key1 c
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; sadd key2 c
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; sadd key2 d
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; sadd key2 e
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; SDIFF key1 key2						<span class="c1"># 差集</span>
+1<span class="o">)</span> <span class="s2">&#34;a&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;b&#34;</span>
+127.0.0.1:6379&gt; SINTER key1 key2				  <span class="c1"># 交集</span>
+1<span class="o">)</span> <span class="s2">&#34;c&#34;</span>
+127.0.0.1:6379&gt; SUNION key1 key2			    <span class="c1"># 并集</span>
+1<span class="o">)</span> <span class="s2">&#34;c&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;b&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;a&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;d&#34;</span>
+5<span class="o">)</span> <span class="s2">&#34;e&#34;</span>
+127.0.0.1:6379&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="hash哈希">Hash（哈希）</h2>
+<p><strong>Hash插入值是顺序插入，并且是可重复的！</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210708104832.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210708104832.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210708104832.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210708104832.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210708104832.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210708104832.png" /></p>
+<p>可以将其想象成一个Map集合！之前我们用的都是<code>Key-Value</code>，而我们这里是将<code>Value</code>换成<code>Map</code>，也就是</p>
+<p><code>key-map</code>的形式，Map中存放的又是一个<code>key-value</code>，所以这个时候这个值是一个<code>Map</code>集合</p>
+<p>Hash本质和String类型没有太大区别，还是一个简单的key-value</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; hset myhash test1 felix							<span class="c1"># set一个具体的key-value</span>
+OK
+127.0.0.1:6379&gt; hset myhash test2 ryan
+OK
+127.0.0.1:6379&gt; hget myhash test1								<span class="c1"># 获取一个字段值</span>
+<span class="s2">&#34;felix&#34;</span>
+127.0.0.1:6379&gt; hget myhash test2
+<span class="s2">&#34;ryan&#34;</span>
+127.0.0.1:6379&gt; hmset myhash test1 clover test2 cosy		<span class="c1"># set多个具体的key-value</span>
+OK
+127.0.0.1:6379&gt; hmget myhash test1 test2							<span class="c1"># 获取多个字段值</span>
+1<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;cosy&#34;</span>
+127.0.0.1:6379&gt; hgetall myhash									<span class="c1"># 获取全部数据，展示是key-value形式</span>
+1<span class="o">)</span> <span class="s2">&#34;test1&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;test2&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;cosy&#34;</span>
+127.0.0.1:6379&gt; hdel myhash test2							<span class="c1"># 删除指定key字段！对应的value值也就消失了！</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; hgetall myhash
+1<span class="o">)</span> <span class="s2">&#34;test1&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+127.0.0.1:6379&gt;
+<span class="c1">########################################</span>
+
+hlen  获取hash的长度
+127.0.0.1:6379&gt; hmset myhash test2 felix
+OK
+127.0.0.1:6379&gt; HGETALL myhash
+1<span class="o">)</span> <span class="s2">&#34;test1&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;test2&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;felix&#34;</span>
+127.0.0.1:6379&gt; HLEN myhash				<span class="c1"># 获取hash表的字段数量</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; 
+
+<span class="c1">########################################</span>
+
+127.0.0.1:6379&gt; HEXISTS myhash test0			<span class="c1"># 判断hash中指定字段是否存在！</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; HEXISTS myhash test4
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">0</span>
+127.0.0.1:6379&gt; 
+
+<span class="c1">########################################</span>
+<span class="c1"># 只获得所有filed</span>
+<span class="c1"># 只获得所有value</span>
+127.0.0.1:6379&gt; hkeys myhash
+1<span class="o">)</span> <span class="s2">&#34;test1&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;test2&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;test3&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;test0&#34;</span>
+127.0.0.1:6379&gt; hvals myhash					<span class="c1"># 这个地方使用的是简写</span>
+1<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;felix&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+127.0.0.1:6379&gt; 
+
+<span class="c1">######################################## </span>
+incr 自增	  decr	自减
+
+127.0.0.1:6379&gt; hset myhash test4 <span class="m">5</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; HINCRBY myhash test4 1			<span class="c1"># 自增加1</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">6</span>
+127.0.0.1:6379&gt; HINCRBY myhash test4 -1			<span class="c1"># 这就相当于执行自减了</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">5</span>
+127.0.0.1:6379&gt; hsetnx myhash test5 clover		<span class="c1"># 判断某一个值是否存在，不存在就创建一个，存在就返回0且不能设置</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; hsetnx myhash test5 felix
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">0</span>
+127.0.0.1:6379&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p>hash用来保存变更的数据，尤其是用户信息之类的，经常变更的信息！hash更适合于对象的存储，String</p>
+<p>更加适合字符串存储！</p>
+<h2 id="zset有序集合">Zset（有序集合）</h2>
+<p>在set基础上，增加了一个值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; zadd myset <span class="m">1</span> one						<span class="c1"># 添加一个值</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; zadd myset <span class="m">2</span> two <span class="m">3</span> three			<span class="c1"># 添加多个值</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; ZRANGE myset <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;one&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;two&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;three&#34;</span>
+127.0.0.1:6379&gt; 
+
+<span class="c1">##########################################</span>
+排序是如何实现的呢
+
+127.0.0.1:6379&gt; zadd salary <span class="m">2500</span> xiaohong			<span class="c1"># 添加三个用户	</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; zadd salary <span class="m">5000</span> zhangsan
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; zadd salary <span class="m">500</span> clover
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; ZRANGEBYSCORE salary -inf +inf		<span class="c1"># 显示全部的用户！  从小到大排序</span>
+1<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;xiaohong&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;zhangsan&#34;</span>
+127.0.0.1:6379&gt; ZRANGEBYSCORE salary -inf +inf withscores		<span class="c1"># 显示全部用户并且附带成绩</span>
+1<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;500&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;xiaohong&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;2500&#34;</span>
+5<span class="o">)</span> <span class="s2">&#34;zhangsan&#34;</span>
+6<span class="o">)</span> <span class="s2">&#34;5000&#34;</span>
+127.0.0.1:6379&gt; ZRANGEBYSCORE salary -inf <span class="m">2500</span> withscores		<span class="c1"># 显示工资小于2500员工的升序排序</span>
+1<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;500&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;xiaohong&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;2500&#34;</span>
+
+<span class="c1"># 此处 狂神将得由问题：RANGE命令是指从小到大，不能用于去执行从大到小，要执行从大到小，得使用ZREVRANGE</span>
+127.0.0.1:6379&gt; ZREVRANGE salary <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;zhangsan&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;xiaohong&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+127.0.0.1:6379&gt; 
+
+<span class="c1">########################################</span>
+<span class="c1"># 移除指定的元素rem</span>
+
+127.0.0.1:6379&gt; zrange salary <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;xiaohong&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;zhangsan&#34;</span>
+127.0.0.1:6379&gt; zrem salary xiaohong			<span class="c1"># 移除有序集合中指定的元素</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; zrange salary <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;zhangsan&#34;</span>
+127.0.0.1:6379&gt; zcard salary					<span class="c1"># 获取有序集合中的个数</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+
+<span class="c1">#######################################</span>
+127.0.0.1:6379&gt; zadd myset <span class="m">1</span> one <span class="m">2</span> two <span class="m">3</span> three
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; ZCOUNT myset <span class="m">1</span> 3				<span class="c1"># 获取指定区间的成员数量</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; ZCOUNT myset <span class="m">1</span> <span class="m">2</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="三种特殊数据类型">三种特殊数据类型</h1>
+<h2 id="geospatial地理位置">geospatial地理位置</h2>
+<p>Redis的Geo在Redis3.2版本就推出了！这个功能可以推算地理位置的信息，两地之间的距离，方圆几里的人！</p>
+<p>只有六个命令</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709110013.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709110013.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709110013.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709110013.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709110013.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709110013.png" /></p>
+<blockquote>
+<p>getadd</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># getadd 添加地理位置</span>
+<span class="c1"># 规则：两级无法直接添加，我们一般会下载城市数据，直接通过java程序一次性导入！</span>
+<span class="c1"># 有效的经度从-180度到180度。</span>
+<span class="c1"># 有效的纬度从-85.05112878度到85.05112878度。</span>
+<span class="c1"># 当坐标位置超出上述指定范围时，该命令将会返回一个错误。</span>
+    <span class="c1"># 127.0.0.1:6379&gt; geoadd china:city 39.90 116.40 beijin</span>
+<span class="o">(</span>error<span class="o">)</span> ERR invalid longitude,latitude pair 39.900000,116.400000
+<span class="c1"># 参数 key  值（）</span>
+127.0.0.1:6379&gt; geoadd china:city 116.40 39.90 beijing
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; geoadd china:city 121.47 31.23 shanghai
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; geoadd china:city 106.50 29.53 chongqing 114.05 22.52 shengzhen
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; geoadd china:city 120.16 30.24 hangzhou 108.96 34.26 xian
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>getpos</p>
+</blockquote>
+<p>获得当前定位：一定是一个坐标值！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; GEOPOS china:city beijing  <span class="c1"># 获取指定的城市的经度和纬度！</span>
+1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;116.39999896287918091&#34;</span>
+   2<span class="o">)</span> <span class="s2">&#34;39.90000009167092543&#34;</span>
+127.0.0.1:6379&gt; GEOPOS china:city beijing chongqi
+1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;116.39999896287918091&#34;</span>
+   2<span class="o">)</span> <span class="s2">&#34;39.90000009167092543&#34;</span>
+2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;106.49999767541885376&#34;</span>
+   2<span class="o">)</span> <span class="s2">&#34;29.52999957900659211&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>GEODIST</p>
+</blockquote>
+<p>两人之间的距离！</p>
+<p>单位：</p>
+<ul>
+<li>m 表示单位为米。</li>
+<li>km 表示单位为千米。</li>
+<li>mi 表示单位为英里。</li>
+<li>ft 表示单位为英尺。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; GEODIST china:city beijing shanghai km  <span class="c1"># 查看上海到北京的直线距离</span>
+<span class="s2">&#34;1067.3788&#34;</span>
+127.0.0.1:6379&gt; GEODIST china:city beijing chongqi km   <span class="c1"># 查看重庆到北京的直线距离</span>
+<span class="s2">&#34;1464.0708&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>georadius以给定的经纬度为中心， 找出某一半径内的元素</p>
+</blockquote>
+<p>我附近的人？ （获得所有附近的人的地址，定位！）通过半径来查询！</p>
+<p>获得指定数量的人，200</p>
+<p>所有数据应该都录入：china:city ，才会让结果更加清晰！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; GEORADIUS china:city <span class="m">110</span> <span class="m">30</span> <span class="m">1000</span> km  <span class="c1"># 以110，30 这个经纬度为中心，寻</span>
+找方圆1000km内的城市
+1<span class="o">)</span> <span class="s2">&#34;chongqi&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;xian&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;shengzhen&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;hangzhou&#34;</span>
+127.0.0.1:6379&gt; GEORADIUS china:city <span class="m">110</span> <span class="m">30</span> <span class="m">500</span> km
+1<span class="o">)</span> <span class="s2">&#34;chongqi&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;xian&#34;</span>
+127.0.0.1:6379&gt; GEORADIUS china:city <span class="m">110</span> <span class="m">30</span> <span class="m">500</span> km withdist  <span class="c1"># 显示到中间距离的位置</span>
+1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;chongqi&#34;</span>
+   2<span class="o">)</span> <span class="s2">&#34;341.9374&#34;</span>
+2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;xian&#34;</span>
+   2<span class="o">)</span> <span class="s2">&#34;483.8340&#34;</span>
+127.0.0.1:6379&gt; GEORADIUS china:city <span class="m">110</span> <span class="m">30</span> <span class="m">500</span> km withcoord  <span class="c1"># 显示他人的定位信息</span>
+1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;chongqi&#34;</span>
+   2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;106.49999767541885376&#34;</span>
+      2<span class="o">)</span> <span class="s2">&#34;29.52999957900659211&#34;</span>
+2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;xian&#34;</span>
+   2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;108.96000176668167114&#34;</span>
+      2<span class="o">)</span> <span class="s2">&#34;34.25999964418929977&#34;</span>
+127.0.0.1:6379&gt; GEORADIUS china:city <span class="m">110</span> <span class="m">30</span> <span class="m">500</span> km withdist withcoord count <span class="m">1</span>  <span class="c1"># 筛选出指定的结果！</span>
+1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;chongqi&#34;</span>
+   2<span class="o">)</span> <span class="s2">&#34;341.9374&#34;</span>
+   3<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;106.49999767541885376&#34;</span>
+      2<span class="o">)</span> <span class="s2">&#34;29.52999957900659211&#34;</span>
+127.0.0.1:6379&gt; GEORADIUS china:city <span class="m">110</span> <span class="m">30</span> <span class="m">500</span> km withdist withcoord count <span class="m">2</span>
+1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;chongqi&#34;</span>
+   2<span class="o">)</span> <span class="s2">&#34;341.9374&#34;</span>
+   3<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;106.49999767541885376&#34;</span>
+      2<span class="o">)</span> <span class="s2">&#34;29.52999957900659211&#34;</span>
+2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;xian&#34;</span>
+   2<span class="o">)</span> <span class="s2">&#34;483.8340&#34;</span>
+   3<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;108.96000176668167114&#34;</span>
+      2<span class="o">)</span> <span class="s2">&#34;34.25999964418929977&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>GEORADIUSBYMEMBER</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 找出位于指定元素周围的其他元素！</span>
+127.0.0.1:6379&gt; GEORADIUSBYMEMBER china:city beijing <span class="m">1000</span> km
+1<span class="o">)</span> <span class="s2">&#34;beijing&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;xian&#34;</span>
+127.0.0.1:6379&gt; GEORADIUSBYMEMBER china:city shanghai <span class="m">400</span> km
+1<span class="o">)</span> <span class="s2">&#34;hangzhou&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;shanghai&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>GEOHASH 命令 - 返回一个或多个位置元素的 Geohash 表示</p>
+</blockquote>
+<p>该命令将返回11个字符的Geohash字符串!</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 将二维的经纬度转换为一维的字符串，如果两个字符串越接近，那么则距离越近！</span>
+127.0.0.1:6379&gt; geohash china:city beijing chongqi
+1<span class="o">)</span> <span class="s2">&#34;wx4fbxxfke0&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;wm5xzrybty0&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>GEO 底层的实现原理其实就是 <code>Zset</code>！我们可以使用<code>Zset</code>命令来操作geo！</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; ZRANGE china:city <span class="m">0</span> -1  <span class="c1"># 查看地图中全部的元素</span>
+1<span class="o">)</span> <span class="s2">&#34;chongqi&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;xian&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;shengzhen&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;hangzhou&#34;</span>
+5<span class="o">)</span> <span class="s2">&#34;shanghai&#34;</span>
+6<span class="o">)</span> <span class="s2">&#34;beijing&#34;</span>
+127.0.0.1:6379&gt; zrem china:city beijing  <span class="c1"># 移除指定元素！</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; ZRANGE china:city <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;chongqi&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;xian&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;shengzhen&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;hangzhou&#34;</span>
+5<span class="o">)</span> <span class="s2">&#34;shanghai&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="hyperloglog">Hyperloglog</h2>
+<blockquote>
+<p>什么是基数？</p>
+</blockquote>
+<p>A {1,3,5,7,8,7}</p>
+<p>B{1,3,5,7,8}</p>
+<p>基数（是指一个集合中不重复的元素）= 5 可以接受误差！</p>
+<blockquote>
+<p>简介</p>
+</blockquote>
+<p>Redis 2.8.9 版本就更新了 Hyperloglog 数据结构！</p>
+<p>Redis Hyperloglog  基数统计的算法！</p>
+<p>优点：占用的内存是固定，2^64 不同的元素的基数，只需要废 12KB内存！如果要从内存角度来比较的</p>
+<p>话 Hyperloglog 首选！</p>
+<p><strong>网页的 UV （一个人访问一个网站多次，但是还是算作一个人！）</strong></p>
+<p>传统的方式， set 保存用户的id，然后就可以统计 set 中的元素数量作为标准判断 !</p>
+<p>这个方式如果保存大量的用户id，就会比较麻烦！我们的目的是为了计数，而不是保存用户id；</p>
+<p>0.81% 错误率！ 统计UV任务，可以忽略不计的！</p>
+<blockquote>
+<p>测试使用</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; PFadd mykey a b c d e f g h i j   <span class="c1"># 创建第一组元素 mykey</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; PFCOUNT mykey  <span class="c1"># 统计 mykey 元素的基数数量</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">10</span>
+127.0.0.1:6379&gt; PFadd mykey2 i j z x c v b n m   <span class="c1"># 创建第二组元素 mykey2</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; PFCOUNT mykey2
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">9</span>
+127.0.0.1:6379&gt; PFMERGE mykey3 mykey mykey2  <span class="c1"># 合并两组 mykey mykey2 =&gt; mykey3 并集</span>
+OK
+127.0.0.1:6379&gt; PFCOUNT mykey3  <span class="c1"># 看并集的数量！</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">15</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果允许容错，那么一定可以使用 Hyperloglog  ！</p>
+<p>如果不允许容错，就使用 set 或者自己的数据类型即可！</p>
+<h2 id="bitmap">Bitmap</h2>
+<p>为什么其他教程都不喜欢讲这些？这些在生活中或者开发中，都有十分多的应用场景，学习了，就是就是</p>
+<p>多一个思路！</p>
+<p>技多不压身！</p>
+<blockquote>
+<p>位存储</p>
+</blockquote>
+<p>统计用户信息，活跃，不活跃！  登录 、 未登录！ 打卡，365打卡！ 两个状态的，都可以使用
+Bitmap！</p>
+<p>Bitmap 位图，数据结构！ 都是操作二进制位来进行记录，就只有0 和 1 两个状态！
+365 天 = 365 bit</p>
+<p>1字节 = 8bit    46 个字节左右！</p>
+<blockquote>
+<p>测试</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709173121.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709173121.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709173121.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709173121.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709173121.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709173121.png" /></p>
+<p>一个方框代表一天，来统计一个星期的打卡情况</p>
+<p>使用bitmap 来记录 周一到周日的打卡！</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709173206.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709173206.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709173206.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709173206.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709173206.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709173206.png" /></p>
+<p>查看某一天是否打卡</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; getbit sign <span class="m">3</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; getbit sign <span class="m">6</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">0</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>统计操作，统计 打卡的天数！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; bitcount sign  <span class="c1"># 统计这周的打卡记录，就可以看到是否有全勤！</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="事务">事务</h1>
+<pre><code>要么同时成功，要么同时失败，原子性！
+</code></pre>
+<p>Redis事务本质：一组命令的集合！一个事务中的所有命令都会被序列化，在事务执行过程中，会按照顺序</p>
+<p>执行！</p>
+<p>一次性（队列中的命令一次执行完）、顺序性、排他性（不允许别人干扰）！执行一系列命令！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">-----------------  队列  set（命令）set（命令） set（命令）执行----------------------
+
+命令执行的过程中是不允许被打断的，出现了错误会去执行处理错误的机制
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>Redis事务没有隔离级别的概念</strong></p>
+<p>所有的命令在事务中，并没有直接被执行！只有发起执行命令的时候才会执行！Exec（执行命令）</p>
+<p><strong>Redis单条命令是保存原子性的，但是redis事务不保证原子性！</strong></p>
+<p>redis的事务：</p>
+<ul>
+<li>
+<p>开启事务（multi）</p>
+</li>
+<li>
+<p>命令入队（）</p>
+</li>
+<li>
+<p>执行命令（exec）</p>
+</li>
+</ul>
+<blockquote>
+<p>正常执行事务！</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; multi    <span class="c1"># 开启事务</span>
+OK
+<span class="c1"># 命令入队</span>
+127.0.0.1:6379&gt; <span class="nb">set</span> k1 v1
+QUEUED
+127.0.0.1:6379&gt; <span class="nb">set</span> k2 v2
+QUEUED
+127.0.0.1:6379&gt; get k2
+QUEUED
+127.0.0.1:6379&gt; <span class="nb">set</span> k3 v3
+QUEUED
+127.0.0.1:6379&gt; <span class="nb">exec</span>  <span class="c1"># 执行事务</span>
+1<span class="o">)</span> OK
+2<span class="o">)</span> OK
+3<span class="o">)</span> <span class="s2">&#34;v2&#34;</span>
+4<span class="o">)</span> OK
+127.0.0.1:6379&gt; multi    <span class="c1"># 开启事务</span>
+OK
+<span class="c1"># 命令入队</span>
+127.0.0.1:6379&gt; <span class="nb">set</span> k1 v1
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>放弃事务！</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; multi   <span class="c1"># 开启事务</span>
+OK
+127.0.0.1:6379&gt; <span class="nb">set</span> k1 v1
+QUEUED
+127.0.0.1:6379&gt; <span class="nb">set</span> k2 v2
+QUEUED
+127.0.0.1:6379&gt; <span class="nb">set</span> k4 v4
+QUEUED
+127.0.0.1:6379&gt; DISCARD   <span class="c1"># 取消事务</span>
+OK
+127.0.0.1:6379&gt; get k4  <span class="c1"># 事务队列中命令都不会被执行！</span>
+<span class="o">(</span>nil<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>编译型异常（代码有问题！ 命令有错！） ，事务中所有的命令都不会被执行！</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; multi
+OK
+127.0.0.1:6379&gt; <span class="nb">set</span> k1 v1
+QUEUED
+127.0.0.1:6379&gt; <span class="nb">set</span> k2 v2
+QUEUED
+127.0.0.1:6379&gt; <span class="nb">set</span> k3 v3
+QUEUED
+127.0.0.1:6379&gt; getset k3    <span class="c1"># 错误的命令</span>
+<span class="o">(</span>error<span class="o">)</span> ERR wrong number of arguments <span class="k">for</span> <span class="s1">&#39;getset&#39;</span> <span class="nb">command</span>
+127.0.0.1:6379&gt; <span class="nb">set</span> k4 v4
+QUEUED
+127.0.0.1:6379&gt; <span class="nb">set</span> k5 v5
+QUEUED
+127.0.0.1:6379&gt; <span class="nb">exec</span>  <span class="c1"># 执行事务报错！</span>
+<span class="o">(</span>error<span class="o">)</span> EXECABORT Transaction discarded because of previous errors.
+127.0.0.1:6379&gt; get k5  <span class="c1"># 所有的命令都不会被执行！</span>
+<span class="o">(</span>nil<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>运行时异常（1/0）， 如果事务队列中存在语法性错误，那么执行命令的时候，其他命令是可以正常执行的，错误命令抛出异常！</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; <span class="nb">set</span> k1 <span class="s2">&#34;v1&#34;</span>
+OK
+127.0.0.1:6379&gt; multi
+OK
+127.0.0.1:6379&gt; incr k1  <span class="c1"># 会执行的时候失败！</span>
+QUEUED
+127.0.0.1:6379&gt; <span class="nb">set</span> k2 v2
+QUEUED
+127.0.0.1:6379&gt; <span class="nb">set</span> k3 v3
+QUEUED
+127.0.0.1:6379&gt; get k3
+QUEUED
+127.0.0.1:6379&gt; <span class="nb">exec</span>
+1<span class="o">)</span> <span class="o">(</span>error<span class="o">)</span> ERR value is not an integer or out of range  <span class="c1"># 虽然第一条命令报错了，但是依旧正常执行成功了！</span>
+2<span class="o">)</span> OK
+3<span class="o">)</span> OK
+4<span class="o">)</span> <span class="s2">&#34;v3&#34;</span>
+127.0.0.1:6379&gt; get k2
+<span class="s2">&#34;v2&#34;</span>
+127.0.0.1:6379&gt; get k3
+<span class="s2">&#34;v3&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>监控！ Watch  （面试常问！）</p>
+</blockquote>
+<p>悲观锁：</p>
+<ul>
+<li>很悲观，认为什么时候都会出问题，无论做什么都会加锁！</li>
+</ul>
+<p>乐观锁：</p>
+<ul>
+<li>
+<p>很乐观，认为什么时候都不会出问题，所以不会上锁！ 更新数据的时候去判断一下，在此期间是否
+有人修改过这个数据，</p>
+</li>
+<li>
+<p>获取version</p>
+</li>
+<li>
+<p>更新的时候比较 version</p>
+</li>
+</ul>
+<blockquote>
+<p>Redis测监视测试</p>
+</blockquote>
+<p>正常执行成功！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; <span class="nb">set</span> money <span class="m">100</span>
+OK
+127.0.0.1:6379&gt; <span class="nb">set</span> out <span class="m">0</span>
+OK
+127.0.0.1:6379&gt; watch money   <span class="c1"># 监视 money 对象</span>
+OK
+127.0.0.1:6379&gt; multi     
+OK
+127.0.0.1:6379&gt; DECRBY money <span class="m">20</span>
+QUEUED
+127.0.0.1:6379&gt; INCRBY out <span class="m">20</span>
+QUEUED
+127.0.0.1:6379&gt; <span class="nb">exec</span>		<span class="c1"># 事务正常结束，数据期间没有发生变动，这个时候就正常执行成功！</span>
+1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">80</span>
+2<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">20</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>测试多线程修改值 , 使用watch 可以当做redis的乐观锁操作！</p>
+<pre><code>Watch的生命周期，只是和事务关联的，一个事务执行完毕（执行了exec命令），相应的Watch的生命周期即将结束
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; watch money   <span class="c1"># 监视  money</span>
+OK
+127.0.0.1:6379&gt; multi
+OK
+127.0.0.1:6379&gt; DECRBY money <span class="m">10</span>
+QUEUED
+127.0.0.1:6379&gt; INCRBY out <span class="m">10</span>
+QUEUED
+127.0.0.1:6379&gt; <span class="nb">exec</span>  <span class="c1"># 执行之前，另外一个线程，修改了我们的值，这个时候，就会导致事务执行失败！</span>
+<span class="o">(</span>nil<span class="o">)</span>
+
+
+<span class="c1">################################</span>
+这是第二条线程，在还没执行exec时，第二条线程插队修改了值
+127.0.0.1:6379&gt; get money
+<span class="s2">&#34;80&#34;</span>
+127.0.0.1:6379&gt; <span class="nb">set</span> money <span class="m">1000</span>
+OK
+</code></pre></td></tr></table>
+</div>
+</div><p>如果修改失败，获取最新的值就好</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709214828.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709214828.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709214828.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709214828.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709214828.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709214828.png" /></p>
+<h1 id="jedis">Jedis</h1>
+<p>我们要使用 Java 来操作 Redis</p>
+<blockquote>
+<p>什么是Jedis  是 Redis 官方推荐的 java连接开发工具！ 使用Java 操作Redis 中间件！如果你要使用
+java操作redis，那么一定要对Jedis 十分的熟悉！</p>
+</blockquote>
+<blockquote>
+<p>测试</p>
+</blockquote>
+<p>1、导入对应的依赖</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">&lt;!--导入jedis包--&gt;
+&lt;dependencies&gt;
+	&lt;!-- https://mvnrepository.com/artifact/redis.clients/jedis --&gt;
+	&lt;dependency&gt;
+		&lt;groupId&gt;redis.clients&lt;/groupId&gt;
+		&lt;artifactId&gt;jedis&lt;/artifactId&gt;
+		&lt;version&gt;3.3.0&lt;/version&gt;
+	&lt;/dependency&gt;
+	&lt;!--fastjson--&gt;
+	&lt;!-- https://mvnrepository.com/artifact/com.alibaba/fastjson --&gt;
+	&lt;dependency&gt;
+		&lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+		&lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+		&lt;version&gt;1.2.75&lt;/version&gt;
+	&lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>2、编码测试：</p>
+<p>-连接数据库</p>
+<ul>
+<li>
+<p>操作命令</p>
+</li>
+<li>
+<p>断开连接！</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">package com.clover<span class="p">;</span>
+
+import redis.clients.jedis.Jedis<span class="p">;</span>
+
+public class TestPing <span class="o">{</span>
+    public static void main<span class="o">(</span>String<span class="o">[]</span> args<span class="o">)</span> <span class="o">{</span>
+        //1、new Jedis<span class="o">()</span>对象即可
+        Jedis <span class="nv">jedis</span> <span class="o">=</span> new Jedis<span class="o">(</span><span class="s2">&#34;127.0.0.1&#34;</span>,6379<span class="o">)</span><span class="p">;</span>
+        //jedis所有的命令就是我们之前学习的所有指令！所以之前的指令学习很重要
+
+        System.out.println<span class="o">(</span>jedis.ping<span class="o">())</span><span class="p">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709222245.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709222245.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709222245.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709222245.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709222245.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210709222245.png" /></p>
+<h2 id="常用的api">常用的API</h2>
+<p>String</p>
+<p>List</p>
+<p>Set</p>
+<p>Hash</p>
+<p>Zset</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
