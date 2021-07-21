@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/redis\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Redis","wordcount":  10414 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Redis","wordcount":  15278 ,
         "url": "https:\/\/cloverfelix.github.io\/redis\/","datePublished": "2021-07-04T16:36:09+08:00","dateModified": "2021-07-04T16:36:09+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>Redis</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10414 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 21 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 15278 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 31 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -143,6 +143,11 @@
 
   <ul>
     <li><a href="#常用的api">常用的API</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#rdbredis-database">RDB（Redis Database）</a></li>
+    <li><a href="#aofappend-only-file">AOF(Append Only File)</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="nosql概述">NoSQL概述</h1>
@@ -369,7 +374,7 @@
 <p>4、地图信息分析</p>
 <p>5、计时器、计数器（浏览量！）</p>
 <h2 id="windows安装">Windows安装</h2>
-<p>1、下载安装包：https://github.com/microsoftarchive/redis/releases/tag/win-3.2.100</p>
+<p>1、<a href="https://github.com/microsoftarchive/redis/releases/tag/win-3.2.100" target="_blank" rel="noopener noreffer">下载安装包</a></p>
 <p>2、下载完毕得到压缩包</p>
 <p>3、解压到自己环境目录下！Redis十分的小</p>
 <p>4、开启Redis，双击运行即可！</p>
@@ -2649,22 +2654,22 @@ java操作redis，那么一定要对Jedis 十分的熟悉！</p>
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">&lt;!--导入jedis包--&gt;
-&lt;dependencies&gt;
-	&lt;!-- https://mvnrepository.com/artifact/redis.clients/jedis --&gt;
-	&lt;dependency&gt;
-		&lt;groupId&gt;redis.clients&lt;/groupId&gt;
-		&lt;artifactId&gt;jedis&lt;/artifactId&gt;
-		&lt;version&gt;3.3.0&lt;/version&gt;
-	&lt;/dependency&gt;
-	&lt;!--fastjson--&gt;
-	&lt;!-- https://mvnrepository.com/artifact/com.alibaba/fastjson --&gt;
-	&lt;dependency&gt;
-		&lt;groupId&gt;com.alibaba&lt;/groupId&gt;
-		&lt;artifactId&gt;fastjson&lt;/artifactId&gt;
-		&lt;version&gt;1.2.75&lt;/version&gt;
-	&lt;/dependency&gt;
-&lt;/dependencies&gt;
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--导入jedis包--&gt;</span>
+<span class="nt">&lt;dependencies&gt;</span>
+	<span class="c">&lt;!-- https://mvnrepository.com/artifact/redis.clients/jedis --&gt;</span>
+	<span class="nt">&lt;dependency&gt;</span>
+		<span class="nt">&lt;groupId&gt;</span>redis.clients<span class="nt">&lt;/groupId&gt;</span>
+		<span class="nt">&lt;artifactId&gt;</span>jedis<span class="nt">&lt;/artifactId&gt;</span>
+		<span class="nt">&lt;version&gt;</span>3.3.0<span class="nt">&lt;/version&gt;</span>
+	<span class="nt">&lt;/dependency&gt;</span>
+	<span class="c">&lt;!--fastjson--&gt;</span>
+	<span class="c">&lt;!-- https://mvnrepository.com/artifact/com.alibaba/fastjson --&gt;</span>
+	<span class="nt">&lt;dependency&gt;</span>
+		<span class="nt">&lt;groupId&gt;</span>com.alibaba<span class="nt">&lt;/groupId&gt;</span>
+		<span class="nt">&lt;artifactId&gt;</span>fastjson<span class="nt">&lt;/artifactId&gt;</span>
+		<span class="nt">&lt;version&gt;</span>1.2.75<span class="nt">&lt;/version&gt;</span>
+	<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>2、编码测试：</p>
@@ -2694,17 +2699,17 @@ java操作redis，那么一定要对Jedis 十分的熟悉！</p>
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">package com.clover<span class="p">;</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.clover</span><span class="o">;</span>
 
-import redis.clients.jedis.Jedis<span class="p">;</span>
+<span class="kn">import</span> <span class="nn">redis.clients.jedis.Jedis</span><span class="o">;</span>
 
-public class TestPing <span class="o">{</span>
-    public static void main<span class="o">(</span>String<span class="o">[]</span> args<span class="o">)</span> <span class="o">{</span>
-        //1、new Jedis<span class="o">()</span>对象即可
-        Jedis <span class="nv">jedis</span> <span class="o">=</span> new Jedis<span class="o">(</span><span class="s2">&#34;127.0.0.1&#34;</span>,6379<span class="o">)</span><span class="p">;</span>
-        //jedis所有的命令就是我们之前学习的所有指令！所以之前的指令学习很重要
-
-        System.out.println<span class="o">(</span>jedis.ping<span class="o">())</span><span class="p">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestPing</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//1、new Jedis()对象即可
+</span><span class="c1"></span>        <span class="n">Jedis</span> <span class="n">jedis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Jedis</span><span class="o">(</span><span class="s">&#34;127.0.0.1&#34;</span><span class="o">,</span><span class="n">6379</span><span class="o">);</span>
+        <span class="c1">//jedis所有的命令就是我们之前学习的所有指令！所以之前的指令学习很重要
+</span><span class="c1"></span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">jedis</span><span class="o">.</span><span class="na">ping</span><span class="o">());</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
@@ -2723,7 +2728,923 @@ public class TestPing <span class="o">{</span>
 <p>Set</p>
 <p>Hash</p>
 <p>Zset</p>
+<blockquote>
+<p>事务</p>
+</blockquote>
 <div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.clover</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.alibaba.fastjson.JSONObject</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">redis.clients.jedis.Jedis</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">redis.clients.jedis.Transaction</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestTX</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Jedis</span> <span class="n">jedis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Jedis</span><span class="o">(</span><span class="s">&#34;127.0.0.4&#34;</span><span class="o">,</span> <span class="n">6379</span><span class="o">);</span>
+
+        <span class="c1">//每次执行前清空数据库
+</span><span class="c1"></span>        <span class="n">jedis</span><span class="o">.</span><span class="na">flushDB</span><span class="o">();</span>
+
+        <span class="n">JSONObject</span> <span class="n">jsonObject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
+        <span class="n">jsonObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;hello&#34;</span><span class="o">,</span><span class="s">&#34;world&#34;</span><span class="o">);</span>
+        <span class="n">jsonObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;name&#34;</span><span class="o">,</span><span class="s">&#34;clover&#34;</span><span class="o">);</span>
+
+        <span class="c1">//开启事务
+</span><span class="c1"></span>        <span class="n">Transaction</span> <span class="n">multi</span> <span class="o">=</span> <span class="n">jedis</span><span class="o">.</span><span class="na">multi</span><span class="o">();</span>
+        <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">jsonObject</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">();</span>
+
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">multi</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="s">&#34;user1&#34;</span><span class="o">,</span><span class="n">result</span><span class="o">);</span>
+            <span class="n">multi</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="s">&#34;user2&#34;</span><span class="o">,</span><span class="n">result</span><span class="o">);</span>
+            <span class="c1">//int i = 1/0;//代码抛出异常，执行失败
+</span><span class="c1"></span>            <span class="n">multi</span><span class="o">.</span><span class="na">exec</span><span class="o">();</span><span class="c1">//执行事务
+</span><span class="c1"></span>        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">multi</span><span class="o">.</span><span class="na">discard</span><span class="o">();</span><span class="c1">//放弃事务
+</span><span class="c1"></span>            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">jedis</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;user1&#34;</span><span class="o">));</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">jedis</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;user2&#34;</span><span class="o">));</span>
+            <span class="n">jedis</span><span class="o">.</span><span class="na">close</span><span class="o">();</span><span class="c1">//关闭连接
+</span><span class="c1"></span>        <span class="o">}</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="springboot整合">SpringBoot整合</h1>
+<p>SpringBoot操作数据：都是集中在spring-data中操作</p>
+<p>SpringData和SpringBoot齐名的项目！</p>
+<pre><code>说明：在SpringBoot2.x之后，原来使用的Jedis被替换成了lettuce
+</code></pre>
+<p><strong>jedis：采用的直连，多个线程操作的话，是不安全的，如果想要避免不安全的，使用jedis pool连接池！更像 BIO模式</strong></p>
+<p><strong>lettuce：采用netty，实例可以在多个线程中进行共享，不存在线程不安全的情况！可以减少线程数量，更像 NIO模式</strong></p>
+<p>源码分析</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Bean</span>
+<span class="nd">@ConditionalOnMissingBean</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#34;redisTemplate&#34;</span><span class="o">)</span> <span class="c1">// 我们可以自己定义一个redis Template来替换这个默认的！ 
+</span><span class="c1"></span><span class="kd">public</span> <span class="n">RedisTemplate</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="nf">redisTemplate</span><span class="o">(</span><span class="n">RedisConnectionFactory</span> <span class="n">redisConnectionFactory</span><span class="o">)</span>
+    <span class="kd">throws</span> <span class="n">UnknownHostException</span> <span class="o">{</span>
+    <span class="c1">// 默认的 Redis Template 没有过多的设置，redis 对象都是需要序列化！
+</span><span class="c1"></span>    <span class="c1">// 两个泛型都是 Object, Object 的类型，我们后使用需要强制转换 &lt;String, Object&gt;
+</span><span class="c1"></span>    <span class="n">RedisTemplate</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">template</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RedisTemplate</span><span class="o">&lt;&gt;();</span>
+    <span class="n">template</span><span class="o">.</span><span class="na">setConnectionFactory</span><span class="o">(</span><span class="n">redisConnectionFactory</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">template</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="nd">@Bean</span>
+<span class="nd">@ConditionalOnMissingBean</span>  <span class="c1">// 由于 String 是redis中最常使用的类型，所以说单独提出来了一个bean！
+</span><span class="c1"></span><span class="kd">public</span> <span class="n">StringRedisTemplate</span> <span class="nf">stringRedisTemplate</span><span class="o">(</span><span class="n">RedisConnectionFactory</span> <span class="n">redisConnectionFactory</span><span class="o">)</span>
+    <span class="kd">throws</span> <span class="n">UnknownHostException</span> <span class="o">{</span>
+    <span class="n">StringRedisTemplate</span> <span class="n">template</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringRedisTemplate</span><span class="o">();</span>
+    <span class="n">template</span><span class="o">.</span><span class="na">setConnectionFactory</span><span class="o">(</span><span class="n">redisConnectionFactory</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">template</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>整合测试</p>
+</blockquote>
+<p>1、导入redis依赖</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--操作redis--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-redis<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>2、编写配置文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"># SpringBoot 所有的配置类，都会由一个自动配置类
+# 自动配置类都会绑定一个 properties 配置文件
+
+# 配置redis
+spring.redis.host=127.0.0.1
+spring.redis.port=6379
+
+# 我们以后使用集群部署时尽量使用最新的lettuce，因为Jedis中有一部分配置类不存在，所以不生效
+# 而lettuce中所有的类默认都是生效的
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>我们以后使用集群部署时尽量使用最新的lettuce，因为Jedis中有一部分配置类不存在，所以不生效
+而lettuce中所有的类默认都是生效的
+</code></pre>
+<p>3、测试！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.clover.redis02springboot</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.junit.jupiter.api.Test</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.test.context.SpringBootTest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.core.RedisTemplate</span><span class="o">;</span>
+
+<span class="nd">@SpringBootTest</span>
+<span class="kd">class</span> <span class="nc">Redis02SpringbootApplicationTests</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="n">RedisTemplate</span> <span class="n">redisTemplate</span><span class="o">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kt">void</span> <span class="nf">contextLoads</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="c1">// redisTemplate  操作不同的数据类型，api和我们的指令是一样的
+</span><span class="c1"></span>        <span class="c1">// opsForValue  操作字符串 类似String
+</span><span class="c1"></span>        <span class="c1">// opsForList   操作List 类似List
+</span><span class="c1"></span>        <span class="c1">// opsForSet
+</span><span class="c1"></span>        <span class="c1">// opsForHash
+</span><span class="c1"></span>        <span class="c1">// opsForZSet
+</span><span class="c1"></span>        <span class="c1">// opsForGeo
+</span><span class="c1"></span>        <span class="c1">// opsForHyperLogLog
+</span><span class="c1"></span>        <span class="c1">// 除了基本的操作，我们常用的方法都可以直接通过redisTemplate操作，比如事务，和基本的CRUD
+</span><span class="c1"></span>        <span class="c1">// 获取redis的连接对象
+</span><span class="c1"></span>        <span class="c1">// RedisConnection connection =redisTemplate.getConnectionFactory().getConnection();
+</span><span class="c1"></span>        <span class="c1">// connection.flushDb();
+</span><span class="c1"></span>        <span class="c1">// connection.flushAll();
+</span><span class="c1"></span>
+        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForValue</span><span class="o">().</span><span class="na">set</span><span class="o">(</span><span class="s">&#34;mykey&#34;</span><span class="o">,</span><span class="s">&#34;clover&#34;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForValue</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;mykey&#34;</span><span class="o">));</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210710215204.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210710215204.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210710215204.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210710215204.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210710215204.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210710215204.png" /></p>
+<blockquote>
+<p>关于对象的保存时出现的问题</p>
+</blockquote>
+<p>1、使用了序列化时的结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">test</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">JsonProcessingException</span> <span class="o">{</span>
+	<span class="c1">// 真实的开发中，我们一般使用json来传递对象
+</span><span class="c1"></span>	<span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="o">(</span><span class="s">&#34;clover&#34;</span><span class="o">,</span> <span class="n">3</span><span class="o">);</span>
+	<span class="c1">// 这个是我们创建SpringBoot项目中所存在的，也就是jackson对象
+</span><span class="c1"></span>	<span class="c1">// 序列化该对象
+</span><span class="c1"></span>	<span class="n">String</span> <span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ObjectMapper</span><span class="o">().</span><span class="na">writeValueAsString</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+	<span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForValue</span><span class="o">().</span><span class="na">set</span><span class="o">(</span><span class="s">&#34;user&#34;</span><span class="o">,</span><span class="n">obj</span><span class="o">);</span>
+	<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForValue</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;user&#34;</span><span class="o">));</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719105913.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719105913.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719105913.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719105913.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719105913.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719105913.png" /></p>
+<p>2、未使用序列化时的结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">test</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">JsonProcessingException</span> <span class="o">{</span>
+	<span class="c1">// 真实的开发中，我们一般使用json来传递对象
+</span><span class="c1"></span>	<span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="o">(</span><span class="s">&#34;clover&#34;</span><span class="o">,</span> <span class="n">3</span><span class="o">);</span>
+	<span class="c1">// 这个是我们创建SpringBoot项目中所存在的，也就是jackson对象
+</span><span class="c1"></span>	<span class="c1">// 序列化该对象
+</span><span class="c1"></span>	<span class="c1">//String obj = new ObjectMapper().writeValueAsString(user);
+</span><span class="c1"></span>	<span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForValue</span><span class="o">().</span><span class="na">set</span><span class="o">(</span><span class="s">&#34;user&#34;</span><span class="o">,</span><span class="n">user</span><span class="o">);</span>
+	<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForValue</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;user&#34;</span><span class="o">));</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>产生的报错结果如下图：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719105714.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719105714.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719105714.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719105714.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719105714.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719105714.png" /></p>
+<p>我们编写一个自己的Tempalte</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.config</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.fasterxml.jackson.annotation.JsonAutoDetect</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.fasterxml.jackson.annotation.PropertyAccessor</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.ObjectMapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.RedisConnectionFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.core.RedisTemplate</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.redis.serializer.StringRedisSerializer</span><span class="o">;</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RedisConfig</span> <span class="o">{</span>
+    <span class="c1">// 这是我给大家写好的一个固定模板，大家在企业中，拿去就可以直接使用！
+</span><span class="c1"></span>    <span class="c1">// 自己定义了一个 RedisTemplate
+</span><span class="c1"></span>    <span class="nd">@Bean</span>
+    <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">&#34;all&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">RedisTemplate</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="nf">redisTemplate</span><span class="o">(</span><span class="n">RedisConnectionFactory</span> <span class="n">factory</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 我们为了自己开发方便，一般直接使用 &lt;String, Object&gt;
+</span><span class="c1"></span>        <span class="n">RedisTemplate</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">template</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RedisTemplate</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">Object</span><span class="o">&gt;();</span>
+        <span class="n">template</span><span class="o">.</span><span class="na">setConnectionFactory</span><span class="o">(</span><span class="n">factory</span><span class="o">);</span>
+        <span class="c1">// Json序列化配置
+</span><span class="c1"></span>        <span class="n">Jackson2JsonRedisSerializer</span> <span class="n">jackson2JsonRedisSerializer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Jackson2JsonRedisSerializer</span><span class="o">(</span><span class="n">Object</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">ObjectMapper</span> <span class="n">om</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ObjectMapper</span><span class="o">();</span>
+        <span class="n">om</span><span class="o">.</span><span class="na">setVisibility</span><span class="o">(</span><span class="n">PropertyAccessor</span><span class="o">.</span><span class="na">ALL</span><span class="o">,</span> <span class="n">JsonAutoDetect</span><span class="o">.</span><span class="na">Visibility</span><span class="o">.</span><span class="na">ANY</span><span class="o">);</span>
+        <span class="n">om</span><span class="o">.</span><span class="na">enableDefaultTyping</span><span class="o">(</span><span class="n">ObjectMapper</span><span class="o">.</span><span class="na">DefaultTyping</span><span class="o">.</span><span class="na">NON_FINAL</span><span class="o">);</span>
+        <span class="n">jackson2JsonRedisSerializer</span><span class="o">.</span><span class="na">setObjectMapper</span><span class="o">(</span><span class="n">om</span><span class="o">);</span>
+        <span class="c1">// String 的序列化
+</span><span class="c1"></span>        <span class="n">StringRedisSerializer</span> <span class="n">stringRedisSerializer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringRedisSerializer</span><span class="o">();</span>
+
+        <span class="c1">// key采用String的序列化方式
+</span><span class="c1"></span>        <span class="n">template</span><span class="o">.</span><span class="na">setKeySerializer</span><span class="o">(</span><span class="n">stringRedisSerializer</span><span class="o">);</span>
+        <span class="c1">// hash的key也采用String的序列化方式
+</span><span class="c1"></span>        <span class="n">template</span><span class="o">.</span><span class="na">setHashKeySerializer</span><span class="o">(</span><span class="n">stringRedisSerializer</span><span class="o">);</span>
+        <span class="c1">// value序列化方式采用jackson
+</span><span class="c1"></span>        <span class="n">template</span><span class="o">.</span><span class="na">setValueSerializer</span><span class="o">(</span><span class="n">jackson2JsonRedisSerializer</span><span class="o">);</span>
+        <span class="c1">// hash的value序列化方式采用jackson
+</span><span class="c1"></span>        <span class="n">template</span><span class="o">.</span><span class="na">setHashValueSerializer</span><span class="o">(</span><span class="n">jackson2JsonRedisSerializer</span><span class="o">);</span>
+        <span class="n">template</span><span class="o">.</span><span class="na">afterPropertiesSet</span><span class="o">();</span>
+
+        <span class="k">return</span> <span class="n">template</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>所有的redis操作，其实对于Java操作人员来说，十分的简单，更重要的是去理解redis的思想和每一种数据结构的用处和作用场景！</p>
+<h1 id="redisconf详解">Redis.conf详解</h1>
+<p>启动的时候，就通过配置文件来启动!</p>
+<blockquote>
+<p>单位</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719145819.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719145819.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719145819.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719145819.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719145819.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719145819.png" /></p>
+<p>1、配置文件unit单位，对大小写不敏感</p>
+<blockquote>
+<p>包含</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719150023.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719150023.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719150023.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719150023.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719150023.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719150023.png" /></p>
+<p>可以将多个配置文件导入进来，合并成一个配置文件</p>
+<blockquote>
+<p>网络</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">bind</span> 127.0.0.1					 <span class="c1"># 绑定的ip</span>
+protected-mode yes		  <span class="c1"># 保护进程</span>
+port 6379						  <span class="c1"># 端口设置</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>通用GENERAL</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">daemonize yes			<span class="c1"># 以守护进程的方式运行，默认是no，我们需要自己开启为yes！</span>
+
+pidfile /var/run/redis_6379.pid <span class="c1"># 如果以后台的方式运行，我们就需要指定一个pid文件！</span>
+
+<span class="c1"># 日志</span>
+<span class="c1"># Specify the server verbosity level.</span>
+<span class="c1"># This can be one of:</span>
+<span class="c1"># debug (a lot of information, useful for development/testing)</span>
+<span class="c1"># verbose (many rarely useful info, but not a mess like the debug level)</span>
+<span class="c1"># notice (moderately verbose, what you want in production probably)</span>
+<span class="c1"># warning (only very important / critical messages are logged)</span>
+loglevel notice				<span class="c1"># 日志级别</span>
+
+logfile <span class="s2">&#34;&#34;</span>						<span class="c1"># 日志文件的位置名，为空就是一个标准的输出</span>
+
+databases 16			  <span class="c1"># 数据库的数量，默认是16个数据库</span>
+
+always-show-logo no		<span class="c1"># 是否总是显示log，默认为false</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>快照 SNAPSHOTTING</p>
+</blockquote>
+<p>持久化，在规定的时间内，执行了多少次操作，则会持久化到文件 .rdb  .aof</p>
+<p>redis是内存数据库，如果没有持久化操作，那么数据断电即失！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">save <span class="m">3600</span> 1							<span class="c1"># 如果3600s内，至少有一个key进行了修改，我们就进行持久化操作</span>
+save <span class="m">300</span> 100					   <span class="c1"># 如果300s内，至少有100个key进行了修改，我们就进行持久化操作</span>
+save <span class="m">60</span> 10000					  <span class="c1"># 如果60s内，至少有10000个key进行了修改，我们就进行持久化操作</span>
+
+stop-writes-on-bgsave-error yes			<span class="c1"># 持久化如果出错，是否还要继续工作！</span>
+
+rdbcompression yes						<span class="c1"># 是否压缩rdb文件，需要消耗一定cpu资源</span>
+
+rdbchecksum yes							<span class="c1"># 保存rdb文件的时候，进行错误的校验检查</span>
+
+dir ./											<span class="c1"># rdb 文件保存的目录</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>REPLICATION复制，后面讲主从复制的时候详细讲解</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>SECURITY 安全</p>
+</blockquote>
+<p>可以在这里设置密码，redis默认没有密码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; ping
+PONG
+127.0.0.1:6379&gt; config get requirepass				<span class="c1"># 获取redis的密码</span>
+1<span class="o">)</span> <span class="s2">&#34;requirepass&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;&#34;</span>	
+127.0.0.1:6379&gt; config <span class="nb">set</span> requirepass <span class="s2">&#34;clover&#34;</span>			<span class="c1"># 设置redis的密码</span>
+OK
+127.0.0.1:6379&gt; config get requirepass
+1<span class="o">)</span> <span class="s2">&#34;requirepass&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+127.0.0.1:6379&gt; ping
+PONG
+127.0.0.1:6379&gt; <span class="nb">exit</span>
+
+<span class="c1"># 这里设置密码后退出重新进入后才会生效，因为变向的改变了配置文件</span>
+
+<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ ~<span class="o">]</span><span class="c1"># redis-cli</span>
+127.0.0.1:6379&gt; ping
+<span class="o">(</span>error<span class="o">)</span> NOAUTH Authentication required.
+127.0.0.1:6379&gt; config get requirepass				<span class="c1"># 发现命令没有权限了</span>
+<span class="o">(</span>error<span class="o">)</span> NOAUTH Authentication required.
+127.0.0.1:6379&gt; auth clover							<span class="c1"># 使用密码进行登录</span>
+OK
+127.0.0.1:6379&gt; config get requirepass
+1<span class="o">)</span> <span class="s2">&#34;requirepass&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+127.0.0.1:6379&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>限制CLIENTS</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">maxclients 10000				<span class="c1"># 设置能连接上redis的最大客户端的数量</span>
+
+maxmemory &lt;bytes&gt;			<span class="c1"># redis配置最大的内存容量</span>
+
+maxmemory-policy noeviction			<span class="c1"># 内存达到上限后的处理策略</span>
+
+	1、noeviction
+	2、allkeys-lru
+	3、volatile-lru
+	4、allkeys-random
+	5、volatile-random
+	6、volatile-ttl:在设置了过期时间的所有键，抛弃存活时间最短的数据。
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>APPEND ONLY  模式 aof配置</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">appendonly no				<span class="c1"># 默认是不开启aof模式的，默认是使用rdb方式持久化的，在大部分所有的情况下，rdb是够使用的</span>
+
+appendfilename <span class="s2">&#34;appendonly.aof&#34;</span>			<span class="c1"># 持久化文件的名字</span>
+
+<span class="c1"># appendfsync always			# 每次修改都会执行sync，速度会很慢，消耗性能</span>
+appendfsync everysec			<span class="c1"># 每秒执行一次 sync，在这一秒宕机，可能会丢失这一秒的数据</span>
+<span class="c1"># appendfsync no				  # 不执行 sync，这个时候操作系统自己同步数据，速度最快</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="redis持久化">Redis持久化</h1>
+<p>Redis是内存数据库，如果不将内存中的数据库状态保存到磁盘，那么一旦服务器进程退出，服务器中的数据库状态也会小时。所以Redis提供了持久化功能</p>
+<h2 id="rdbredis-database">RDB（Redis Database）</h2>
+<p>在主从复制中，RDB是用来备份的，存在在从机中，不占用主机内存！</p>
+<blockquote>
+<p>什么是RDB</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721143706.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721143706.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721143706.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721143706.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721143706.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721143706.png" /></p>
+<p>在指定的时间间隔内将内存中的数据集快照写入磁盘，也就是行话讲的Snapshot快照，它恢复时是将快照文件直接读到内存里。</p>
+<p>Redis会单独创建一个(fork)一个紫禁城来进行持久化，会先将数据写入到一个临时文件中，待持久化过程都结束了，再用这个临时文件替换上次持久化好的文件。整个过程中，主进程是不进行任何IO操作的。这就确保了极高的性能。
+如果需要进行大规模数据的恢复，且对于数据恢复的完整性不是非常敏感，那RDB方式要比AOF方式更加的高效。RDB的缺点是最后一次持久化后的数据可能丢失。我们默认的就是RDB，一般情况下不需要修改这个配置！</p>
+<p><strong>rdb保存的文件是 <code>dump.rdb</code></strong>  都是在我们的配置文件中的快照进行配置的！</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721145216.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721145216.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721145216.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721145216.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721145216.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721145216.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721151859.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721151859.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721151859.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721151859.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721151859.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721151859.png" /></p>
+<blockquote>
+<p>触发机制</p>
+</blockquote>
+<p>1、sava规则满足的情况下，会自动触发rdb规则</p>
+<p>2、执行flushall命令，也会触发我们的rdb规则</p>
+<p>3、退出redis，也会产生rdb文件</p>
+<p>备份就会自动生成一个dump.rdb文件</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721152117.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721152117.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721152117.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721152117.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721152117.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721152117.png" /></p>
+<pre><code>注意，使用sava命令保存时，也会产生一个edb文件
+</code></pre>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721151342.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721151342.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721151342.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721151342.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721151342.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721151342.png" /></p>
+<blockquote>
+<p>如何恢复rdb文件</p>
+</blockquote>
+<p>1、只需要将rdb文件放在我们redis启动目录就可以了，redis启动的时候会自动检查dump.rdb 恢复其中的数据</p>
+<p>2、查看需要存放的位置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; config get dir
+1<span class="o">)</span> <span class="s2">&#34;dir&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;/usr/local/bin&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>几乎它自己默认的配置就够用了，但是我们还是要去学习</p>
+</blockquote>
+<p><strong>优点:</strong></p>
+<pre><code>1、适合大规模的数据恢复！
+
+2、对数据的完整性要求不高！
+</code></pre>
+<p><strong>缺点：</strong></p>
+<pre><code>1、需要一定的时间间隔进行操作！如果redis意外宕机了，这个最后一次修改的数据就没有了！
+
+2、fork进程的时候，会占用一定的内存空间!
+</code></pre>
+<h2 id="aofappend-only-file">AOF(Append Only File)</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721200204.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721200204.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721200204.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721200204.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721200204.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721200204.png" /></p>
+<p>以日志的形式来记录每个写操作。将Redis执行过的所有指令记录下来（读操作不记录），只许追加文件但不可以改写文件，<code>redis启动之初会读取该文件重新构建数据</code>，换而言之，redis重启的化就根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作</p>
+<p>AOF保存的是appendonly.aof文件</p>
+<blockquote>
+<p>append</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721201825.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721201825.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721201825.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721201825.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721201825.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721201825.png" /></p>
+<p>默认是不开启的，我们需要手动进行配置！我们只需要将appendonly 改为yes就开启了aof！</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721201900.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721201900.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721201900.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721201900.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721201900.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721201900.png" /></p>
+<p>重启，redis就可以生效了！</p>
+<p>如果这个aof文件有错误，这时候redis是启动不起来的，我们需要修复这个aof文件</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202304.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202304.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202304.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202304.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202304.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202304.png" /></p>
+<p>redis 给我们提供了一个工具<code>redis-check-aof --fix</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202405.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202405.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202405.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202405.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202405.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202405.png" /></p>
+<p>如果文件正常，重启就可以直接恢复了！</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202520.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202520.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202520.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202520.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202520.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202520.png" /></p>
+<p>但是它对文件进行修复，也不是全部修复，是可能损坏部分值的！！！</p>
+<blockquote>
+<p>重写规则说明</p>
+</blockquote>
+<p>aof默认就是文件的无限追加，文件会越来越大</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721203830.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721203830.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721203830.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721203830.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721203830.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721203830.png" /></p>
+<p>如果aof文件大于64M，太大了的话，就会fork一个新的进程来将我们的文件进行重写！</p>
+<blockquote>
+<p>优点和缺点</p>
+</blockquote>
+<p><strong>优点：</strong></p>
+<p>1、每一次修改都同步，文件的完整性会更好</p>
+<p>2、每秒同步一次，可能会丢失一秒的数据</p>
+<p>3、从不同步，效率是最高的！</p>
+<p><strong>缺点：</strong></p>
+<p>1、相对于数据文件来说，aof远远大于rdb，修复的速度也比rdb慢！</p>
+<p>2、Aof运行效率也比rdb慢（因为其文件比rdb大），所以我们redis默认的配置就是rdb持久化！</p>
+<p><strong>扩展：</strong></p>
+<p>1、RDB 持久化方式能够在指定的时间间隔内对你的数据进行快照存储</p>
+<p>2、AOF 持久化方式记录每次对服务器写的操作，当服务器重启的时候会重新执行这些命令来恢复原始的数据，AOF命令以Redis 协议追加保存每次写的操作到文件末尾，Redis还能对AOF文件进行后台重写，使得AOF文件的体积不至于过大。</p>
+<p>**3、只做缓存，如果你只希望你的数据在服务器运行的时候存在，你也可以不使用任何持久化  **</p>
+<p>4、同时开启两种持久化方式</p>
+<ul>
+<li>在这种情况下，当redis重启的时候会优先载入AOF文件来恢复原始的数据，因为在通常情况下AOF文件保存的数据集要比RDB文件保存的数据集要完整。</li>
+<li>RDB 的数据不实时，同时使用两者时服务器重启也只会找AOF文件，那要不要只使用AOF呢？作者建议不要，因为RDB更适合用于备份数据库（AOF在不断变化不好备份），快速重启，而且不会有AOF可能潜在的Bug，留着作为一个万一的手段。</li>
+</ul>
+<p>5、性能建议</p>
+<ul>
+<li>因为RDB文件只用作后备用途，建议只在Slave上持久化RDB文件，而且只要15分钟备份一次就够了，只保留 save 900 1 这条规则。</li>
+<li>如果Enable AOF ，好处是在最恶劣情况下也只会丢失不超过两秒数据，启动脚本较简单只load自己的AOF文件就可以了，代价一是带来了持续的IO，二是AOF rewrite 的最后将 rewrite 过程中产生的新数据写到新文件造成的阻塞几乎是不可避免的。只要硬盘许可，应该尽量减少AOF rewrite的频率，AOF重写的基础大小默认值64M太小了，可以设到5G以上，默认超过原大小100%大小重写可以改到适当的数值。</li>
+<li>如果不Enable AOF ，仅靠 Master-Slave Repllcation 实现高可用性也可以，能省掉一大笔IO，也减少了rewrite时带来的系统波动。代价是如果Master/Slave 同时倒掉，会丢失十几分钟的数据，启动脚本也要比较两个 Master/Slave 中的 RDB文件，载入较新的那个，微博就是这种架构。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code></code></pre></td>
 <td class="lntd">

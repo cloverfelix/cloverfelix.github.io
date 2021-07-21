@@ -208,7 +208,7 @@ master-slave（主从）同步。
 
 ## Windows安装
 
-1、下载安装包：https://github.com/microsoftarchive/redis/releases/tag/win-3.2.100
+1、[下载安装包](https://github.com/microsoftarchive/redis/releases/tag/win-3.2.100)
 
 2、下载完毕得到压缩包
 
@@ -1473,7 +1473,7 @@ java操作redis，那么一定要对Jedis 十分的熟悉！
 
 1、导入对应的依赖
 
-~~~bash
+~~~xml
 <!--导入jedis包-->
 <dependencies>
 	<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
@@ -1500,7 +1500,7 @@ java操作redis，那么一定要对Jedis 十分的熟悉！
 
 - 断开连接！
 
-~~~bash
+~~~java
 package com.clover;
 
 import redis.clients.jedis.Jedis;
@@ -1530,29 +1530,557 @@ Hash
 
 Zset
 
-~~~bash
+>事务
+
+~~~java
+package com.clover;
+
+import com.alibaba.fastjson.JSONObject;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Transaction;
+
+public class TestTX {
+    public static void main(String[] args) {
+        Jedis jedis = new Jedis("127.0.0.4", 6379);
+
+        //每次执行前清空数据库
+        jedis.flushDB();
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("hello","world");
+        jsonObject.put("name","clover");
+
+        //开启事务
+        Transaction multi = jedis.multi();
+        String result = jsonObject.toJSONString();
+
+        try {
+            multi.set("user1",result);
+            multi.set("user2",result);
+            //int i = 1/0;//代码抛出异常，执行失败
+            multi.exec();//执行事务
+        } catch (Exception e) {
+            multi.discard();//放弃事务
+            e.printStackTrace();
+        } finally {
+            System.out.println(jedis.get("user1"));
+            System.out.println(jedis.get("user2"));
+            jedis.close();//关闭连接
+        }
+
+    }
+}
 ~~~
 
-~~~bash
+# SpringBoot整合
+
+SpringBoot操作数据：都是集中在spring-data中操作
+
+SpringData和SpringBoot齐名的项目！
+
+	说明：在SpringBoot2.x之后，原来使用的Jedis被替换成了lettuce
+	
+**jedis：采用的直连，多个线程操作的话，是不安全的，如果想要避免不安全的，使用jedis pool连接池！更像 BIO模式**
+
+**lettuce：采用netty，实例可以在多个线程中进行共享，不存在线程不安全的情况！可以减少线程数量，更像 NIO模式**
+
+源码分析
+
+~~~Java
+@Bean
+@ConditionalOnMissingBean(name = "redisTemplate") // 我们可以自己定义一个redis Template来替换这个默认的！ 
+public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory)
+    throws UnknownHostException {
+    // 默认的 Redis Template 没有过多的设置，redis 对象都是需要序列化！
+    // 两个泛型都是 Object, Object 的类型，我们后使用需要强制转换 <String, Object>
+    RedisTemplate<Object, Object> template = new RedisTemplate<>();
+    template.setConnectionFactory(redisConnectionFactory);
+    return template;
+}
+@Bean
+@ConditionalOnMissingBean  // 由于 String 是redis中最常使用的类型，所以说单独提出来了一个bean！
+public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory)
+    throws UnknownHostException {
+    StringRedisTemplate template = new StringRedisTemplate();
+    template.setConnectionFactory(redisConnectionFactory);
+    return template;
+}
 ~~~
 
-~~~bash
+>整合测试
+
+1、导入redis依赖
+
+~~~xml
+<!--操作redis-->
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
 ~~~
 
-~~~bash
+2、编写配置文件
+
+~~~xml
+# SpringBoot 所有的配置类，都会由一个自动配置类
+# 自动配置类都会绑定一个 properties 配置文件
+
+# 配置redis
+spring.redis.host=127.0.0.1
+spring.redis.port=6379
+
+# 我们以后使用集群部署时尽量使用最新的lettuce，因为Jedis中有一部分配置类不存在，所以不生效
+# 而lettuce中所有的类默认都是生效的
 ~~~
 
-~~~bash
+	我们以后使用集群部署时尽量使用最新的lettuce，因为Jedis中有一部分配置类不存在，所以不生效
+	而lettuce中所有的类默认都是生效的
+
+3、测试！
+
+~~~java
+package com.clover.redis02springboot;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+
+@SpringBootTest
+class Redis02SpringbootApplicationTests {
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Test
+    void contextLoads() {
+
+        // redisTemplate  操作不同的数据类型，api和我们的指令是一样的
+        // opsForValue  操作字符串 类似String
+        // opsForList   操作List 类似List
+        // opsForSet
+        // opsForHash
+        // opsForZSet
+        // opsForGeo
+        // opsForHyperLogLog
+        // 除了基本的操作，我们常用的方法都可以直接通过redisTemplate操作，比如事务，和基本的CRUD
+        // 获取redis的连接对象
+        // RedisConnection connection =redisTemplate.getConnectionFactory().getConnection();
+        // connection.flushDb();
+        // connection.flushAll();
+
+        redisTemplate.opsForValue().set("mykey","clover");
+        System.out.println(redisTemplate.opsForValue().get("mykey"));
+    }
+
+}
 ~~~
 
-~~~bash
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210710215204.png)
+
+>关于对象的保存时出现的问题
+
+1、使用了序列化时的结果
+~~~Java
+@Test
+public void test() throws JsonProcessingException {
+	// 真实的开发中，我们一般使用json来传递对象
+	User user = new User("clover", 3);
+	// 这个是我们创建SpringBoot项目中所存在的，也就是jackson对象
+	// 序列化该对象
+	String obj = new ObjectMapper().writeValueAsString(user);
+	redisTemplate.opsForValue().set("user",obj);
+	System.out.println(redisTemplate.opsForValue().get("user"));
+}
+~~~
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719105913.png)
+
+2、未使用序列化时的结果
+~~~Java
+@Test
+public void test() throws JsonProcessingException {
+	// 真实的开发中，我们一般使用json来传递对象
+	User user = new User("clover", 3);
+	// 这个是我们创建SpringBoot项目中所存在的，也就是jackson对象
+	// 序列化该对象
+	//String obj = new ObjectMapper().writeValueAsString(user);
+	redisTemplate.opsForValue().set("user",user);
+	System.out.println(redisTemplate.opsForValue().get("user"));
+}
+~~~
+产生的报错结果如下图：
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719105714.png)
+
+我们编写一个自己的Tempalte
+
+~~~Java
+package com.clover.config;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+@Configuration
+public class RedisConfig {
+    // 这是我给大家写好的一个固定模板，大家在企业中，拿去就可以直接使用！
+    // 自己定义了一个 RedisTemplate
+    @Bean
+    @SuppressWarnings("all")
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
+        // 我们为了自己开发方便，一般直接使用 <String, Object>
+        RedisTemplate<String, Object> template = new RedisTemplate<String,Object>();
+        template.setConnectionFactory(factory);
+        // Json序列化配置
+        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+        ObjectMapper om = new ObjectMapper();
+        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        jackson2JsonRedisSerializer.setObjectMapper(om);
+        // String 的序列化
+        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+
+        // key采用String的序列化方式
+        template.setKeySerializer(stringRedisSerializer);
+        // hash的key也采用String的序列化方式
+        template.setHashKeySerializer(stringRedisSerializer);
+        // value序列化方式采用jackson
+        template.setValueSerializer(jackson2JsonRedisSerializer);
+        // hash的value序列化方式采用jackson
+        template.setHashValueSerializer(jackson2JsonRedisSerializer);
+        template.afterPropertiesSet();
+
+        return template;
+    }
+
+}
 ~~~
 
-~~~bash
-~~~
+所有的redis操作，其实对于Java操作人员来说，十分的简单，更重要的是去理解redis的思想和每一种数据结构的用处和作用场景！
+
+# Redis.conf详解
+
+启动的时候，就通过配置文件来启动!
+
+>单位
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719145819.png)
+
+1、配置文件unit单位，对大小写不敏感
+
+>包含
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210719150023.png)
+
+可以将多个配置文件导入进来，合并成一个配置文件
+
+> 网络
 
 ~~~bash
+bind 127.0.0.1					 # 绑定的ip
+protected-mode yes		  # 保护进程
+port 6379						  # 端口设置
 ~~~
 
+>通用GENERAL
+
 ~~~bash
+daemonize yes			# 以守护进程的方式运行，默认是no，我们需要自己开启为yes！
+
+pidfile /var/run/redis_6379.pid # 如果以后台的方式运行，我们就需要指定一个pid文件！
+
+# 日志
+# Specify the server verbosity level.
+# This can be one of:
+# debug (a lot of information, useful for development/testing)
+# verbose (many rarely useful info, but not a mess like the debug level)
+# notice (moderately verbose, what you want in production probably)
+# warning (only very important / critical messages are logged)
+loglevel notice				# 日志级别
+
+logfile ""						# 日志文件的位置名，为空就是一个标准的输出
+
+databases 16			  # 数据库的数量，默认是16个数据库
+
+always-show-logo no		# 是否总是显示log，默认为false
 ~~~
+
+>快照 SNAPSHOTTING
+
+持久化，在规定的时间内，执行了多少次操作，则会持久化到文件 .rdb  .aof
+
+redis是内存数据库，如果没有持久化操作，那么数据断电即失！
+
+~~~bash
+save 3600 1							# 如果3600s内，至少有一个key进行了修改，我们就进行持久化操作
+save 300 100					   # 如果300s内，至少有100个key进行了修改，我们就进行持久化操作
+save 60 10000					  # 如果60s内，至少有10000个key进行了修改，我们就进行持久化操作
+
+stop-writes-on-bgsave-error yes			# 持久化如果出错，是否还要继续工作！
+
+rdbcompression yes						# 是否压缩rdb文件，需要消耗一定cpu资源
+
+rdbchecksum yes							# 保存rdb文件的时候，进行错误的校验检查
+
+dir ./											# rdb 文件保存的目录
+~~~ 
+
+>REPLICATION复制，后面讲主从复制的时候详细讲解
+
+~~~bash
+~~~  
+
+>SECURITY 安全
+
+可以在这里设置密码，redis默认没有密码
+
+~~~bash
+127.0.0.1:6379> ping
+PONG
+127.0.0.1:6379> config get requirepass				# 获取redis的密码
+1) "requirepass"
+2) ""	
+127.0.0.1:6379> config set requirepass "clover"			# 设置redis的密码
+OK
+127.0.0.1:6379> config get requirepass
+1) "requirepass"
+2) "clover"
+127.0.0.1:6379> ping
+PONG
+127.0.0.1:6379> exit
+
+# 这里设置密码后退出重新进入后才会生效，因为变向的改变了配置文件
+
+[root@iZ8vb8plggk0dqs0rr5kzfZ ~]# redis-cli
+127.0.0.1:6379> ping
+(error) NOAUTH Authentication required.
+127.0.0.1:6379> config get requirepass				# 发现命令没有权限了
+(error) NOAUTH Authentication required.
+127.0.0.1:6379> auth clover							# 使用密码进行登录
+OK
+127.0.0.1:6379> config get requirepass
+1) "requirepass"
+2) "clover"
+127.0.0.1:6379> 
+~~~  
+
+> 限制CLIENTS
+
+~~~bash
+maxclients 10000				# 设置能连接上redis的最大客户端的数量
+
+maxmemory <bytes>			# redis配置最大的内存容量
+
+maxmemory-policy noeviction			# 内存达到上限后的处理策略
+
+	1、noeviction
+	2、allkeys-lru
+	3、volatile-lru
+	4、allkeys-random
+	5、volatile-random
+	6、volatile-ttl:在设置了过期时间的所有键，抛弃存活时间最短的数据。
+
+~~~  
+
+>APPEND ONLY  模式 aof配置
+
+~~~bash
+appendonly no				# 默认是不开启aof模式的，默认是使用rdb方式持久化的，在大部分所有的情况下，rdb是够使用的
+
+appendfilename "appendonly.aof"			# 持久化文件的名字
+
+# appendfsync always			# 每次修改都会执行sync，速度会很慢，消耗性能
+appendfsync everysec			# 每秒执行一次 sync，在这一秒宕机，可能会丢失这一秒的数据
+# appendfsync no				  # 不执行 sync，这个时候操作系统自己同步数据，速度最快
+~~~  
+
+# Redis持久化
+
+Redis是内存数据库，如果不将内存中的数据库状态保存到磁盘，那么一旦服务器进程退出，服务器中的数据库状态也会小时。所以Redis提供了持久化功能
+
+## RDB（Redis Database）
+
+在主从复制中，RDB是用来备份的，存在在从机中，不占用主机内存！
+
+>什么是RDB
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721143706.png)
+
+在指定的时间间隔内将内存中的数据集快照写入磁盘，也就是行话讲的Snapshot快照，它恢复时是将快照文件直接读到内存里。
+
+Redis会单独创建一个(fork)一个紫禁城来进行持久化，会先将数据写入到一个临时文件中，待持久化过程都结束了，再用这个临时文件替换上次持久化好的文件。整个过程中，主进程是不进行任何IO操作的。这就确保了极高的性能。
+如果需要进行大规模数据的恢复，且对于数据恢复的完整性不是非常敏感，那RDB方式要比AOF方式更加的高效。RDB的缺点是最后一次持久化后的数据可能丢失。我们默认的就是RDB，一般情况下不需要修改这个配置！
+
+**rdb保存的文件是 `dump.rdb`**  都是在我们的配置文件中的快照进行配置的！
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721145216.png)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721151859.png)
+
+>触发机制
+
+1、sava规则满足的情况下，会自动触发rdb规则
+
+2、执行flushall命令，也会触发我们的rdb规则
+
+3、退出redis，也会产生rdb文件
+
+备份就会自动生成一个dump.rdb文件
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721152117.png)
+
+	注意，使用sava命令保存时，也会产生一个edb文件
+	
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721151342.png)
+
+>如何恢复rdb文件
+
+1、只需要将rdb文件放在我们redis启动目录就可以了，redis启动的时候会自动检查dump.rdb 恢复其中的数据
+
+2、查看需要存放的位置
+~~~bash
+127.0.0.1:6379> config get dir
+1) "dir"
+2) "/usr/local/bin"
+~~~  
+
+>几乎它自己默认的配置就够用了，但是我们还是要去学习
+
+**优点:**
+
+	1、适合大规模的数据恢复！
+
+	2、对数据的完整性要求不高！
+
+**缺点：**
+
+	1、需要一定的时间间隔进行操作！如果redis意外宕机了，这个最后一次修改的数据就没有了！
+
+	2、fork进程的时候，会占用一定的内存空间!
+
+## AOF(Append Only File)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721200204.png)
+
+以日志的形式来记录每个写操作。将Redis执行过的所有指令记录下来（读操作不记录），只许追加文件但不可以改写文件，`redis启动之初会读取该文件重新构建数据`，换而言之，redis重启的化就根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作
+
+AOF保存的是appendonly.aof文件
+
+>append
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721201825.png)
+
+默认是不开启的，我们需要手动进行配置！我们只需要将appendonly 改为yes就开启了aof！
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721201900.png)
+
+重启，redis就可以生效了！
+
+如果这个aof文件有错误，这时候redis是启动不起来的，我们需要修复这个aof文件
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202304.png)
+
+redis 给我们提供了一个工具`redis-check-aof --fix`
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202405.png)
+
+如果文件正常，重启就可以直接恢复了！
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721202520.png)
+
+但是它对文件进行修复，也不是全部修复，是可能损坏部分值的！！！
+
+>重写规则说明
+
+aof默认就是文件的无限追加，文件会越来越大
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210721203830.png)
+
+如果aof文件大于64M，太大了的话，就会fork一个新的进程来将我们的文件进行重写！
+
+>优点和缺点
+
+**优点：**
+
+1、每一次修改都同步，文件的完整性会更好
+
+2、每秒同步一次，可能会丢失一秒的数据
+
+3、从不同步，效率是最高的！
+
+**缺点：**
+
+1、相对于数据文件来说，aof远远大于rdb，修复的速度也比rdb慢！
+
+2、Aof运行效率也比rdb慢（因为其文件比rdb大），所以我们redis默认的配置就是rdb持久化！
+
+**扩展：**
+
+1、RDB 持久化方式能够在指定的时间间隔内对你的数据进行快照存储  
+
+2、AOF 持久化方式记录每次对服务器写的操作，当服务器重启的时候会重新执行这些命令来恢复原始的数据，AOF命令以Redis 协议追加保存每次写的操作到文件末尾，Redis还能对AOF文件进行后台重写，使得AOF文件的体积不至于过大。  
+
+**3、只做缓存，如果你只希望你的数据在服务器运行的时候存在，你也可以不使用任何持久化  **
+
+4、同时开启两种持久化方式
+
+-   在这种情况下，当redis重启的时候会优先载入AOF文件来恢复原始的数据，因为在通常情况下AOF文件保存的数据集要比RDB文件保存的数据集要完整。
+-   RDB 的数据不实时，同时使用两者时服务器重启也只会找AOF文件，那要不要只使用AOF呢？作者建议不要，因为RDB更适合用于备份数据库（AOF在不断变化不好备份），快速重启，而且不会有AOF可能潜在的Bug，留着作为一个万一的手段。
+
+5、性能建议
+
+-   因为RDB文件只用作后备用途，建议只在Slave上持久化RDB文件，而且只要15分钟备份一次就够了，只保留 save 900 1 这条规则。
+-   如果Enable AOF ，好处是在最恶劣情况下也只会丢失不超过两秒数据，启动脚本较简单只load自己的AOF文件就可以了，代价一是带来了持续的IO，二是AOF rewrite 的最后将 rewrite 过程中产生的新数据写到新文件造成的阻塞几乎是不可避免的。只要硬盘许可，应该尽量减少AOF rewrite的频率，AOF重写的基础大小默认值64M太小了，可以设到5G以上，默认超过原大小100%大小重写可以改到适当的数值。
+-   如果不Enable AOF ，仅靠 Master-Slave Repllcation 实现高可用性也可以，能省掉一大笔IO，也减少了rewrite时带来的系统波动。代价是如果Master/Slave 同时倒掉，会丢失十几分钟的数据，启动脚本也要比较两个 Master/Slave 中的 RDB文件，载入较新的那个，微博就是这种架构。
+~~~bash
+~~~  
+
+~~~bash
+~~~  
+
+~~~bash
+~~~  
+
+~~~bash
+~~~  
+
+~~~bash
+~~~  
+
+~~~bash
+~~~  
+
+~~~bash
+~~~  
+
+~~~bash
+~~~  
+
+~~~bash
+~~~  
+
+~~~bash
+~~~  
+
+~~~bash
+~~~  
+
+~~~bash
+~~~  
+
+~~~bash
+~~~  
+
+~~~bash
+~~~  
+
+~~~bash
+~~~  
+
+~~~bash
+~~~  
