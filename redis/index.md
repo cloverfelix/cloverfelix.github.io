@@ -2039,17 +2039,253 @@ aof默认就是文件的无限追加，文件会越来越大
 -   如果不Enable AOF ，仅靠 Master-Slave Repllcation 实现高可用性也可以，能省掉一大笔IO，也减少了rewrite时带来的系统波动。代价是如果Master/Slave 同时倒掉，会丢失十几分钟的数据，启动脚本也要比较两个 Master/Slave 中的 RDB文件，载入较新的那个，微博就是这种架构。
 
 # Redis发布订阅
-~~~bash
-~~~  
+
+Redis发布订阅（pub/sub）是一种消息通信模式：发送者（pub）发送消息，订阅者（sub）接受消息。
+
+Redis客户端可以订阅任意数量的频道。
+
+订阅/发布消息图：
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202318.png)
+
+下图展示了频道channel1，以及订阅这个频道的三个客户端--client2、client5和client1之间的关系：
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202452.png)
+
+当有新消息通过PUBLISH 命令发送给频道channel1时，这个消息就会被发送给订阅它的三个客户端：
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202622.png)
+
+> 命令
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723200431.png)
+
+>测试
+
+订阅端：
 
 ~~~bash
+127.0.0.1:6379> SUBSCRIBE clover
+Reading messages... (press Ctrl-C to quit)
+1) "subscribe"
+2) "clover"
+3) (integer) 1
+# 等待读取推送的信息
+1) "message"		# 接送的是什么，消息
+2) "clover"			   # 哪个频道的消息
+3) "hello,world"	# 消息的具体内容
+1) "message"
+2) "clover"
+3) "hello,cloverfelix"
 ~~~  
 
-~~~bash
-~~~  
+发送端:
 
 ~~~bash
+127.0.0.1:6379> PUBLISH clover "hello,world"			# 发布者发布消息到频道
+(integer) 1
+127.0.0.1:6379> PUBLISH clover "hello,cloverfelix"		# 发布者发布消息到频道
+(integer) 1
+127.0.0.1:6379> 
 ~~~  
+
+**原理**
+
+Redis是使用C实现的，通过分析 Redis 源码里的 pubsub.c 文件，了解发布和订阅机制的底层实现，籍此加深对 Redis 的理解。
+
+Redis 通过 PUBLISH 、SUBSCRIBE 和 PSUBSCRIBE 等命令实现发布和订阅功能。
+
+每个 Redis 服务器进程都维持着一个表示服务器状态的 redis.h/redisServer 结构， 结构的 pubsub_channels 属性是一个字典， 这个字典就用于保存订阅频道的信息，其中，字典的键为正在被订阅的频道， 而字典的值则是一个链表， 链表中保存了所有订阅这个频道的客户端。
+
+客户端订阅，就被链接到对应频道的链表的尾部，退订则就是将客户端节点从链表中移除。
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202921.png)
+
+**缺点**
+
+1.  如果一个客户端订阅了频道，但自己读取消息的速度却不够快的话，那么不断积压的消息会使redis输出缓冲区的体积变得越来越大，这可能使得redis本身的速度变慢，甚至直接崩溃。
+2.  这和数据传输可靠性有关，如果在订阅方断线，那么他将会丢失所有在短线期间发布者发布的消息。
+
+**应用**
+
+1.  消息订阅：公众号订阅，微博关注等等（起始更多是使用消息队列来进行实现）
+2.  多人在线聊天室。
+
+稍微复杂的场景，我们就会使用消息中间件MQ处理。
+
+# Redis主从复制
+
+## 概念
+
+主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点（Master/Leader）,后者称为从节点（Slave/Follower）， **数据的复制是`单向的`！只能由主节点复制到从节点**（主节点以写为主、从节点以读为主）。
+
+**默认情况下，每台Redis服务器都是主节点**
+
+一个主节点可以有0个或者多个从节点，但每个从节点只能由一个主节点。
+
+## 作用
+
+1.  数据冗余：主从复制实现了数据的热备份，是持久化之外的一种数据冗余的方式。
+
+2.  故障恢复：当主节点故障时，从节点可以暂时替代主节点提供服务，是一种服务冗余的方式
+
+3.  负载均衡：在主从复制的基础上，配合读写分离，由主节点进行写操作，从节点进行读操作，分担服务器的负载；尤其是在多读少写的场景下，通过多个从节点分担负载，提高并发量。
+
+4.  高可用（集群）基石：主从复制还是哨兵和集群能够实施的基础。
+
+## 为什么使用集群
+
+一般来说，要将Redis运用于工程项目中，只使用一台Redis是万万不能的（宕机），原因如下：
+
+1、从结构上，单个Redis服务器会发生单点故障，并且一台服务器需要处理所有的请求负载，压力较大；
+
+2、从容量上，单个Redis服务器内存容量有限，就算一台Redis服务器内存容量为256G，也不能将所有内存用作Redis存储内存，一般来说，**单台Redis最大使用内存不应该超过20G。**
+
+电商网站上的商品，一般都是一次上传，无数次浏览的，说专业点也就是"多读少写"。
+
+对于这种场景，我们可以使如下这种架构：
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723204337.png)
+
+# 环境配置
+
+只用配置从库，不用配置主库，因为每个Redis是默认自己是主库
+
+~~~bash
+127.0.0.1:6379> info replication						# 查看当前库的信息
+# Replication
+role:master						# 角色   master
+connected_slaves:0		  # 没有从机
+master_failover_state:no-failover
+master_replid:ce9e2da75c46b69ccaf4bea614598be642658691
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:0
+second_repl_offset:-1
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+~~~  
+
+复制3个配置文件，然后修改对应的信息
+
+1、端口
+
+2、pid 名字
+
+3、log文件名字
+
+4、dump.rdb 名字
+
+修改完毕后，启动我们3个redis服务，可以通过进程信息查看
+
+## 一主二从
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723210738.png)
+
+~~~bash
+127.0.0.1:6380> SLAVEOF 127.0.0.1 6379
+OK
+127.0.0.1:6380> info replication
+# Replication
+role:slave				# 当前角色是从机
+master_host:127.0.0.1  # 可以查看到主机的信息
+master_port:6379
+master_link_status:up
+master_last_io_seconds_ago:3
+master_sync_in_progress:0
+slave_repl_offset:14
+slave_priority:100
+slave_read_only:1
+replica_announced:1
+connected_slaves:0
+master_failover_state:no-failover
+master_replid:80653bedaad4360f908ff72a68a47a4bd1045f0f
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:14
+second_repl_offset:-1
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:1
+repl_backlog_histlen:14
+127.0.0.1:6380> 
+
+
+# 在主机中查看信息
+127.0.0.1:6379> info replication
+# Replication
+role:master
+connected_slaves:2			# 多了从机的信息，可以查看从机的信息
+slave0:ip=127.0.0.1,port=6380,state=online,offset=56,lag=1
+slave1:ip=127.0.0.1,port=6381,state=online,offset=56,lag=1
+master_failover_state:no-failover
+master_replid:80653bedaad4360f908ff72a68a47a4bd1045f0f
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:56
+second_repl_offset:-1
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:1
+repl_backlog_histlen:56
+127.0.0.1:6379> 
+~~~  
+
+如果两个都配置完了，就会显示两个从机
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723212114.png)
+
+真实的主从配置应该在配置文件中配置，这样的话是永久的，我们这里使用的是命令，只是暂时的！
+
+## 使用规则
+
+1.从机只能读，不能写，主机可读可写但是多用于写。
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213646.png)
+
+2.从机只能读取内容，如果写入内容会报错
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213742.png)
+
+
+>测试
+
+主机断开连接，从机依旧连接到主机的，但是没有写操作，这个时候，主机如果回来了，从机依旧可以直接获取到主机写的信息
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213924.png)
+
+如果是使用命令行来配置的从机，这个时候如果重启了，就会变回主机！只要变为从机，立马就会从主机中获取值！
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214210.png)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214303.png)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214442.png)
+
+>复制原理
+
+Slave 启动成功连接到 master 后会发送一个`sync同步`命令
+
+Master 接到命令，启动后台的存盘进程，同时收集所有接收到的用于修改数据集命令，在后台进程执行完毕之后，master将传送整个数据文件到slave，并完成一次完全同步。
+
+**全量复制**：而slave服务在接收到数据库文件数据后，将其存盘并加载到内存中。
+
+**增量复制**：Master 继续将新的所有收集到的修改命令依次传给slave，完成同步
+
+但是只要是重新连接master，一次完全同步（全量复制）将被自动执行！ 我们的数据一定可以在从机中看到！
+
+>层层链路
+
+上一个Master链接下一个Slave
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214841.png)
+
+这样也可以完成我们的主从复制！
+
+>如果没有老大了，这个时候能不能选择一个老大出来呢？哨兵模式没出来之前是：手动选择
+
+如果主机断开了连接，我们可以使用`SLAVEOF no one`让自己变成主机！其它的节点就可以手动连接到这个最新的主节点（手动）如果这个时候老大修复了，那就只有重新配置连接了！
+
+## 哨兵模式
 
 ~~~bash
 ~~~  

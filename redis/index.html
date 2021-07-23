@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/redis\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Redis","wordcount":  15287 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Redis","wordcount":  17610 ,
         "url": "https:\/\/cloverfelix.github.io\/redis\/","datePublished": "2021-07-04T16:36:09+08:00","dateModified": "2021-07-04T16:36:09+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>Redis</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 15287 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 31 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 17610 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 36 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -148,6 +148,18 @@
   <ul>
     <li><a href="#rdbredis-database">RDB（Redis Database）</a></li>
     <li><a href="#aofappend-only-file">AOF(Append Only File)</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#概念">概念</a></li>
+    <li><a href="#作用">作用</a></li>
+    <li><a href="#为什么使用集群">为什么使用集群</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#一主二从">一主二从</a></li>
+    <li><a href="#使用规则">使用规则</a></li>
+    <li><a href="#哨兵模式">哨兵模式</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="nosql概述">NoSQL概述</h1>
@@ -3603,31 +3615,391 @@ appendfsync everysec			<span class="c1"># 每秒执行一次 sync，在这一秒
 <li>如果不Enable AOF ，仅靠 Master-Slave Repllcation 实现高可用性也可以，能省掉一大笔IO，也减少了rewrite时带来的系统波动。代价是如果Master/Slave 同时倒掉，会丢失十几分钟的数据，启动脚本也要比较两个 Master/Slave 中的 RDB文件，载入较新的那个，微博就是这种架构。</li>
 </ul>
 <h1 id="redis发布订阅">Redis发布订阅</h1>
+<p>Redis发布订阅（pub/sub）是一种消息通信模式：发送者（pub）发送消息，订阅者（sub）接受消息。</p>
+<p>Redis客户端可以订阅任意数量的频道。</p>
+<p>订阅/发布消息图：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202318.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202318.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202318.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202318.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202318.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202318.png" /></p>
+<p>下图展示了频道channel1，以及订阅这个频道的三个客户端&ndash;client2、client5和client1之间的关系：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202452.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202452.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202452.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202452.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202452.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202452.png" /></p>
+<p>当有新消息通过PUBLISH 命令发送给频道channel1时，这个消息就会被发送给订阅它的三个客户端：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202622.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202622.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202622.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202622.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202622.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202622.png" /></p>
+<blockquote>
+<p>命令</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723200431.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723200431.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723200431.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723200431.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723200431.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723200431.png" /></p>
+<blockquote>
+<p>测试</p>
+</blockquote>
+<p>订阅端：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; SUBSCRIBE clover
+Reading messages... <span class="o">(</span>press Ctrl-C to quit<span class="o">)</span>
+1<span class="o">)</span> <span class="s2">&#34;subscribe&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+3<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+<span class="c1"># 等待读取推送的信息</span>
+1<span class="o">)</span> <span class="s2">&#34;message&#34;</span>		<span class="c1"># 接送的是什么，消息</span>
+2<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>			   <span class="c1"># 哪个频道的消息</span>
+3<span class="o">)</span> <span class="s2">&#34;hello,world&#34;</span>	<span class="c1"># 消息的具体内容</span>
+1<span class="o">)</span> <span class="s2">&#34;message&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;clover&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;hello,cloverfelix&#34;</span>
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p>发送端:</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; PUBLISH clover <span class="s2">&#34;hello,world&#34;</span>			<span class="c1"># 发布者发布消息到频道</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; PUBLISH clover <span class="s2">&#34;hello,cloverfelix&#34;</span>		<span class="c1"># 发布者发布消息到频道</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; 
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p><strong>原理</strong></p>
+<p>Redis是使用C实现的，通过分析 Redis 源码里的 pubsub.c 文件，了解发布和订阅机制的底层实现，籍此加深对 Redis 的理解。</p>
+<p>Redis 通过 PUBLISH 、SUBSCRIBE 和 PSUBSCRIBE 等命令实现发布和订阅功能。</p>
+<p>每个 Redis 服务器进程都维持着一个表示服务器状态的 redis.h/redisServer 结构， 结构的 pubsub_channels 属性是一个字典， 这个字典就用于保存订阅频道的信息，其中，字典的键为正在被订阅的频道， 而字典的值则是一个链表， 链表中保存了所有订阅这个频道的客户端。</p>
+<p>客户端订阅，就被链接到对应频道的链表的尾部，退订则就是将客户端节点从链表中移除。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202921.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202921.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202921.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202921.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202921.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723202921.png" /></p>
+<p><strong>缺点</strong></p>
+<ol>
+<li>如果一个客户端订阅了频道，但自己读取消息的速度却不够快的话，那么不断积压的消息会使redis输出缓冲区的体积变得越来越大，这可能使得redis本身的速度变慢，甚至直接崩溃。</li>
+<li>这和数据传输可靠性有关，如果在订阅方断线，那么他将会丢失所有在短线期间发布者发布的消息。</li>
+</ol>
+<p><strong>应用</strong></p>
+<ol>
+<li>消息订阅：公众号订阅，微博关注等等（起始更多是使用消息队列来进行实现）</li>
+<li>多人在线聊天室。</li>
+</ol>
+<p>稍微复杂的场景，我们就会使用消息中间件MQ处理。</p>
+<h1 id="redis主从复制">Redis主从复制</h1>
+<h2 id="概念">概念</h2>
+<p>主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点（Master/Leader）,后者称为从节点（Slave/Follower）， <strong>数据的复制是<code>单向的</code>！只能由主节点复制到从节点</strong>（主节点以写为主、从节点以读为主）。</p>
+<p><strong>默认情况下，每台Redis服务器都是主节点</strong></p>
+<p>一个主节点可以有0个或者多个从节点，但每个从节点只能由一个主节点。</p>
+<h2 id="作用">作用</h2>
+<ol>
+<li>
+<p>数据冗余：主从复制实现了数据的热备份，是持久化之外的一种数据冗余的方式。</p>
+</li>
+<li>
+<p>故障恢复：当主节点故障时，从节点可以暂时替代主节点提供服务，是一种服务冗余的方式</p>
+</li>
+<li>
+<p>负载均衡：在主从复制的基础上，配合读写分离，由主节点进行写操作，从节点进行读操作，分担服务器的负载；尤其是在多读少写的场景下，通过多个从节点分担负载，提高并发量。</p>
+</li>
+<li>
+<p>高可用（集群）基石：主从复制还是哨兵和集群能够实施的基础。</p>
+</li>
+</ol>
+<h2 id="为什么使用集群">为什么使用集群</h2>
+<p>一般来说，要将Redis运用于工程项目中，只使用一台Redis是万万不能的（宕机），原因如下：</p>
+<p>1、从结构上，单个Redis服务器会发生单点故障，并且一台服务器需要处理所有的请求负载，压力较大；</p>
+<p>2、从容量上，单个Redis服务器内存容量有限，就算一台Redis服务器内存容量为256G，也不能将所有内存用作Redis存储内存，一般来说，<strong>单台Redis最大使用内存不应该超过20G。</strong></p>
+<p>电商网站上的商品，一般都是一次上传，无数次浏览的，说专业点也就是&quot;多读少写&quot;。</p>
+<p>对于这种场景，我们可以使如下这种架构：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723204337.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723204337.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723204337.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723204337.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723204337.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723204337.png" /></p>
+<h1 id="环境配置">环境配置</h1>
+<p>只用配置从库，不用配置主库，因为每个Redis是默认自己是主库</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; info replication						<span class="c1"># 查看当前库的信息</span>
+<span class="c1"># Replication</span>
+role:master						<span class="c1"># 角色   master</span>
+connected_slaves:0		  <span class="c1"># 没有从机</span>
+master_failover_state:no-failover
+master_replid:ce9e2da75c46b69ccaf4bea614598be642658691
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:0
+second_repl_offset:-1
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p>复制3个配置文件，然后修改对应的信息</p>
+<p>1、端口</p>
+<p>2、pid 名字</p>
+<p>3、log文件名字</p>
+<p>4、dump.rdb 名字</p>
+<p>修改完毕后，启动我们3个redis服务，可以通过进程信息查看</p>
+<h2 id="一主二从">一主二从</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723210738.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723210738.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723210738.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723210738.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723210738.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723210738.png" /></p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6380&gt; SLAVEOF 127.0.0.1 <span class="m">6379</span>
+OK
+127.0.0.1:6380&gt; info replication
+<span class="c1"># Replication</span>
+role:slave				<span class="c1"># 当前角色是从机</span>
+master_host:127.0.0.1  <span class="c1"># 可以查看到主机的信息</span>
+master_port:6379
+master_link_status:up
+master_last_io_seconds_ago:3
+master_sync_in_progress:0
+slave_repl_offset:14
+slave_priority:100
+slave_read_only:1
+replica_announced:1
+connected_slaves:0
+master_failover_state:no-failover
+master_replid:80653bedaad4360f908ff72a68a47a4bd1045f0f
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:14
+second_repl_offset:-1
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:1
+repl_backlog_histlen:14
+127.0.0.1:6380&gt; 
+
+
+<span class="c1"># 在主机中查看信息</span>
+127.0.0.1:6379&gt; info replication
+<span class="c1"># Replication</span>
+role:master
+connected_slaves:2			<span class="c1"># 多了从机的信息，可以查看从机的信息</span>
+slave0:ip<span class="o">=</span>127.0.0.1,port<span class="o">=</span>6380,state<span class="o">=</span>online,offset<span class="o">=</span>56,lag<span class="o">=</span><span class="m">1</span>
+slave1:ip<span class="o">=</span>127.0.0.1,port<span class="o">=</span>6381,state<span class="o">=</span>online,offset<span class="o">=</span>56,lag<span class="o">=</span><span class="m">1</span>
+master_failover_state:no-failover
+master_replid:80653bedaad4360f908ff72a68a47a4bd1045f0f
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:56
+second_repl_offset:-1
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:1
+repl_backlog_histlen:56
+127.0.0.1:6379&gt; 
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p>如果两个都配置完了，就会显示两个从机</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723212114.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723212114.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723212114.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723212114.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723212114.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723212114.png" /></p>
+<p>真实的主从配置应该在配置文件中配置，这样的话是永久的，我们这里使用的是命令，只是暂时的！</p>
+<h2 id="使用规则">使用规则</h2>
+<p>1.从机只能读，不能写，主机可读可写但是多用于写。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213646.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213646.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213646.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213646.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213646.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213646.png" /></p>
+<p>2.从机只能读取内容，如果写入内容会报错</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213742.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213742.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213742.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213742.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213742.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213742.png" /></p>
+<blockquote>
+<p>测试</p>
+</blockquote>
+<p>主机断开连接，从机依旧连接到主机的，但是没有写操作，这个时候，主机如果回来了，从机依旧可以直接获取到主机写的信息</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213924.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213924.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213924.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213924.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213924.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723213924.png" /></p>
+<p>如果是使用命令行来配置的从机，这个时候如果重启了，就会变回主机！只要变为从机，立马就会从主机中获取值！</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214210.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214210.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214210.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214210.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214210.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214210.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214303.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214303.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214303.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214303.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214303.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214303.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214442.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214442.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214442.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214442.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214442.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214442.png" /></p>
+<blockquote>
+<p>复制原理</p>
+</blockquote>
+<p>Slave 启动成功连接到 master 后会发送一个<code>sync同步</code>命令</p>
+<p>Master 接到命令，启动后台的存盘进程，同时收集所有接收到的用于修改数据集命令，在后台进程执行完毕之后，master将传送整个数据文件到slave，并完成一次完全同步。</p>
+<p><strong>全量复制</strong>：而slave服务在接收到数据库文件数据后，将其存盘并加载到内存中。</p>
+<p><strong>增量复制</strong>：Master 继续将新的所有收集到的修改命令依次传给slave，完成同步</p>
+<p>但是只要是重新连接master，一次完全同步（全量复制）将被自动执行！ 我们的数据一定可以在从机中看到！</p>
+<blockquote>
+<p>层层链路</p>
+</blockquote>
+<p>上一个Master链接下一个Slave</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214841.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214841.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214841.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214841.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214841.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210723214841.png" /></p>
+<p>这样也可以完成我们的主从复制！</p>
+<blockquote>
+<p>如果没有老大了，这个时候能不能选择一个老大出来呢？哨兵模式没出来之前是：手动选择</p>
+</blockquote>
+<p>如果主机断开了连接，我们可以使用<code>SLAVEOF no one</code>让自己变成主机！其它的节点就可以手动连接到这个最新的主节点（手动）如果这个时候老大修复了，那就只有重新配置连接了！</p>
+<h2 id="哨兵模式">哨兵模式</h2>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code></code></pre></td>
 <td class="lntd">
