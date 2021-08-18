@@ -83,7 +83,8 @@ npm install --unsafe-perm --registry=https://registry.npm.taobao.org
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210702203220.png)
 
-	注意：如果你没有安装node的话是执行不了的，那你就必须得先去安装node后才可以执行，Linux上安装node的教程可以参考codesheep给的pdf上安装node的教程，只是，他最后配置node环境变量时，那个profile文件夹是存在于/etc下的profile文件夹中进行配置，而不是他pdf上所给的指令，使用pdf上的指令会提示我们没有权限
+	注意：如果你没有安装node的话是执行不了的，那你就必须得先去安装node后才可以执行，Linux上安
+	装node的教程可以参考codesheep给的pdf上安装node的教程，只是，他最后配置node环境变量时，那个profile文件夹是存在于/etc下的profile文件夹中进行配置，而不是他pdf上所给的指令，使用pdf上的指令会提示我们没有权限
 	
 安装完依赖后就可以使用`npm run build:prod`打生产环境前端的包就可以了
 

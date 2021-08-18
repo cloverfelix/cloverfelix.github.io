@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/docker\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Docker","wordcount":  14319 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Docker","wordcount":  14207 ,
         "url": "https:\/\/cloverfelix.github.io\/docker\/","datePublished": "2021-07-04T16:23:44+08:00","dateModified": "2021-07-04T16:23:44+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Docker</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/docker/"><i class="far fa-folder fa-fw"></i>Docker</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 14319 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 14207 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 29 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -221,7 +221,7 @@
         <li><a href="#官方dockerfile示例">官方DockerFile示例</a></li>
         <li><a href="#dockerfile基础知识">DockerFile基础知识</a></li>
         <li><a href="#dockerfile命令">DockerFile命令</a></li>
-        <li><a href="#heading-1"></a></li>
+        <li><a href="#dockerfile-1">DockerFile</a></li>
         <li><a href="#实战构建自己的centos">实战构建自己的centos</a></li>
         <li><a href="#cmd与entrypoint">CMD与ENTRYPOINT</a></li>
         <li><a href="#实战tomcat镜像">实战Tomcat镜像</a></li>
@@ -797,7 +797,7 @@ sudo systemctl restart docker # 重启docker
 <p><a href="https://www.processon.com/" target="_blank" rel="noopener noreffer">在线画图软件ProcessOn</a></p>
 <p><a href="https://www.bilibili.com/video/BV177411K7bH" target="_blank" rel="noopener noreffer">服务器及购买相关介绍</a></p>
 <h2 id="底层原理">底层原理</h2>
-<p>Docker是真么工作的？</p>
+<p>Docker是怎么工作的？</p>
 <p>Docker是一个Client-Server结构的系统，Docker的守护进程在主机上。通过Socket从客户端访问！</p>
 <p>DockerServer接受到Docker-Client的指令，</p>
 <p><img
@@ -1221,7 +1221,7 @@ ls
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601112327.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601112327.png" /></p>
-<p>注意<strong>这里面主机名，编程了centos的id</strong></p>
+<p>注意<strong>这里面主机名，变成了centos的容器id</strong></p>
 <p>这里面就是一个容器，套娃啊</p>
 <h4 id="查看运行的容器">查看运行的容器</h4>
 <div class="highlight"><div class="chroma">
@@ -2942,7 +2942,8 @@ docker <span class="nb">exec</span> -it tomcat01 /bin/bash
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601113537.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601113537.png" /></p>
 <p>思考问题：</p>
-<pre><code>我们以后部署项目，如果每次都要进入容器是不是身份麻烦？我要是可以在容器外部提供一个映射路径，webapps，我们在外部放置项目，就自动同步到内部就好了！
+<pre><code>我们以后部署项目，如果每次都要进入容器是不是身份麻烦？我要是可以在容器外部提供一个映射路径，
+webapps，我们在外部放置项目，就自动同步到内部就好了！
 </code></pre>
 <p>docker容器 tomcat+网站</p>
 <p>docker mysql</p>
@@ -3746,7 +3747,7 @@ docker build -f dockerfile1 -t padaxing/centos:1.0 .  <span class="c1"># 最后�
 <ol>
 <li>每个指令都必须是大写字母</li>
 <li>按照从上到下顺序执行</li>
-<li>*#*表示注释</li>
+<li><strong>#</strong> 表示注释</li>
 <li>每一个指令都会创建体检一个新的镜像层，并提交</li>
 </ol>
 <p><img
@@ -3769,7 +3770,7 @@ docker build -f dockerfile1 -t padaxing/centos:1.0 .  <span class="c1"># 最后�
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601115428.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601115428.png" /></p>
-<h3 id="heading-1"></h3>
+<h3 id="dockerfile-1">DockerFile</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -4042,8 +4043,8 @@ CMD <span class="o">[</span><span class="s2">&#34;ls&#34;</span>,<span class="s2
 <ol>
 <li>
 <p>准备镜像文件 tomcat压缩包，jdk压缩包</p>
-<p>jdk压缩包：https://blog.csdn.net/doupeihua/article/details/51831947</p>
-<p>tomcat压缩包：https://tomcat.apache.org/download-90.cgi</p>
+<p><a href="https://blog.csdn.net/doupeihua/article/details/51831947" target="_blank" rel="noopener noreffer">jdk压缩包</a></p>
+<p><a href="https://tomcat.apache.org/download-90.cgi" target="_blank" rel="noopener noreffer">tomcat压缩包</a></p>
 </li>
 <li>
 <p>编写dockerflie文件，官方命名<strong>Dockerfile</strong>，build会自动寻找这个文件，就不需要-f指定了</p>
@@ -4392,7 +4393,7 @@ rtt min/avg/max/mdev <span class="o">=</span> 0.066/0.074/0.091/0.010 ms
 </code></pre></td></tr></table>
 </div>
 </div><p>原理</p>
-<p>1、我们没每启动一个docker容器，docker就会给docker容器分配一个IP，我们只要安装了docker，就会有一个网卡docker0，桥接模式，使用的技术是evth-pair技术</p>
+<p>1、我们每启动一个docker容器，docker就会给docker容器分配一个IP，我们只要安装了docker，就会有一个网卡docker0，桥接模式，使用的技术是evth-pair技术</p>
 <p>再次测试IP addr</p>
 <p><img
         class="lazyload"
@@ -4474,7 +4475,7 @@ rtt min/avg/max/mdev <span class="o">=</span> 0.066/0.074/0.091/0.010 ms
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601115952.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601115952.png" /></p>
-<p>思考一个场景，我们编写了一个微服务，database url=ip:，项目不重启，数据库ip换掉了，我们希望可以解决这个问题，可以使用名字来进行访问容器？  这里使用的是**&ndash;link**技术</p>
+<p>思考一个场景，我们编写了一个微服务，database url=ip:，项目不重启，数据库ip换掉了，我们希望可以解决这个问题，可以使用名字来进行访问容器？  这里使用的是<code>--link</code> 技术</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -4549,9 +4550,9 @@ ff02::2 ip6-allrouters
 172.17.0.4      581a112c15d5
 </code></pre></td></tr></table>
 </div>
-</div><p>本质探究：&ndash;link就是我们在hosts配置中增加了一个tomcat02的映射。172.17.0.3      tomcat02 0303648ab9d4</p>
-<p>我们现在玩Docker已经不建议使用-link了！</p>
-<p>使用的都是自定义网络！不适用docker0！</p>
+</div><p>本质探究：<code>--link</code>就是我们在hosts配置中增加了一个tomcat02的映射。172.17.0.3      tomcat02 0303648ab9d4</p>
+<p>我们现在玩Docker已经不建议使用<code>--link</code>了！</p>
+<p>使用的都是自定义网络！不使用docker0！</p>
 <p>docker0问题：它不支持容器名连接访问！</p>
 <h3 id="自定义网络">自定义网络</h3>
 <p>查看所有的docker网络</p>
@@ -4564,10 +4565,14 @@ ff02::2 ip6-allrouters
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601120024.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601120024.png" /></p>
 <p><strong>网络模式</strong></p>
-<p>bridge： 桥接 就是在docker上搭桥（默认使用，自己创建也使用bridge）</p>
-<p>none： 不配置网络</p>
-<p>host： 和宿主机共享网络</p>
-<p>container： 容器网络连通！（用得少，局限很多）</p>
+<pre><code>bridge： 桥接 就是在docker上搭桥（默认使用，自己创建也使用bridge）
+
+none： 不配置网络
+
+host： 和宿主机共享网络
+
+container： 容器网络连通！（用得少，局限很多）
+</code></pre>
 <p><strong>测试</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -4861,7 +4866,7 @@ rtt min/avg/max/mdev <span class="o">=</span> 0.095/0.105/0.134/0.019 ms
 ping: tomcat-net-01: Name or service not known
 </code></pre></td></tr></table>
 </div>
-</div><p>结论：假设要跨网络操作别人，就需要使用docker network connect 连通！</p>
+</div><p><strong>结论：假设要跨网络操作别人，就需要使用docker network connect 连通！</strong></p>
 <h3 id="实战部署redis集群">实战：部署Redis集群</h3>
 <h2 id="idea整合docker">IDEA整合Docker</h2>
 <h2 id="docker-整合docker">Docker 整合Docker</h2>

@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/springboot\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringBoot","wordcount":  1 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringBoot","wordcount":  10754 ,
         "url": "https:\/\/cloverfelix.github.io\/springboot\/","datePublished": "2021-07-04T16:38:24+08:00","dateModified": "2021-07-04T16:38:24+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,15 +106,1528 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Springboot</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/springboot/"><i class="far fa-folder fa-fw"></i>SpringBoot</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10754 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 22 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
-            </div><div class="content" id="content"><p>study</p>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#springboot原理探讨">SpringBoot原理探讨</a></li>
+    <li><a href="#配置文件">配置文件</a></li>
+    <li><a href="#注入配置文件">注入配置文件</a></li>
+    <li><a href="#自动配置原理">自动配置原理</a></li>
+    <li><a href="#自动配置原理再理解">自动配置原理再理解</a>
+      <ul>
+        <li><a href="#重点enableautoconfiguration">重点EnableAutoConfiguration</a></li>
+        <li><a href="#autoconfigurationpackage">AutoConfigurationPackage</a></li>
+        <li><a href="#回到import">回到Import</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+    <li><a href="#静态资源映射规则">静态资源映射规则</a></li>
+    <li><a href="#模板引擎">模板引擎</a></li>
+    <li><a href="#mvc自动配置原理">MVC自动配置原理</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="springboot原理探讨">SpringBoot原理探讨</h2>
+<p>创建一个Controller时，让其返回一个字符串，有两种方式</p>
+<pre><code>1、使用@RestController注解
+2、使用RequestMapping+ResponseBody注解
+</code></pre>
+<p>**pom.xml **</p>
+<ul>
+<li>spring-boot-dependencies：核心依赖在父工程中</li>
+<li>我们在写或者引入一些Springboot依赖的时候，不需要指定版本，就因为有这些版本仓库</li>
+</ul>
+<p><strong>启动器</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>  
+ 	<span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>  
+ 	<span class="nt">&lt;artifactId&gt;</span>spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>  
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>启动器：说白了就是SpringBoot的启动场景</li>
+<li>比如说spring-boot-starte-web，他就会帮我们自动导入web环境所有的依赖！</li>
+<li>springboot会将所有的功能场景，都变成一个个的启动器</li>
+<li>我们要使用什么功能，就只需要找到对应的启动器就可以了<code>start</code></li>
+</ul>
+<p><strong>主程序</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">// @SpringBootApplication ：标注这这个类是一个SpringBoot的应用   启动类下的所有资源被导入
+</span><span class="c1"></span><span class="nd">@SpringBootApplication</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DemoApplication</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 将Springboot启动
+</span><span class="c1"></span>        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">DemoApplication</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>注解</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">@SpringBootConfiguration 	： springboot的配置
+	@Configuration	：spring的配置类
+		@Component	：说明这也是一个spring的组件
+
+@EnableAutoConfiguration	：自动配置
+	@AutoConfigurationPackage	：自动配置包
+		@Import(AutoConfigurationPackages.Registrar.class)	：自动配置包注册
+	@Import(AutoConfigurationImportSelector.class)	：自动配置导入选择
+
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>@SpringBootApplication 集成了所有注解，当它启动的时候，它所集成的资源都会被导入
+META-INF/spring.factories：自动配置的核心文件
+</code></pre>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210810102522.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210810102522.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210810102522.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210810102522.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210810102522.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210810102522.png" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">Properties properties = PropertiesLoaderUtils.loadProperties(resource)
+//所有资源加载到配置类中！
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>所以，自动配置真正实现是从classpath中搜寻所有的<code>/META-INF/spring.factories</code>配置文件，并将其中对应的org.springframework.boot.autoconfigure.包下的配置项，通过反射实例化为对应标注了@Configuration的JavaConfig形式的IOC容器配置类，然后将这些都汇总成为一个实例并加载到IOC容器中</strong></p>
+<pre><code>结论：springboot所有的自动配置都是在启动的时候扫描并加载：`spring.factories`所有的的自动配置类都在这里，但是不一定生效，要判断条件是否成立，只要导入了对应的start就有对应的启动器了，有了启动器，我们自动装配就会生效，然后就配置成功！
+</code></pre>
+<ul>
+<li>1、springboot在启动的时候，从类路径下<code>/META-INF/spring.factories</code>获取指定的值</li>
+<li>2、将这些自动配置的类导入容器，自动配置就会生效，帮我进行自动配置</li>
+<li>3、以前我们需要自动配置的东西，现在springboot帮我们做了</li>
+<li>4、整个JavaEE的整体解决方案和自动配置都在springboot-autoconfigure的jar包中</li>
+<li><strong>5、它将所有的需要导入的组件一圈类名的方式返回，这些组件就会被添加到容器中</strong></li>
+<li>6、它会给容器中导入非常多的自动配置类(xxxAutoConfiguration)，就是给容器中导入这个场景需要的所有组件，并配置好这些组件，即自动装配(Configuration);</li>
+<li><strong>7、有了自动配置类，免去了我们手动编写配置注入功能组件等工作；</strong></li>
+</ul>
+<blockquote>
+<p>springApplication.run方法分析</p>
+</blockquote>
+<p>分析该方法主要分为两部分，一部分是SpringApplication的实例化，二是run方法的执行</p>
+<blockquote>
+<p>SpringApplication</p>
+</blockquote>
+<p>这个类主要做了一下四件事情</p>
+<pre><code>1、推断应用的类型是普通的项目还是web项目
+2、查找并加载所有可用初始化器，设置到initializers属性中
+3、找出所有的应用程序监听器，设置到listeners属性中
+4、推断并设置main方法的定义类，找到运行的主类
+</code></pre>
+<h2 id="配置文件">配置文件</h2>
+<p>Springboot使用一个全局的配置文件，配置文件名称是固定的</p>
+<ul>
+<li>
+<p>application.properties</p>
+<ul>
+<li>语法结构： key=value</li>
+</ul>
+</li>
+<li>
+<p>application.yml</p>
+<ul>
+<li>语法结构：key:  空格 value</li>
+</ul>
+<p><strong>注意：这里的空格是不能少的，少了即失效</strong></p>
+</li>
+</ul>
+<blockquote>
+<p>yml基础语法</p>
+</blockquote>
+<p>说明：语法要求严格！</p>
+<p>1、空格不能省略</p>
+<p>2、以缩进来控制层级关系，只要是左边对齐的一列数据都是同一个层级的</p>
+<p>3、属性和值的大小写都是十分敏感的</p>
+<p><strong>字面量： 普通的值 [ 数字，布尔值，字符串]</strong></p>
+<p>字面量直接卸载后面就可以，字符串默认不用加上双引号或者单引号</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">k: v
+</code></pre></td></tr></table>
+</div>
+</div><p>注意：</p>
+<ul>
+<li>&ldquo;&ldquo;双引号，不会转义字符串里面的特殊字符，特殊字符会作为本身想表达的意思；
+<ul>
+<li>比如：name: &ldquo;clover \n felix&rdquo; 输出： clover 换行 felix</li>
+</ul>
+</li>
+<li>&lsquo;&lsquo;单引号，会转义特殊字符，特殊字符最终会变成和普通字符一样输出
+<ul>
+<li>比如：name:&lsquo;clover \n felix&rsquo; 输出：clover \n felix</li>
+</ul>
+</li>
+</ul>
+<h2 id="注入配置文件">注入配置文件</h2>
+<blockquote>
+<p>yaml注入配置文件</p>
+</blockquote>
+<p>1、在springboot项目中的resource目录下新建一个文件application.yml</p>
+<p>2、编写一个实体类Dog；</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Component</span>			<span class="c1">//注册bean到容器中
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Dog</span> <span class="o">{</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;wangcai&#34;</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;3&#34;</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+	
+	<span class="c1">// 有参无参构造、get、set方法、toString()方法
+</span><span class="c1"></span><span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、思考我们原来是如何给bean注入属性值的！@Value，给狗狗类测试一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Component</span> <span class="c1">//注册bean 
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Dog</span> <span class="o">{</span> 
+	<span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;阿黄&#34;</span><span class="o">)</span> 
+	<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+	<span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;18&#34;</span><span class="o">)</span> 
+	<span class="kd">private</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>4、在springboot的测试类下注入狗狗类并输出一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@SpringBootTest</span>
+<span class="kd">class</span> <span class="nc">DemoApplicationTests</span> <span class="o">{</span>
+	<span class="nd">@Autowired</span> <span class="c1">//将狗狗自动注入进来
+</span><span class="c1"></span>	<span class="kd">private</span> <span class="n">Dog</span> <span class="n">dog</span><span class="o">;</span>
+	
+	<span class="nd">@Test</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">contextLoads</span><span class="o">()</span> <span class="o">{</span>
+	<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dog</span><span class="o">);</span> <span class="c1">//打印看下狗狗对象
+</span><span class="c1"></span>	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>结果成功输出，@Value注入成功，这是我们原来的方法</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811091730.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811091730.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811091730.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811091730.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811091730.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811091730.png" /></p>
+<p>5、在编写一个复杂一点的实体类：Person类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Component</span> 	<span class="c1">//注册bean到容器中
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+		<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="n">Boolean</span> <span class="n">happy</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="n">Date</span> <span class="n">birth</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">maps</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">lists</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="n">Dog</span> <span class="n">dog</span><span class="o">;</span>
+		<span class="c1">//有参无参构造、get、set方法、toString()方法
+</span><span class="c1"></span><span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6、我们来使用yaml配置的方法进行注入，写的时候要注意区别和优势，编写一个yaml配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">person</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">clover</span><span class="w">
+</span><span class="w">  </span><span class="nt">age</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span><span class="w">  </span><span class="nt">happy</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="w">  </span><span class="nt">birth</span><span class="p">:</span><span class="w"> </span><span class="m">1996</span><span class="l">/08/24</span><span class="w">
+</span><span class="w">  </span><span class="nt">maps</span><span class="p">:</span><span class="w"> </span>{<span class="nt">k1: v1,k2</span><span class="p">:</span><span class="w"> </span><span class="l">v2}</span><span class="w">
+</span><span class="w">  </span><span class="nt">lists</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">code</span><span class="w">
+</span><span class="w">    </span>- <span class="l">music</span><span class="w">
+</span><span class="w">  </span><span class="nt">dog</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">wangcai</span><span class="w">
+</span><span class="w">    </span><span class="nt">age</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>7、把刚刚写好的Person对象所有的值，注入到我们的类中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Component</span>
+
+<span class="cm">/*
+</span><span class="cm">    @ConfigurationProperties作用：
+</span><span class="cm">    将配置文件中配置的每一个属性的值，映射到这个组件中；
+</span><span class="cm">    告诉SpringBoot将本类中的所有属性和配置文件中相关的配置进行绑定
+</span><span class="cm">    参数 prefix = &#34;person&#34; ：将配置文件中的person下面的所有属性一一对应
+</span><span class="cm">
+</span><span class="cm">    只有这个组件是容器中的组件，才能使用容器提供的@ConfigurationProperties功能
+</span><span class="cm">*/</span>
+
+<span class="nd">@ConfigurationProperties</span><span class="o">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;person&#34;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">happy</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Date</span> <span class="n">birth</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">maps</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">lists</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Dog</span> <span class="n">dog</span><span class="o">;</span>
+	
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>8、IDEA提示，SpringBoot配置注解处理器没有找到，让我们查看文档，我们查看文档，可以找到一个依赖</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092203.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092203.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092203.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092203.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092203.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092203.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092345.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092345.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092345.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092345.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092345.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092345.png" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"> <span class="c">&lt;!-- 导入配置文件处理器，配置文件进行绑定就会有提示，需要重启 --&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>spring-boot-configuration-processor<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>9、确认以上配置都OK之后，去测试类中测试一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@SpringBootTest</span>
+<span class="kd">class</span> <span class="nc">Springboot02ConfigApplicationTests</span> <span class="o">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="n">Person</span> <span class="n">person</span><span class="o">;</span>		<span class="c1">//将person自动注入进来
+</span><span class="c1"></span>
+    <span class="nd">@Test</span>
+    <span class="kt">void</span> <span class="nf">contextLoads</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dog</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>结果：所有值全部注入成功</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092707.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092707.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092707.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092707.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092707.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092707.png" /></p>
+<blockquote>
+<p>加载指定的配置文件</p>
+</blockquote>
+<p>@PropertySource：加载指定的配置文件</p>
+<p>@configurationProperties：默认从全局配置文件中获取值</p>
+<pre><code>注意：properties配置文件在写中文的时候，会有乱码 ， 我们需要去IDEA中设置编码格式为UTF-8； settings--&gt;FileEncodings 中配置；
+</code></pre>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092926.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092926.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092926.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092926.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092926.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092926.png" /></p>
+<blockquote>
+<p>对比小结</p>
+</blockquote>
+<p>@Value这个使用起来并不友好！我们需要为每个属性单独注解赋值，比较麻烦；看个功能对比图</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811093043.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811093043.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811093043.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811093043.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811093043.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811093043.png" /></p>
+<p>1、@ConfigurationProperties只需要写一次即可，@Value则需要每个字段都添加</p>
+<p>2、松散绑定：这个什么意思呢？比如我写的yml中写的lastname，这个和lastName是一样的，- 后面跟着的字母默认是大写的。这就是松散绑定。可以进行一下测试。</p>
+<p>3、JSR303数据校验，这个就是我们可以在字段时增加一层锅炉其验证，可以保证数据的合法性</p>
+<p>4、复杂类型封装，yml中可以封装对象，使用value就不支持</p>
+<p><strong>结论：</strong></p>
+<p>配置yml和配置properties都可以获取到值，推荐使用yml</p>
+<p>如果我们在某个业务中，只需要获取配置文件中的某个值，可以使用一下@Value</p>
+<p>如果说我们专门编写了一个JavaBean来和配置文件进行一一映射，就直接使用configurationProperties。</p>
+<h2 id="自动配置原理">自动配置原理</h2>
+<blockquote>
+<p>分析自动配置原理</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">在配置文件中能配置的东西，都存在一个固有的规律
+比如：xxxxAutoConfiguration：都有一个默认值   xxxProperties  和  配置文件进行绑定，我们就可以使用自定义的配置了
+
+xxxProperties中存在一些默认值，也就是xxxxAutoConfiguration的默认值，如果我们想要修改值，就必须让xxxProperties与配置文件绑定，然后就可以通过其中的属性修改默认值
+</code></pre></td></tr></table>
+</div>
+</div><p>以<strong>HttpEncodingAutoConfiguration（Http编码自动配置）</strong> 为例解释自动配置原理；</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//表示这是一个配置类，和以前编写的配置文件一样，也可以给容器中添加组件；
+</span><span class="c1"></span><span class="nd">@Configuration</span>
+
+<span class="c1">//启动指定类的ConfigurationProperties功能；
+</span><span class="c1"></span>		<span class="c1">//进入这个HttpProperties查看，将配置文件中对应的值和HttpProperties绑定起来；
+</span><span class="c1"></span>		<span class="c1">//并把HttpProperties加入到ioc容器中
+</span><span class="c1"></span><span class="nd">@EnableConfigurationProperties</span><span class="o">({</span><span class="n">HttpProperties</span><span class="o">.</span><span class="na">class</span><span class="o">})</span>
+
+<span class="c1">//Spring底层@Conditional注解
+</span><span class="c1"></span>		<span class="c1">//根据不同的条件判断，如果满足指定的条件，整个配置类里面的配置就会生效；
+</span><span class="c1"></span>		<span class="c1">//这里的意思就是判断当前应用是否是web应用，如果是，当前配置类生效
+</span><span class="c1"></span><span class="nd">@ConditionalOnWebApplication</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">ConditionalOnWebApplication</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">SERVLET</span><span class="o">)</span>
+
+<span class="c1">//判断当前项目有没有这个类CharacterEncodingFilter；SpringMVC中进行乱码解决的过滤器；
+</span><span class="c1"></span><span class="nd">@ConditionalOnClass</span><span class="o">({</span><span class="n">CharacterEncodingFilter</span><span class="o">.</span><span class="na">class</span><span class="o">})</span>
+
+<span class="c1">//判断配置文件中是否存在某个配置：spring.http.encoding.enabled；
+</span><span class="c1"></span>	<span class="c1">//如果不存在，判断也是成立的
+</span><span class="c1"></span>	<span class="c1">//即使我们配置文件中不配置pring.http.encoding.enabled=true，也是默认生效的；
+</span><span class="c1"></span><span class="nd">@ConditionalOnProperty</span><span class="o">(</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;spring.http.encoding&#34;</span><span class="o">,</span>
+<span class="n">value</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;enabled&#34;</span><span class="o">},</span>
+<span class="n">matchIfMissing</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HttpEncodingAutoConfiguration</span> <span class="o">{</span>
+		<span class="c1">//他已经和SpringBoot的配置文件映射了
+</span><span class="c1"></span>		<span class="kd">private</span> <span class="kd">final</span> <span class="n">Encoding</span> <span class="n">properties</span><span class="o">;</span>
+		
+		<span class="c1">//只有一个有参构造器的情况下，参数的值就会从容器中拿
+</span><span class="c1"></span>		<span class="kd">public</span> <span class="nf">HttpEncodingAutoConfiguration</span><span class="o">(</span><span class="n">HttpProperties</span> <span class="n">properties</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">this</span><span class="o">.</span><span class="na">properties</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="na">getEncoding</span><span class="o">();</span>
+		<span class="o">}</span>
+		<span class="c1">//给容器中添加一个组件，这个组件的某些值需要从properties中获取
+</span><span class="c1"></span>		<span class="nd">@Bean</span>
+		<span class="nd">@ConditionalOnMissingBean</span> <span class="c1">//判断容器没有这个组件？
+</span><span class="c1"></span>		<span class="kd">public</span> <span class="n">CharacterEncodingFilter</span> <span class="nf">characterEncodingFilter</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">CharacterEncodingFilter</span> <span class="n">filter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OrderedCharacterEncodingFilter</span><span class="o">();</span>
+		<span class="n">filter</span><span class="o">.</span><span class="na">setEncoding</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">getCharset</span><span class="o">().</span><span class="na">name</span><span class="o">());</span>
+		<span class="n">filter</span><span class="o">.</span><span class="na">setForceRequestEncoding</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">shouldForce</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">.</span><span class="na">autoconfigure</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">HttpProperties</span><span class="o">.</span><span class="na">Encoding</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">REQUEST</span><span class="o">));</span>   
+		<span class="n">filter</span><span class="o">.</span><span class="na">setForceResponseEncoding</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">shouldForce</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">springframe</span> <span class="n">work</span><span class="o">.</span><span class="na">boot</span><span class="o">.</span><span class="na">autoconfigure</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">HttpProperties</span><span class="o">.</span><span class="na">Encoding</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">RESPONSE</span><span class="o">));</span> 
+		<span class="k">return</span> <span class="n">filter</span><span class="o">;</span>
+		<span class="o">}</span> <span class="c1">//。。。。。。。 
+</span><span class="c1"></span><span class="o">}</span>
+		
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>一句话总结：根据当前不同的条件判断，决定这个配置类是否生效！</strong></p>
+<ul>
+<li>一旦这个配置类生效：这个配置类就会给容器中添加各种组件；</li>
+<li>这些组件的属性是从对应的properties类中获取的，这些类里面的每一个属性又是和配置文件绑定的;</li>
+<li>所有在配置文件中能配置的属性都是在xxxProperties类中封装着；</li>
+<li>配置文件能配置什么就可以参照某个功能对应的这个属性类</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//从配置文件中获取指定的值和bean的属性进行绑定
+</span><span class="c1"></span><span class="nd">@ConfigurationProperties</span><span class="o">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;spring.http&#34;</span><span class="o">)</span>
+		<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HttpProperties</span> <span class="o">{</span>
+		<span class="c1">// .....
+</span><span class="c1"></span><span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="自动配置原理再理解">自动配置原理再理解</h2>
+<p>SpringBoot类启动的时候有一个<code>@SpringBootApplication</code>注解</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812155819.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812155819.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812155819.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812155819.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812155819.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812155819.png" /></p>
+<p>该注解里面又包含了三个非常重要的注解</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812155911.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812155911.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812155911.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812155911.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812155911.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812155911.png" /></p>
+<ul>
+<li><code>@SpringBootConfiguration</code>:点进去以后可以看到里面的底层是<strong>Configuration</strong>注解，说白了就是支持<strong>JavaConfig</strong>的方式来进行配置(<strong>使用Configuration配置类等同于XML文件</strong>)</li>
+<li><code>@EnableAutoConfiguration</code>:开启<strong>自动配置</strong>功能</li>
+<li><code>@ComponentScan</code>:这个注解，默认是扫描<strong>当前类下</strong>的package。将<code>@Controller/@Service/@Component/@Repository</code>等注解加载到IOC容器中</li>
+</ul>
+<h3 id="重点enableautoconfiguration">重点EnableAutoConfiguration</h3>
+<p>我们知道SpringBoot可以帮我们减少很多的配置，也肯定听过“约定大于配置”这么一句话，那SpringBoot是怎么做的呢？其实靠的就是<code>@EnableAutoConfiguration</code>注解。</p>
+<p>简单来说，这个注解可以帮助我们<strong>自动载入</strong>应用程序所需要的所有<strong>默认配置</strong>。</p>
+<p>点进去查看发现有两个比较主要的注解</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812160527.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812160527.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812160527.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812160527.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812160527.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812160527.png" /></p>
+<ul>
+<li><code>@AutoConfigurationPackage</code>：自动配置包</li>
+<li><code>@Import</code>：给IOC容器导入组件</li>
+</ul>
+<h3 id="autoconfigurationpackage">AutoConfigurationPackage</h3>
+<p>这个注解称之为<strong>自动配置包</strong>，点进去查看后发现依赖的还是<code>Import</code>注解</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812161414.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812161414.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812161414.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812161414.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812161414.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812161414.png" /></p>
+<p>在点进去看，就发现重要的代码</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812161500.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812161500.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812161500.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812161500.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812161500.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812161500.png" /></p>
+<p>在<strong>默认</strong>的情况下就是将：主配置类(<code>@SpringBootApplication</code>)所在包及其子包里边的组件扫描到Spring容器中。</p>
+<ul>
+<li>看完这句话，会不会觉得，这不就是ComponentScan的功能吗？这俩不就重复了吗？</li>
+</ul>
+<p>我开始也有这个疑问，直到我看到文档的这句话：</p>
+<blockquote>
+<p>it will be used when scanning for code @Entity classes.<br>
+It is generally recommended that you place EnableAutoConfiguration (if you&rsquo;re<br>
+not using @SpringBootApplication) in a root package so that all sub-packages<br>
+and classes can be searched.</p>
+</blockquote>
+<p>比如说，你用了Spring Data JPA，可能会在实体类上写<code>@Entity</code>注解。这个<code>@Entity</code>注解由<code>@AutoConfigurationPackage</code>扫描并加载，而我们平时开发用的<code>@Controller/@Service/@Component/@Repository</code>这些注解是由<code>ComponentScan</code>来扫描并加载的。</p>
+<h3 id="回到import">回到Import</h3>
+<p>回到<code>@Import(AutoConfigurationImportSelector.class)</code>这句代码上，再点进去<code>AutoConfigurationImportSelector.class</code>看看具体的实现是什么：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162149.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162149.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162149.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162149.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162149.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162149.png" /></p>
+<p>我们再进去看一下这些配置信息是从哪里来的(进去getCandidateConfigurations方法)：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162231.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162231.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162231.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162231.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162231.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162231.png" /></p>
+<p>这里包装了一层，我们看到的只是通过SpringFactoriesLoader来加载，还没看到关键信息，继续进去：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162435.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162435.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162435.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162435.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162435.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162435.png" /></p>
+<p>梳理思路：</p>
+<ul>
+<li><code>FACTORIES_RESOURCE_LOCATION</code>的值是<code>META-INF/spring.factories</code></li>
+<li>Spring启动的时候会扫描所有jar路径下的<code>META-INF/spring.factories</code>，将其文件包装成Properties对象</li>
+<li>从Properties对象获取到key值为<code>EnableAutoConfiguration</code>的数据，然后添加到容器中去</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162815.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162815.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162815.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162815.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162815.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812162815.png" /></p>
+<h3 id="总结">总结</h3>
+<p><code>@SpringBootApplication</code>等同于下面三个注解：</p>
+<ul>
+<li><code>@SpringBootConfiguration</code></li>
+<li><code>@EnableAutoConfiguration</code></li>
+<li><code>@ComponentScan</code></li>
+</ul>
+<p>其中<code>@EnableAutoConfiguration</code>是关键(启用自动配置)，内部实际上就去加载<code>META-INF/spring.factories</code>文件的信息，然后筛选出以<code>EnableAutoConfiguration</code>为key的数据，加载到IOC容器中，实现自动配置功能！</p>
+<p>通过获取到的key值为<code>EnableAutoConfiguration</code>的数据，就会自动去加载<code>META-INF/spring.factories</code>文件的信息，然后通过xxxxAutoConfiguration中的条件来判断当前这个配置类是否生效，如果生效就会往容器中添加组件</p>
+<ul>
+<li>这些组件中属性的值是从对应的Properties类中所获取的，这些属性又是和配置文件进行绑定的</li>
+<li>所以我们需要配置什么就可以参照properties来配置，你也可以去手动的修改其默认值</li>
+</ul>
+<h2 id="静态资源映射规则">静态资源映射规则</h2>
+<p>SpringBoot中，SpringMVC的web配置都在WebMvcAutoconfiguration这个配置类里面</p>
+<p>WebMvcAutoconfiguration中有很多配置的方法</p>
+<p>有一个方法<code>addResourceHandlers</code>添加资源处理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addResourceHandlers</span><span class="o">(</span><span class="n">ResourceHandlerRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="na">resourceProperties</span><span class="o">.</span><span class="na">isAddMappings</span><span class="o">())</span> <span class="o">{</span>
+				<span class="c1">// 已禁用默认资源处理
+</span><span class="c1"></span>				<span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">&#34;Default resource handling disabled&#34;</span><span class="o">);</span>
+				<span class="k">return</span><span class="o">;</span>
+			<span class="o">}</span>
+			<span class="c1">// 缓存控制
+</span><span class="c1"></span>			<span class="n">Duration</span> <span class="n">cachePeriod</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">resourceProperties</span><span class="o">.</span><span class="na">getCache</span><span class="o">().</span><span class="na">getPeriod</span><span class="o">();</span>
+			<span class="n">CacheControl</span> <span class="n">cacheControl</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">resourceProperties</span><span class="o">.</span><span class="na">getCache</span><span class="o">().</span><span class="na">getCachecontrol</span><span class="o">().</span><span class="na">toHttpCacheControl</span><span class="o">();</span>
+			<span class="c1">// webjars 配置
+</span><span class="c1"></span>			<span class="k">if</span> <span class="o">(!</span><span class="n">registry</span><span class="o">.</span><span class="na">hasMappingForPattern</span><span class="o">(</span><span class="s">&#34;/webjars/**&#34;</span><span class="o">))</span> <span class="o">{</span>
+				<span class="n">customizeResourceHandlerRegistration</span><span class="o">(</span><span class="n">registry</span><span class="o">.</span><span class="na">addResourceHandler</span><span class="o">(</span><span class="s">&#34;/webjars/**&#34;</span><span class="o">)</span>
+						<span class="o">.</span><span class="na">addResourceLocations</span><span class="o">(</span><span class="s">&#34;classpath:/META-INF/resources/webjars/&#34;</span><span class="o">)</span>
+						<span class="o">.</span><span class="na">setCachePeriod</span><span class="o">(</span><span class="n">getSeconds</span><span class="o">(</span><span class="n">cachePeriod</span><span class="o">)).</span><span class="na">setCacheControl</span><span class="o">(</span><span class="n">cacheControl</span><span class="o">));</span>
+			<span class="o">}</span>
+			<span class="c1">// 静态资源配置
+</span><span class="c1"></span>			<span class="n">String</span> <span class="n">staticPathPattern</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">mvcProperties</span><span class="o">.</span><span class="na">getStaticPathPattern</span><span class="o">();</span>
+			<span class="k">if</span> <span class="o">(!</span><span class="n">registry</span><span class="o">.</span><span class="na">hasMappingForPattern</span><span class="o">(</span><span class="n">staticPathPattern</span><span class="o">))</span> <span class="o">{</span>
+				<span class="n">customizeResourceHandlerRegistration</span><span class="o">(</span><span class="n">registry</span><span class="o">.</span><span class="na">addResourceHandler</span><span class="o">(</span><span class="n">staticPathPattern</span><span class="o">)</span>
+						<span class="o">.</span><span class="na">addResourceLocations</span><span class="o">(</span><span class="n">getResourceLocations</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">resourceProperties</span><span class="o">.</span><span class="na">getStaticLocations</span><span class="o">()))</span>
+						<span class="o">.</span><span class="na">setCachePeriod</span><span class="o">(</span><span class="n">getSeconds</span><span class="o">(</span><span class="n">cachePeriod</span><span class="o">)).</span><span class="na">setCacheControl</span><span class="o">(</span><span class="n">cacheControl</span><span class="o">));</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>读源码：</p>
+<ul>
+<li>比如/webjars/** ，都需要去classpath:/META-INF/resources/webjars/找对应的资源；</li>
+</ul>
+<blockquote>
+<p>那什么是webjars呢？</p>
+</blockquote>
+<p>Webjars本质就是以jar包的方式引入我们的静态资源 ， 我们以前要导入一个静态资源文件，直接导入即可</p>
+<p>使用SpringBoot需要使用Webjars，我们可以去搜索一下：</p>
+<p>网站：https://www.webjars.org 【网站带看，并引入jQuery测试】</p>
+<p>要使用jQuery，我们只要要引入jQuery对应版本的pom依赖即可！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>jquery<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;version&gt;</span>3.4.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>查看webjars目录结构，并访问jQuery.js文件</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812174644.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812174644.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812174644.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812174644.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812174644.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812174644.png" /></p>
+<p>访问：只要是静态资源，SpringBoot就会去对应的路径寻找资源</p>
+<blockquote>
+<p>第二种静态资源映射规则</p>
+</blockquote>
+<p>那我们项目中要是使用自己的静态资源该怎么导入呢？我们看下一行代码；</p>
+<p>我们去找<code>staticPathPattern</code>发现第二种映射规则 ：<code> /**</code> , 访问当前的项目任意资源，它会去找 <code>resourceProperties</code> 这个类，我们可以点进去看一下分析：.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 进入方法
+</span><span class="c1"></span><span class="kd">public</span> <span class="n">String</span><span class="o">[]</span> <span class="nf">getStaticLocations</span><span class="o">()</span> <span class="o">{</span>
+	<span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">staticLocations</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="c1">// 找到对应的值
+</span><span class="c1"></span><span class="kd">private</span> <span class="n">String</span><span class="o">[]</span> <span class="n">staticLocations</span> <span class="o">=</span> <span class="n">CLASSPATH_RESOURCE_LOCATIONS</span><span class="o">;</span>
+<span class="c1">// 找到路径
+</span><span class="c1"></span><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">CLASSPATH_RESOURCE_LOCATIONS</span> <span class="o">=</span> <span class="o">{</span>
+		<span class="s">&#34;classpath:/META-INF/resources/&#34;</span><span class="o">,</span>
+		<span class="s">&#34;classpath:/resources/&#34;</span><span class="o">,</span>
+		<span class="s">&#34;classpath:/static/&#34;</span><span class="o">,</span>
+		<span class="s">&#34;classpath:/public/&#34;</span>
+<span class="o">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>ResourceProperties</code> 可以设置和我们静态资源有关的参数；这里面指向了它会去寻找资源的文件夹，即 上面数组的内容。</p>
+<p>所以有四个目录存放的静态资源可以被我们识别</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">&#34;classpath:/META-INF/resources/&#34;,
+&#34;classpath:/resources/&#34;,
+&#34;classpath:/static/&#34;,
+&#34;classpath:/public/&#34;
+</code></pre></td></tr></table>
+</div>
+</div><p>总结：</p>
+<ul>
+<li>1、在SpringBoot，可以使用一下方式处理静态资源
+<ul>
+<li>webjars			<code>localhost:8080/webjars/</code></li>
+<li>public，static，resources            <code>localhost:8080/</code></li>
+</ul>
+</li>
+<li>2、优先级：resources&gt;static(默认)&gt;public</li>
+<li>3、只要自定义了目录，默认路径就会失效，再次访问原来默认对应的路径就会报错</li>
+</ul>
+<p>/* 与 /** 的区别：</p>
+<ul>
+<li>/*   ：会匹配所有的url(<code>只匹配当前文件夹下文件，不匹配子文件夹下文件</code>)，包括*.jsp页面</li>
+<li>/** ：会匹配所有的url(<code>匹配当前文件夹下文件和子文件夹下文件</code>)；路径型的和后缀型的url(包括/login，*.jsp，*.js，*.html等)</li>
+</ul>
+<h2 id="模板引擎">模板引擎</h2>
+<p>思想：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812204038.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812204038.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812204038.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812204038.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812204038.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812204038.png" /></p>
+<p>模板引擎的作用就是我们来写一个页面模板，比如有些值呢，是动态的，我们写一些表达式。而这些 值，从哪来呢，就是我们在后台封装一些数据。然后把这个模板和这个数据交给我们模板引擎，模板引 擎按照我们这个数据帮你把这表达式解析、填充到我们指定的位置，然后把这个数据最终生成一个我们 想要的内容给我们写出去，这就是我们这个模板引擎，不管是jsp还是其他模板引擎，都是这个思想。只 不过呢，就是说不同模板引擎之间，他们可能这个语法有点不一样。其他的我就不介绍了，我主要来介 绍一下SpringBoot给我们推荐的Thymeleaf模板引擎，这模板引擎呢，是一个高级语言的模板引擎，他 的这个语法更简单。而且呢，功能更强大。</p>
+<blockquote>
+<p>引入Thymeleaf</p>
+</blockquote>
+<p><a href="https://www.thymeleaf.org/" target="_blank" rel="noopener noreffer">Thymeleaf 官网：</a></p>
+<p><a href="https://github.com/thymeleaf/thymeleaf" target="_blank" rel="noopener noreffer">Thymeleaf 在Github 的主页：</a></p>
+<p><a href="https://docs.spring.io/spring-boot/docs/2.2.5.RELEASE/reference/htmlsingle/#using-boot-starter" target="_blank" rel="noopener noreffer">Spring官方文档： 找到我们对应的版本 </a></p>
+<p>找到对应的pom依赖：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--thymeleaf--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Maven会自动下载jar包，我们可以去看看下载的东西</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812204329.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812204329.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812204329.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812204329.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812204329.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210812204329.png" /></p>
+<blockquote>
+<p>Thymeleaf分析</p>
+</blockquote>
+<p>前面呢，我们已经引入了Thymeleaf，那这个要怎么使用呢？</p>
+<p>我们首先得按照SpringBoot的自动配置原理看一下我们这个Thymeleaf的自动配置规则，在按照那个规 则，我们进行使用。</p>
+<p>我们去找一下Thymeleaf的自动配置类：ThymeleafProperties</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@ConfigurationProperties</span><span class="o">(</span>
+		<span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;spring.thymeleaf&#34;</span>
+<span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ThymeleafProperties</span> <span class="o">{</span>
+		<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Charset</span> <span class="n">DEFAULT_ENCODING</span><span class="o">;</span>
+		<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">DEFAULT_PREFIX</span> <span class="o">=</span> <span class="s">&#34;classpath:/templates/&#34;</span><span class="o">;</span>
+		<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">DEFAULT_SUFFIX</span> <span class="o">=</span> <span class="s">&#34;.html&#34;</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="kt">boolean</span> <span class="n">checkTemplate</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="kt">boolean</span> <span class="n">checkTemplateLocation</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="n">String</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;classpath:/templates/&#34;</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="n">String</span> <span class="n">suffix</span> <span class="o">=</span> <span class="s">&#34;.html&#34;</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="n">String</span> <span class="n">mode</span> <span class="o">=</span> <span class="s">&#34;HTML&#34;</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="n">Charset</span> <span class="n">encoding</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>我们可以在其中看到默认的前缀和后缀！</p>
+<p>我们只需要把我们的html页面放在类路径下的templates下，thymeleaf就可以帮我们自动渲染了。</p>
+<p>使用thymeleaf什么都不需要配置，只需要将他放在指定的文件夹下即可！</p>
+<h2 id="mvc自动配置原理">MVC自动配置原理</h2>
+<blockquote>
+<p>官网阅读</p>
+</blockquote>
+<p><a href="https://docs.spring.io/spring-boot/docs/2.2.5.RELEASE/reference/htmlsingle/#boot-features-spring-mvc-auto-configuration" target="_blank" rel="noopener noreffer">官方文档</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">Spring MVC Auto-configuration
+// Spring Boot为Spring MVC提供了自动配置，它可以很好地与大多数应用程序一起工作。
+Spring Boot provides auto-configuration for Spring MVC that works well with most applications.
+
+// 自动配置在Spring默认设置的基础上添加了以下功能：
+The auto-configuration adds the following features on top of Spring&#39;s defaults:
+
+// 包含视图解析器
+Inclusion of ContentNegotiatingViewResolver and BeanNameViewResolver beans.
+
+// 支持静态资源文件夹的路径，以及webjars
+Support for serving static resources, including support for WebJars
+
+// 自动注册了Converter：
+// 转换器，这就是我们网页提交数据到后台自动封装成为对象的东西，比如把&#34;1&#34;字符串自动转换为 int类型
+// Formatter：【格式化器，比如页面给我们了一个2019-8-10，它会给我们自动格式化为Date对象】
+Automatic registration of Converter, GenericConverter, and Formatter beans.
+
+// HttpMessageConverters
+// SpringMVC用来转换Http请求和响应的的，比如我们要把一个User对象转换为JSON字符串，可以去看官网文档解释；
+Support for HttpMessageConverters (covered later in this document).
+
+// 定义错误代码生成规则的
+Automatic registration of MessageCodesResolver (covered later in this document).
+
+// 首页定制
+Static index.html support.
+
+// 图标定制
+Custom Favicon support (covered later in this document).
+
+// 初始化数据绑定器：帮我们把请求数据绑定到JavaBean中！
+Automatic use of a ConfigurableWebBindingInitializer bean (covered later in this document).
+
+/*
+如果您希望保留Spring Boot MVC功能，并且希望添加其他MVC配置（拦截器、格式化程序、视图控制器和其他功能），
+则可以添加自己的@configuration类，类型为webmvcconfiguer，但不添加@EnableWebMvc。如果希望提供
+RequestMappingHandlerMapping、RequestMappingHandlerAdapter或
+ExceptionHandlerExceptionResolver的自定义实例，则可以声明WebMVCregistrationAdapter实例来提供此类组件。
+*/
+If you want to keep Spring Boot MVC features and you want to add additional MVC configuration
+(interceptors, formatters, view controllers, and other features), you can add your own@Configuration class 
+of type WebMvcConfigurer but without @EnableWebMvc.If you wish to provide custom instances of 
+RequestMappingHandlerMapping,RequestMappingHandlerAdapter, orExceptionHandlerExceptionResolver, 
+you can declare a WebMvcRegistrationsAdapter instance to provide such components.
+// 如果您想完全控制Spring MVC，可以添加自己的@Configuration，并用@EnableWebMvc进行注释。
+If you want to take complete control of Spring MVC, you can add your own @Configuration annotated with @EnableWebMvc.
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>ContentNegotiatingViewResolver 内容协商视图解析器</p>
+</blockquote>
+<p>自动配置了ViewResolver，就是我们之前学习SpringMVC的视图解析器；</p>
+<p>即根据方法的返回值取得视图对象(View)，然后由视图对象决定如何渲染(转发，重定向)</p>
+<p>先查看一下源码：找到WebMvcAutoConfiguration，然后搜索ContentNegotiatingViewResolver。找到如下方法！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Bean</span>
+<span class="nd">@ConditionalOnBean</span><span class="o">(</span><span class="n">ViewResolver</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@ConditionalOnMissingBean</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#34;viewResolver&#34;</span><span class="o">,</span> <span class="n">value</span> <span class="o">=</span>
+<span class="n">ContentNegotiatingViewResolver</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="kd">public</span> <span class="n">ContentNegotiatingViewResolver</span> <span class="nf">viewResolver</span><span class="o">(</span><span class="n">BeanFactory</span> <span class="n">beanFactory</span><span class="o">)</span>
+<span class="o">{</span>
+	<span class="n">ContentNegotiatingViewResolver</span> <span class="n">resolver</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ContentNegotiatingViewResolver</span><span class="o">();</span>
+	
+	<span class="n">resolver</span><span class="o">.</span><span class="na">setContentNegotiationManager</span><span class="o">(</span><span class="n">beanFactory</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="n">ContentNegotiationManager</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+	
+	<span class="c1">// ContentNegotiatingViewResolver使用所有其他视图解析器来定位视图，因此它应该具有较高的优先级
+</span><span class="c1"></span>	<span class="n">resolver</span><span class="o">.</span><span class="na">setOrder</span><span class="o">(</span><span class="n">Ordered</span><span class="o">.</span><span class="na">HIGHEST_PRECEDENCE</span><span class="o">);</span>
+	<span class="k">return</span> <span class="n">resolver</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813090409.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813090409.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813090409.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813090409.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813090409.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813090409.png" /></p>
+<p>可以点击这个类(<code>ContentNegotiatingViewResolver</code>)看看，找到对应的解析视图的代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Nullable</span> <span class="c1">// 注解说明：@Nullable 即参数可为null
+</span><span class="c1"></span><span class="kd">public</span> <span class="n">View</span> <span class="nf">resolveViewName</span><span class="o">(</span><span class="n">String</span> <span class="n">viewName</span><span class="o">,</span> <span class="n">Locale</span> <span class="n">locale</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span>
+<span class="o">{</span>
+		<span class="n">RequestAttributes</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">RequestContextHolder</span><span class="o">.</span><span class="na">getRequestAttributes</span><span class="o">();</span>
+		<span class="n">Assert</span><span class="o">.</span><span class="na">state</span><span class="o">(</span><span class="n">attrs</span> <span class="k">instanceof</span> <span class="n">ServletRequestAttributes</span><span class="o">,</span> <span class="s">&#34;No currentServletRequestAttributes&#34;</span><span class="o">);</span>
+		<span class="n">List</span><span class="o">&lt;</span><span class="n">MediaType</span><span class="o">&gt;</span> <span class="n">requestedMediaTypes</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getMediaTypes</span><span class="o">(((</span><span class="n">ServletRequestAttributes</span><span class="o">)</span><span class="n">attrs</span><span class="o">).</span><span class="na">getRequest</span><span class="o">());</span>
+		<span class="k">if</span> <span class="o">(</span><span class="n">requestedMediaTypes</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+			<span class="c1">// 获取候选的视图对象
+</span><span class="c1"></span>			<span class="n">List</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;</span> <span class="n">candidateViews</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getCandidateViews</span><span class="o">(</span><span class="n">viewName</span><span class="o">,</span> <span class="n">locale</span><span class="o">,</span><span class="n">requestedMediaTypes</span><span class="o">);</span>
+			<span class="c1">// 选择一个最适合的视图对象，然后把这个对象返回
+</span><span class="c1"></span>			<span class="n">View</span> <span class="n">bestView</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getBestView</span><span class="o">(</span><span class="n">candidateViews</span><span class="o">,</span> <span class="n">requestedMediaTypes</span><span class="o">,</span> <span class="n">attrs</span><span class="o">);</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">bestView</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span> 		
+					<span class="k">return</span> <span class="n">bestView</span><span class="o">;</span> 
+			<span class="o">}</span>
+		<span class="o">}</span> 
+		<span class="c1">// .....
+</span><span class="c1"></span><span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>继续点击查看，是如何获取视图的呢？</p>
+<p><code>getCandidateViews</code>中看到他是把所有的视图解析器拿来，进行while循环，挨个解析！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Iterator</span> <span class="n">var5</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">viewResolvers</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813090654.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813090654.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813090654.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813090654.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813090654.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813090654.png" /></p>
+<p>所以得出结论：<strong>ContentNegotiatingViewResolver 这个视图解析器就是用来组合所有的视图解析器的</strong></p>
+<p>再去研究下他的组合逻辑，看到有个属性viewResolvers，看看它是在哪里进行赋值的！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">initServletContext</span><span class="o">(</span><span class="n">ServletContext</span> <span class="n">servletContext</span><span class="o">)</span> <span class="o">{</span>
+	<span class="c1">// 这里它是从beanFactory工具中获取容器中的所有视图解析器
+</span><span class="c1"></span>	<span class="c1">// ViewRescolver.class 把所有的视图解析器来组合的
+</span><span class="c1"></span>	<span class="n">Collection</span><span class="o">&lt;</span><span class="n">ViewResolver</span><span class="o">&gt;</span> <span class="n">matchingBeans</span> <span class="o">=</span> <span class="n">BeanFactoryUtils</span><span class="o">.</span><span class="na">beansOfTypeIncludingAncestors</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">obtainApplicationContext</span><span class="o">(),</span> <span class="n">ViewResolver</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">values</span><span class="o">();</span>
+	
+	<span class="n">ViewResolver</span> <span class="n">viewResolver</span><span class="o">;</span>
+	<span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">viewResolvers</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">this</span><span class="o">.</span><span class="na">viewResolvers</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">(</span><span class="n">matchingBeans</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+	<span class="o">}</span>
+	<span class="c1">// ...............
+</span><span class="c1"></span><span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813091136.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813091136.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813091136.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813091136.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813091136.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813091136.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813091244.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813091244.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813091244.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813091244.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813091244.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813091244.png" /></p>
+<p>既然它是在容器中去找视图解析器，我们是否可以猜想，我们就可以去实现一个视图解析器了呢？ 我们可以自己给容器中去添加一个视图解析器；这个类就会帮我们自动的将它组合进来；<strong>我们去实现一 下</strong></p>
+<p>1、在主程序中新建一个config的package，在里面写一个自己的解析器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.config</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.View</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.ViewResolver</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.config.annotation.WebMvcConfigurer</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.Locale</span><span class="o">;</span>
+
+<span class="c1">// 扩展SpringMVC
+</span><span class="c1"></span><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyMvcConfig</span> <span class="kd">implements</span> <span class="n">WebMvcConfigurer</span> <span class="o">{</span>
+
+    <span class="c1">// ViewResolver 实现了视图解析器接口的类，我们就可以把它看作视图解析器
+</span><span class="c1"></span>
+    <span class="nd">@Bean</span>   <span class="c1">// 放入到Bean中
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">ViewResolver</span> <span class="nf">getViewResolver</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">MyViewResolver</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 自定义了一个自己的视图解析器 MyViewResolver
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">MyViewResolver</span> <span class="kd">implements</span> <span class="n">ViewResolver</span><span class="o">{</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">View</span> <span class="nf">resolveViewName</span><span class="o">(</span><span class="n">String</span> <span class="n">viewName</span><span class="o">,</span> <span class="n">Locale</span> <span class="n">locale</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>2、查看我们的自己写的解析视图器是否起作用</p>
+<p>给DispatchServlet中的doDispatch方法加个断点进行调试一下，因为所有请求都会走到这个方法中</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813092901.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813092901.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813092901.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813092901.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813092901.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813092901.png" /></p>
+<p>3、启动项目，查看Debug消息</p>
+<p>找到this</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813092948.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813092948.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813092948.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813092948.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813092948.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813092948.png" /></p>
+<p>找到视图解析器，寻找我们自定义的视图解析器</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813093043.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813093043.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813093043.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813093043.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813093043.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210813093043.png" /></p>
+<p>结论：</p>
+<pre><code>如果，你想diy一些定制化的功能，只需要写个组件，然后将它交给SpringBoot，SpringBoot就会帮我们自动装配
+</code></pre>
+<p><strong>测试确实也跳转过来了！所以说，我们要扩展SpringMVC，官方就推荐我们这么去使用，既保留SpringBoot 所有的自动配置，也能用我们扩展的配置！</strong></p>
+<p>分析原理：</p>
+<p>1、WebMvcAutoConfiguration 是 SpringMVC的自动配置类，里面有一个类 WebMvcAutoConfigurationAdapter</p>
+<p>2、这个类上有一个注解，在做其它自动配置是会导入<code>@Import(EnableWebMvcConfiguration.class)</code></p>
+<p>3、点进<code>EnableWebMvcConfiguration</code>这个类看一下，它继承了一个父类：<code>DelegatingWebMvcConfiguration</code></p>
+<p>有如下代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DelegatingWebMvcConfiguration</span> <span class="kd">extends</span>
+<span class="n">WebMvcConfigurationSupport</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">final</span> <span class="n">WebMvcConfigurerComposite</span> <span class="n">configurers</span> <span class="o">=</span> <span class="n">newWebMvcConfigurerComposite</span><span class="o">();</span>
+	<span class="c1">// 从容器中获取所有的webmvcConfigurer
+</span><span class="c1"></span>	<span class="nd">@Autowired</span><span class="o">(</span><span class="n">required</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setConfigurers</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">WebMvcConfigurer</span><span class="o">&gt;</span> <span class="n">configurers</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">if</span> <span class="o">(!</span><span class="n">CollectionUtils</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="n">configurers</span><span class="o">))</span> <span class="o">{</span>
+			<span class="k">this</span><span class="o">.</span><span class="na">configurers</span><span class="o">.</span><span class="na">addWebMvcConfigurers</span><span class="o">(</span><span class="n">configurers</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>4、可以在这个类中去寻找一个我们刚才设置的viewController当做参考，发现它调用了一个</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">addViewControllers</span><span class="o">(</span><span class="n">ViewControllerRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span> 		
+	<span class="k">this</span><span class="o">.</span><span class="na">configurers</span><span class="o">.</span><span class="na">addViewControllers</span><span class="o">(</span><span class="n">registry</span><span class="o">);</span> 
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>5、点进去查看</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">addViewControllers</span><span class="o">(</span><span class="n">ViewControllerRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
+	<span class="n">Iterator</span> <span class="n">var2</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">delegates</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
+	<span class="k">while</span><span class="o">(</span><span class="n">var2</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+		<span class="c1">// 将所有的WebMvcConfigurer相关配置来一起调用！包括我们自己配置的和Spring给我们配置的
+</span><span class="c1"></span>		<span class="n">WebMvcConfigurer</span> <span class="n">delegate</span> <span class="o">=</span> <span class="o">(</span><span class="n">WebMvcConfigurer</span><span class="o">)</span><span class="n">var2</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+		<span class="n">delegate</span><span class="o">.</span><span class="na">addViewControllers</span><span class="o">(</span><span class="n">registry</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>结论：</p>
+<pre><code>所有的WebMvcConfiguration都会被调用，不止Spring自己的配置类，我们自己的类当然也会被调用
+</code></pre>
+<blockquote>
+<p>全面接管SpringMVC</p>
+</blockquote>
+<p><strong>当然，我们开发中不推荐使用全面接管SpringMVC</strong></p>
+<p>思考问题？为什么加了一个注解，自动配置就失效了！查看源码</p>
+<p>1、发现这个注解导入了一个类，点进去查看</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Import</span><span class="o">({</span><span class="n">DelegatingWebMvcConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">})</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">EnableWebMvc</span> <span class="o">{</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>2、它继承了一个父类<code>WebMvcConfigurationSupport</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DelegatingWebMvcConfiguration</span> <span class="kd">extends</span> <span class="n">WebMvcConfigurationSupport</span>
+<span class="o">{</span>
+	<span class="c1">// ......
+</span><span class="c1"></span><span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、查看WebMvc自动配置类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Configuration</span><span class="o">(</span><span class="n">proxyBeanMethods</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+<span class="nd">@ConditionalOnWebApplication</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">Type</span><span class="o">.</span><span class="na">SERVLET</span><span class="o">)</span>
+<span class="nd">@ConditionalOnClass</span><span class="o">({</span> <span class="n">Servlet</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">DispatcherServlet</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">WebMvcConfigurer</span><span class="o">.</span><span class="na">class</span> <span class="o">})</span>
+
+<span class="c1">// 这个注解的意思就是：容器中没有这个组件的时候，这个自动配置类才生效
+</span><span class="c1"></span><span class="nd">@ConditionalOnMissingBean</span><span class="o">(</span><span class="n">WebMvcConfigurationSupport</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@AutoConfigureOrder</span><span class="o">(</span><span class="n">Ordered</span><span class="o">.</span><span class="na">HIGHEST_PRECEDENCE</span> <span class="o">+</span> <span class="n">10</span><span class="o">)</span>
+<span class="nd">@AutoConfigureAfter</span><span class="o">({</span> <span class="n">DispatcherServletAutoConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
+<span class="n">TaskExecutionAutoConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">ValidationAutoConfiguration</span><span class="o">.</span><span class="na">class</span> <span class="o">})</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcAutoConfiguration</span> <span class="o">{</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>总结一句话：<code>@EnableWebMvc</code>将WebMvcConfigurationSupport组件导入进来了；</p>
+<p>而导入的WebMvcConfigurationSupport只是SpringMVC最基本的功能！</p>
+<p><strong>在SpringBoot中会有非常多的扩展配置，只要看见了这个，我们就应该多留心注意</strong></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

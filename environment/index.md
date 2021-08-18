@@ -162,6 +162,8 @@ tar -zxvf /root/redis-6.2.4.tar.gz -C ./
 
 解压完毕后，进入redis-6.2.4文件中执行下面命令
 
+**注意：如果你所装虚拟机为最小化介质安装，则需要先安装gcc，执行yum -install gcc后，才能执行下面命令，否则会报错**
+
 ~~~bash
 make  && make install
 ~~~

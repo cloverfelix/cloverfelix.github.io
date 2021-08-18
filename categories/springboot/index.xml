@@ -9,6 +9,6 @@
     <pubDate>Sun, 04 Jul 2021 16:38:24 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://cloverfelix.github.io/springboot/</guid>
-    <description><![CDATA[study]]></description>
+    <description><![CDATA[SpringBoot原理探讨 创建一个Controller时，让其返回一个字符串，有两种方式 1、使用@RestController注解 2、使用]]></description>
 </item></channel>
 </rss>

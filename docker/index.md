@@ -369,7 +369,7 @@ sudo systemctl restart docker # 重启docker
 
 ## 底层原理
 
-Docker是真么工作的？
+Docker是怎么工作的？
 
 Docker是一个Client-Server结构的系统，Docker的守护进程在主机上。通过Socket从客户端访问！
 
@@ -595,7 +595,7 @@ exit
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601112327.png)
 
-注意**这里面主机名，编程了centos的id**
+注意**这里面主机名，变成了centos的容器id**
 
 这里面就是一个容器，套娃啊
 
@@ -1506,7 +1506,8 @@ docker exec -it tomcat01 /bin/bash
 
 思考问题：
 
-	我们以后部署项目，如果每次都要进入容器是不是身份麻烦？我要是可以在容器外部提供一个映射路径，webapps，我们在外部放置项目，就自动同步到内部就好了！
+	我们以后部署项目，如果每次都要进入容器是不是身份麻烦？我要是可以在容器外部提供一个映射路径，
+	webapps，我们在外部放置项目，就自动同步到内部就好了！
 
 docker容器 tomcat+网站 
 
@@ -1981,7 +1982,7 @@ docker rm -f
 
 1. 每个指令都必须是大写字母
 2. 按照从上到下顺序执行
-3. *#*表示注释
+3. **#** 表示注释
 4. 每一个指令都会创建体检一个新的镜像层，并提交
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601115407.png)
@@ -1996,7 +1997,7 @@ Docker镜像逐渐成为企业的交付标准，必须掌握！
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601115428.png)
 
-### 
+### DockerFile
 
 ```shell
 FROM          # 基础镜像 比如centos
@@ -2147,9 +2148,9 @@ Docker中许多命令都十分相似，我们需要了解他们的区别，最�
 
 1. 准备镜像文件 tomcat压缩包，jdk压缩包
 
-   jdk压缩包：https://blog.csdn.net/doupeihua/article/details/51831947
+   [jdk压缩包](https://blog.csdn.net/doupeihua/article/details/51831947)
 
-   tomcat压缩包：https://tomcat.apache.org/download-90.cgi
+   [tomcat压缩包](https://tomcat.apache.org/download-90.cgi)
 
 2. 编写dockerflie文件，官方命名**Dockerfile**，build会自动寻找这个文件，就不需要-f指定了
 
@@ -2361,7 +2362,7 @@ rtt min/avg/max/mdev = 0.066/0.074/0.091/0.010 ms
 
 原理
 
-1、我们没每启动一个docker容器，docker就会给docker容器分配一个IP，我们只要安装了docker，就会有一个网卡docker0，桥接模式，使用的技术是evth-pair技术
+1、我们每启动一个docker容器，docker就会给docker容器分配一个IP，我们只要安装了docker，就会有一个网卡docker0，桥接模式，使用的技术是evth-pair技术
 
 再次测试IP addr
 
@@ -2422,7 +2423,7 @@ Docker中的所有的网络接口都是虚拟的，虚拟的转发效率高！
 
 
 
-思考一个场景，我们编写了一个微服务，database url=ip:，项目不重启，数据库ip换掉了，我们希望可以解决这个问题，可以使用名字来进行访问容器？  这里使用的是**--link**技术
+思考一个场景，我们编写了一个微服务，database url=ip:，项目不重启，数据库ip换掉了，我们希望可以解决这个问题，可以使用名字来进行访问容器？  这里使用的是`--link` 技术
 
 ~~~shell
 [root@iZ2zejeormv0s24sdvazvxZ ~]# docker exec -it tomcat02 ping tomcat01
@@ -2466,13 +2467,13 @@ ff02::2 ip6-allrouters
 
 
 
-本质探究：--link就是我们在hosts配置中增加了一个tomcat02的映射。172.17.0.3      tomcat02 0303648ab9d4 
+本质探究：`--link`就是我们在hosts配置中增加了一个tomcat02的映射。172.17.0.3      tomcat02 0303648ab9d4 
 
 
 
-我们现在玩Docker已经不建议使用-link了！
+我们现在玩Docker已经不建议使用`--link`了！
 
-使用的都是自定义网络！不适用docker0！
+使用的都是自定义网络！不使用docker0！
 
 docker0问题：它不支持容器名连接访问！
 
@@ -2488,13 +2489,13 @@ docker0问题：它不支持容器名连接访问！
 
 **网络模式**
 
-bridge： 桥接 就是在docker上搭桥（默认使用，自己创建也使用bridge）
+	bridge： 桥接 就是在docker上搭桥（默认使用，自己创建也使用bridge）
 
-none： 不配置网络
+	none： 不配置网络
 
-host： 和宿主机共享网络
+	host： 和宿主机共享网络
 
-container： 容器网络连通！（用得少，局限很多）
+	container： 容器网络连通！（用得少，局限很多）
 
 **测试**
 
@@ -2652,7 +2653,7 @@ rtt min/avg/max/mdev = 0.095/0.105/0.134/0.019 ms
 ping: tomcat-net-01: Name or service not known
 ~~~
 
-结论：假设要跨网络操作别人，就需要使用docker network connect 连通！
+**结论：假设要跨网络操作别人，就需要使用docker network connect 连通！**
 
 
 

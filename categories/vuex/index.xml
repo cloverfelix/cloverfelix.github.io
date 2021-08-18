@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Vuex - 分类 - clover</title>
+        <link>https://cloverfelix.github.io/categories/vuex/</link>
+        <description>Vuex - 分类 - clover</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 28 Jul 2021 08:41:01 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/categories/vuex/" rel="self" type="application/rss+xml" /><item>
+    <title>Vue</title>
+    <link>https://cloverfelix.github.io/vue/</link>
+    <pubDate>Wed, 28 Jul 2021 08:41:01 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/vue/</guid>
+    <description><![CDATA[开始、简介 每一个Vuex应用的核心就是store（仓库）。”store“基本上就是一个容器，它包含着你的应用中绝大部分的状态。Vuex和单纯]]></description>
+</item></channel>
+</rss>
