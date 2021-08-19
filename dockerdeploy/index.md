@@ -1,15 +1,5 @@
-# 
+# DockerDeploy
 
-c---
-title: "DockerDeploy"
-date: 2021-08-18T11:18:38+08:00
-draft: false
-tags: [DockerDeploy]
-keywords: [DockerDeploy]
-categories: [DockerDeploy]
-description: "DockerDeploy"
-slug: ""
----
 
 
 # 使用Dockers部署若依项目
@@ -220,5 +210,7 @@ server {
 然后继续修改`pom.xml`文件，将`packaging`修改成你所要打包对应的类型
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210818163950.png)
+
+后端还未部署起来，还在继续测试！！！
 
 

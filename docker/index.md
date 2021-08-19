@@ -2678,13 +2678,11 @@ Could not connect to '192.168.147.131' (port 22): Connection failed.
 ```
 
 
-
 注：电脑休眠重启后，机子会断开，要重新在vmware里面输入ip addr 获得ip
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601120136.png)
 
 修改xshell中的主机接口即可
-
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601120148.png)
 
