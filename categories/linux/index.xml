@@ -3,7 +3,21 @@
         <title>Linux - 分类 - clover</title>
         <link>https://cloverfelix.github.io/categories/linux/</link>
         <description>Linux - 分类 - clover</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 04 Jul 2021 16:31:22 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/categories/linux/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 06 Jul 2021 17:53:29 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/categories/linux/" rel="self" type="application/rss+xml" /><item>
+    <title>Frp</title>
+    <link>https://cloverfelix.github.io/frp/</link>
+    <pubDate>Tue, 06 Jul 2021 17:53:29 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/frp/</guid>
+    <description><![CDATA[配置FRP实现内网穿透 1、安装frp frp的作用 利用处于内网或防火墙后的机器，对外网环境提供 http 或 https 服务。 对于 http, https 服务支持基于域名的虚拟主机，]]></description>
+</item><item>
+    <title>Environment</title>
+    <link>https://cloverfelix.github.io/environment/</link>
+    <pubDate>Mon, 05 Jul 2021 16:55:21 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/environment/</guid>
+    <description><![CDATA[Linux编程环境和软件安装 1、安装JDK 去官网地址下载JDK：https://www.oracle.com/java/technologi]]></description>
+</item><item>
     <title>Linux</title>
     <link>https://cloverfelix.github.io/linux/</link>
     <pubDate>Sun, 04 Jul 2021 16:31:22 &#43;0800</pubDate>

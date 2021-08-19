@@ -212,5 +212,6 @@ server {
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210818163950.png)
 
 后端还未部署起来，还在继续测试！！！
+后端打jar包时运行一直报数据库错误
 
 
