@@ -3,14 +3,7 @@
         <title>所有文章 - clover</title>
         <link>https://cloverfelix.github.io/posts/</link>
         <description>所有文章 | clover</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 18 Aug 2021 11:18:38 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/posts/" rel="self" type="application/rss+xml" /><item>
-    <title>DockerDeploy</title>
-    <link>https://cloverfelix.github.io/dockerdeploy/</link>
-    <pubDate>Wed, 18 Aug 2021 11:18:38 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://cloverfelix.github.io/dockerdeploy/</guid>
-    <description><![CDATA[使用Dockers部署若依项目 1、先进行docker安装 2、安装mysql 1 2 3 docker run -p 3307:3306 --name mysql01 -v /home/westbrook/mysql/log:/var/log/mysql \ -v /home/westbrook/mysql/conf/my.cnf:/etc/mysql/my.cnf \ -v /home/westbrook/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=xn123456 -d mysql:5.7.33 执行成功后 注意：如果第一]]></description>
-</item><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 28 Jul 2021 08:41:01 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>Vue</title>
     <link>https://cloverfelix.github.io/vue/</link>
     <pubDate>Wed, 28 Jul 2021 08:41:01 &#43;0800</pubDate>
@@ -73,5 +66,12 @@
     <author>作者</author>
     <guid>https://cloverfelix.github.io/mutinodelinux/</guid>
     <description><![CDATA[部署项目到服务器 使用的是ruoyi进行试验 第一步 首先将项目后端的数据库以及一些配置文件配置好 数据库配置： 对于这里的数据库必须使用远程的数据库]]></description>
+</item><item>
+    <title>SQL常见问题</title>
+    <link>https://cloverfelix.github.io/sql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Sun, 04 Jul 2021 16:34:29 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/sql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[SQL常见问题 建立新连接时报错：can&rsquo;t connect to mysql server on ‘localhost’ 原因：是因为本地服务器没开启 解决：用系统管理员打开命令]]></description>
 </item></channel>
 </rss>

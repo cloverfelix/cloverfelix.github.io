@@ -1509,9 +1509,6 @@ docker exec -it tomcat01 /bin/bash
 	我们以后部署项目，如果每次都要进入容器是不是身份麻烦？我要是可以在容器外部提供一个映射路径，
 	webapps，我们在外部放置项目，就自动同步到内部就好了！
 
-docker容器 tomcat+网站 
-
-docker mysql
 
 ##### 部署es+kibana
 
@@ -1613,9 +1610,6 @@ docker run -d -p 8088:9000 --restart=always -v /var/run/docker.sock:/var/run/doc
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601113918.png)
 
 【平时不会用这个，好吧，先往下】
-
-### 
-
 
 
 ## Docker镜像

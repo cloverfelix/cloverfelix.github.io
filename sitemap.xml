@@ -2,13 +2,10 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://cloverfelix.github.io/categories/</loc><lastmod>2021-08-18T11:18:38&#43;08:00</lastmod></url><url>
-            <loc>https://cloverfelix.github.io/</loc><lastmod>2021-08-18T11:18:38&#43;08:00</lastmod></url><url>
-            <loc>https://cloverfelix.github.io/tags/dockerdeploy/</loc><lastmod>2021-08-18T11:18:38&#43;08:00</lastmod></url><url>
-            <loc>https://cloverfelix.github.io/categories/dockerdeploy/</loc><lastmod>2021-08-18T11:18:38&#43;08:00</lastmod></url><url>
-            <loc>https://cloverfelix.github.io/dockerdeploy/</loc><lastmod>2021-08-18T11:18:38&#43;08:00</lastmod></url><url>
-            <loc>https://cloverfelix.github.io/posts/</loc><lastmod>2021-08-18T11:18:38&#43;08:00</lastmod></url><url>
-            <loc>https://cloverfelix.github.io/tags/</loc><lastmod>2021-08-18T11:18:38&#43;08:00</lastmod></url><url>
+            <loc>https://cloverfelix.github.io/categories/</loc><lastmod>2021-07-28T08:41:01&#43;08:00</lastmod></url><url>
+            <loc>https://cloverfelix.github.io/</loc><lastmod>2021-07-28T08:41:01&#43;08:00</lastmod></url><url>
+            <loc>https://cloverfelix.github.io/posts/</loc><lastmod>2021-07-28T08:41:01&#43;08:00</lastmod></url><url>
+            <loc>https://cloverfelix.github.io/tags/</loc><lastmod>2021-07-28T08:41:01&#43;08:00</lastmod></url><url>
             <loc>https://cloverfelix.github.io/vue/</loc><lastmod>2021-07-28T08:41:01&#43;08:00</lastmod></url><url>
             <loc>https://cloverfelix.github.io/tags/vuex/</loc><lastmod>2021-07-28T08:41:01&#43;08:00</lastmod></url><url>
             <loc>https://cloverfelix.github.io/categories/vuex/</loc><lastmod>2021-07-28T08:41:01&#43;08:00</lastmod></url><url>
@@ -65,4 +62,5 @@
             <loc>https://cloverfelix.github.io/docker/</loc><lastmod>2021-07-04T16:23:44&#43;08:00</lastmod></url><url>
             <loc>https://cloverfelix.github.io/tags/ajax-json/</loc><lastmod>2021-07-04T16:17:16&#43;08:00</lastmod></url><url>
             <loc>https://cloverfelix.github.io/categories/ajax-json/</loc><lastmod>2021-07-04T16:17:16&#43;08:00</lastmod></url><url>
-            <loc>https://cloverfelix.github.io/ajax-json/</loc><lastmod>2021-07-04T16:17:16&#43;08:00</lastmod></url></urlset>
+            <loc>https://cloverfelix.github.io/ajax-json/</loc><lastmod>2021-07-04T16:17:16&#43;08:00</lastmod></url><url>
+            <loc>https://cloverfelix.github.io/dockerdeploy/</loc></url></urlset>

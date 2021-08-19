@@ -923,3 +923,6 @@ public class WebMvcAutoConfiguration {
 
 **在SpringBoot中会有非常多的扩展配置，只要看见了这个，我们就应该多留心注意**
 
+
+## shrio
+

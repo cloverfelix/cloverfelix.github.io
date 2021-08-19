@@ -1,5 +1,15 @@
-# DockerDeploy
+# 
 
+c---
+title: "DockerDeploy"
+date: 2021-08-18T11:18:38+08:00
+draft: false
+tags: [DockerDeploy]
+keywords: [DockerDeploy]
+categories: [DockerDeploy]
+description: "DockerDeploy"
+slug: ""
+---
 
 
 # 使用Dockers部署若依项目
@@ -205,7 +215,7 @@ server {
 
 **如果想打war包就得进行一些修改**
 
-首先修改`pom.xml`文件，将`tomcat`的依赖去掉，因为springboot自动集成了tomcat，打war包就得去掉。
+首先修改`pom.xml`文件，引入tomcat依赖将`tomcat`内置的依赖去掉，因为springboot自动集成了tomcat，打war包就得去掉。
 
 然后继续修改`pom.xml`文件，将`packaging`修改成你所要打包对应的类型
 
