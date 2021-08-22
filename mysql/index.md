@@ -245,14 +245,17 @@ create table [if not exists] `表名`(
 ## 2.5、数据字段属性
 
 **UnSigned **
+
 - 无符号的 
 - 声明该数据列不允许负数 .
 
 **ZEROFILL **
+
 - 0填充的 
 - 不足位数的用0来填充 , 如int(3),5则为005
 
 **Auto_InCrement **
+
 - 自动增长的 , 每添加一条数据 , 自动在上一个记录数上加 1(默认) 
 - 通常用于设置主键 , 且为整数类型 
 - 可定义起始值和步长 
@@ -260,10 +263,12 @@ create table [if not exists] `表名`(
 	- SET @@auto_increment_increment=5 ; 影响所有使用自增的表(全局)
 
 **NULL 和 NOT NULL **
+
 - 默认为NULL , 即没有插入该列的数值 
 - 如果设置为NOT NULL , 则该列必须有值
 
 **DEFAULT **
+
 - 默认的 
 - 用于设置默认值 
 - 例如,性别字段,默认为"男" , 否则为 "女" ; 若无指定该列的值 , 则默认值为"男"的值
