@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/mysql\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Mysql","wordcount":  1 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Mysql","wordcount":  3570 ,
         "url": "https:\/\/cloverfelix.github.io\/mysql\/","datePublished": "2021-07-04T16:33:35+08:00","dateModified": "2021-07-04T16:33:35+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,16 +106,576 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Mysql</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>Mysql</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3570 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
-            </div><div class="content" id="content"><p>study</p>
-</div><div class="post-footer" id="post-footer">
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#11为什么学习数据库">1.1、为什么学习数据库</a></li>
+    <li><a href="#12什么是数据库">1.2、什么是数据库</a></li>
+    <li><a href="#13什么是dbms">1.3、什么是DBMS</a></li>
+    <li><a href="#14mysql简介">1.4、MySQL简介</a></li>
+    <li><a href="#15安装mysql">1.5、安装MySQL</a></li>
+    <li><a href="#16sqlyog">1.6、SQLyog</a></li>
+    <li><a href="#17连接数据库">1.7、连接数据库</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#21结构化查询语句分类">2.1、结构化查询语句分类</a></li>
+    <li><a href="#22数据库操作">2.2、数据库操作</a></li>
+    <li><a href="#23创建数据表">2.3、创建数据表</a></li>
+    <li><a href="#24数据值和列类型">2.4、数据值和列类型</a></li>
+    <li><a href="#25数据字段属性">2.5、数据字段属性</a></li>
+    <li><a href="#26数据表的类型">2.6、数据表的类型</a></li>
+    <li><a href="#27修改数据库">2.7、修改数据库</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="1初始mysql">1、初始Mysql</h1>
+<h2 id="11为什么学习数据库">1.1、为什么学习数据库</h2>
+<p>1、岗位技能需求</p>
+<p>2、现在的世界,得数据者得天下</p>
+<p>3、存储数据的方法</p>
+<p>4、程序,网站中,大量数据如何长久保存?</p>
+<p><strong>5、数据库是几乎软件体系中最核心的一个存在。</strong></p>
+<h2 id="12什么是数据库">1.2、什么是数据库</h2>
+<p>数据库 ( <strong>DataBase</strong> , 简称<strong>DB</strong> )</p>
+<p>概念 : 长期存放在计算机内,有组织,可共享的大量数据的集合,是一个数据 &ldquo;仓库&rdquo;</p>
+<p>作用 : 保存,并能安全管理数据(如:增删改查等),减少冗余&hellip;</p>
+<p>数据库总览 :</p>
+<ul>
+<li>关系型数据库 ( SQL )
+<ul>
+<li>MySQL , Oracle , SQL Server , SQLite , DB2 , &hellip;</li>
+<li>关系型数据库通过外键关联来建立表与表之间的关系</li>
+</ul>
+</li>
+<li>非关系型数据库 ( NOSQL )
+<ul>
+<li>Redis , MongoDB , &hellip;</li>
+<li>非关系型数据库通常指数据以对象的形式存储在数据库中，而对象之间的关系通过每个对象自 身的属性来决定</li>
+</ul>
+</li>
+</ul>
+<h2 id="13什么是dbms">1.3、什么是DBMS</h2>
+<p>数据库管理系统(<strong>D</strong>ata<strong>B</strong>ase <strong>M</strong>anagement <strong>S</strong>ystem)</p>
+<p>数据库管理软件，科学组织和存储数据，高效的获取和维护数据</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822200246.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822200246.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822200246.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822200246.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822200246.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822200246.png" /></p>
+<p>为社么要说这个呢？</p>
+<p>因为我们要学习的Mysql应该算是一个数据库管理系统</p>
+<h2 id="14mysql简介">1.4、MySQL简介</h2>
+<p><strong>概念</strong>：是现在<strong>流行的</strong>，<strong>开源的</strong>，<strong>免费的</strong>，<strong>关系型</strong>数据库</p>
+<p><strong>历史</strong>：由瑞典MySQL AB公司开发，目前属于Oracle旗下产品。</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>免费，开源数据库</li>
+<li>小巧，功能齐全</li>
+<li>使用便捷</li>
+<li>可运行与Windows或Linux操作系统</li>
+<li>可适用于中小型甚至大型网站应用</li>
+</ul>
+<p><a href="https://www.mysql.com/" target="_blank" rel="noopener noreffer">官网</a></p>
+<h2 id="15安装mysql">1.5、安装MySQL</h2>
+<p><strong>这里建议大家使用压缩版,安装快,方便.不复杂.</strong></p>
+<blockquote>
+<p>1、软件下载</p>
+</blockquote>
+<p><a href="https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.19-winx64.zip" target="_blank" rel="noopener noreffer">MySQL5.7 64位下载地址</a></p>
+<blockquote>
+<p>2、步骤</p>
+</blockquote>
+<p>1、下载后得到zip压缩包</p>
+<p>2、解压到自己想要安装到的目录，本人解压到的是D:\Environment\mysql-5.7.19</p>
+<p>3、添加环境变量：我的电脑-&gt;属性-&gt;高级-&gt;环境变</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">选择PATH,在其后面添加: 你的mysql 安装文件下面的bin文件夹
+</code></pre></td></tr></table>
+</div>
+</div><p>4、编辑 my.ini 文件 ,注意替换路径位置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[mysqld] 
+basedir=D:\Program Files\mysql-5.7\
+datadir=D:\Program Files\mysql-5.7\data\ 
+port=3306 
+skip-grant-tables
+</code></pre></td></tr></table>
+</div>
+</div><p>5、启动管理员模式下的CMD，并将路径切换至mysql下的bin目录，然后输入<code>mysqld –install</code> (安装 mysql)</p>
+<p>6、再输入<code>mysqld --initialize-insecure --user=mysql</code>初始化数据文件</p>
+<p>7、然后再次启动mysql 然后用命令 <code>mysql –u root –p</code> 进入mysql管理界面（密码可为空）</p>
+<p>8、进入界面后更改root密码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">update mysql.user set authentication_string=password(&#39;xn123456&#39;) where user=&#39;root&#39; and Host = &#39;localhost&#39;;
+</code></pre></td></tr></table>
+</div>
+</div><p>9、刷新权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">flush privileges;
+</code></pre></td></tr></table>
+</div>
+</div><p>10、修改 my.ini文件删除最后一句skip-grant-tables</p>
+<p>11、重启mysql即可正常使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">net stop mysql 
+net start mysql
+</code></pre></td></tr></table>
+</div>
+</div><p>12、连接上测试出现以下结果就安装好了</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201243.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201243.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201243.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201243.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201243.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201243.png" /></p>
+<p>一步步去做 , 理论上是没有任何问题的 .</p>
+<p>如果以前装过,现在需要重装,一定要将环境清理干净 .</p>
+<p>好了,到这里大家都装好了,因为刚接触,所以我们先不学习命令.</p>
+<p>这里给大家推荐一个工具 : <strong>SQLyog</strong> .</p>
+<p>即便有了可视化工具,可是基本的DOS命名大家还是要记住!</p>
+<h2 id="16sqlyog">1.6、SQLyog</h2>
+<p>可手动操作,管理MySQL数据库的软件工具
+<strong>特点 : 简洁 , 易用 , 图形化</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201846.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201846.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201846.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201846.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201846.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201846.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201905.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201905.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201905.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201905.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201905.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822201905.png" /></p>
+<p>使用SQLyog管理工具自己完成以下操作 :</p>
+<ul>
+<li>连接本地MySQL数据库</li>
+<li>新建MySchool数据库
+<ul>
+<li>数据库名称MySchool</li>
+<li>新建数据库表(grade)
+<ul>
+<li>字段
+<ul>
+<li>GradeID : int(11) , Primary Key (pk)</li>
+<li>GradeName : varchar(50)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>在历史记录中可以看到相对应的数据库操作的语句 .</p>
+<h2 id="17连接数据库">1.7、连接数据库</h2>
+<p>打开MySQL命令窗口</p>
+<ul>
+<li>在DOS命令行窗口进入 <strong>安装目录\mysql\bin</strong></li>
+<li>可设置环境遍历，设置了环境变量，可以在任意目录打开！</li>
+</ul>
+<p>连接数据库语句：<code>mysql -h 服务器主机地址 -u 用户名 -p 用户密码</code></p>
+<pre><code>注意 : -p后面不能加空格,否则会被当做密码的内容,导致登录失败 !
+</code></pre>
+<p><strong>几个基本的数据库操作命令</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">update</span> <span class="k">user</span> <span class="k">set</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">(</span><span class="s1">&#39;123456&#39;</span><span class="p">)</span><span class="k">where</span> <span class="k">user</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">;</span> <span class="err">修改密码</span>
+<span class="n">flush</span> <span class="k">privileges</span><span class="p">;</span> <span class="err">刷新数据库</span>
+<span class="k">show</span> <span class="n">databases</span><span class="p">;</span> <span class="err">显示所有数据库</span>
+<span class="n">use</span> <span class="n">dbname</span><span class="err">；</span> <span class="err">打开某个数据库</span>
+<span class="k">show</span> <span class="n">tables</span><span class="p">;</span> <span class="err">显示数据库</span><span class="n">mysql中所有的表</span>
+<span class="k">describe</span> <span class="k">user</span><span class="p">;</span> <span class="err">显示表</span><span class="n">mysql数据库中user表的列信息</span>
+<span class="k">create</span> <span class="k">database</span> <span class="n">name</span><span class="p">;</span> <span class="err">创建数据库</span>
+<span class="n">use</span> <span class="n">databasename</span><span class="p">;</span> <span class="err">选择数据库</span>
+<span class="n">exit</span><span class="p">;</span> <span class="err">退出</span><span class="n">Mysql</span>
+<span class="o">?</span> <span class="err">命令关键词</span> <span class="p">:</span> <span class="err">寻求帮助</span>
+<span class="c1">-- 表示注释
+</span></code></pre></td></tr></table>
+</div>
+</div><h1 id="2操作数据库">2、操作数据库</h1>
+<h2 id="21结构化查询语句分类">2.1、结构化查询语句分类</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822202503.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822202503.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822202503.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822202503.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822202503.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822202503.png" /></p>
+<h2 id="22数据库操作">2.2、数据库操作</h2>
+<blockquote>
+<p>命令行操作数据库</p>
+</blockquote>
+<p>创建数据库 :<code>create database [if not exists] 数据库名;</code></p>
+<p>删除数据库 : <code>drop database [if exists] 数据库名; </code></p>
+<p>查看数据库 : <code>show databases;</code></p>
+<p>使用数据库 : <code>use 数据库名;</code></p>
+<blockquote>
+<p>对比工具操作数据库</p>
+</blockquote>
+<p><strong>学习方法：</strong></p>
+<ul>
+<li>对照SQLyog工具自动生成的语句学习</li>
+<li>固定语法中的单词需要记忆</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822202734.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822202734.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822202734.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822202734.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822202734.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822202734.png" /></p>
+<h2 id="23创建数据表">2.3、创建数据表</h2>
+<p>属于DDL的一种语法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="p">[</span><span class="k">if</span> <span class="k">not</span> <span class="k">exists</span><span class="p">]</span> <span class="o">`</span><span class="err">表名</span><span class="o">`</span><span class="p">(</span>
+<span class="s1">&#39;字段名1&#39;</span> <span class="err">列类型</span> <span class="p">[</span><span class="err">属性</span><span class="p">][</span><span class="err">索引</span><span class="p">][</span><span class="err">注释</span><span class="p">],</span>
+<span class="s1">&#39;字段名2&#39;</span> <span class="err">列类型</span> <span class="p">[</span><span class="err">属性</span><span class="p">][</span><span class="err">索引</span><span class="p">][</span><span class="err">注释</span><span class="p">],</span>
+<span class="o">#</span><span class="p">...</span>
+<span class="s1">&#39;字段名n&#39;</span> <span class="err">列类型</span> <span class="p">[</span><span class="err">属性</span><span class="p">][</span><span class="err">索引</span><span class="p">][</span><span class="err">注释</span><span class="p">]</span>
+<span class="p">)[</span><span class="err">表类型</span><span class="p">][</span><span class="err">表字符集</span><span class="p">][</span><span class="err">注释</span><span class="p">];</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>说明</strong> : 反引号用于区别MySQL保留字与普通字符而引入的 (键盘esc下面的键)</p>
+<h2 id="24数据值和列类型">2.4、数据值和列类型</h2>
+<p>列类型：规定数据库中该列存放的数据类型</p>
+<blockquote>
+<p>数值类型</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203751.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203751.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203751.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203751.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203751.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203751.png" /></p>
+<blockquote>
+<p>字符串类型</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203815.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203815.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203815.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203815.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203815.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203815.png" /></p>
+<blockquote>
+<p>日期和时间型数值类型</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203848.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203848.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203848.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203848.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203848.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822203848.png" /></p>
+<blockquote>
+<p>NULL值</p>
+</blockquote>
+<ul>
+<li>理解为&quot;没有值&quot;或&quot;未知值&quot;</li>
+<li>不要用NULL进行算术运算，结果仍为NULL</li>
+</ul>
+<h2 id="25数据字段属性">2.5、数据字段属性</h2>
+<p>**UnSigned **</p>
+<ul>
+<li>无符号的</li>
+<li>声明该数据列不允许负数 .</li>
+</ul>
+<p>**ZEROFILL **</p>
+<ul>
+<li>0填充的</li>
+<li>不足位数的用0来填充 , 如int(3),5则为005</li>
+</ul>
+<p>**Auto_InCrement **</p>
+<ul>
+<li>自动增长的 , 每添加一条数据 , 自动在上一个记录数上加 1(默认)</li>
+<li>通常用于设置主键 , 且为整数类型</li>
+<li>可定义起始值和步长
+<ul>
+<li>当前表设置步长(AUTO_INCREMENT=100) : 只影响当前表</li>
+<li>SET @@auto_increment_increment=5 ; 影响所有使用自增的表(全局)</li>
+</ul>
+</li>
+</ul>
+<p>**NULL 和 NOT NULL **</p>
+<ul>
+<li>默认为NULL , 即没有插入该列的数值</li>
+<li>如果设置为NOT NULL , 则该列必须有值</li>
+</ul>
+<p>**DEFAULT **</p>
+<ul>
+<li>默认的</li>
+<li>用于设置默认值</li>
+<li>例如,性别字段,默认为&quot;男&quot; , 否则为 &ldquo;女&rdquo; ; 若无指定该列的值 , 则默认值为&quot;男&quot;的值</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- 目标 : 创建一个school数据库
+</span><span class="c1">-- 创建学生表(列,字段)
+</span><span class="c1">-- 学号int 登录密码varchar(20) 姓名,性别varchar(2),出生日期(datatime),家庭住
+</span><span class="c1"></span><span class="err">址</span><span class="p">,</span><span class="n">email</span>
+<span class="c1">-- 创建表之前 , 一定要先选择数据库
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="o">`</span><span class="n">student</span><span class="o">`</span> <span class="p">(</span>
+<span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span> <span class="k">COMMENT</span> <span class="s1">&#39;学号&#39;</span><span class="p">,</span>
+<span class="o">`</span><span class="n">name</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="s1">&#39;匿名&#39;</span> <span class="k">COMMENT</span> <span class="s1">&#39;姓名&#39;</span><span class="p">,</span>
+<span class="o">`</span><span class="n">pwd</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="s1">&#39;123456&#39;</span> <span class="k">COMMENT</span> <span class="s1">&#39;密码&#39;</span><span class="p">,</span>
+<span class="o">`</span><span class="n">sex</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="s1">&#39;男&#39;</span> <span class="k">COMMENT</span> <span class="s1">&#39;性别&#39;</span><span class="p">,</span>
+<span class="o">`</span><span class="n">birthday</span><span class="o">`</span> <span class="n">datetime</span> <span class="k">DEFAULT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;生日&#39;</span><span class="p">,</span>
+<span class="o">`</span><span class="n">address</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;地址&#39;</span><span class="p">,</span>
+<span class="o">`</span><span class="n">email</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;邮箱&#39;</span><span class="p">,</span>
+<span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span>
+<span class="c1">-- 查看数据库的定义
+</span><span class="c1"></span><span class="k">SHOW</span> <span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">school</span><span class="p">;</span>
+<span class="c1">-- 查看数据表的定义
+</span><span class="c1"></span><span class="k">SHOW</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">student</span><span class="p">;</span>
+<span class="c1">-- 显示表结构
+</span><span class="c1"></span><span class="k">DESC</span> <span class="n">student</span><span class="p">;</span> <span class="c1">-- 设置严格检查模式(不能容错了)
+</span><span class="c1"></span><span class="k">SET</span> <span class="n">sql_mode</span><span class="o">=</span><span class="s1">&#39;STRICT_TRANS_TABLES&#39;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="26数据表的类型">2.6、数据表的类型</h2>
+<blockquote>
+<p>设置数据表的类型</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="err">表名</span><span class="p">(</span>
+<span class="c1">-- 省略一些代码
+</span><span class="c1">-- Mysql注释
+</span><span class="c1">-- 1. # 单行注释
+</span><span class="c1">-- 2. /*...*/ 多行注释
+</span><span class="c1"></span><span class="p">)</span><span class="n">ENGINE</span> <span class="o">=</span> <span class="n">MyISAM</span> <span class="p">(</span><span class="k">or</span> <span class="n">InnoDB</span><span class="p">)</span>
+
+<span class="c1">-- 查看mysql所支持的引擎类型 (表类型)
+</span><span class="c1"></span><span class="k">SHOW</span> <span class="n">ENGINES</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>MySQL的数据表的类型 : <strong>MyISAM</strong> , <strong>InnoDB</strong> , HEAP , BOB , CSV等&hellip;</p>
+<p>常见的 MyISAM 与 InnoDB 类型：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822204628.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822204628.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822204628.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822204628.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822204628.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822204628.png" /></p>
+<p>经验(使用场合)：</p>
+<ul>
+<li>使用M有ISAM：节约空间及相应速度</li>
+<li>使用InnoDB：安全性，事务性及多用户操作数据表</li>
+</ul>
+<blockquote>
+<p>数据表的存储位置</p>
+</blockquote>
+<ul>
+<li>MySQL数据表以文件方式存放在磁盘中
+<ul>
+<li>包括表文件，数据文件，以及数据库的选项文件</li>
+<li>位置：Mysql安装目录\data\下存放数据表 . 目录名对应数据库名 , 该目录下文件名对应数据表</li>
+</ul>
+</li>
+<li>注意：
+<ul>
+<li>InnoDB类型数据表只有一个*.frm文件，以及上一级目录的ibdata1文件</li>
+<li>MyISAM类型数据表对应三个文件：
+<ul>
+<li>*.frm &ndash;表结构定义文件</li>
+<li>*.MYD &ndash;数据文件(data)</li>
+<li>*.MYI &ndash;索引文件(index)</li>
+<li><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822205055.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822205055.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822205055.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822205055.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822205055.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822205055.png" /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>设置数据表字符集</p>
+</blockquote>
+<p>我们可谓护具看，数据表，数据列设置不同的字符集，设定方法；</p>
+<ul>
+<li>创建时通过命令来设置，如：<code>CREATE TABLE 表名()CHARSET = utf8;</code></li>
+<li>如果没有设置，则根据MySQL数据库配置文件<code>my.ini</code>中的参数设定</li>
+</ul>
+<h2 id="27修改数据库">2.7、修改数据库</h2>
+<blockquote>
+<p>修改表（ALTER ＴABLE）</p>
+</blockquote>
+<p>修改表名：<code>ALTER TABLE 旧表名 RENAME AS 新表名</code></p>
+<p>添加字段 :  <code>ALTER TABLE 表名 ADD字段名 列属性[属性]</code></p>
+<p>修改字段 :</p>
+<ul>
+<li><code>ALTER TABLE 表名 MODIFY 字段名 列类型[属性]</code></li>
+<li><code>ALTER TABLE 表名 CHANGE 旧字段名 新字段名 列属性[属性]</code></li>
+</ul>
+<p>删除字段 : <code>ALTER TABLE 表名 DROP 字段名</code></p>
+<blockquote>
+<p>删除数据表</p>
+</blockquote>
+<p>语法： <code>DROP TABLE [IF EXISTS] 表名</code></p>
+<ul>
+<li><code>IF EXISTS</code>为可选 , 判断是否存在该数据表</li>
+<li>如删除不存在的数据表会抛出错误</li>
+</ul>
+<blockquote>
+<p>其它</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="mi">1</span><span class="p">.</span> <span class="err">可用反引号（</span><span class="o">`</span><span class="err">）为标识符（库名、表名、字段名、索引、别名）包裹，以避免与关键字重名！中文也可以作为标识符！</span>
+
+<span class="mi">2</span><span class="p">.</span> <span class="err">每个库目录存在一个保存当前数据库的选项文件</span><span class="n">db</span><span class="p">.</span><span class="n">opt</span><span class="err">。</span>
+
+<span class="mi">3</span><span class="p">.</span> <span class="err">注释：</span>
+		<span class="err">单行注释</span> <span class="o">#</span> <span class="err">注释内容</span>
+		<span class="err">多行注释</span> <span class="cm">/* 注释内容 */</span>
+		<span class="err">单行注释</span> <span class="c1">-- 注释内容 (标准SQL注释风格，要求双破折号后加一空格符（空格、TAB、换行等）)
+</span><span class="c1"></span>		
+<span class="mi">4</span><span class="p">.</span> <span class="err">模式通配符：</span>
+		<span class="n">_</span> <span class="err">任意单个字符</span>
+		<span class="o">%</span> <span class="err">任意多个字符，甚至包括零字符</span>
+		<span class="err">单引号需要进行转义</span> <span class="err">\</span><span class="s1">&#39;
+</span><span class="s1">		
+</span><span class="s1">5. CMD命令行内的语句结束符可以为 &#34;;&#34;, &#34;\G&#34;, &#34;\g&#34;，仅影响显示结果。其他地方还是用分号结束。delimiter 可修改当前对话的语句结束符。
+</span><span class="s1">
+</span><span class="s1">6. SQL对大小写不敏感 （关键字）
+</span><span class="s1">
+</span><span class="s1">7. 清除已有语句：\c
+</span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
