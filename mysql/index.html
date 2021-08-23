@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/mysql\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Mysql","wordcount":  3565 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Mysql","wordcount":  5681 ,
         "url": "https:\/\/cloverfelix.github.io\/mysql\/","datePublished": "2021-07-04T16:33:35+08:00","dateModified": "2021-07-04T16:33:35+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Mysql</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>Mysql</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3565 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5681 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -132,6 +132,14 @@
     <li><a href="#25数据字段属性">2.5、数据字段属性</a></li>
     <li><a href="#26数据表的类型">2.6、数据表的类型</a></li>
     <li><a href="#27修改数据库">2.7、修改数据库</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#31外键">3.1、外键</a></li>
+    <li><a href="#32dml语言">3.2、DML语言</a></li>
+    <li><a href="#33添加数据">3.3、添加数据</a></li>
+    <li><a href="#34修改数据">3.4、修改数据</a></li>
+    <li><a href="#35删除数据">3.5、删除数据</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="1初始mysql">1、初始Mysql</h1>
@@ -499,14 +507,12 @@ net start mysql
 </span><span class="lnt">19
 </span><span class="lnt">20
 </span><span class="lnt">21
-</span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- 目标 : 创建一个school数据库
 </span><span class="c1">-- 创建学生表(列,字段)
-</span><span class="c1">-- 学号int 登录密码varchar(20) 姓名,性别varchar(2),出生日期(datatime),家庭住
-</span><span class="c1"></span><span class="err">址</span><span class="p">,</span><span class="n">email</span>
-<span class="c1">-- 创建表之前 , 一定要先选择数据库
+</span><span class="c1">-- 学号int 登录密码varchar(20) 姓名,性别varchar(2),出生日期(datatime),家庭住址,email
+</span><span class="c1">-- 创建表之前 , 一定要先选择数据库
 </span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="o">`</span><span class="n">student</span><span class="o">`</span> <span class="p">(</span>
 <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span> <span class="k">COMMENT</span> <span class="s1">&#39;学号&#39;</span><span class="p">,</span>
 <span class="o">`</span><span class="n">name</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="s1">&#39;匿名&#39;</span> <span class="k">COMMENT</span> <span class="s1">&#39;姓名&#39;</span><span class="p">,</span>
@@ -675,7 +681,325 @@ net start mysql
 </span><span class="s1">7. 清除已有语句：\c
 </span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><h1 id="3mysql数据管理">3、MySQL数据管理</h1>
+<h2 id="31外键">3.1、外键</h2>
+<blockquote>
+<p>外键概念</p>
+</blockquote>
+<p>如果公共关键字在一个关系中是主关键字，那么这个公共关键字被称为另一个关系的外键。由此可见， 外键表示了两个关系之间的相关联系。以另一个关系的外键作主关键字的表被称为<strong>主表</strong>，具有此外键的 表被称为主表的<strong>从表</strong>。</p>
+<p>在实际操作中，将一个表的值放入第二个表来表示关联，所使用的值是第一个表的主键值(在必要时可包括复合主键值)。此时，第二个表中保存这些值的属性称为外键(<strong>foreign key</strong>)。</p>
+<p><strong>外键作用</strong></p>
+<p>保持数据<strong>一致性</strong>，<strong>完整性</strong>，主要目的是控制存储在外键表中的数据,<strong>约束</strong>。 使两张表形成关联，外键只能 引用外表中的列的值或使用空值。</p>
+<blockquote>
+<p>创建外键</p>
+</blockquote>
+<p>建表时指定外键约束</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- 创建外键的方式一 : 创建子表同时创建外键
+</span><span class="c1"></span>
+<span class="c1">-- 年级表 (id\年级名称)
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">grade</span><span class="o">`</span> <span class="p">(</span>
+	<span class="o">`</span><span class="n">gradeid</span><span class="o">`</span> <span class="nb">INT</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span> <span class="k">COMMENT</span> <span class="s1">&#39;年级ID&#39;</span><span class="p">,</span>
+	<span class="o">`</span><span class="n">gradename</span><span class="o">`</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;年级名称&#39;</span><span class="p">,</span>
+	<span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">gradeid</span><span class="o">`</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">INNODB</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span>
+
+<span class="c1">-- 学生信息表 (学号,姓名,性别,年级,手机,地址,出生日期,邮箱,身份证号)
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">student</span><span class="o">`</span> <span class="p">(</span>
+	<span class="o">`</span><span class="n">studentno</span><span class="o">`</span> <span class="nb">INT</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;学号&#39;</span><span class="p">,</span>
+	<span class="o">`</span><span class="n">studentname</span><span class="o">`</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="s1">&#39;匿名&#39;</span> <span class="k">COMMENT</span> <span class="s1">&#39;姓名&#39;</span><span class="p">,</span>
+	<span class="o">`</span><span class="n">sex</span><span class="o">`</span> <span class="n">TINYINT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="s1">&#39;1&#39;</span> <span class="k">COMMENT</span> <span class="s1">&#39;性别&#39;</span><span class="p">,</span>
+	<span class="o">`</span><span class="n">gradeid</span><span class="o">`</span> <span class="nb">INT</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;年级&#39;</span><span class="p">,</span>
+	<span class="o">`</span><span class="n">phoneNum</span><span class="o">`</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;手机&#39;</span><span class="p">,</span>
+	<span class="o">`</span><span class="n">address</span><span class="o">`</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;地址&#39;</span><span class="p">,</span>
+	<span class="o">`</span><span class="n">borndate</span><span class="o">`</span> <span class="n">DATETIME</span> <span class="k">DEFAULT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;生日&#39;</span><span class="p">,</span>
+	<span class="o">`</span><span class="n">email</span><span class="o">`</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;邮箱&#39;</span><span class="p">,</span>
+	<span class="o">`</span><span class="n">idCard</span><span class="o">`</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;身份证号&#39;</span><span class="p">,</span>
+	<span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">studentno</span><span class="o">`</span><span class="p">),</span>
+	<span class="k">KEY</span> <span class="o">`</span><span class="n">FK_gradeid</span><span class="o">`</span> <span class="p">(</span><span class="o">`</span><span class="n">gradeid</span><span class="o">`</span><span class="p">),</span>
+	<span class="k">CONSTRAINT</span> <span class="o">`</span><span class="n">FK_gradeid</span><span class="o">`</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">gradeid</span><span class="o">`</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="o">`</span><span class="n">grade</span><span class="o">`</span><span class="p">(</span><span class="o">`</span><span class="n">gradeid</span><span class="o">`</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">INNODB</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span>
+
+<span class="c1">-- 创建外键方式二 : 创建子表完毕后,修改子表添加外键 
+</span><span class="c1"></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">student</span><span class="o">`</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="o">`</span><span class="n">FK_gradeid</span><span class="o">`</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">gradeid</span><span class="o">`</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="o">`</span><span class="n">grade</span><span class="o">`</span><span class="p">(</span><span class="o">`</span><span class="n">gradeid</span><span class="o">`</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>删除外键</p>
+</blockquote>
+<p>操作：删除grade表，发现报错</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823105534.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823105534.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823105534.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823105534.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823105534.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823105534.png" /></p>
+<p><strong>注意</strong>：删除具有主外键关系的表时，要先删子表，后删主表</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- 删除外键
+</span><span class="c1"></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">student</span> <span class="k">DROP</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="n">FK_gradeid</span><span class="p">;</span>
+<span class="c1">-- 发现执行完上面的,索引还在,所以还要删除索引
+</span><span class="c1">-- 注:这个索引是建立外键的时候默认生成的
+</span><span class="c1"></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">student</span> <span class="k">DROP</span> <span class="k">INDEX</span> <span class="n">FK_gradeid</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="32dml语言">3.2、DML语言</h2>
+<p><strong>数据库意义</strong>：数据存储、数据管理</p>
+<p><strong>管理数据库数据方法</strong>：</p>
+<ul>
+<li>通过SQLyog等管理工具管理数据库数据</li>
+<li>通过<strong>DML语句</strong>管理数据库数据</li>
+</ul>
+<p><strong>DML语言</strong>：数据操作语言</p>
+<ul>
+<li>用于操作数据库对象中所包含的数据</li>
+<li>包括
+<ul>
+<li>INSERT(添加数据语句)</li>
+<li>UPDATE(更新数据语句)</li>
+<li>DELETE(删除数据语句)</li>
+</ul>
+</li>
+</ul>
+<h2 id="33添加数据">3.3、添加数据</h2>
+<blockquote>
+<p>INSERT 命令</p>
+</blockquote>
+<p><strong>语法</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="err">表名</span><span class="p">[(</span><span class="err">字段</span><span class="mi">1</span><span class="p">,</span><span class="err">字段</span><span class="mi">2</span><span class="p">,</span><span class="err">字段</span><span class="mi">3</span><span class="p">,...)]</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">&#39;值1&#39;</span><span class="p">,</span><span class="s1">&#39;值2&#39;</span><span class="p">,</span><span class="s1">&#39;值3&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>注意：</p>
+<ul>
+<li>字段或值之间使用英文逗号隔开。</li>
+<li>&lsquo;字段1,字段2,字段3&rsquo;该部分可省略，但添加的值无比与表结构，数据列，顺序相对应，且数量一致</li>
+<li>可同时插入多条数据，values后用英文逗号隔开</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- 使用语句如何增加语句?
+</span><span class="c1">-- 语法 : INSERT INTO 表名[(字段1,字段2,字段3,...)] VALUES(&#39;值1&#39;,&#39;值2&#39;,&#39;值3&#39;)
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">grade</span><span class="p">(</span><span class="n">gradename</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;大一&#39;</span><span class="p">);</span>
+
+<span class="c1">-- 主键自增,那能否省略呢?
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">grade</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;大二&#39;</span><span class="p">);</span>
+
+<span class="c1">-- 查询:INSERT INTO grade VALUE (&#39;大二&#39;)错误代码： 1136
+</span><span class="c1"></span><span class="k">Column</span> <span class="k">count</span> <span class="n">doesn</span><span class="o">`</span><span class="n">t</span> <span class="k">match</span> <span class="n">value</span> <span class="k">count</span> <span class="k">at</span> <span class="k">row</span> <span class="mi">1</span>
+
+<span class="c1">-- 结论:&#39;字段1,字段2...&#39;该部分可省略 , 但添加的值务必与表结构,数据列,顺序相对应,且数量一致.
+</span><span class="c1"></span>
+<span class="c1">-- 一次插入多条数据
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">grade</span><span class="p">(</span><span class="n">gradename</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;大三&#39;</span><span class="p">),(</span><span class="s1">&#39;大四&#39;</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="34修改数据">3.4、修改数据</h2>
+<blockquote>
+<p>update命令</p>
+</blockquote>
+<p>语法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">UPDATE</span> <span class="err">表名</span> <span class="k">SET</span> <span class="k">column_name</span><span class="o">=</span><span class="n">value</span> <span class="p">[,</span><span class="n">column_name2</span><span class="o">=</span><span class="n">value2</span><span class="p">,...]</span> <span class="p">[</span><span class="k">WHERE</span> <span class="n">condition</span><span class="p">];</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>注意</strong>：</p>
+<ul>
+<li>column_name韋要更改的数据列</li>
+<li>value为修改后的数据，可以为变量，具体指表达式或者嵌套的SELECT结果</li>
+<li>condition为筛选条件，如不指定则修改该表的所有列数据</li>
+</ul>
+<blockquote>
+<p>where条件子句</p>
+</blockquote>
+<p>可以简单的理解为：有条件的从表中筛选数据</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823110852.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823110852.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823110852.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823110852.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823110852.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823110852.png" /></p>
+<p>测试：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- 修改年级信息
+</span><span class="c1"></span><span class="k">UPDATE</span> <span class="n">grade</span> <span class="k">SET</span> <span class="n">gradename</span> <span class="o">=</span> <span class="s1">&#39;高中&#39;</span> <span class="k">WHERE</span> <span class="n">gradeid</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="35删除数据">3.5、删除数据</h2>
+<blockquote>
+<p>DELETE命令</p>
+</blockquote>
+<p>语法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DELETE</span> <span class="k">FROM</span> <span class="err">表名</span> <span class="p">[</span><span class="k">WHERE</span> <span class="n">condition</span><span class="p">];</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>注意：condition为筛选条件，如不指定则删除该表的所有列数据</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- 删除最后一个数据 
+</span><span class="c1"></span><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">grade</span> <span class="k">WHERE</span> <span class="n">gradeid</span> <span class="o">=</span> <span class="mi">5</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>TRUNCATE命令</p>
+</blockquote>
+<p>作用：用于完全清空表数据，但表结构，索引，约束等不变；</p>
+<p>语法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">TRUNCATE</span> <span class="p">[</span><span class="k">TABLE</span><span class="p">]</span> <span class="k">table_name</span><span class="p">;</span> 
+
+<span class="c1">-- 清空年级表 
+</span><span class="c1"></span><span class="k">TRUNCATE</span> <span class="n">grade</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>注意：区别于DELETE命令</strong></p>
+<ul>
+<li>相同：都能删除数据，不删除表结构，但TRUNCATE速度更快</li>
+<li>不同：
+<ul>
+<li>使用TRUNCATE TABLE 重新设置 AUTO_INCREMENT计数器</li>
+<li>使用TRUNCATE TABLE 不会对事务有影响</li>
+</ul>
+</li>
+</ul>
+<p>测试：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- 创建一个测试表
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">test</span><span class="o">`</span> <span class="p">(</span>
+	<span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">INT</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+	<span class="o">`</span><span class="n">coll</span><span class="o">`</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+	<span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">INNODB</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span>
+
+<span class="c1">-- 插入几个测试数据
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span><span class="p">(</span><span class="n">coll</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">&#39;row1&#39;</span><span class="p">),(</span><span class="s1">&#39;row2&#39;</span><span class="p">),(</span><span class="s1">&#39;row3&#39;</span><span class="p">);</span>
+
+<span class="c1">-- 删除表数据(不带where条件的delete)
+</span><span class="c1"></span><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">test</span><span class="p">;</span>
+<span class="c1">-- 结论:如不指定Where则删除该表的所有列数据,自增当前值依然从原来基础上进行,会记录日志.
+</span><span class="c1"></span>
+<span class="c1">-- 删除表数据(truncate)
+</span><span class="c1"></span><span class="k">TRUNCATE</span> <span class="k">TABLE</span> <span class="n">test</span><span class="p">;</span>
+<span class="c1">-- 结论:truncate删除数据,自增当前值会恢复到初始值重新开始;不会记录日志.
+</span><span class="c1"></span>
+<span class="c1">-- 同样使用DELETE清空不同引擎的数据库表数据.重启数据库服务后
+</span><span class="c1">-- InnoDB : 自增列从初始值重新开始 (因为是存储在内存中,断电即失)
+</span><span class="c1">-- MyISAM : 自增列依然从上一个自增数据基础上开始 (存在文件中,不会丢失)
+</span></code></pre></td></tr></table>
+</div>
+</div><h1 id="4使用dql查询数据">4、使用DQL查询数据</h1>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
