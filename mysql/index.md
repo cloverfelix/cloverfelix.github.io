@@ -591,5 +591,1125 @@ TRUNCATE TABLE test;
 
 ## 4.1、DQL语言
 
+**DQL( Data Query Language 数据查询语言 ) **
+- 查询数据库数据 , 如**SELECT**语句 
+- 简单的单表查询或多表的复杂查询和嵌套查询 
+- 是数据库语言中最核心,最重要的语句 
+- 使用频率最高的语句
+
+> SELECT语法
+
+~~~sql
+SELECT [ALL | DISTINCT]
+{* | table.* | [table.field1[as alias1][,table.field2[as alias2]][,...]]}
+FROM table_name [as table_alias]
+		[left | right | inner join table_name2] -- 联合查询
+		[WHERE ...] -- 指定结果需满足的条件
+		[GROUP BY ...] -- 指定结果按照哪几个字段来分组
+		[HAVING] -- 过滤分组的记录必须满足的次要条件
+		[ORDER BY ...] -- 指定查询记录按一个或多个条件排序
+		[LIMIT {[offset,]row_count | row_countOFFSET offset}];
+		-- 指定查询的记录从哪条至哪条
+~~~
+
+**注意 : [ ] 括号代表可选的 , { }括号代表必选得**
+
+## 4.2、指定查询字段
+
+~~~sql
+-- 查询表中所有的数据列结果 , 采用 **" \* "** 符号; 但是效率低，不推荐 .
+
+-- 查询所有学生信息
+SELECT * FROM student;
+
+-- 查询指定列(学号 , 姓名)
+SELECT studentno,studentname FROM student;
+~~~
+
+> AS子句作为别名
+
+作用：
+- 可以给数据列取一个新别名
+- 可给表去一个新别名
+- 可把经计算或总结的结果用另一个新名称来代替
+
+~~~sql
+-- 这里是为列取别名(当然as关键词可以省略)
+SELECT studentno AS 学号,studentname AS 姓名 FROM student;
+
+-- 使用as也可以为表取别名
+SELECT studentno AS 学号,studentname AS 姓名 FROM student AS s;
+
+-- 使用as,为查询结果取一个新名字
+-- CONCAT()函数拼接字符串
+SELECT CONCAT('姓名:',studentname) AS 新姓名 FROM student;
+~~~
+
+>DISTINCT关键字的使用
+
+作用 : 去掉SELECT查询返回的记录结果中重复的记录 ( 返回所有列的值都相同 ) , 只返回一条
+
+~~~sql
+-- 查看哪些同学参加了考试(学号) 去除重复项 
+SELECT * FROM result; -- 查看考试成绩 
+SELECT studentno FROM result; -- 查看哪些同学参加了考试 
+SELECT DISTINCT studentno FROM result; -- 了解:DISTINCT 去除重复项 , (默认是ALL)
+~~~
+
+> 使用表达式的列
+
+**数据库中的表达式：一般由文本值，列值，NULL，函数和操作符等组成**
+
+应用场景：
+- SELECT语句返回结果列中使用
+- SELECT语句中的ORDER　BY，HAVING等子句中使用
+- DML语句中的where条件语句中使用表达式
+
+~~~sql
+-- selcet查询中可以使用表达式
+SELECT @@auto_increment_increment; -- 查询自增步长
+SELECT VERSION(); -- 查询版本号
+SELECT 100*3-1 AS 计算结果; -- 表达式
+
+-- 学员考试成绩集体提分一分查看
+SELECT studentno,StudentResult+1 AS '提分后' FROM result;
+~~~
+
+- 避免SQL返回结果中包含 ' . ' , ' * ' 和括号等干扰开发语言程序.
+
+## 4.3、where条件语句
+
+作用：用于检索数据表中符合条件的记录
+
+搜索条件可由一个或多个逻辑表达式组成，结果一般为真或假
+
+> 逻辑操作符
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823161005.png)
+
+测试：
+
+~~~sql
+-- 满足条件的查询(where)
+SELECT Studentno,StudentResult FROM result;
+
+-- 查询考试成绩在95-100之间的
+SELECT Studentno,StudentResult
+FROM result
+WHERE StudentResult>=95 AND StudentResult<=100;
+
+-- AND也可以写成 &&
+SELECT Studentno,StudentResult
+FROM result
+WHERE StudentResult>=95 && StudentResult<=100;
+
+-- 模糊查询(对应的词:精确查询)
+SELECT Studentno,StudentResult
+FROM result
+WHERE StudentResult BETWEEN 95 AND 100;
+
+-- 除了1000号同学,要其他同学的成绩
+SELECT studentno,studentresult
+FROM result
+WHERE studentno!=1000;
+
+-- 使用NOT
+SELECT studentno,studentresult
+FROM result
+WHERE NOT studentno=1000;
+~~~
+
+> 模糊查询：比较操作符
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823161120.png)
+
+注意：
+- 数值数据类型的记录之间才能进行算术运算；
+- 相同数据类型的数据之间才能进行比较；
+
+测试：
+
+~~~sql
+-- 模糊查询 between and \ like \ in \ null
+
+-- =============================================
+-- LIKE
+-- =============================================
+-- 查询姓刘的同学的学号及姓名
+-- like结合使用的通配符 : % (代表0到任意个字符) _ (一个字符)
+SELECT studentno,studentname FROM student
+WHERE studentname LIKE '刘%';
+
+-- 查询姓刘的同学,后面只有一个字的
+SELECT studentno,studentname FROM student
+WHERE studentname LIKE '刘_';
+
+-- 查询姓刘的同学,后面只有两个字的
+SELECT studentno,studentname FROM student
+WHERE studentname LIKE '刘__';
+
+-- 查询姓名中含有 嘉 字的
+SELECT studentno,studentname FROM student
+WHERE studentname LIKE '%嘉%';
+
+-- 查询姓名中含有特殊字符的需要使用转义符号 '\'
+-- 自定义转义符关键字: ESCAPE ':'
+
+-- =============================================
+-- IN
+-- =============================================
+-- 查询学号为1000,1001,1002的学生姓名
+SELECT studentno,studentname FROM student
+WHERE studentno IN (1000,1001,1002);
+
+-- 查询地址在北京,南京,河南洛阳的学生
+SELECT studentno,studentname,address FROM student
+WHERE address IN ('北京','南京','河南洛阳');
+
+-- =============================================
+-- NULL 空
+-- =============================================
+-- 查询出生日期没有填写的同学
+-- 不能直接写=NULL , 这是代表错误的 , 用 is null
+SELECT studentname FROM student
+WHERE BornDate IS NULL;
+
+-- 查询出生日期填写的同学
+SELECT studentname FROM student
+WHERE BornDate IS NOT NULL;
+
+-- 查询没有写家庭住址的同学(空字符串不等于null)
+SELECT studentname FROM student
+WHERE Address='' OR Address IS NULL;
+~~~
+
+## 4.4、连接查询
+
+> JOIN对比
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823161412.png)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823161513.png)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823161537.png)
+
+测试：
+
+~~~SQL
+/*
+连接查询
+		如需要多张数据表的数据进行查询,则可通过连接运算符实现多个查询
+内连接 inner join
+		查询两个表中的结果集中的交集
+外连接 outer join
+		左外连接 left join
+		(以左表作为基准,右边表来一一匹配,匹配不上的,返回左表的记录,右表以NULL填充)
+		右外连接 right join
+		(以右表作为基准,左边表来一一匹配,匹配不上的,返回右表的记录,左表以NULL填充)
+等值连接和非等值连接
+
+自连接
+*/
+-- 查询参加了考试的同学信息(学号,学生姓名,科目编号,分数)
+SELECT * FROM student;
+SELECT * FROM result;
+
+/*思路:
+(1):分析需求,确定查询的列来源于两个类,student result,连接查询
+(2):确定使用哪种连接查询?(内连接)
+*/
+SELECT s.studentno,studentname,subjectno,StudentResult
+FROM student s
+INNER JOIN result r
+ON r.studentno = s.studentno
+
+-- 右连接(也可实现)
+SELECT s.studentno,studentname,subjectno,StudentResult
+FROM student s
+RIGHT JOIN result r
+ON r.studentno = s.studentno
+
+-- 等值连接
+SELECT s.studentno,studentname,subjectno,StudentResult
+FROM student s , result r
+WHERE r.studentno = s.studentno
+
+-- 左连接 (查询了所有同学,不考试的也会查出来)
+SELECT s.studentno,studentname,subjectno,StudentResult
+FROM student s
+LEFT JOIN result r
+ON r.studentno = s.studentno
+
+-- 查一下缺考的同学(左连接应用场景)
+SELECT s.studentno,studentname,subjectno,StudentResult
+FROM student s
+LEFT JOIN result r
+ON r.studentno = s.studentno
+WHERE StudentResult IS NULL
+
+-- 思考题:查询参加了考试的同学信息(学号,学生姓名,科目名,分数)
+SELECT s.studentno,studentname,subjectname,StudentResult
+FROM student s
+INNER JOIN result r
+ON r.studentno = s.studentno
+INNER JOIN `subject` sub
+ON sub.subjectno = r.subjectno
+~~~
+
+>自连接
+
+~~~sql
+/*
+自连接
+		数据表与自身进行连接
+需求:从一个包含栏目ID , 栏目名称和父栏目ID的表中
+		查询父栏目名称和其他子栏目名称
+*/
+
+-- 创建一个表
+CREATE TABLE `category` (
+`categoryid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主题id',
+`pid` INT(10) NOT NULL COMMENT '父id',
+`categoryName` VARCHAR(50) NOT NULL COMMENT '主题名字',
+PRIMARY KEY (`categoryid`)
+) ENGINE=INNODB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8
+
+-- 插入数据
+INSERT INTO `category` (`categoryid`, `pid`, `categoryName`)
+VALUES('2','1','信息技术'),('3','1','软件开发'),('4','3','数据库'),('5','1','美术设计'),('6','3','web开发'),('7','5','ps技术'),('8','2','办公信息');
+
+-- 编写SQL语句,将栏目的父子关系呈现出来 (父栏目名称,子栏目名称)
+-- 核心思想:把一张表看成两张一模一样的表,然后将这两张表连接查询(自连接)
+SELECT a.categoryName AS '父栏目',b.categoryName AS '子栏目'
+FROM category AS a,category AS b
+WHERE a.`categoryid`=b.`pid`
+
+-- 思考题:查询参加了考试的同学信息(学号,学生姓名,科目名,分数)
+SELECT s.studentno,studentname,subjectname,StudentResult
+FROM student s
+INNER JOIN result r
+ON r.studentno = s.studentno
+INNER JOIN `subject` sub
+ON sub.subjectno = r.subjectno
+
+-- 查询学员及所属的年级(学号,学生姓名,年级名)
+SELECT studentno AS 学号,studentname AS 学生姓名,gradename AS 年级名称
+FROM student s
+INNER JOIN grade g
+ON s.`GradeId` = g.`GradeID`
+
+-- 查询科目及所属的年级(科目名称,年级名称)
+SELECT subjectname AS 科目名称,gradename AS 年级名称
+FROM SUBJECT sub
+INNER JOIN grade g
+ON sub.gradeid = g.gradeid
+
+-- 查询 数据库结构-1 的所有考试结果(学号 学生姓名 科目名称 成绩)
+SELECT s.studentno,studentname,subjectname,StudentResult
+FROM student s
+INNER JOIN result r
+ON r.studentno = s.studentno
+INNER JOIN `subject` sub
+ON r.subjectno = sub.subjectno
+WHERE subjectname='数据库结构-1'
+~~~
+
+## 4.5、排序和分页
+
+测试：
+
+~~~sql
+/*============== 排序 ================
+语法 : ORDER BY
+		ORDER BY 语句用于根据指定的列对结果集进行排序。
+		ORDER BY 语句默认按照ASC升序对记录进行排序。
+		如果您希望按照降序对记录进行排序，可以使用 DESC 关键字。
+*/
+
+-- 查询 数据库结构-1 的所有考试结果(学号 学生姓名 科目名称 成绩)
+-- 按成绩降序排序
+SELECT s.studentno,studentname,subjectname,StudentResult
+FROM student s
+INNER JOIN result r
+ON r.studentno = s.studentno
+INNER JOIN `subject` sub
+ON r.subjectno = sub.subjectno
+WHERE subjectname='数据库结构-1'
+ORDER BY StudentResult DESC
+
+/*============== 分页 ================
+语法 : SELECT * FROM table LIMIT [offset,] rows | rows OFFSET offset
+好处 : (用户体验,网络传输,查询压力)
+推导:
+第一页 : limit 0,5
+第二页 : limit 5,5
+第三页 : limit 10,5
+......
+第N页 : limit (pageNo-1)*pageSzie,pageSzie
+[pageNo:页码,pageSize:单页面显示条数]
+*/
+
+-- 每页显示5条数据
+SELECT s.studentno,studentname,subjectname,StudentResult
+FROM student s
+INNER JOIN result r
+ON r.studentno = s.studentno
+INNER JOIN `subject` sub
+ON r.subjectno = sub.subjectno
+WHERE subjectname='数据库结构-1'
+ORDER BY StudentResult DESC , studentno
+LIMIT 0,5
+
+-- 查询 JAVA第一学年 课程成绩前10名并且分数大于80的学生信息(学号,姓名,课程名,分数)
+SELECT s.studentno,studentname,subjectname,StudentResult
+FROM student s
+INNER JOIN result r
+ON r.studentno = s.studentno
+INNER JOIN `subject` sub
+ON r.subjectno = sub.subjectno
+WHERE subjectname='JAVA第一学年'
+ORDER BY StudentResult DESC
+LIMIT 0,10
+~~~
+
+## 4.6、子查询
+
+~~~SQL
+/*============== 子查询 ================
+什么是子查询?
+		在查询语句中的WHERE条件子句中,又嵌套了另一个查询语句
+		嵌套查询可由多个子查询组成,求解的方式是由里及外;
+		子查询返回的结果一般都是集合,故而建议使用IN关键字;
+*/
+-- 查询 数据库结构-1 的所有考试结果(学号,科目编号,成绩),并且成绩降序排列
+-- 方法一:使用连接查询
+SELECT studentno,r.subjectno,StudentResult
+FROM result r
+INNER JOIN `subject` sub
+ON r.`SubjectNo`=sub.`SubjectNo`
+WHERE subjectname = '数据库结构-1'
+ORDER BY studentresult DESC;
+
+-- 方法二:使用子查询(执行顺序:由里及外)
+SELECT studentno,subjectno,StudentResult
+FROM result
+WHERE subjectno=(
+SELECT subjectno FROM `subject`
+WHERE subjectname = '数据库结构-1')
+ORDER BY studentresult DESC;
+
+-- 查询课程为 高等数学-2 且分数不小于80分的学生的学号和姓名
+-- 方法一:使用连接查询
+SELECT s.studentno,studentname
+FROM student s
+INNER JOIN result r
+ON s.`StudentNo` = r.`StudentNo`
+INNER JOIN `subject` sub
+ON sub.`SubjectNo` = r.`SubjectNo`
+WHERE subjectname = '高等数学-2' AND StudentResult>=80
+
+-- 方法二:使用连接查询+子查询
+-- 分数不小于80分的学生的学号和姓名
+SELECT r.studentno,studentname FROM student s
+INNER JOIN result r ON s.`StudentNo`=r.`StudentNo`
+WHERE StudentResult>=80
+
+-- 在上面SQL基础上,添加需求:课程为 高等数学-2
+SELECT r.studentno,studentname FROM student s
+INNER JOIN result r ON s.`StudentNo`=r.`StudentNo`
+WHERE StudentResult>=80 AND subjectno=(
+SELECT subjectno FROM `subject`
+WHERE subjectname = '高等数学-2')
+
+-- 方法三:使用子查询
+-- 分步写简单sql语句,然后将其嵌套起来
+SELECT studentno,studentname FROM student WHERE studentno IN(
+	SELECT studentno FROM result WHERE StudentResult>=80 AND subjectno=(
+		SELECT subjectno FROM `subject` WHERE subjectname = '高等数学-2'
+	)
+)
+/*
+练习题目:
+查 C语言-1 的前5名学生的成绩信息(学号,姓名,分数)
+使用子查询,查询郭靖同学所在的年级名称
+*/
+~~~
+
+# 5、MySQL函数
+
+## 5.1、常用函数
+
+**数据函数**
+
+~~~sql
+SELECT ABS(-8); /*绝对值*/
+SELECT CEILING(9.4); /*向上取整*/
+SELECT FLOOR(9.4); /*向下取整*/
+SELECT RAND(); /*随机数,返回一个0-1之间的随机数*/
+SELECT SIGN(0); /*符号函数: 负数返回-1,正数返回1,0返回0*/
+~~~
+
+**字符串函数**
+
+~~~sql
+SELECT CHAR_LENGTH('狂神说坚持就能成功'); /*返回字符串包含的字符数*/
+SELECT CONCAT('我','爱','程序'); /*合并字符串,参数可以有多个*/
+SELECT INSERT('我爱编程helloworld',1,2,'超级热爱'); /*替换字符串,从某个位置开始替换某个长度*/
+SELECT LOWER('KuangShen'); /*小写*/
+SELECT UPPER('KuangShen'); /*大写*/
+SELECT LEFT('hello,world',5); /*从左边截取*/
+SELECT RIGHT('hello,world',5); /*从右边截取*/
+SELECT REPLACE('狂神说坚持就能成功','坚持','努力'); /*替换字符串*/
+SELECT SUBSTR('狂神说坚持就能成功',4,6); /*截取字符串,开始和长度*/
+SELECT REVERSE('狂神说坚持就能成功'); /*反转
+
+-- 查询姓周的同学,改成邹
+SELECT REPLACE(studentname,'周','邹') AS 新名字
+FROM student WHERE studentname LIKE '周%';
+~~~
+
+**日期和时间函数**
+
+~~~sql
+SELECT CURRENT_DATE(); /*获取当前日期*/
+SELECT CURDATE(); /*获取当前日期*/
+SELECT NOW(); /*获取当前日期和时间*/
+SELECT LOCALTIME(); /*获取当前日期和时间*/
+SELECT SYSDATE(); /*获取当前日期和时间*/
+
+-- 获取年月日,时分秒
+SELECT YEAR(NOW());
+SELECT MONTH(NOW());
+SELECT DAY(NOW());
+SELECT HOUR(NOW());
+SELECT MINUTE(NOW());
+SELECT SECOND(NOW());
+~~~
+
+**系统信息函数**
+
+~~~sql
+SELECT VERSION(); /*版本*/
+SELECT USER(); /*用户*/
+~~~
+
+## 5.2、聚合函数
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823162435.png)
+
+~~~sql
+-- 聚合函数
+/*COUNT:非空的*/
+SELECT COUNT(studentname) FROM student;
+SELECT COUNT(*) FROM student;
+SELECT COUNT(1) FROM student; /*推荐*/
+
+-- 从含义上讲，count(1) 与 count(*) 都表示对全部数据行的查询。
+-- count(字段) 会统计该字段在表中出现的次数，忽略字段为null 的情况。即不统计字段为null
+的记录。
+-- count(*) 包括了所有的列，相当于行数，在统计结果的时候，包含字段为null 的记录；
+-- count(1) 用1代表代码行，在统计结果的时候，包含字段为null 的记录 。
+/*
+很多人认为count(1)执行的效率会比count(*)高，原因是count(*)会存在全表扫描，而count(1)
+可以针对一个字段进行查询。其实不然，count(1)和count(*)都会对全表进行扫描，统计所有记录的
+条数，包括那些为null的记录，因此，它们的效率可以说是相差无几。而count(字段)则与前两者不
+同，它会统计该字段不为null的记录条数。
+
+下面它们之间的一些对比：
+1）在表没有主键时，count(1)比count(*)快
+2）有主键时，主键作为计算条件，count(主键)效率最高；
+3）若表格只有一个字段，则count(*)效率较高。
+*/
+
+SELECT SUM(StudentResult) AS 总和 FROM result;
+SELECT AVG(StudentResult) AS 平均分 FROM result;
+SELECT MAX(StudentResult) AS 最高分 FROM result;
+SELECT MIN(StudentResult) AS 最低分 FROM result;
+~~~
+
+**题目**：
+
+~~~sql
+-- 查询不同课程的平均分,最高分,最低分
+-- 前提:根据不同的课程进行分组
+
+SELECT subjectname,AVG(studentresult) AS 平均分,MAX(StudentResult) AS 最高分,MIN(StudentResult) AS 最低分
+FROM result AS r
+INNER JOIN `subject` AS s
+ON r.subjectno = s.subjectno
+GROUP BY r.subjectno
+HAVING 平均分>80;
+
+/*
+where写在group by前面.
+要是放在分组后面的筛选
+要使用HAVING..
+因为having是从前面筛选的字段再筛选，而where是从数据表中的>字段直接进行的筛选的
+*/
+~~~
+
+> MD5加密
+
+**一、MD5简介**
+
+MD5即Message-Digest Algorithm 5（信息-摘要算法5），用于确保信息传输完整一致。是计算机广泛使用的杂凑算法之一（又译摘要算法、哈希算法），主流编程语言普遍已有MD5实现。将数据（如汉字）运算为另一固定长度值，是杂凑算法的基础原理，MD5的前身有MD2、MD3和MD4。
+
+**二、实现数据加密**
+
+新建一个表testmd5
+
+~~~sql
+CREATE TABLE `testmd5` (
+		`id` INT(4) NOT NULL,
+		`name` VARCHAR(20) NOT NULL,
+		`pwd` VARCHAR(50) NOT NULL,
+		PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8
+~~~
+
+插入一些数据
+
+~~~sql
+INSERT INTO testmd5 VALUES(1,'kuangshen','123456'),(2,'qinjiang','456789')
+~~~
+
+如果我们要对pwd着一列数据进行加密，语法是：
+
+~~~sql
+update testmd5 set pwd = md5(pwd);
+~~~
+
+如果单独对某个用户(如kuangshen)的密码加密：
+
+~~~sql
+INSERT INTO testmd5 VALUES(3,'kuangshen2','123456')
+update testmd5 set pwd = md5(pwd) where name = 'kuangshen2';
+~~~
+
+插入新的数据自动加密
+
+~~~sql
+INSERT INTO testmd5 VALUES(4,'kuangshen3',md5('123456'));
+~~~
+
+查询登录用户信息（md5对比使用，查看用户输入加密后的密码进行比对）
+
+~~~sql
+SELECT * FROM testmd5 WHERE `name`='kuangshen' AND pwd=MD5('123456');
+~~~
+
+## 5.3、小结
+
+~~~sql
+-- ================ 内置函数 ================
+
+-- 数值函数
+abs(x) -- 绝对值 abs(-10.9) = 10
+format(x, d) -- 格式化千分位数值 format(1234567.456, 2) = 1,234,567.46
+ceil(x) -- 向上取整 ceil(10.1) = 11
+floor(x) -- 向下取整 floor (10.1) = 10
+round(x) -- 四舍五入去整
+mod(m, n) -- m%n m mod n 求余 10%3=1
+pi() -- 获得圆周率
+pow(m, n) -- m^n
+sqrt(x) -- 算术平方根
+rand() -- 随机数
+truncate(x, d) -- 截取d位小数
+
+-- 时间日期函数
+now(), current_timestamp(); -- 当前日期时间
+current_date(); -- 当前日期
+current_time(); -- 当前时间
+date('yyyy-mm-dd hh:ii:ss'); -- 获取日期部分
+time('yyyy-mm-dd hh:ii:ss'); -- 获取时间部分
+date_format('yyyy-mm-dd hh:ii:ss', '%d %y %a %d %m %b %j'); -- 格式化时间
+unix_timestamp(); -- 获得unix时间戳
+from_unixtime(); -- 从时间戳获得时间
+
+-- 字符串函数
+length(string) -- string长度，字节
+char_length(string) -- string的字符个数
+substring(str, position [,length]) -- 从str的position开始,取length个字符
+replace(str ,search_str ,replace_str) -- 在str中用replace_str替换search_str
+instr(string ,substring) -- 返回substring首次在string中出现的位置
+concat(string [,...]) -- 连接字串
+charset(str) -- 返回字串字符集
+lcase(string) -- 转换成小写
+left(string, length) -- 从string2中的左边起取length个字符
+load_file(file_name) -- 从文件读取内容
+locate(substring, string [,start_position]) -- 同instr,但可指定开始位置
+lpad(string, length, pad) -- 重复用pad加在string开头,直到字串长度为length
+ltrim(string) -- 去除前端空格
+repeat(string, count) -- 重复count次
+rpad(string, length, pad) --在str后用pad补充,直到长度为length
+rtrim(string) -- 去除后端空格
+strcmp(string1 ,string2) -- 逐字符比较两字串大小
+
+-- 聚合函数
+count()
+sum();
+max();
+min();
+avg();
+group_concat()
+
+-- 其他常用函数
+md5();
+default();
+~~~
+
+# 6、事务
+
+## 6.1、概述
+
+> 什么是事务
+
+- 事务就是将一组SQL语句放在同一批次内去执行 
+- 如果一个SQL语句出错,则该批次内的所有SQL都将被取消执行 
+- MySQL事务处理只支持InnoDB和BDB数据表类型
+
+> 事务的ACID原则  百度ACID
+
+**原子性(Atomic)**
+- 整个事务中的所有操作，要么全部完成，要么全部不完成，不可能停滞在中间某个环节。事务在执
+行过程中发生错误，会被回滚（ROLLBACK）到事务开始前的状态，就像这个事务从来没有执行过
+一样。
+
+**一致性(Consist)**
+- 一个事务可以封装状态改变（除非它是一个只读的）。事务必须始终保持系统处于一致的状态，不
+管在任何给定的时间并发事务有多少。也就是说：如果事务是并发多个，系统也必须如同串行事务
+一样操作。其主要特征是保护性和不变性(Preserving an Invariant)，以转账案例为例，假设有五
+个账户，每个账户余额是100元，那么五个账户总额是500元，如果在这个5个账户之间同时发生多
+个转账，无论并发多少个，比如在A与B账户之间转账5元，在C与D账户之间转账10元，在B与E之
+间转账15元，五个账户总额也应该还是500元，这就是保护性和不变性。
+
+**隔离性(Isolated)**
+- 隔离状态执行事务，使它们好像是系统在给定时间内执行的唯一操作。如果有两个事务，运行在相
+同的时间内，执行相同的功能，事务的隔离性将确保每一事务在系统中认为只有该事务在使用系
+统。这种属性有时称为串行化，为了防止事务操作间的混淆，必须串行化或序列化请求，使得在同
+一时间仅有一个请求用于同一数据。
+
+**持久性(Durable)**
+- 在事务完成以后，该事务对数据库所作的更改便持久的保存在数据库之中，并不会被回滚。
+
+## 6.2、事务实现
+
+**基本语法**：
+
+~~~sql
+-- 使用set语句来改变自动提交模式
+SET autocommit = 0; /*关闭*/
+SET autocommit = 1; /*开启*/
+
+-- 注意:
+--- 1.MySQL中默认是自动提交
+--- 2.使用事务时应先关闭自动提交
+
+-- 开始一个事务,标记事务的起始点
+START TRANSACTION
+
+-- 提交一个事务给数据库
+COMMIT
+
+-- 将事务回滚,数据回到本次事务的初始状态
+ROLLBACK
+
+-- 还原MySQL数据库的自动提交
+SET autocommit =1;
+
+-- 保存点
+SAVEPOINT 保存点名称 -- 设置一个事务保存点
+ROLLBACK TO SAVEPOINT 保存点名称 -- 回滚到保存点
+RELEASE SAVEPOINT 保存点名称 -- 删除保存点
+~~~
+
+事务处理步骤：
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823165551.png)
+
+## 6.3、测试题目
+
+~~~sql
+/*
+课堂测试题目
+
+A在线买一款价格为500元商品,网上银行转账.
+A的银行卡余额为2000,然后给商家B支付500.
+商家B一开始的银行卡余额为10000
+
+创建数据库shop和创建表account并插入2条数据
+*/
+CREATE DATABASE `shop`CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+USE `shop`;
+
+CREATE TABLE `account` (
+		`id` INT(11) NOT NULL AUTO_INCREMENT,
+		`name` VARCHAR(32) NOT NULL,
+		`cash` DECIMAL(9,2) NOT NULL,
+		PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8
+
+INSERT INTO account (`name`,`cash`) VALUES('A',2000.00),('B',10000.00)
+-- 转账实现
+SET autocommit = 0; -- 关闭自动提交
+START TRANSACTION; -- 开始一个事务,标记事务的起始点
+UPDATE account SET cash=cash-500 WHERE `name`='A';
+UPDATE account SET cash=cash+500 WHERE `name`='B';
+COMMIT; -- 提交事务
+# rollback;
+SET autocommit = 1; -- 恢复自动提交
+~~~
+
+# 7、索引
+
+## 7.1、索引分类
+
+> 索引的作用
+
+- 提高查询速度
+- 确保数据唯一性
+- 可以加速表和表之间的连接，实现表与表之间的参照完整性
+- 使用分组和排序子句进行数据检索时，可以显著减少分组和排序的时间
+- 全文检索字段进行搜索优化
+
+> 在一个表中，主键索引只能有一个，唯一索引可以有多个
+
+- 主键索引
+	- 唯一的标识，主键不可重复，只能有一个列作为主键
+- 唯一索引
+	- 避免重复的列出现，唯一索引可以重复，多个列都可以标识为唯一索引
+- 常规索引
+	- 默认的，可以使用index，key关键字来设置
+- 全文索引
+	- 在特定的数据库引擎下才有，MyISAM
+	- 快速定位数据
+	- 只能用于CHAR，VARCHAR，TEXT数据列类型
+
+基础语法：
+
+~~~sql
+-- 索引的使用
+-- 1、在创建表的时候给字段增加索引
+-- 2、创建完毕后，增加索引
+
+-- 显示所有的索引信息
+SHOW INDEX FROM student
+
+-- 增加一个全文索引(索引名)   列名
+ALTER TABLE school.student ADD FULLTEXT INDEX studentName(studentName);
+
+-- EXPLAIN 分析sql执行的状况
+EXPLAIN SELECT * FROM student; --- 非全文索引
+
+EXPLAIN SELECT * FROM student WHERE MATCH(studentName)  AGAINST('刘');
+~~~
+
+[关于EXPLAIN](https://blog.csdn.net/jiadajing267/article/details/81269067)
+
+## 7.2、扩展：测试索引
+**建表app_user：**
+
+~~~sql
+CREATE TABLE `app_user` (
+		`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+		`name` varchar(50) DEFAULT '' COMMENT '用户昵称',
+		`email` varchar(50) NOT NULL COMMENT '用户邮箱',
+		`phone` varchar(20) DEFAULT '' COMMENT '手机号',
+		`gender` tinyint(4) unsigned DEFAULT '0' COMMENT '性别（0:男；1：女）',
+		`password` varchar(100) NOT NULL COMMENT '密码',
+		`age` tinyint(4) DEFAULT '0' COMMENT '年龄',
+		`create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+		`update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE
+		CURRENT_TIMESTAMP,
+		PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='app用户表'
+~~~
+
+**批量插入数据：100w**
+
+~~~sql
+DROP FUNCTION IF EXISTS mock_data;
+DELIMITER $$
+CREATE FUNCTION mock_data()
+RETURNS INT
+BEGIN
+	DECLARE num INT DEFAULT 1000000;
+	DECLARE i INT DEFAULT 0;
+	WHILE i < num DO
+		INSERT INTO app_user(`name`, `email`, `phone`, `gender`, `password`,`age`)
+		VALUES(CONCAT('用户', i), '24736743@qq.com', CONCAT('18', FLOOR(RAND()*
+		(999999999-100000000)+100000000)),FLOOR(RAND()*2),UUID(),
+		FLOOR(RAND()*100));
+		SET i = i + 1;
+	END WHILE;
+	RETURN i;
+END;
+SELECT mock_data();
+
+# 创建一个索引
+-- 格式：id_表名_字段名
+CREATE INDEX 索引名 on 表(字段)
+CREATE INDEX id_user_app_name ON user_app(name);
+~~~
+
+**索引效率测试**
+
+- 无索引
+
+~~~sql
+SELECT * FROM app_user WHERE name = '用户9999'; -- 查看耗时
+SELECT * FROM app_user WHERE name = '用户9999';
+SELECT * FROM app_user WHERE name = '用户9999';
+
+
+mysql> EXPLAIN SELECT * FROM app_user WHERE name = '用户9999'\G
+*************************** 1. row ***************************
+							id: 1
+							select_type: SIMPLE
+							table: app_user
+							partitions: NULL
+							type: ALL
+							possible_keys: NULL
+							key: NULL
+							key_len: NULL
+							ref: NULL
+							rows: 992759
+							filtered: 10.00
+							Extra: Using where
+1 row in set, 1 warning (0.00 sec)
+~~~
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823195926.png)
+
+**创建索引**
+
+~~~sql
+CREATE INDEX idx_app_user_name ON app_user(name);
+~~~
+
+**测试普通索引**
+
+~~~sql
+mysql> EXPLAIN SELECT * FROM app_user WHERE name = '用户9999'\G
+*************************** 1. row ***************************
+						id: 1
+						select_type: SIMPLE
+						table: app_user
+						partitions: NULL
+						type: ref
+						possible_keys: idx_app_user_name
+						key: idx_app_user_name
+						key_len: 203
+						ref: const
+						rows: 1
+						filtered: 100.00
+						Extra: NULL
+1 row in set, 1 warning (0.00 sec)
+
+mysql> SELECT * FROM app_user WHERE name = '用户9999';
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM app_user WHERE name = '用户9999';
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM app_user WHERE name = '用户9999';
+1 row in set (0.00 sec)
+~~~
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823195943.png)
+
+	索引在小数据量的时候，用户不大，但是在大数据的时候，区别十分明显
+
+
+## 7.3、索引原则
+
+- 索引不是越多越好
+- 不要对经常变动的数据加索引(因为又得重新查询)
+- 小数据量的表不需要加索引
+- 索引一般加载常用来查询的字段上！
+
+## 7.4、索引的数据结构
+
+~~~sql
+-- 我们可以在创建上述索引的时候，为其指定索引类型，分两类
+hash类型的索引：查询单条快，范围查询慢
+btree类型的索引：b+树，层数越多，数据量指数级增长（我们就用它，因为innodb默认支持它）
+
+-- 不同的存储引擎支持的索引类型也不一样
+InnoDB 支持事务，支持行级别锁定，支持 B-tree、Full-text 等索引，不支持 Hash 索引；
+MyISAM 不支持事务，支持表级别锁定，支持 B-tree、Full-text 等索引，不支持 Hash 索引；
+Memory 不支持事务，支持表级别锁定，支持 B-tree、Hash 等索引，不支持 Full-text 索引；
+NDB 支持事务，支持行级别锁定，支持 Hash 索引，不支持 B-tree、Full-text 等索引；
+Archive 不支持事务，支持表级别锁定，不支持 B-tree、Hash、Full-text 等索引；
+~~~
+
+[关于索引的本质](http://blog.codinglabs.org/articles/theory-of-mysql-index.html)
+
+# 8、权限管理和备份
+
+## 8.1、用户管理
+
+> SQLyog可视化界面
+
+ ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823202306.png)
+ 
+ > SQL命令操作
+
+用户表：`mysql.user`
+
+本质：对这张表进行增删改查
+
+~~~sql
+-- 创建用户 CREATE USER 用户名 IDENTIFIED BY '密码'
+CREATE USER clover IDENTIFIED BY '1234566';
+
+-- 修改密码(修改当前用户的密码)
+SET PASSWORD = PASSWORD('123456')
+
+-- 修改密码(修改指定用户的密码)
+SET PASSWORD FOR clover= PASSWORD('123456')
+
+-- 重命名 RENAME USER 原来名字 TO 新名字
+RENAME USER clover TO cloverfelix
+
+-- 用户授权 ALL PRIVILEGES 全部的权限，库.表
+-- ALL PRIVILEGES 除了给别人授权，其它都可以干
+GRANT ALL PRIVILEGES ON *.* TO cloverfelix
+
+-- 查询权限
+SHOW GRANTS FOR cloverfelix       -- 查看指定用户的权限
+SHOW GRANTS FOR root@localhost
+
+-- ROOT用户权限：GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT　OPTION
+
+-- 撤销权限 REVOKE 哪些权限   在哪个库撤销，给谁撤销
+REVOKE ALL PRIVILEGES ON *.* FROM cloverfelix
+
+-- 删除用户
+DROP USER cloverfelix
+~~~
+
+> 基本命令
+
+~~~sql
+/* 用户和权限管理 */ ------------------
+用户信息表：mysql.user
+
+-- 刷新权限
+FLUSH PRIVILEGES
+
+-- 增加用户 CREATE USER kuangshen IDENTIFIED BY '123456'
+CREATE USER 用户名 IDENTIFIED BY [PASSWORD] 密码(字符串)
+		- 必须拥有mysql数据库的全局CREATE USER权限，或拥有INSERT权限。
+		- 只能创建用户，不能赋予权限。
+		- 用户名，注意引号：如 'user_name'@'192.168.1.1'
+		- 密码也需引号，纯数字密码也要加引号
+		- 要在纯文本中指定密码，需忽略PASSWORD关键词。要把密码指定为由PASSWORD()函数返回的混编值，需包含关键字PASSWORD
+		
+-- 重命名用户 RENAME USER kuangshen TO kuangshen2
+RENAME USER old_user TO new_user
+
+-- 设置密码
+SET PASSWORD = PASSWORD('密码') -- 为当前用户设置密码
+SET PASSWORD FOR 用户名 = PASSWORD('密码') -- 为指定用户设置密码
+
+-- 删除用户 DROP USER kuangshen2
+DROP USER 用户名
+
+-- 分配权限/添加用户
+GRANT 权限列表 ON 表名 TO 用户名 [IDENTIFIED BY [PASSWORD] 'password']
+		- all privileges 表示所有权限
+		- *.* 表示所有库的所有表
+		- 库名.表名 表示某库下面的某表
+		
+-- 查看权限 SHOW GRANTS FOR root@localhost;
+SHOW GRANTS FOR 用户名
+
+-- 查看当前用户权限
+SHOW GRANTS; 或 SHOW GRANTS FOR CURRENT_USER; 或 SHOW GRANTS FOR
+CURRENT_USER();
+
+-- 撤消权限
+REVOKE 权限列表 ON 表名 FROM 用户名
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 用户名 -- 撤销所有权限
+~~~
+
+> 权限解释
+
+~~~sql
+-- 权限列表
+ALL [PRIVILEGES] -- 设置除GRANT OPTION之外的所有简单权限
+ALTER -- 允许使用ALTER TABLE
+ALTER ROUTINE -- 更改或取消已存储的子程序
+CREATE -- 允许使用CREATE TABLE
+CREATE ROUTINE -- 创建已存储的子程序
+CREATE TEMPORARY TABLES -- 允许使用CREATE TEMPORARY TABLE
+CREATE USER -- 允许使用CREATE USER, DROP USER, RENAME USER和REVOKE ALL
+PRIVILEGES。
+CREATE VIEW -- 允许使用CREATE VIEW
+DELETE -- 允许使用DELETE
+DROP -- 允许使用DROP TABLE
+EXECUTE -- 允许用户运行已存储的子程序
+FILE -- 允许使用SELECT...INTO OUTFILE和LOAD DATA INFILE
+INDEX -- 允许使用CREATE INDEX和DROP INDEX
+INSERT -- 允许使用INSERT
+LOCK TABLES -- 允许对您拥有SELECT权限的表使用LOCK TABLES
+PROCESS -- 允许使用SHOW FULL PROCESSLIST
+REFERENCES -- 未被实施
+RELOAD -- 允许使用FLUSH
+REPLICATION CLIENT -- 允许用户询问从属服务器或主服务器的地址
+REPLICATION SLAVE -- 用于复制型从属服务器（从主服务器中读取二进制日志事件）
+SELECT -- 允许使用SELECT
+SHOW DATABASES -- 显示所有数据库
+SHOW VIEW -- 允许使用SHOW CREATE VIEW
+SHUTDOWN -- 允许使用mysqladmin shutdown
+SUPER -- 允许使用CHANGE MASTER, KILL, PURGE MASTER LOGS和SET GLOBAL语句，
+mysqladmin debug命令；允许您连接（一次），即使已达到max_connections。
+UPDATE -- 允许使用UPDATE
+USAGE -- “无权限”的同义词
+GRANT OPTION -- 允许授予权限
+
+/* 表维护 */
+-- 分析和存储表的关键字分布
+ANALYZE [LOCAL | NO_WRITE_TO_BINLOG] TABLE 表名 ...
+-- 检查一个或多个表是否有错误
+CHECK TABLE tbl_name [, tbl_name] ... [option] ...
+option = {QUICK | FAST | MEDIUM | EXTENDED | CHANGED}
+-- 整理数据文件的碎片
+OPTIMIZE [LOCAL | NO_WRITE_TO_BINLOG] TABLE tbl_name [, tbl_name] ...
+~~~
+
+## 8.2、数据库备份
+
+使用命令行导出 `mysqldump` 命令行使用
+
+~~~sql
+# mysqldump -h 主机 -u 用户名 -p  密码 数据库 表 >物理磁盘位置/文件名
+mysqldump -hlocalhost -uroot -pxn123456 mybatis user >H:/a.sql
+
+# mysqldump -h 主机 -u 用户名 -p  密码 数据库 表1 表2 表3 >物理磁盘位置/文件名
+mysqldump -hlocalhost -uroot -pxn123456 mybatis user1 user2 user3 >H:/a.sql
+
+# mysqldump -h 主机 -u 用户名 -p  密码 数据库 >物理磁盘位置/文件名
+mysqldump -hlocalhost -uroot -pxn123456 mybatisr >H:/a.sql
+
+# 导入
+# 在登录的情况下，切换到指定的数据库
+# source  备份文件
+source H:/a.sql
+
+# 一步完成 
+mysql -u用户名 -p密码 库名< 备份文件
+~~~
+
+如下图所示即可成功，需要进入mysql安装目录下的bin目录在使用cmd命令
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823210720.png)
+
+如果在管理员模式下运行不成功说明你环境配置有问题，取环境变量中的path选项中加入MySQL安装目录下的bin所在位置即可
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823211210.png)
+
 
 
