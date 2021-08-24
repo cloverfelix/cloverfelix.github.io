@@ -1711,5 +1711,755 @@ mysql -u用户名 -p密码 库名< 备份文件
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823211210.png)
 
+# 9、规范化数据库
+
+## 9.1、为什么需要数据库设计
+
+**糟糕的数据库设计**
+- 数据冗余，存储空间浪费
+- 数据更新和插入的异常
+- 程序性能差
+
+**良好的数据库设计**
+- 节省数据的存储空间
+- 能够保证数据的完整性
+- 方便进行数据库应用系统的开发
+
+**软件项目开发周期中数据库设计**
+- 需求分析阶段：分析客户的业务和数据处理需求
+- 概要设计阶段：设计数据库的E-R模型图，确认需求信息的正确和完整
+
+**设计数据库步骤**
+- 收集信息
+	- 与该系统有关人员进行交流、座谈，充分了解用户需求，理解数据库需要完成的任务
+- 标识实体[Entity]
+	- 标识数据库要管理的关键对象或实体，实体一般是名词
+- 标识每个实体需要存储的详细信息[Attribute]
+- 标识实体之间的关系[Relationship]
+
+## 9.2、三大范式
+
+**问题：为什么需要数据规范化**
+
+不合规范的表设计会导致的问题
+- 信息重复
+- 更新异常
+- 插入异常
+	- 无法正确表示信息
+- 删除异常
+	- 丢失有效信息
+
+> 百度搜索：三大范式
+
+**第一范式(1st NF)**
+
+第一范式的目标是确保每列的原子性，如果每列都是`不可再分的最小数据单元`，则满足第一范式
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104423.png)
+
+**第二范式(2st NF)**
+
+第二范式是在第一范式的基础上建立起来的，即满足第二范式必须先满足第一范式
+
+第二范式要求每个表只描述一件事情
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104442.png)
+
+**第三范式(3st NF)**
+
+如果一个关系满足第二范式，并且非主键列都不传递依赖于主键列，则满足第三范式
+
+第三范式需要确保数据表中的每一列数据都和主键直接相关，而不能间接相关
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104508.png)
+
+**规范化和性能的关系**
+
+- 为满足某种商业目标，数据库性能比规范化数据库更重要
+- 在数据规范化的同时，要综合考虑数据库的性能
+- 通过在给定的表中添加额外的字段，一减少需要从中搜索信息所需要的时间
+- 通过在给的的表中插入计算列，以方便查询
+
+# 10、JDBC
+
+## 10.1、数据库驱动
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210410.png)
+
+我们的程序会通过数据库驱动和数据库打交道！！
+
+## 10.2、JDBC介绍
+
+SUN公司为了简化开发人员的(对数据库的统一)操作，提供了一个(Java操作数据库的)规范，俗称JDBC
+
+这些规范的实现由具体的厂商取做
+
+对于开发人员来说，我们只需要掌握JDBC接口的操作即可
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210632.png)
+
+## 10.3、编写JDBC程序
+
+> 搭建实验环境
+
+~~~sql
+CREATE DATABASE jdbcStudy CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+USE jdbcStudy;
+
+CREATE TABLE users(
+		id INT PRIMARY KEY,
+		NAME VARCHAR(40),
+		PASSWORD VARCHAR(40),
+		email VARCHAR(60),
+		birthday DATE
+);
+
+INSERT INTO users(id,NAME,PASSWORD,email,birthday)
+VALUES(1,'zhansan','123456','zs@sina.com','1980-12-04'),
+(2,'lisi','123456','lisi@sina.com','1981-12-04'),
+(3,'wangwu','123456','wangwu@sina.com','1979-12-04');
+~~~
+
+> 新建一个Java工程，并导入数据驱动
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824120332.png)
+
+> 编写程序从user表中读取数据，并打印在命令行窗口中
+
+~~~Java
+package com.kuang.lesson01;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+public class JdbcFirstDemo {
+	public static void main(String[] args) throws Exception {
+			//要连接的数据库URL
+			String url = "jdbc:mysql://localhost:3306/jdbcStudy?
+			useUnicode=true&characterEncoding=utf8&useSSL=true";
+			
+			//连接的数据库时使用的用户名
+			String username = "root";
+			
+			//连接的数据库时使用的密码
+			String password = "123456";
+			
+			//1.加载驱动
+			//DriverManager.registerDriver(new com.mysql.jdbc.Driver());不推荐使用这种方式来加载驱动
+			Class.forName("com.mysql.jdbc.Driver");//推荐使用这种方式来加载驱动
+			
+			//2.获取与数据库的链接  conn 代表数据库
+			Connection conn = DriverManager.getConnection(url, username,password);
+			
+			//3.获取用于向数据库发送sql语句的statement
+			Statement st = conn.createStatement();
+			String sql = "select id,name,password,email,birthday from users";
+			
+			//4.向数据库发sql,并获取代表结果集的resultset
+			ResultSet rs = st.executeQuery(sql);
+			
+			//5.取出结果集的数据
+			while(rs.next()){
+				System.out.println("id=" + rs.getObject("id"));
+				System.out.println("name=" + rs.getObject("name"));
+				System.out.println("password=" + rs.getObject("password"));
+				System.out.println("email=" + rs.getObject("email"));
+				System.out.println("birthday=" + rs.getObject("birthday"));
+			}
+			
+			//6.关闭链接，释放资源
+			rs.close();
+			st.close();
+			conn.close();
+		}
+}
+~~~
+
+步骤总结：
+
+1、加载驱动
+
+2、连接数据库DriverManager
+
+3、获得执行sql的对象Statement
+
+4、获得返回的结果集
+
+5、释放连接
 
 
+## 10.4、对象说明
+
+> DriverManager类讲解
+
+Jdbc程序中的DriverManager用于加载驱动，并创建与数据库的连接，这个API常用方法
+
+~~~Java
+DriverManager.registerDriver(new Driver());
+DriverManager.getConnection(url, user, password);
+~~~
+
+注意：**在实际开发中并不推荐采用registerDriver方法注册驱动**。原因有二：
+
+1. 查看Driver的源代码可以看到，如果采用此种方式，会导致驱动程序注册两次，也就是在内存中会有两个Driver对象
+2. 程序依赖MySQL的api，脱离MySQL的jar包，程序将无法编译，将来程序切换底层数据库将会非常麻烦
+
+推荐方式：**Class.forName("com.mysql.jdbc.Driver");**
+
+采用此种方式不会导致驱动对象在内存中重复出现，并且采用此种方式，程序仅仅只需要一个字符串，不需要依赖具体的驱动，使程序的灵活性更高
+
+> 数据库URL
+
+URL用于标识数据库的位置，通过URL地址告诉JDBC程序连接哪个数据库，URL的写法为：
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824201059.png)
+
+常用数据库URL地址的写法：
+- Oracle写法：jdbc:oracle:thin:@localhost:1521:sid
+- SqlServer写法:jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=sid
+- Mysqlxi写法：jdbc:mysql://localhost:3306/sid
+
+如果连接的使本地的MySQL数据库，并且连接使用的端口使3306，那么url地址可以简写为`jdbc:mysql:///数据库`
+
+> Connection类
+
+Jdbc程序中的Connection，它用于代表数据库的链接，Collection是数据库编程中最重要的一个对象，客户端与数据库所有交互都是通过connection对象完成的，这个对象的常用方法：
+- createStatement()：创建向数据库发送sql的statement对象。
+- **prepareStatement(sql) ：创建向数据库发送预编译sql的PrepareSatement对象。**
+- setAutoCommit(boolean autoCommit)：设置事务是否自动提交。
+- commit() ：在链接上提交事务。
+- rollback() ：在此链接上回滚事务。
+
+> Statement类
+
+Jdbc程序中的Statement对象用于向数据库发送SQL语句， Statement对象常用方法：
+- executeQuery(String sql) ：用于向数据发送查询语句。
+- executeUpdate(String sql)：用于向数据库发送insert、update或delete语句
+- execute(String sql)：用于向数据库发送任意sql语句
+- addBatch(String sql) ：把多条sql语句放到一个批处理中。
+- executeBatch()：向数据库发送一批sql语句执行。
+
+> ResultSet类
+
+Jdbc程序中的ResultSet用于代表Sql语句的执行结果。Resultset封装执行结果时，采用的类似于表格的 方式。ResultSet 对象维护了一个指向表格数据行的游标，初始的时候，**游标在第一行之前**，调用ResultSet.next() 方法，可以使游标指向具体的数据行，进行调用方法获取该行的数据。
+
+ResultSet既然用于封装执行结果的，所以该对象提供的都是用于获取数据的get方法：
+- 获取任意类型的数据
+	- getObject(int index)
+	- getObject(string columnName)
+- 获取指定类型的数据，例如：
+	- getString(int index)
+	- getString(String columnName)
+
+ResultSet还提供了对结果集进行滚动的方法：
+- next()：移动到下一行
+- Previous()：移动到前一行
+- absolute(int row)：移动到指定行
+- beforeFirst()：移动resultSet的最前面。
+- afterLast() ：移动到resultSet的最后面。
+
+>释放资源
+
+Jdbc程序运行完后，切记要释放程序在运行过程中，创建的那些与数据库进行交互的对象，这些对象通常是`ResultSet, Statement和Connection对象`，`特别是Connection对象`，它是非常稀有的资源，用完后必须马上释放，如果Connection不能及时、正确的关闭，极易导致系统宕机。Connection的使用原则是尽量晚创建，尽量早的释放。
+
+	为确保资源释放代码能运行，资源释放代码也一定要放在finally语句中。
+
+## 10.5、statement对象
+
+Jdbc中的statement对象用于向数据库发送SQL语句，想完成对数据库的增删改查，只需要通过这个对象向数据库发送增删改查语句即可。
+
+Statement对象的executeUpdate方法，用于向数据库发送增、删、改的sql语句，executeUpdate执行完后，将会返回一个整数（即增删改语句导致了数据库几行数据发生了变化）。
+
+Statement.executeQuery方法用于向数据库发送查询语句，executeQuery方法返回代表查询结果的
+ResultSet对象。
+
+> CRUD操作-create
+
+使用executeUpdate(String sql)方法完成数据添加操作，示例操作：
+
+~~~Java
+Statement st = conn.createStatement();
+String sql = "insert into user(….) values(…..) ";
+int num = st.executeUpdate(sql);
+if(num>0){
+	System.out.println("插入成功！！！");
+}
+~~~
+
+> CRUD操作-update
+
+使用executeUpdate(String sql)方法完成数据修改操作，示例操作：
+
+~~~Java
+Statement st = conn.createStatement();
+String sql = "update user set name='' where name=''";
+int num = st.executeUpdate(sql);
+if(num>0){
+	System.out.println(“修改成功！！！");
+}
+~~~
+
+> CRUD操作-read
+
+使用executeQuery(String sql)方法完成数据查询操作，示例操作：
+
+~~~Java
+Statement st = conn.createStatement();
+String sql = "select * from user where id=1";
+ResultSet rs = st.executeUpdate(sql);
+while(rs.next()){
+		//根据获取列的数据类型，分别调用rs的相应方法映射到java对象中
+}
+~~~
+
+**使用jdbc对数据库增删改查**
+
+1. 新建一个lesson02的包
+2. 在src目录下创建一个个db.properties文件，如下图所示：
+
+~~~xml
+driver=com.mysql.jdbc.Driver
+url=jdbc:mysql://localhost:3306/jdbcStudy?useUnicode=true&characterEncoding=utf8&useSSL=true
+username=root
+password=xn123456
+~~~
+3. 在lesson02 下新建一个 utils 包，新建一个类 `JdbcUtils`
+
+~~~Java
+package com.kuang.lesson02.utils;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
+public class JdbcUtils {
+		private static String driver = null;
+		private static String url = null;
+		private static String username = null;
+		private static String password = null;
+		
+		static{
+			try{
+				//读取db.properties文件中的数据库连接信息
+				InputStream in =JdbcUtils.class.getClassLoader().getResourceAsStream("db.properties");
+				Properties prop = new Properties();
+				prop.load(in);
+				
+				//获取数据库连接驱动
+				driver = prop.getProperty("driver");
+				//获取数据库连接URL地址
+				url = prop.getProperty("url");
+				//获取数据库连接用户名
+				username = prop.getProperty("username");
+				//获取数据库连接密码
+				password = prop.getProperty("password");
+				
+				//加载数据库驱动
+				Class.forName(driver);
+			}catch (Exception e) {
+				throw new ExceptionInInitializerError(e);
+			}
+		}
+		// 获取数据库连接对象
+		public static Connection getConnection() throws SQLException{
+		return DriverManager.getConnection(url, username,password);
+		}
+		// 释放资源，要释放的资源包括Connection数据库连接对象，负责执行SQL命令的Statement对象，存储查询结果的ResultSet对象
+		public static void release(Connection conn,Statement st,ResultSet rs){
+			if(rs!=null){
+				try{
+						//关闭存储查询结果的ResultSet对象
+						rs.close();
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+					rs = null;
+				}
+				if(st!=null){
+					try{
+						//关闭负责执行SQL命令的Statement对象
+						st.close();
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				if(conn!=null){
+					try{
+						//关闭Connection数据库连接对象
+						conn.close();
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+			}
+		}
+}
+~~~
+
+> 使用statement对象完成对数据库的CRUD操作
+
+1、插入一条数据
+
+~~~java 
+package com.kuang.lesson02;
+
+import com.kuang.lesson02.utils.JdbcUtils;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+public class TestInsert {
+	public static void main(String[] args) {
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{
+				//获取一个数据库连接
+				conn = JdbcUtils.getConnection();
+				//通过conn对象获取负责执行SQL命令的Statement对象
+				st = conn.createStatement();
+				//要执行的SQL命令
+				String sql = "insert into users(id,name,password,email,birthday)" +
+				"values(4,'kuangshen','123','24736743@qq.com','2020-01-01')";
+				//执行插入操作，executeUpdate方法返回成功的条数
+				int num = st.executeUpdate(sql);
+				if(num>0){
+					System.out.println("插入成功！！");
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally{
+				//SQL执行完成之后释放相关资源
+				JdbcUtils.release(conn, st, rs);
+		}
+	}
+}
+~~~
+
+2、删除一条数据
+
+~~~Java
+package com.kuang.lesson02;
+import com.kuang.lesson02.utils.JdbcUtils;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+public class TestDelete {
+	public static void main(String[] args) {
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{
+				conn = JdbcUtils.getConnection();
+				String sql = "delete from users where id=4";
+				st = conn.createStatement();
+				int num = st.executeUpdate(sql);
+				if(num>0){
+					System.out.println("删除成功！！");
+				}
+		}catch (Exception e) {
+				e.printStackTrace();
+		}finally{
+				JdbcUtils.release(conn, st, rs);
+		}
+	}
+}
+~~~
+
+3、更新一条数据
+
+~~~Java
+package com.kuang.lesson02;
+import com.kuang.lesson02.utils.JdbcUtils;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+public class TestUpdate {
+	public static void main(String[] args) {
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		
+		try{
+				conn = JdbcUtils.getConnection();
+				String sql = "update users set
+				name='kuangshen',email='24736743@qq.com' where id=3";
+				st = conn.createStatement();
+				int num = st.executeUpdate(sql);
+				if(num>0){
+					System.out.println("更新成功！！");
+				}
+		}catch (Exception e) {
+				e.printStackTrace();
+		}finally{
+				JdbcUtils.release(conn, st, rs);
+		}
+	}
+}
+~~~
+
+4、查询数据
+
+~~~Java
+package com.kuang.lesson02;
+import com.kuang.lesson02.utils.JdbcUtils;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+public class TestSelect {
+	public static void main(String[] args) {
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		
+		try{
+				conn = JdbcUtils.getConnection();
+				String sql = "select * from users where id=3";
+				st = conn.createStatement();
+				rs = st.executeQuery(sql);
+				if(rs.next()){
+					System.out.println(rs.getString("name"));
+				}
+		}catch (Exception e) {
+				e.printStackTrace();
+		}finally{
+				JdbcUtils.release(conn, st, rs);
+		}
+	}
+}
+~~~
+
+> SQL注入问题
+
+**通过巧妙的技巧来拼接字符串，造成SQL短路，从而获取数据库数据**
+
+~~~Java
+package com.kuang.lesson02;
+import com.kuang.lesson02.utils.JdbcUtils;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+public class SQL注入 {
+	public static void main(String[] args) {
+			// login("zhangsan","123456"); // 正常登陆
+			login("'or '1=1","123456"); // SQL 注入
+		}
+		public static void login(String username,String password){
+			Connection conn = null;
+			Statement st = null;
+			ResultSet rs = null;
+			try{
+					conn = JdbcUtils.getConnection();
+					// select * from users where name='' or '1=1' and password ='123456'
+					String sql = "select * from users where name='"+username+"' and password='"+password+"';
+					st = conn.createStatement();
+					rs = st.executeQuery(sql);
+					while(rs.next()){
+							System.out.println(rs.getString("name"));
+							System.out.println(rs.getString("password"));
+							System.out.println("==============");
+					}
+			}catch (Exception e) {
+					e.printStackTrace();
+			}finally{
+					JdbcUtils.release(conn, st, rs);
+			}
+	}
+}
+~~~
+
+## 10.6、PreparedStatement对象
+
+`PreperedStatement`是`Statement`的子类，它的实例对象可以通过调用Connection.preparedStatement()方法获得，相对于Statement对象而言：PreperedStatement可以避
+免SQL注入的问题。
+
+Statement会使数据库频繁编译SQL，可能造成数据库缓冲区溢出。
+
+PreparedStatement可对SQL进行`预编译`，从而提高数据库的执行效率。并且PreperedStatement对于sql中的参数，允许使用占位符的形式进行替换，简化sql语句的编写。
+
+>使用PreparedStatement对象完成对数据库的CRUD操作
+
+1、插入数据
+
+~~~Java
+package com.kuang.lesson03;
+import com.kuang.lesson02.utils.JdbcUtils;
+import java.sql.Connection;
+import java.util.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+public class TestInsert {
+	public static void main(String[] args) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		try{
+				//获取一个数据库连接
+				conn = JdbcUtils.getConnection();
+				//要执行的SQL命令，SQL中的参数使用?作为占位符
+				String sql = "insert into users(id,name,password,email,birthday) values(?,?,?,?,?)";
+				//通过conn对象获取负责执行SQL命令的prepareStatement对象
+				st = conn.prepareStatement(sql);
+				
+				//为SQL语句中的参数赋值，注意，索引是从1开始的
+				st.setInt(1, 4);//id是int类型的
+				st.setString(2, "kuangshen");//name是varchar(字符串类型)
+				st.setString(3, "123");//password是varchar(字符串类型)
+				st.setString(4, "24736743@qq.com");//email是varchar(字符串类型)
+				st.setDate(5, new java.sql.Date(new Date().getTime()));//birthday是date类型
+				
+				//执行插入操作，executeUpdate方法返回成功的条数
+				int num = st.executeUpdate();
+				if(num>0){
+					System.out.println("插入成功！！");
+				}
+		}catch (Exception e) {
+				e.printStackTrace();
+		}finally{
+				//SQL执行完成之后释放相关资源
+				JdbcUtils.release(conn, st, rs);
+		}
+	}
+}
+~~~
+
+2、删除一条数据
+
+~~~Java
+package com.kuang.lesson03;
+import com.kuang.lesson02.utils.JdbcUtils;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+public class TestDelete {
+	public static void main(String[] args) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try{
+				conn = JdbcUtils.getConnection();
+				String sql = "delete from users where id=?";
+				st = conn.prepareStatement(sql);
+				st.setInt(1, 4);
+				int num = st.executeUpdate();
+				if(num>0){
+					System.out.println("删除成功！！");
+				}
+		}catch (Exception e) {
+				e.printStackTrace();
+		}finally{
+				JdbcUtils.release(conn, st, rs);
+		}
+	}
+}
+~~~
+
+3、更新一条数据
+
+~~~Java
+package com.kuang.lesson03;
+import com.kuang.lesson02.utils.JdbcUtils;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+public class TestUpdate {
+	public static void main(String[] args) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try{
+				conn = JdbcUtils.getConnection();
+				String sql = "update users set name=?,email=? where id=?";
+				st = conn.prepareStatement(sql);
+				st.setString(1, "kuangshen");
+				st.setString(2, "24736743@qq.com");
+				st.setInt(3, 2);
+				int num = st.executeUpdate();
+				if(num>0){
+					System.out.println("更新成功！！");
+				}
+		}catch (Exception e) {
+				e.printStackTrace();
+		}finally{
+				JdbcUtils.release(conn, st, rs);
+		}
+	}
+}
+~~~
+
+4、查询一条数据
+
+~~~Java
+package com.kuang.lesson03;
+import com.kuang.lesson02.utils.JdbcUtils;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+public class TestSelect {
+	public static void main(String[] args) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try{
+				conn = JdbcUtils.getConnection();
+				String sql = "select * from users where id=?";
+				st = conn.prepareStatement(sql);
+				st.setInt(1, 1);
+				rs = st.executeQuery();
+				if(rs.next()){
+					System.out.println(rs.getString("name"));
+				}
+		}catch (Exception e) {
+		}finally{
+				JdbcUtils.release(conn, st, rs);
+		}
+	}
+}
+~~~
+
+> 避免SQL注入
+
+~~~Java
+package com.kuang.lesson03;
+
+import com.kuang.lesson02.utils.JdbcUtils;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+public class SQL注入 {
+	public static void main(String[] args) {
+		// login("zhangsan","123456"); // 正常登陆
+		login("'or '1=1","123456"); // SQL 注入
+	}
+	public static void login(String username,String password){
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try{
+			conn = JdbcUtils.getConnection();
+			
+			// 假设其中存在转义字符，就直接忽略，比如说  '  会被直接转义
+			// select * from users where name='' or '1=1' and password ='123456'
+			String sql = "select * from users where name=? and password=?";
+			st = conn.prepareStatement(sql);
+			st.setString(1,username);
+			st.setString(2,password);
+			rs = st.executeQuery();
+			while(rs.next()){
+				System.out.println(rs.getString("name"));
+				System.out.println(rs.getString("password"));
+				System.out.println("==============");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			JdbcUtils.release(conn, st, rs);
+		}
+	}
+}
+~~~
+
+	原理：执行的时候参数会用引号包起来，并把参数中的引号作为转义字符，从而避免了参数也作为条件的一部分

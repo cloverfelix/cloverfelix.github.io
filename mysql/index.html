@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/mysql\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Mysql","wordcount":  16784 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Mysql","wordcount":  23150 ,
         "url": "https:\/\/cloverfelix.github.io\/mysql\/","datePublished": "2021-07-04T16:33:35+08:00","dateModified": "2021-07-04T16:33:35+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Mysql</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>Mysql</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 16784 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 34 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 23150 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 47 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -173,6 +173,20 @@
   <ul>
     <li><a href="#81用户管理">8.1、用户管理</a></li>
     <li><a href="#82数据库备份">8.2、数据库备份</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#91为什么需要数据库设计">9.1、为什么需要数据库设计</a></li>
+    <li><a href="#92三大范式">9.2、三大范式</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#101数据库驱动">10.1、数据库驱动</a></li>
+    <li><a href="#102jdbc介绍">10.2、JDBC介绍</a></li>
+    <li><a href="#103编写jdbc程序">10.3、编写JDBC程序</a></li>
+    <li><a href="#104对象说明">10.4、对象说明</a></li>
+    <li><a href="#105statement对象">10.5、statement对象</a></li>
+    <li><a href="#106preparedstatement对象">10.6、PreparedStatement对象</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="1初始mysql">1、初始Mysql</h1>
@@ -3079,6 +3093,1300 @@ net start mysql
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823211210.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823211210.png" /></p>
+<h1 id="9规范化数据库">9、规范化数据库</h1>
+<h2 id="91为什么需要数据库设计">9.1、为什么需要数据库设计</h2>
+<p><strong>糟糕的数据库设计</strong></p>
+<ul>
+<li>数据冗余，存储空间浪费</li>
+<li>数据更新和插入的异常</li>
+<li>程序性能差</li>
+</ul>
+<p><strong>良好的数据库设计</strong></p>
+<ul>
+<li>节省数据的存储空间</li>
+<li>能够保证数据的完整性</li>
+<li>方便进行数据库应用系统的开发</li>
+</ul>
+<p><strong>软件项目开发周期中数据库设计</strong></p>
+<ul>
+<li>需求分析阶段：分析客户的业务和数据处理需求</li>
+<li>概要设计阶段：设计数据库的E-R模型图，确认需求信息的正确和完整</li>
+</ul>
+<p><strong>设计数据库步骤</strong></p>
+<ul>
+<li>收集信息
+<ul>
+<li>与该系统有关人员进行交流、座谈，充分了解用户需求，理解数据库需要完成的任务</li>
+</ul>
+</li>
+<li>标识实体[Entity]
+<ul>
+<li>标识数据库要管理的关键对象或实体，实体一般是名词</li>
+</ul>
+</li>
+<li>标识每个实体需要存储的详细信息[Attribute]</li>
+<li>标识实体之间的关系[Relationship]</li>
+</ul>
+<h2 id="92三大范式">9.2、三大范式</h2>
+<p><strong>问题：为什么需要数据规范化</strong></p>
+<p>不合规范的表设计会导致的问题</p>
+<ul>
+<li>信息重复</li>
+<li>更新异常</li>
+<li>插入异常
+<ul>
+<li>无法正确表示信息</li>
+</ul>
+</li>
+<li>删除异常
+<ul>
+<li>丢失有效信息</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>百度搜索：三大范式</p>
+</blockquote>
+<p><strong>第一范式(1st NF)</strong></p>
+<p>第一范式的目标是确保每列的原子性，如果每列都是<code>不可再分的最小数据单元</code>，则满足第一范式</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104423.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104423.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104423.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104423.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104423.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104423.png" /></p>
+<p><strong>第二范式(2st NF)</strong></p>
+<p>第二范式是在第一范式的基础上建立起来的，即满足第二范式必须先满足第一范式</p>
+<p>第二范式要求每个表只描述一件事情</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104442.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104442.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104442.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104442.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104442.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104442.png" /></p>
+<p><strong>第三范式(3st NF)</strong></p>
+<p>如果一个关系满足第二范式，并且非主键列都不传递依赖于主键列，则满足第三范式</p>
+<p>第三范式需要确保数据表中的每一列数据都和主键直接相关，而不能间接相关</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104508.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104508.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104508.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104508.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104508.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824104508.png" /></p>
+<p><strong>规范化和性能的关系</strong></p>
+<ul>
+<li>为满足某种商业目标，数据库性能比规范化数据库更重要</li>
+<li>在数据规范化的同时，要综合考虑数据库的性能</li>
+<li>通过在给定的表中添加额外的字段，一减少需要从中搜索信息所需要的时间</li>
+<li>通过在给的的表中插入计算列，以方便查询</li>
+</ul>
+<h1 id="10jdbc">10、JDBC</h1>
+<h2 id="101数据库驱动">10.1、数据库驱动</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210410.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210410.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210410.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210410.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210410.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210410.png" /></p>
+<p>我们的程序会通过数据库驱动和数据库打交道！！</p>
+<h2 id="102jdbc介绍">10.2、JDBC介绍</h2>
+<p>SUN公司为了简化开发人员的(对数据库的统一)操作，提供了一个(Java操作数据库的)规范，俗称JDBC</p>
+<p>这些规范的实现由具体的厂商取做</p>
+<p>对于开发人员来说，我们只需要掌握JDBC接口的操作即可</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210632.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210632.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210632.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210632.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210632.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210632.png" /></p>
+<h2 id="103编写jdbc程序">10.3、编写JDBC程序</h2>
+<blockquote>
+<p>搭建实验环境</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">jdbcStudy</span> <span class="nb">CHARACTER</span> <span class="k">SET</span> <span class="n">utf8</span> <span class="k">COLLATE</span> <span class="n">utf8_general_ci</span><span class="p">;</span>
+
+<span class="n">USE</span> <span class="n">jdbcStudy</span><span class="p">;</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">users</span><span class="p">(</span>
+		<span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+		<span class="n">NAME</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">40</span><span class="p">),</span>
+		<span class="n">PASSWORD</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">40</span><span class="p">),</span>
+		<span class="n">email</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">60</span><span class="p">),</span>
+		<span class="n">birthday</span> <span class="nb">DATE</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">users</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="n">NAME</span><span class="p">,</span><span class="n">PASSWORD</span><span class="p">,</span><span class="n">email</span><span class="p">,</span><span class="n">birthday</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;zhansan&#39;</span><span class="p">,</span><span class="s1">&#39;123456&#39;</span><span class="p">,</span><span class="s1">&#39;zs@sina.com&#39;</span><span class="p">,</span><span class="s1">&#39;1980-12-04&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;lisi&#39;</span><span class="p">,</span><span class="s1">&#39;123456&#39;</span><span class="p">,</span><span class="s1">&#39;lisi@sina.com&#39;</span><span class="p">,</span><span class="s1">&#39;1981-12-04&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;wangwu&#39;</span><span class="p">,</span><span class="s1">&#39;123456&#39;</span><span class="p">,</span><span class="s1">&#39;wangwu@sina.com&#39;</span><span class="p">,</span><span class="s1">&#39;1979-12-04&#39;</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>新建一个Java工程，并导入数据驱动</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824120332.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824120332.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824120332.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824120332.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824120332.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824120332.png" /></p>
+<blockquote>
+<p>编写程序从user表中读取数据，并打印在命令行窗口中</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.kuang.lesson01</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.DriverManager</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Statement</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">JdbcFirstDemo</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+			<span class="c1">//要连接的数据库URL
+</span><span class="c1"></span>			<span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&#34;jdbc:mysql://localhost:3306/jdbcStudy?
+</span><span class="s">			useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=true&#34;</span><span class="o">;</span>
+			
+			<span class="c1">//连接的数据库时使用的用户名
+</span><span class="c1"></span>			<span class="n">String</span> <span class="n">username</span> <span class="o">=</span> <span class="s">&#34;root&#34;</span><span class="o">;</span>
+			
+			<span class="c1">//连接的数据库时使用的密码
+</span><span class="c1"></span>			<span class="n">String</span> <span class="n">password</span> <span class="o">=</span> <span class="s">&#34;123456&#34;</span><span class="o">;</span>
+			
+			<span class="c1">//1.加载驱动
+</span><span class="c1"></span>			<span class="c1">//DriverManager.registerDriver(new com.mysql.jdbc.Driver());不推荐使用这种方式来加载驱动
+</span><span class="c1"></span>			<span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&#34;com.mysql.jdbc.Driver&#34;</span><span class="o">);</span><span class="c1">//推荐使用这种方式来加载驱动
+</span><span class="c1"></span>			
+			<span class="c1">//2.获取与数据库的链接  conn 代表数据库
+</span><span class="c1"></span>			<span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="n">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">username</span><span class="o">,</span><span class="n">password</span><span class="o">);</span>
+			
+			<span class="c1">//3.获取用于向数据库发送sql语句的statement
+</span><span class="c1"></span>			<span class="n">Statement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+			<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&#34;select id,name,password,email,birthday from users&#34;</span><span class="o">;</span>
+			
+			<span class="c1">//4.向数据库发sql,并获取代表结果集的resultset
+</span><span class="c1"></span>			<span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			
+			<span class="c1">//5.取出结果集的数据
+</span><span class="c1"></span>			<span class="k">while</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">()){</span>
+				<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;id=&#34;</span> <span class="o">+</span> <span class="n">rs</span><span class="o">.</span><span class="na">getObject</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">));</span>
+				<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;name=&#34;</span> <span class="o">+</span> <span class="n">rs</span><span class="o">.</span><span class="na">getObject</span><span class="o">(</span><span class="s">&#34;name&#34;</span><span class="o">));</span>
+				<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;password=&#34;</span> <span class="o">+</span> <span class="n">rs</span><span class="o">.</span><span class="na">getObject</span><span class="o">(</span><span class="s">&#34;password&#34;</span><span class="o">));</span>
+				<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;email=&#34;</span> <span class="o">+</span> <span class="n">rs</span><span class="o">.</span><span class="na">getObject</span><span class="o">(</span><span class="s">&#34;email&#34;</span><span class="o">));</span>
+				<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;birthday=&#34;</span> <span class="o">+</span> <span class="n">rs</span><span class="o">.</span><span class="na">getObject</span><span class="o">(</span><span class="s">&#34;birthday&#34;</span><span class="o">));</span>
+			<span class="o">}</span>
+			
+			<span class="c1">//6.关闭链接，释放资源
+</span><span class="c1"></span>			<span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">conn</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>步骤总结：</p>
+<p>1、加载驱动</p>
+<p>2、连接数据库DriverManager</p>
+<p>3、获得执行sql的对象Statement</p>
+<p>4、获得返回的结果集</p>
+<p>5、释放连接</p>
+<h2 id="104对象说明">10.4、对象说明</h2>
+<blockquote>
+<p>DriverManager类讲解</p>
+</blockquote>
+<p>Jdbc程序中的DriverManager用于加载驱动，并创建与数据库的连接，这个API常用方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">DriverManager</span><span class="o">.</span><span class="na">registerDriver</span><span class="o">(</span><span class="k">new</span> <span class="n">Driver</span><span class="o">());</span>
+<span class="n">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">password</span><span class="o">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>注意：<strong>在实际开发中并不推荐采用registerDriver方法注册驱动</strong>。原因有二：</p>
+<ol>
+<li>查看Driver的源代码可以看到，如果采用此种方式，会导致驱动程序注册两次，也就是在内存中会有两个Driver对象</li>
+<li>程序依赖MySQL的api，脱离MySQL的jar包，程序将无法编译，将来程序切换底层数据库将会非常麻烦</li>
+</ol>
+<p>推荐方式：<strong>Class.forName(&ldquo;com.mysql.jdbc.Driver&rdquo;);</strong></p>
+<p>采用此种方式不会导致驱动对象在内存中重复出现，并且采用此种方式，程序仅仅只需要一个字符串，不需要依赖具体的驱动，使程序的灵活性更高</p>
+<blockquote>
+<p>数据库URL</p>
+</blockquote>
+<p>URL用于标识数据库的位置，通过URL地址告诉JDBC程序连接哪个数据库，URL的写法为：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824201059.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824201059.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824201059.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824201059.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824201059.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824201059.png" /></p>
+<p>常用数据库URL地址的写法：</p>
+<ul>
+<li>Oracle写法：jdbc:oracle:thin:@localhost:1521:sid</li>
+<li>SqlServer写法:jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=sid</li>
+<li>Mysqlxi写法：jdbc:mysql://localhost:3306/sid</li>
+</ul>
+<p>如果连接的使本地的MySQL数据库，并且连接使用的端口使3306，那么url地址可以简写为<code>jdbc:mysql:///数据库</code></p>
+<blockquote>
+<p>Connection类</p>
+</blockquote>
+<p>Jdbc程序中的Connection，它用于代表数据库的链接，Collection是数据库编程中最重要的一个对象，客户端与数据库所有交互都是通过connection对象完成的，这个对象的常用方法：</p>
+<ul>
+<li>createStatement()：创建向数据库发送sql的statement对象。</li>
+<li><strong>prepareStatement(sql) ：创建向数据库发送预编译sql的PrepareSatement对象。</strong></li>
+<li>setAutoCommit(boolean autoCommit)：设置事务是否自动提交。</li>
+<li>commit() ：在链接上提交事务。</li>
+<li>rollback() ：在此链接上回滚事务。</li>
+</ul>
+<blockquote>
+<p>Statement类</p>
+</blockquote>
+<p>Jdbc程序中的Statement对象用于向数据库发送SQL语句， Statement对象常用方法：</p>
+<ul>
+<li>executeQuery(String sql) ：用于向数据发送查询语句。</li>
+<li>executeUpdate(String sql)：用于向数据库发送insert、update或delete语句</li>
+<li>execute(String sql)：用于向数据库发送任意sql语句</li>
+<li>addBatch(String sql) ：把多条sql语句放到一个批处理中。</li>
+<li>executeBatch()：向数据库发送一批sql语句执行。</li>
+</ul>
+<blockquote>
+<p>ResultSet类</p>
+</blockquote>
+<p>Jdbc程序中的ResultSet用于代表Sql语句的执行结果。Resultset封装执行结果时，采用的类似于表格的 方式。ResultSet 对象维护了一个指向表格数据行的游标，初始的时候，<strong>游标在第一行之前</strong>，调用ResultSet.next() 方法，可以使游标指向具体的数据行，进行调用方法获取该行的数据。</p>
+<p>ResultSet既然用于封装执行结果的，所以该对象提供的都是用于获取数据的get方法：</p>
+<ul>
+<li>获取任意类型的数据
+<ul>
+<li>getObject(int index)</li>
+<li>getObject(string columnName)</li>
+</ul>
+</li>
+<li>获取指定类型的数据，例如：
+<ul>
+<li>getString(int index)</li>
+<li>getString(String columnName)</li>
+</ul>
+</li>
+</ul>
+<p>ResultSet还提供了对结果集进行滚动的方法：</p>
+<ul>
+<li>next()：移动到下一行</li>
+<li>Previous()：移动到前一行</li>
+<li>absolute(int row)：移动到指定行</li>
+<li>beforeFirst()：移动resultSet的最前面。</li>
+<li>afterLast() ：移动到resultSet的最后面。</li>
+</ul>
+<blockquote>
+<p>释放资源</p>
+</blockquote>
+<p>Jdbc程序运行完后，切记要释放程序在运行过程中，创建的那些与数据库进行交互的对象，这些对象通常是<code>ResultSet, Statement和Connection对象</code>，<code>特别是Connection对象</code>，它是非常稀有的资源，用完后必须马上释放，如果Connection不能及时、正确的关闭，极易导致系统宕机。Connection的使用原则是尽量晚创建，尽量早的释放。</p>
+<pre><code>为确保资源释放代码能运行，资源释放代码也一定要放在finally语句中。
+</code></pre>
+<h2 id="105statement对象">10.5、statement对象</h2>
+<p>Jdbc中的statement对象用于向数据库发送SQL语句，想完成对数据库的增删改查，只需要通过这个对象向数据库发送增删改查语句即可。</p>
+<p>Statement对象的executeUpdate方法，用于向数据库发送增、删、改的sql语句，executeUpdate执行完后，将会返回一个整数（即增删改语句导致了数据库几行数据发生了变化）。</p>
+<p>Statement.executeQuery方法用于向数据库发送查询语句，executeQuery方法返回代表查询结果的
+ResultSet对象。</p>
+<blockquote>
+<p>CRUD操作-create</p>
+</blockquote>
+<p>使用executeUpdate(String sql)方法完成数据添加操作，示例操作：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Statement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&#34;insert into user(….) values(…..) &#34;</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+<span class="k">if</span><span class="o">(</span><span class="n">num</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+	<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;插入成功！！！&#34;</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>CRUD操作-update</p>
+</blockquote>
+<p>使用executeUpdate(String sql)方法完成数据修改操作，示例操作：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Statement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&#34;update user set name=&#39;&#39; where name=&#39;&#39;&#34;</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+<span class="k">if</span><span class="o">(</span><span class="n">num</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+	<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="err">“</span><span class="n">修改成功</span><span class="err">！！！&#34;</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>CRUD操作-read</p>
+</blockquote>
+<p>使用executeQuery(String sql)方法完成数据查询操作，示例操作：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Statement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&#34;select * from user where id=1&#34;</span><span class="o">;</span>
+<span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+<span class="k">while</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">()){</span>
+		<span class="c1">//根据获取列的数据类型，分别调用rs的相应方法映射到java对象中
+</span><span class="c1"></span><span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>使用jdbc对数据库增删改查</strong></p>
+<ol>
+<li>新建一个lesson02的包</li>
+<li>在src目录下创建一个个db.properties文件，如下图所示：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml">driver=com.mysql.jdbc.Driver
+url=jdbc:mysql://localhost:3306/jdbcStudy?useUnicode=true<span class="err">&amp;</span>characterEncoding=utf8<span class="err">&amp;</span>useSSL=true
+username=root
+password=xn123456
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>在lesson02 下新建一个 utils 包，新建一个类 <code>JdbcUtils</code></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.kuang.lesson02.utils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.DriverManager</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.SQLException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Statement</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Properties</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">JdbcUtils</span> <span class="o">{</span>
+		<span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">driver</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">username</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">password</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		
+		<span class="kd">static</span><span class="o">{</span>
+			<span class="k">try</span><span class="o">{</span>
+				<span class="c1">//读取db.properties文件中的数据库连接信息
+</span><span class="c1"></span>				<span class="n">InputStream</span> <span class="n">in</span> <span class="o">=</span><span class="n">JdbcUtils</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getClassLoader</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&#34;db.properties&#34;</span><span class="o">);</span>
+				<span class="n">Properties</span> <span class="n">prop</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Properties</span><span class="o">();</span>
+				<span class="n">prop</span><span class="o">.</span><span class="na">load</span><span class="o">(</span><span class="n">in</span><span class="o">);</span>
+				
+				<span class="c1">//获取数据库连接驱动
+</span><span class="c1"></span>				<span class="n">driver</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&#34;driver&#34;</span><span class="o">);</span>
+				<span class="c1">//获取数据库连接URL地址
+</span><span class="c1"></span>				<span class="n">url</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&#34;url&#34;</span><span class="o">);</span>
+				<span class="c1">//获取数据库连接用户名
+</span><span class="c1"></span>				<span class="n">username</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&#34;username&#34;</span><span class="o">);</span>
+				<span class="c1">//获取数据库连接密码
+</span><span class="c1"></span>				<span class="n">password</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&#34;password&#34;</span><span class="o">);</span>
+				
+				<span class="c1">//加载数据库驱动
+</span><span class="c1"></span>				<span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">driver</span><span class="o">);</span>
+			<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">throw</span> <span class="k">new</span> <span class="n">ExceptionInInitializerError</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		<span class="c1">// 获取数据库连接对象
+</span><span class="c1"></span>		<span class="kd">public</span> <span class="kd">static</span> <span class="n">Connection</span> <span class="nf">getConnection</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">SQLException</span><span class="o">{</span>
+		<span class="k">return</span> <span class="n">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">username</span><span class="o">,</span><span class="n">password</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="c1">// 释放资源，要释放的资源包括Connection数据库连接对象，负责执行SQL命令的Statement对象，存储查询结果的ResultSet对象
+</span><span class="c1"></span>		<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">release</span><span class="o">(</span><span class="n">Connection</span> <span class="n">conn</span><span class="o">,</span><span class="n">Statement</span> <span class="n">st</span><span class="o">,</span><span class="n">ResultSet</span> <span class="n">rs</span><span class="o">){</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+				<span class="k">try</span><span class="o">{</span>
+						<span class="c1">//关闭存储查询结果的ResultSet对象
+</span><span class="c1"></span>						<span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+					<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+						<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+					<span class="o">}</span>
+					<span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+				<span class="o">}</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">st</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+					<span class="k">try</span><span class="o">{</span>
+						<span class="c1">//关闭负责执行SQL命令的Statement对象
+</span><span class="c1"></span>						<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+					<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+						<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+					<span class="o">}</span>
+				<span class="o">}</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">conn</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+					<span class="k">try</span><span class="o">{</span>
+						<span class="c1">//关闭Connection数据库连接对象
+</span><span class="c1"></span>						<span class="n">conn</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+					<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+						<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+					<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>使用statement对象完成对数据库的CRUD操作</p>
+</blockquote>
+<p>1、插入一条数据</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.kuang.lesson02</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.kuang.lesson02.utils.JdbcUtils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Statement</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestInsert</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">Statement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span><span class="o">{</span>
+				<span class="c1">//获取一个数据库连接
+</span><span class="c1"></span>				<span class="n">conn</span> <span class="o">=</span> <span class="n">JdbcUtils</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+				<span class="c1">//通过conn对象获取负责执行SQL命令的Statement对象
+</span><span class="c1"></span>				<span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+				<span class="c1">//要执行的SQL命令
+</span><span class="c1"></span>				<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&#34;insert into users(id,name,password,email,birthday)&#34;</span> <span class="o">+</span>
+				<span class="s">&#34;values(4,&#39;kuangshen&#39;,&#39;123&#39;,&#39;24736743@qq.com&#39;,&#39;2020-01-01&#39;)&#34;</span><span class="o">;</span>
+				<span class="c1">//执行插入操作，executeUpdate方法返回成功的条数
+</span><span class="c1"></span>				<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">num</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+					<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;插入成功！！&#34;</span><span class="o">);</span>
+				<span class="o">}</span>
+			<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">finally</span><span class="o">{</span>
+				<span class="c1">//SQL执行完成之后释放相关资源
+</span><span class="c1"></span>				<span class="n">JdbcUtils</span><span class="o">.</span><span class="na">release</span><span class="o">(</span><span class="n">conn</span><span class="o">,</span> <span class="n">st</span><span class="o">,</span> <span class="n">rs</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>2、删除一条数据</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.kuang.lesson02</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.kuang.lesson02.utils.JdbcUtils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Statement</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestDelete</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">Statement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span><span class="o">{</span>
+				<span class="n">conn</span> <span class="o">=</span> <span class="n">JdbcUtils</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+				<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&#34;delete from users where id=4&#34;</span><span class="o">;</span>
+				<span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+				<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">num</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+					<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;删除成功！！&#34;</span><span class="o">);</span>
+				<span class="o">}</span>
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">finally</span><span class="o">{</span>
+				<span class="n">JdbcUtils</span><span class="o">.</span><span class="na">release</span><span class="o">(</span><span class="n">conn</span><span class="o">,</span> <span class="n">st</span><span class="o">,</span> <span class="n">rs</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、更新一条数据</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.kuang.lesson02</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.kuang.lesson02.utils.JdbcUtils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Statement</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestUpdate</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">Statement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		
+		<span class="k">try</span><span class="o">{</span>
+				<span class="n">conn</span> <span class="o">=</span> <span class="n">JdbcUtils</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+				<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&#34;update users set
+</span><span class="s">				name=&#39;kuangshen&#39;,email=&#39;24736743@qq.com&#39; where id=3&#34;</span><span class="o">;</span>
+				<span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+				<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">num</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+					<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;更新成功！！&#34;</span><span class="o">);</span>
+				<span class="o">}</span>
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">finally</span><span class="o">{</span>
+				<span class="n">JdbcUtils</span><span class="o">.</span><span class="na">release</span><span class="o">(</span><span class="n">conn</span><span class="o">,</span> <span class="n">st</span><span class="o">,</span> <span class="n">rs</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>4、查询数据</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.kuang.lesson02</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.kuang.lesson02.utils.JdbcUtils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Statement</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestSelect</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">Statement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		
+		<span class="k">try</span><span class="o">{</span>
+				<span class="n">conn</span> <span class="o">=</span> <span class="n">JdbcUtils</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+				<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&#34;select * from users where id=3&#34;</span><span class="o">;</span>
+				<span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+				<span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">()){</span>
+					<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;name&#34;</span><span class="o">));</span>
+				<span class="o">}</span>
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">finally</span><span class="o">{</span>
+				<span class="n">JdbcUtils</span><span class="o">.</span><span class="na">release</span><span class="o">(</span><span class="n">conn</span><span class="o">,</span> <span class="n">st</span><span class="o">,</span> <span class="n">rs</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>SQL注入问题</p>
+</blockquote>
+<p><strong>通过巧妙的技巧来拼接字符串，造成SQL短路，从而获取数据库数据</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.kuang.lesson02</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.kuang.lesson02.utils.JdbcUtils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Statement</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SQL注入</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+			<span class="c1">// login(&#34;zhangsan&#34;,&#34;123456&#34;); // 正常登陆
+</span><span class="c1"></span>			<span class="n">login</span><span class="o">(</span><span class="s">&#34;&#39;or &#39;1=1&#34;</span><span class="o">,</span><span class="s">&#34;123456&#34;</span><span class="o">);</span> <span class="c1">// SQL 注入
+</span><span class="c1"></span>		<span class="o">}</span>
+		<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">login</span><span class="o">(</span><span class="n">String</span> <span class="n">username</span><span class="o">,</span><span class="n">String</span> <span class="n">password</span><span class="o">){</span>
+			<span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+			<span class="n">Statement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+			<span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+			<span class="k">try</span><span class="o">{</span>
+					<span class="n">conn</span> <span class="o">=</span> <span class="n">JdbcUtils</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+					<span class="c1">// select * from users where name=&#39;&#39; or &#39;1=1&#39; and password =&#39;123456&#39;
+</span><span class="c1"></span>					<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&#34;select * from users where name=&#39;&#34;</span><span class="o">+</span><span class="n">username</span><span class="o">+</span><span class="s">&#34;&#39; and password=&#39;&#34;</span><span class="o">+</span><span class="n">password</span><span class="o">+</span><span class="s">&#34;&#39;;
+</span><span class="s">					st = conn.createStatement();
+</span><span class="s">					rs = st.executeQuery(sql);
+</span><span class="s">					while(rs.next()){
+</span><span class="s">							System.out.println(rs.getString(&#34;</span><span class="n">name</span><span class="s">&#34;));
+</span><span class="s">							System.out.println(rs.getString(&#34;</span><span class="n">password</span><span class="s">&#34;));
+</span><span class="s">							System.out.println(&#34;</span><span class="o">==============</span><span class="err">&#34;</span><span class="o">);</span>
+					<span class="o">}</span>
+			<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+					<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">finally</span><span class="o">{</span>
+					<span class="n">JdbcUtils</span><span class="o">.</span><span class="na">release</span><span class="o">(</span><span class="n">conn</span><span class="o">,</span> <span class="n">st</span><span class="o">,</span> <span class="n">rs</span><span class="o">);</span>
+			<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="106preparedstatement对象">10.6、PreparedStatement对象</h2>
+<p><code>PreperedStatement</code>是<code>Statement</code>的子类，它的实例对象可以通过调用Connection.preparedStatement()方法获得，相对于Statement对象而言：PreperedStatement可以避
+免SQL注入的问题。</p>
+<p>Statement会使数据库频繁编译SQL，可能造成数据库缓冲区溢出。</p>
+<p>PreparedStatement可对SQL进行<code>预编译</code>，从而提高数据库的执行效率。并且PreperedStatement对于sql中的参数，允许使用占位符的形式进行替换，简化sql语句的编写。</p>
+<blockquote>
+<p>使用PreparedStatement对象完成对数据库的CRUD操作</p>
+</blockquote>
+<p>1、插入数据</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.kuang.lesson03</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.kuang.lesson02.utils.JdbcUtils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Date</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.PreparedStatement</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestInsert</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		
+		<span class="k">try</span><span class="o">{</span>
+				<span class="c1">//获取一个数据库连接
+</span><span class="c1"></span>				<span class="n">conn</span> <span class="o">=</span> <span class="n">JdbcUtils</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+				<span class="c1">//要执行的SQL命令，SQL中的参数使用?作为占位符
+</span><span class="c1"></span>				<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&#34;insert into users(id,name,password,email,birthday) values(?,?,?,?,?)&#34;</span><span class="o">;</span>
+				<span class="c1">//通过conn对象获取负责执行SQL命令的prepareStatement对象
+</span><span class="c1"></span>				<span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+				
+				<span class="c1">//为SQL语句中的参数赋值，注意，索引是从1开始的
+</span><span class="c1"></span>				<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">4</span><span class="o">);</span><span class="c1">//id是int类型的
+</span><span class="c1"></span>				<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="n">2</span><span class="o">,</span> <span class="s">&#34;kuangshen&#34;</span><span class="o">);</span><span class="c1">//name是varchar(字符串类型)
+</span><span class="c1"></span>				<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="n">3</span><span class="o">,</span> <span class="s">&#34;123&#34;</span><span class="o">);</span><span class="c1">//password是varchar(字符串类型)
+</span><span class="c1"></span>				<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="n">4</span><span class="o">,</span> <span class="s">&#34;24736743@qq.com&#34;</span><span class="o">);</span><span class="c1">//email是varchar(字符串类型)
+</span><span class="c1"></span>				<span class="n">st</span><span class="o">.</span><span class="na">setDate</span><span class="o">(</span><span class="n">5</span><span class="o">,</span> <span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">sql</span><span class="o">.</span><span class="na">Date</span><span class="o">(</span><span class="k">new</span> <span class="n">Date</span><span class="o">().</span><span class="na">getTime</span><span class="o">()));</span><span class="c1">//birthday是date类型
+</span><span class="c1"></span>				
+				<span class="c1">//执行插入操作，executeUpdate方法返回成功的条数
+</span><span class="c1"></span>				<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">num</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+					<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;插入成功！！&#34;</span><span class="o">);</span>
+				<span class="o">}</span>
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">finally</span><span class="o">{</span>
+				<span class="c1">//SQL执行完成之后释放相关资源
+</span><span class="c1"></span>				<span class="n">JdbcUtils</span><span class="o">.</span><span class="na">release</span><span class="o">(</span><span class="n">conn</span><span class="o">,</span> <span class="n">st</span><span class="o">,</span> <span class="n">rs</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>2、删除一条数据</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.kuang.lesson03</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.kuang.lesson02.utils.JdbcUtils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.PreparedStatement</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestDelete</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span><span class="o">{</span>
+				<span class="n">conn</span> <span class="o">=</span> <span class="n">JdbcUtils</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+				<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&#34;delete from users where id=?&#34;</span><span class="o">;</span>
+				<span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+				<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">4</span><span class="o">);</span>
+				<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">num</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+					<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;删除成功！！&#34;</span><span class="o">);</span>
+				<span class="o">}</span>
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">finally</span><span class="o">{</span>
+				<span class="n">JdbcUtils</span><span class="o">.</span><span class="na">release</span><span class="o">(</span><span class="n">conn</span><span class="o">,</span> <span class="n">st</span><span class="o">,</span> <span class="n">rs</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、更新一条数据</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.kuang.lesson03</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.kuang.lesson02.utils.JdbcUtils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.PreparedStatement</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestUpdate</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span><span class="o">{</span>
+				<span class="n">conn</span> <span class="o">=</span> <span class="n">JdbcUtils</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+				<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&#34;update users set name=?,email=? where id=?&#34;</span><span class="o">;</span>
+				<span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+				<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="s">&#34;kuangshen&#34;</span><span class="o">);</span>
+				<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="n">2</span><span class="o">,</span> <span class="s">&#34;24736743@qq.com&#34;</span><span class="o">);</span>
+				<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="n">3</span><span class="o">,</span> <span class="n">2</span><span class="o">);</span>
+				<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">num</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+					<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;更新成功！！&#34;</span><span class="o">);</span>
+				<span class="o">}</span>
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">finally</span><span class="o">{</span>
+				<span class="n">JdbcUtils</span><span class="o">.</span><span class="na">release</span><span class="o">(</span><span class="n">conn</span><span class="o">,</span> <span class="n">st</span><span class="o">,</span> <span class="n">rs</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>4、查询一条数据</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.kuang.lesson03</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.kuang.lesson02.utils.JdbcUtils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.PreparedStatement</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestSelect</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span><span class="o">{</span>
+				<span class="n">conn</span> <span class="o">=</span> <span class="n">JdbcUtils</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+				<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&#34;select * from users where id=?&#34;</span><span class="o">;</span>
+				<span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+				<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span>
+				<span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">()){</span>
+					<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;name&#34;</span><span class="o">));</span>
+				<span class="o">}</span>
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+		<span class="o">}</span><span class="k">finally</span><span class="o">{</span>
+				<span class="n">JdbcUtils</span><span class="o">.</span><span class="na">release</span><span class="o">(</span><span class="n">conn</span><span class="o">,</span> <span class="n">st</span><span class="o">,</span> <span class="n">rs</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>避免SQL注入</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.kuang.lesson03</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.kuang.lesson02.utils.JdbcUtils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.PreparedStatement</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Statement</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SQL注入</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// login(&#34;zhangsan&#34;,&#34;123456&#34;); // 正常登陆
+</span><span class="c1"></span>		<span class="n">login</span><span class="o">(</span><span class="s">&#34;&#39;or &#39;1=1&#34;</span><span class="o">,</span><span class="s">&#34;123456&#34;</span><span class="o">);</span> <span class="c1">// SQL 注入
+</span><span class="c1"></span>	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">login</span><span class="o">(</span><span class="n">String</span> <span class="n">username</span><span class="o">,</span><span class="n">String</span> <span class="n">password</span><span class="o">){</span>
+		<span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span><span class="o">{</span>
+			<span class="n">conn</span> <span class="o">=</span> <span class="n">JdbcUtils</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+			
+			<span class="c1">// 假设其中存在转义字符，就直接忽略，比如说  &#39;  会被直接转义
+</span><span class="c1"></span>			<span class="c1">// select * from users where name=&#39;&#39; or &#39;1=1&#39; and password =&#39;123456&#39;
+</span><span class="c1"></span>			<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&#34;select * from users where name=? and password=?&#34;</span><span class="o">;</span>
+			<span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">username</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="n">2</span><span class="o">,</span><span class="n">password</span><span class="o">);</span>
+			<span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+			<span class="k">while</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">()){</span>
+				<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;name&#34;</span><span class="o">));</span>
+				<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;password&#34;</span><span class="o">));</span>
+				<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;==============&#34;</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">finally</span><span class="o">{</span>
+			<span class="n">JdbcUtils</span><span class="o">.</span><span class="na">release</span><span class="o">(</span><span class="n">conn</span><span class="o">,</span> <span class="n">st</span><span class="o">,</span> <span class="n">rs</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>原理：执行的时候参数会用引号包起来，并把参数中的引号作为转义字符，从而避免了参数也作为条件的一部分</code></pre>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
