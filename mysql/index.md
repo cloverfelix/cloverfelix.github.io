@@ -1276,16 +1276,14 @@ default();
 一样。
 
 **一致性(Consist)**
-- 一个事务可以封装状态改变（除非它是一个只读的）。事务必须始终保持系统处于一致的状态，不
-管在任何给定的时间并发事务有多少。也就是说：如果事务是并发多个，系统也必须如同串行事务
-一样操作。其主要特征是保护性和不变性(Preserving an Invariant)，以转账案例为例，假设有五
+- 一个事务可以封装状态改变（除非它是一个只读的）。事务必须始终保持系统处于一致的状态，不管在任何给定的时间并发事务有多少。也就是说：如果事务是并发多个，系统也必须如同串行事务
+一样操作。其主要特征是`保护性和不变性`(Preserving an Invariant)，以转账案例为例，假设有五
 个账户，每个账户余额是100元，那么五个账户总额是500元，如果在这个5个账户之间同时发生多
 个转账，无论并发多少个，比如在A与B账户之间转账5元，在C与D账户之间转账10元，在B与E之
 间转账15元，五个账户总额也应该还是500元，这就是保护性和不变性。
 
 **隔离性(Isolated)**
-- 隔离状态执行事务，使它们好像是系统在给定时间内执行的唯一操作。如果有两个事务，运行在相
-同的时间内，执行相同的功能，事务的隔离性将确保每一事务在系统中认为只有该事务在使用系
+- 隔离状态执行事务，使它们好像是系统在给定时间内执行的唯一操作。如果有两个事务，运行在相同的时间内，执行相同的功能，事务的隔离性将确保每一事务在系统中认为只有该事务在使用系
 统。这种属性有时称为串行化，为了防止事务操作间的混淆，必须串行化或序列化请求，使得在同
 一时间仅有一个请求用于同一数据。
 
@@ -2463,3 +2461,360 @@ public class SQL注入 {
 ~~~
 
 	原理：执行的时候参数会用引号包起来，并把参数中的引号作为转义字符，从而避免了参数也作为条件的一部分
+	
+## 10.7、事务
+
+> 概念
+
+**事务指逻辑上的一组操作，组成这组操作的各个单元，要不全部成功，要不全部不成功**
+
+> ACID原则
+
+**原子性**
+
+- 整个事务中的所有操作，要么全部完成，要么全部不完成，不可能停滞在中间某个环节。事务在执 行过程中发生错误，会被回滚（ROLLBACK）到事务开始前的状态，就像这个事务从来没有执行过一样
+
+**一致性**
+
+- 一个事务可以封装状态改变（除非它是一个只读的）。事务必须始终保持系统处于一致的状态，不 管在任何给定的时间并发事务有多少。也就是说：如果事务是并发多个，系统也必须如同串行事务 一样操作。其主要特征是保护性和不变性(Preserving an Invariant)，以转账案例为例，假设有五 个账户，每个账户余额是100元，那么五个账户总额是500元，如果在这个5个账户之间同时发生多 个转账，无论并发多少个，比如在A与B账户之间转账5元，在C与D账户之间转账10元，在B与E之 间转账15元，五个账户总额也应该还是500元，这就是保护性和不变性。
+
+**隔离性**
+- 隔离状态执行事务，使它们好像是系统在给定时间内执行的唯一操作。如果有两个事务，运行在相 同的时间内，执行相同的功能，事务的隔离性将确保每一事务在系统中认为只有该事务在使用系 统。这种属性有时称为串行化，为了防止事务操作间的混淆，必须串行化或序列化请求，使得在同 一时间仅有一个请求用于同一数据。
+
+**持久性**
+- 在事务完成以后，该事务对数据库所作的更改便持久的保存在数据库之中，并不会被回滚。
+
+> 隔离性问题
+
+1. 脏读：脏读指一个事务读取了另外一个事务未提交的数据
+2. 不可重复读：不可重复读指在一个事务内读取表中的某一行数据，多次读取结构不同
+3. 虚读(幻读)：虚读(幻读)是指在一个事务内读到了别的事务插入的数据，导致前后读取不一致
+
+> 代码测试
+
+~~~java 
+/*创建账户表*/
+CREATE TABLE account(
+		id INT PRIMARY KEY AUTO_INCREMENT,
+		NAME VARCHAR(40),
+		money FLOAT
+);
+
+/*插入测试数据*/
+insert into account(name,money) values('A',1000);
+insert into account(name,money) values('B',1000);
+insert into account(name,money) values('C',1000);
+~~~
+
+当Jdbc程序向数据库获得一个Connection对象时，默认情况下这个Connection对象会自动向数据库提交在它上面发送的SQL语句。若想关闭这种默认提交方式，让多条SQL在一个事务中执行，可使用下列的JDBC控制事务语句
+
+- Connection.setAutoCommit(false);//开启事务(start transaction)
+- Connection.rollback();//回滚事务(rollback)
+- Connection.commit();//提交事务(commit)
+
+> 程序编写
+
+1、模拟转账成功时的业务场景
+
+~~~Java
+package com.kuang.lesson04;
+import com.kuang.lesson02.utils.JdbcUtils;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+//模拟转账成功时的业务场景
+public class TestTransaction1 {
+	public static void main(String[] args) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try{
+				conn = JdbcUtils.getConnection();
+				conn.setAutoCommit(false);//通知数据库开启事务(start transaction)
+				String sql1 = "update account set money=money-100 where name='A'";
+				st = conn.prepareStatement(sql1);
+				st.executeUpdate();
+				
+				String sql2 = "update account set money=money+100 where name='B'";
+				st = conn.prepareStatement(sql2);
+				st.executeUpdate();
+				conn.commit();//上面的两条SQL执行Update语句成功之后就通知数据库提交事务(commit)
+				System.out.println("成功！！！"); //log4j
+		}catch (Exception e) {
+				e.printStackTrace();
+		}finally{
+				JdbcUtils.release(conn, st, rs);
+		}
+	}
+}
+~~~
+
+2、模拟转账过程中出现异常导致有一部分SQL执行失败后让数据库自动回滚事务
+
+~~~Java
+package com.kuang.lesson04;
+import com.kuang.lesson02.utils.JdbcUtils;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+// 模拟转账过程中出现异常导致有一部分SQL执行失败后让数据库自动回滚事务
+public class TestTransaction2 {
+	public static void main(String[] args) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try{
+				conn = JdbcUtils.getConnection();
+				conn.setAutoCommit(false);//通知数据库开启事务(start transaction)
+				String sql1 = "update account set money=money-100 where name='A'";
+				st = conn.prepareStatement(sql1);
+				st.executeUpdate();
+				
+				//用这句代码模拟执行完SQL1之后程序出现了异常而导致后面的SQL无法正常执行，事务也无法正常提交，此时数据库会自动执行回滚操作
+				int x = 1/0;
+				
+				String sql2 = "update account set money=money+100 where name='B'";
+				st = conn.prepareStatement(sql2);
+				st.executeUpdate();
+				conn.commit();//上面的两条SQL执行Update语句成功之后就通知数据库提交事务(commit)
+				System.out.println("成功！！！");
+		}catch (Exception e) {
+				e.printStackTrace();
+		}finally{
+				JdbcUtils.release(conn, st, rs);
+		}
+	}
+}
+~~~
+
+3、模拟转账过程中出现异常导致有一部分SQL执行失败时手动通知数据库回滚事务
+
+~~~Java
+package com.kuang.lesson04;
+import com.kuang.lesson02.utils.JdbcUtils;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+//模拟转账过程中出现异常导致有一部分SQL执行失败时手动通知数据库回滚事务
+public class TestTransaction3 {
+	public static void main(String[] args) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try{
+				conn = JdbcUtils.getConnection();
+				conn.setAutoCommit(false);//通知数据库开启事务(start transaction)
+				String sql1 = "update account set money=money-100 where name='A'";
+				st = conn.prepareStatement(sql1);
+				st.executeUpdate();
+				
+				//用这句代码模拟执行完SQL1之后程序出现了异常而导致后面的SQL无法正常执行，事务也无法正常提交
+				int x = 1/0;
+				String sql2 = "update account set money=money+100 where name='B'";
+				st = conn.prepareStatement(sql2);
+				st.executeUpdate();
+				conn.commit();//上面的两条SQL执行Update语句成功之后就通知数据库提交事务(commit)
+				System.out.println("成功！！！");
+		}catch (Exception e) {
+				try {
+						//捕获到异常之后手动通知数据库执行回滚事务的操作
+						conn.rollback();
+				} catch (SQLException e1) {
+						e1.printStackTrace();
+				}
+				e.printStackTrace();
+		}finally{
+				JdbcUtils.release(conn, st, rs);
+		}
+	}
+}
+~~~
+
+## 10.8、数据库连接池
+
+用户每次请求都需要向数据库获得链接，而数据库创建连接通常需要消耗相对较大的资源，创建时间也 较长。假设网站一天10万访问量，数据库服务器就需要创建10万次连接，极大的浪费数据库的资源，并 且极易造成数据库服务器内存溢出、拓机。
+
+> 数据库连接池的基本概念
+
+**数据库连接池负责分配,管理和释放数据库连接,它允许应用程序重复使用一个现有的
+数据库连接,而不是重新建立一个。**
+
+数据库连接池在初始化时将创建一定数量的数据库连接放到连接池中, 这些数据库连接的数量是由`最小数据库`连接数来设定的.无论这些数据库连接是否被使用,连接池都将一直保证至少拥有这么多的连接数量. 连接池的最大数据库连接数量限定了这个连接池能占有的最大连接数,当应用程序向连接池请求的连接数`超过最大连接数量时,这些请求将被加入到等待队列中`
+
+数据库连接池的最小连接数和最大连接数的设置要考虑到以下几个因素:
+1. 最小连接数:是连接池一直保持的数据库连接,所以如果应用程序对数据库连接的使用量不大,将会有
+大量的数据库连接资源被浪费.
+2. 最大连接数:是连接池能申请的最大连接数,如果数据库连接请求超过次数,后面的数据库连接请求将
+被加入到等待队列中,这会影响以后的数据库操作
+3. 如果最小连接数与最大连接数相差很大:那么最先连接请求将会获利,之后超过最小连接数量的连接
+请求等价于建立一个新的数据库连接.不过,这些大于最小连接数的数据库连接在使用完不会马上被
+释放,他将被放到连接池中等待重复使用或是空间超时后被释放.
+
+**编写连接池需实现java.sql.DataSource接口。**
+
+> 开源数据库连接池
+
+现在很多WEB服务器(Weblogic, WebSphere, Tomcat)都提供了DataSoruce的实现，即连接池的实现。 **通常我们把DataSource的实现，按其英文含义称之为数据源，数据源中都包含了数据库连接池的实 现。**
+
+也有一些开源组织提供了数据源的独立实现：
+
+- DBCP数据库连接池
+- C3P0数据库连接池
+
+在使用了数据库连接池之后，在项目的实际开发中就`不需要编写连接数据库的代码了`，直接从数据源获得数据库的连接
+
+> DBCP数据源
+
+DBCP 是 Apache 软件基金组织下的开源连接池实现，要使用DBCP数据源，需要应用程序应在系统中增加如下两个 jar 文件：
+- Commons-dbcp.jar：连接池的实现
+- Commons-pool.jar：连接池实现的依赖库
+
+Tomcat 的连接池正是采用该连接池来实现的。该数据库连接池既可以与应用服务器整合使用，也可由
+应用程序独立使用。
+
+测试：
+1. 导入相关jar包
+2. 在类目录下加入dbcp的配置文件：dbcpconfig.properties
+
+~~~sql
+#连接设置
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://localhost:3306/jdbcStudy?
+useUnicode=true&characterEncoding=utf8&useSSL=true
+username=root
+password=123456
+
+#<!-- 初始化连接 -->
+initialSize=10
+#最大连接数量
+maxActive=50
+#<!-- 最大空闲连接 -->
+maxIdle=20
+#<!-- 最小空闲连接 -->
+minIdle=5
+#<!-- 超时等待时间以毫秒为单位 6000毫秒/1000等于60秒 -->
+maxWait=60000
+
+#JDBC驱动建立连接时附带的连接属性属性的格式必须为这样：[属性名=property;]
+#注意："user" 与 "password" 两个属性会被明确地传递，因此这里不需要包含他们。
+connectionProperties=useUnicode=true;characterEncoding=UTF8
+
+#指定由连接池所创建的连接的自动提交（auto-commit）状态。
+defaultAutoCommit=true
+#driver default 指定由连接池所创建的连接的只读（read-only）状态。
+#如果没有设置该值，则“setReadOnly”方法将不被调用。（某些驱动并不支持只读模式，如：Informix）
+defaultReadOnly=
+
+#driver default 指定由连接池所创建的连接的事务级别（TransactionIsolation）。
+#可用值为下列之一：（详情可见javadoc。）NONE,READ_UNCOMMITTED, READ_COMMITTED,REPEATABLE_READ, SERIALIZABLE
+defaultTransactionIsolation=READ_UNCOMMITTED
+~~~
+
+3、编写工具类 JdbcUtils_DBCP
+
+~~~Java
+package com.kuang.datasource.utils;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
+import javax.sql.DataSource;
+import org.apache.commons.dbcp.BasicDataSourceFactory;
+//数据库连接工具类
+public class JdbcUtils_DBCP {
+		/**
+		* 在java中，编写数据库连接池需实现java.sql.DataSource接口，每一种数据库连接池都
+		是DataSource接口的实现
+		* DBCP连接池就是java.sql.DataSource接口的一个具体实现
+		*/
+		private static DataSource ds = null;
+		//在静态代码块中创建数据库连接池
+		static{
+			try{
+					//加载dbcpconfig.properties配置文件
+					InputStream in =JdbcUtils_DBCP.class.getClassLoader().getResourceAsStream("dbcpconfig.properties");
+					Properties prop = new Properties();
+					prop.load(in);
+					//创建数据源
+					ds = BasicDataSourceFactory.createDataSource(prop);
+				}catch (Exception e) {
+					throw new ExceptionInInitializerError(e);
+				}
+		}
+		//从数据源中获取数据库连接
+		public static Connection getConnection() throws SQLException{
+			//从数据源中获取数据库连接
+			return ds.getConnection();
+		}
+		// 释放资源
+		public static void release(Connection conn,Statement st,ResultSet rs){
+			if(rs!=null){
+				try{
+						//关闭存储查询结果的ResultSet对象
+						rs.close();
+				}catch (Exception e) {
+						e.printStackTrace();
+				}
+				rs = null;
+			}
+			if(st!=null){
+				try{
+					//关闭负责执行SQL命令的Statement对象
+					st.close();
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(conn!=null){
+				try{
+					//将Connection连接对象还给数据库连接池
+					conn.close();
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+	}
+}
+~~~
+
+测试类
+
+~~~Java
+package com.kuang.datasource;
+import com.kuang.datasource.utils.JdbcUtils_DBCP;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Date;
+public class DBCPTest {
+	public static void main(String[] args) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try{
+				//获取数据库连接
+				conn = JdbcUtils_DBCP.getConnection();
+				String sql = "insert into users(id,name,password,email,birthday) values(?,?,?,?,?)";
+				st = conn.prepareStatement(sql);
+				
+				st.setInt(1, 5);//id是int类型的
+				st.setString(2, "kuangshen");//name是varchar(字符串类型)
+				st.setString(3, "123");//password是varchar(字符串类型)
+				st.setString(4, "24736743@qq.com");//email是varchar(字符串类型)
+				st.setDate(5, new java.sql.Date(new Date().getTime()));//birthday是date类型
+				int i = st.executeUpdate();
+				if (i>0){
+						System.out.println("插入成功");
+				}
+		}catch (Exception e) {
+				e.printStackTrace();
+		}finally{
+				//释放资源
+				JdbcUtils_DBCP.release(conn, st, rs);
+		}
+	}
+}
+~~~
