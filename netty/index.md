@@ -1125,3 +1125,5 @@ public class GroupChatClient {
 2. mmap需要**4**次上下文切换，**3**次数据拷贝；sendFile需要**3**次上下文切换，**最少2**次数据拷贝
 3. sendFile可以利用DMA方式，减少CPU拷贝，mmap则不能(必须从内核拷贝到Socket缓冲区)
 
+
+## 3.14、零拷贝实例
