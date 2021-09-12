@@ -1127,3 +1127,210 @@ public class GroupChatClient {
 
 
 ## 3.14、零拷贝实例
+
+案例要求：
+1. 使用传统的IO方法传递一个大文件
+2. 使用NIO零拷贝方式传递(transferTo)一个大文件
+3. 看看两种传递方式耗时时间分别是多少
+
+### 3.14.1、传统IO方式
+
+**服务器端：**
+~~~Java
+package com.clover.nio.zerocopy;
+
+import java.io.DataInputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class OldIOServer {
+
+    public static void main(String[] args) throws Exception {
+        ServerSocket serverSocket = new ServerSocket(7001);
+
+        while (true) {
+            Socket socket = serverSocket.accept();
+            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
+
+            try {
+                byte[] byteArray = new byte[4096];
+
+                while (true) {
+                    int readCount = dataInputStream.read(byteArray, 0, byteArray.length);
+
+                    if (-1 == readCount) {
+                        break;
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+}
+~~~
+
+**客户端：**
+~~~Java
+package com.clover.nio.zerocopy;
+
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.Socket;
+
+public class OldIOClient {
+
+    public static void main(String[] args) throws Exception {
+        Socket socket = new Socket("localhost", 7001);
+
+        String fileName = "protoc-3.6.1-win32.zip";
+        InputStream inputStream = new FileInputStream(fileName);
+
+        DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+
+        byte[] buffer = new byte[4096];
+        long readCount;
+        long total = 0;
+
+        long startTime = System.currentTimeMillis();
+
+        while ((readCount = inputStream.read(buffer)) >= 0) {
+            total += readCount;
+            dataOutputStream.write(buffer);
+        }
+
+        System.out.println("发送总字节数： " + total + ", 耗时： " + (System.currentTimeMillis() - startTime));
+
+        dataOutputStream.close();
+        socket.close();
+        inputStream.close();
+    }
+}
+~~~
+
+结果图：
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210911161411.png)
+
+### 3.14.2、transferTo
+
+**服务器端：**
+~~~Java
+package com.clover.nio.zerocopy;
+
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.nio.ByteBuffer;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+
+public class NewIOServer {
+  public static void main(String[] args) throws Exception{
+    ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+    InetSocketAddress inetSocketAddress = new InetSocketAddress(7001);
+    ServerSocket serverSocket = serverSocketChannel.socket();
+    serverSocket.bind(inetSocketAddress);
+
+    //创建Buffer
+    ByteBuffer buffer = ByteBuffer.allocate(4096);
+
+    while (true){
+      SocketChannel socketChannel = serverSocketChannel.accept();
+
+      int readCount = 0;
+
+      while (-1 != readCount){
+        try {
+          readCount = socketChannel.read(buffer);
+        } catch (Exception e){
+          e.printStackTrace();
+        }
+
+        // 将buffer倒带，因为这个buffer这次使用后下次还需使用
+        buffer.rewind();// 使 position = 0 mark=-1 作废
+      }
+    }
+  }
+}
+~~~
+
+**客户端：**
+~~~Java
+package com.clover.nio.zerocopy;
+
+import java.io.FileInputStream;
+import java.net.InetSocketAddress;
+import java.nio.channels.FileChannel;
+import java.nio.channels.SocketChannel;
+
+public class NewIOClient {
+  public static void main(String[] args) throws Exception{
+      SocketChannel socketChannel = SocketChannel.open();
+      socketChannel.connect(new InetSocketAddress("localhost",7001));
+      String filename = "protoc-3.6.1-win32.zip";
+
+      // 得到一个文件channel
+      FileChannel fileChannel = new FileInputStream(filename).getChannel();
+
+      // 准备发送
+      long startTime = System.currentTimeMillis();
+
+      // 在Linux下，一个transferTo 方法就可以完成传输
+      // 在windows下，一次调用transferTo只能发送8M文件，就需要分段传输文件，而且要注意传输位置
+      long transferCount = fileChannel.transferTo(0, fileChannel.size(), socketChannel);
+
+      System.out.println("发送的总的字节数 =" + transferCount + " 耗时："+(System.currentTimeMillis()-startTime));
+
+      // 关闭通道
+      fileChannel.close();
+  }
+}
+~~~
+
+结果图：
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210911161735.png)
+
+## 3.15、Java AIO基本介绍
+1. JDK7引入了Asynchronous I/O，即AIO。在进行I/O编程中，常用到两种模式：Reactor和Proactor。Java 的NIO就是Reactor，当有时间触发时，服务器端得到通知，进行相应的处理
+2. AIO即NIO2.0，叫做异步不阻塞的IO。即AIO引入异步通道的概念，采用了Proactor模式，简化了程序编写，有效的请求才启动线程，它的特点时先由操作系统完成后才通知服务端程序启动线程区处理，一般适用于连接数较多且连接时间较长的应用
+3. 目前AIO还没有广泛应用，Netty也是基于NIO，而不是AIO，因此我们就不详解AIO了，有兴趣的同学可以参考[Java新一代网络编程模型AIO原理及Linux系统AIO介绍](http://www.52im.net/thread-306-1-1.html)
+
+## 3.16、BIO、NIO、AIO对比表
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210911164234.png)
+
+**举例说明**
+1. **同步阻塞**：到理发店理发，就一直等理发师，知道轮到自己理发
+2. **同步非阻塞**：到理发店理发，发现前面有其它人理发，给理发师说下，先干其它事情，一会过来看是否轮到自己
+3. **异步非阻塞**：给理发师打电话，让理发师上门服务，自己干其它事情，理发师自己来家给你理发
+
+# 4、Netty概述
+
+## 4.1、原生NIO存在的问题
+1. NIO的类库和API复杂，使用麻烦：需要熟练掌握Selector、ServerSocketChannel、SocketChannel、ByteBuffer等
+2. 需要具备其它的额外技能：要熟悉Java多线程编程，因为NIO编程涉及到Reactor模式，你必须对多线程和网络编程非常熟悉，才能编写出高直连的NIO程序
+3. 开发工作量和难度都非常大：例如客户端面临断连重连、网络闪断、半包读写、失败缓存、网络拥塞和异常流的处理等等
+4. JDK NIO的BUG：例如臭名昭著的 Epoll Bug，它会导致Selector空轮询，最终导致CPU100%。直到JDK 1.7 版本该问题仍旧存在，没有被根本解决
+
+## 4.2、Netty官网说明
+
+[Netty官网](https://netty.io/)
+
+Netty is _an asynchronous event-driven network application framework_  
+for rapid development of maintainable high performance protocol servers & clients.
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210911172202.png)
+
+## 4.3、Netty的优点
+
+Netty对JDK自带的NIO的API进行了封装，解决了上述问题
+
+1. 设计优雅：适用于各种传输类型的统一API阻塞和非阻塞Socket；基于灵活且可扩展的事件模型，可以清晰的分离关注点；高度可定制的线程模型，单线程，一个或多个线程池
+2. 使用方便：详细记录的Javadoc，用户指南和实例；没有其它依赖项，JDK 5(Netty 3.x)或6 (Netty 4.x)就足够了
+3. **高性能、吞吐量更高：延迟耕地；减少资源消耗；最小化不必要的内存复制**
+4. 安全：完整的SSL/TLS和StartTLS支持
+5. 社区活跃、不断更新、版本迭代周期端，发现的Bug可以被及时修复，同时，更多的性功能会被加入
+
+## 4.4、版本说明
+1. netty版本分别为netty3.x、netty4.x和netty5.x
+2. 因为netty5出现重大Bug，已经被官网废弃了，目前推荐使用的是Netty4.x的稳定版本
+3. 目前在官网可下载的版本netty3.x、netty4.0.x和netty4.1.x
+4. [Netty下载地址](https://github.com/netty/netty/releases)
