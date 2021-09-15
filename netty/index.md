@@ -2016,6 +2016,6 @@ implements Channel InboundHandler {
 	}
 ~~~
 
-
+## 6.6、Pipeline
 
 
