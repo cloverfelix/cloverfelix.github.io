@@ -1501,7 +1501,9 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210915100204.png)
 
-	ChannelFuture 在Netty中的所有的I/O操作都是异步执行的，这就意味着任何一个I/O操作会立刻返回，不保证在调用结束的时候操作会执行完成。因此，会返回一个ChannelFuture的实例，通过这个实例可以获取当前I/O操作的状态。
+	ChannelFuture 在Netty中的所有的I/O操作都是异步执行的，这就意味着任何一个I/O操作会立刻返
+	回，不保证在调用结束的时候操作会执行完成。因此，会返回一个ChannelFuture的实例，通过这个实
+	例可以获取当前I/O操作的状态。
 
 **服务器端：**
 ~~~Java
@@ -1738,8 +1740,9 @@ ctx.channel()
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210915111616.png)
 3. 非当前Reactor线程调用Channel的各种方法
 
-		例如在推送系统的业务线程里面，根据用户的表示，找到对应的Channel引用，然后调用Write类方法向该用户推送消息，就会进入到这种场景。最终的Write会提交到任务队列中后被异步消费
-		
+		例如在推送系统的业务线程里面，根据用户的表示，找到对应的Channel引用，然后调用Write类方法
+		向该用户推送消息，就会进入到这种场景。最终的Write会提交到任务队列中后被异步消费
+	
 方案再说明：
 1. Netty抽象出两组**线程池**，BossGroup专门负责接收客户端连接，WorkerGroup专门负责网络读写操作。
 2. NioEventLoop表示一个不断循环执行处理任务的线程，每个NioEventLoop都有一个selector，用于监听绑定在其上的socket网络通道。
@@ -1792,7 +1795,8 @@ cf.addListener(new ChannelFutureListener() {
 });
 ~~~
 
-	小结：相比传统阻塞I/O，执行I/O操作后线程会被阻塞住，知道操作完成；异步处理的好处是不会造成线程阻塞，线程在I/O操作期间可以执行别的程序，在高并发情况下会更稳定和更高的吞吐量
+	小结：相比传统阻塞I/O，执行I/O操作后线程会被阻塞住，知道操作完成；异步处理的好处是不会造成
+	线程阻塞，线程在I/O操作期间可以执行别的程序，在高并发情况下会更稳定和更高的吞吐量
 	
 ## 5.10、快速入门实例-HTTP服务
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210915183154.png)
@@ -2016,6 +2020,157 @@ implements Channel InboundHandler {
 	}
 ~~~
 
-## 6.6、Pipeline
+## 6.6、Pipeline和ChannelPipeline 
+
+**ChannelPipeline 是一个重点：**
+
+1. ChannelPipeline 是一个 Handler 的集合，它负责处理和拦截 inbound 或者 outbound 的事件和操作，相当于一个贯穿 Netty 的链。(**也可以这样理解：ChannelPipeline 是保存 ChannelHandler 的 List，用于处理或拦截 Channel 的入站事件和出站操作**)
+2. ChannelPipeline 实现了一种高级形式的拦截过滤器模式，使用户可以完全控制事件的处理方式，以及 Channel 中各个的 ChannelHandler 如何相互交互
+3. 在 Netty 中每个 Channel 都有且仅有一个 ChannelPipeline 与之对应，它们的组成关系如下
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916102025.png)
+	- 一个 Channel 包含了一个 ChannelPipeline，而 ChannelPipeline 中又维护了一个由 ChannelHandlerContext 组成的双向链表，并且每个 ChannelHandlerContext 中又关联着一个 ChannelHandler
+	- 入站事件和出站事件在一个双向链表中，`入站事件`会**从链表 head 往后传递**到最后一个入站的 handler，`出站事件`会**从链表 tail 往前传递**到最前一个出站的 handler，两种类型的 handler 互不干扰
+ 4. 常用方法
+	- Channel Pipeline addFirst(ChannelHandler... handlers)，把一个业务处理类（handler）添加到链中的第一个位置
+	- Channel Pipeline addLast(ChannelHandler... handlers)，把一个业务处理类（handler）添加到链中的最后一个位置
+
+## 6.7、ChannelHandlerContext
+1. 保存 Channel 相关的所有上下文信息，同时关联一个 ChannelHandler 对象
+2. 即ChannelHandlerContext 中包含一个具体的事件处理器 ChannelHandler ， 同 时ChannelHandlerContext 中也绑定了对应的 pipeline 和 Channel 的信息，方便对 ChannelHandler进行调用
+3. 常用方法
+	- ChannelFuture close()，关闭通道
+	- ChannelOutboundInvoker flush()，刷新
+	- ChannelFuture writeAndFlush(Object msg) ， 将数据写到ChannelPipeline中当前ChannelHandler 的下一个 ChannelHandler 开始处理 **(出站)**
+
+ 
+## 6.8、ChannelOption
+1. Netty 在创建 Channel 实例后,一般都需要设置 ChannelOption 参数
+2. ChannelOption 参数如下:
+	- **ChannelOption.SO_BACKLOG**
+		- 对应TCP/IP协议 listen 函数中的 backlog 参数，用来初始化服务器可连接队列大小。服务端处理客户端连接请求是顺序处理的，所以同一时间只能处理一个客户端连接。多个客户端来的时候，服务端将不能处理的客户端连接请求放在队列中等待处理，backlog参数指定了队列的大小
+	- **ChannelOption.SO_KEEPALIVE**
+		- 一直保持连接活动状态
+
+## 6.9、EventLoopGroup 和其实现类 NioEventLoopGroup
+1. EventLoopGroup是一组 EventLoop 的抽象，Netty为了更好的利用多核 CPU 资源，一般会有多个 EventLoop 同时工作，每个EventLoop维护着一个Selector实例
+2. EventLoopGroup 提供 next 接口，可以从组里面按照一定规则获取其中一个 EventLoop来处理任务。在 Netty 服务器端编程中，我们一般都需要提供两个 EventLoopGroup，例如：BossEventLoopGroup 和 WorkerEventLoopGroup
+3. 通常一个服务端口即一个 ServerSocketChannel对应一个Selector 和一个EventLoop线程。BossEventLoop 负责接收客户端的连接并将 SocketChannel 交给 WorkerEventLoopGroup 来进行 IO 处理，如下图所示
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916111322.png)
+	- BossEventLoopGroup 通常是一个单线程的 EventLoop，Event Loop 维护着一个注册了ServerSocketChannel 的 Selector 实例，BossEventLoop 不断轮询Selector 将连接事件分离出来
+	- 通常是OP_ACCEPT 事件，然后将接收到的 SocketChannel 交给 WorkerEventLoopGroup
+	- WorkerEventLoopGroup 会由 next 选择其中一个 EventLoop来将这个SocketChannel 注册到其维护的Selector 并对其后续的 IO 事件进行处理
+4. 常用方法
+	- public NioEventLoopGroup()，构造方法
+	- public Future<> shutdownGracefully()，断开连接，关闭线程
+
+ ## 6.10、Unpooled类
+ 1. Netty 提供一个专门用来`操作缓冲区`(**即Netty的数据容器**)的工具类
+ 2. 常用方法如下所示
+	~~~java 
+	//通过给定的数据和字符编码返回一个 ByteBuf 对象（类似于 NIO 中的 ByteBuffer 但有区别）
+	public static ByteBuf copiedBuffer(CharSequence string, Charset charset)
+	~~~
+ 3. 举例说明Unpooled 获取 Netty的数据容器ByteBuf 的基本使用 `(案例说明)`
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916215409.png)
+
+**实例代码一**
+~~~Java
+package com.clover.netty.buf;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+
+public class NettyByteBuf01 {
+  public static void main(String[] args) {
+      // 先创建一个ByteBuf
+      /*
+       * 说明
+       * 1.创建对象，该对象包含一个数组array，是一个byte[10]类型的数组
+       * 2.在netty的buffer中，不需要使用flip反转
+       *    底层维护了 readerIndex 和 writerIndex
+       * 3.通过 readerIndex 和 writerIndex 和 capacity ，将buffer分成三个区域
+       * 0---readerIndex，已经读取的区域
+       * readerIndex --- writerIndex，可以读取的区域
+       * writerIndex --- 0，可写的区域
+       */
+      ByteBuf buf = Unpooled.buffer(10);
+
+      for (int i = 0; i < 10; i++){
+          buf.writeByte(i);
+      }
+
+      System.out.println("capacity=" + buf.capacity());
+
+    // 输出
+    //      for (int i = 0; i < buf.capacity(); i++){
+    //          // 这种方法是通过下标获取对应的值，不会使readerIndex改变值
+    //          System.out.println(buf.getByte(i));
+    //      }
+
+      // 改变readerIndex的输出方式
+      for (int i = 0;i < buf.capacity(); i++) {
+          System.out.println(buf.readByte());
+      }
+  }
+}
+~~~
+
+**实例代码二**
+
+~~~Java
+package com.clover.netty.buf;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.util.CharsetUtil;
+
+import java.nio.charset.Charset;
+
+public class NettyByteBuf02 {
+  public static void main(String[] args) {
+      //创建ByteBuf
+      /*
+       * 说明
+       * 第一个参数代表写入内容，第二个代表内容的字符集编码
+       */
+      ByteBuf buf = Unpooled.copiedBuffer("hello,world!", Charset.forName("utf-8"));
+
+      // 使用相关的方法
+      if (buf.hasArray()){
+          // 获取buf的数组
+          byte[] content = buf.array();
+
+          System.out.println(new String(content,CharsetUtil.UTF_8));
+          System.out.println("bytebuf=" + buf);
+
+          // 获取数组位移偏移量
+          System.out.println(buf.arrayOffset());// 0
+          System.out.println(buf.readerIndex());// 0
+          System.out.println(buf.writerIndex());// 12
+          System.out.println(buf.capacity());// 36
+
+          //System.out.println(buf.readByte());// 104 这是h代表的ASCII码
+          System.out.println(buf.getByte(0));// 104 这是h代表的ASCII码
+
+          int len = buf.readableBytes();// 获取可读字节数
+          System.out.println("len=" + len);// 如果在前面没有使用readbyte读取数据，则不会对可读字节产生影响，如果使用就会有影响
+
+          // 使用for循环取出各个字节
+          for (int i = 0; i < len; i++) {
+              System.out.println((char) buf.getByte(i));
+          }
+
+          // 按照某个范围读取
+          System.out.println(buf.getCharSequence(0,4,Charset.forName("utf-8")));
+          System.out.println(buf.getCharSequence(4,6,Charset.forName("utf-8")));
+      }
+  }
+}
+~~~
+
+
+
+
+
 
 

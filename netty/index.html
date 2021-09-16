@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/netty\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Netty","wordcount":  26063 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Netty","wordcount":  28199 ,
         "url": "https:\/\/cloverfelix.github.io\/netty\/","datePublished": "2021-07-04T16:44:07+08:00","dateModified": "2021-07-04T16:44:07+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Netty</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/netty/"><i class="far fa-folder fa-fw"></i>Netty</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 26063 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 53 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 28199 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 57 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -246,7 +246,11 @@
     <li><a href="#63channel">6.3、Channel</a></li>
     <li><a href="#64selector">6.4、Selector</a></li>
     <li><a href="#65channelhandler-及其实现类">6.5、ChannelHandler 及其实现类</a></li>
-    <li><a href="#66pipeline">6.6、Pipeline</a></li>
+    <li><a href="#66pipeline和channelpipeline">6.6、Pipeline和ChannelPipeline</a></li>
+    <li><a href="#67channelhandlercontext">6.7、ChannelHandlerContext</a></li>
+    <li><a href="#68channeloption">6.8、ChannelOption</a></li>
+    <li><a href="#69eventloopgroup-和其实现类-nioeventloopgroup">6.9、EventLoopGroup 和其实现类 NioEventLoopGroup</a></li>
+    <li><a href="#610unpooled类">6.10、Unpooled类</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="1netty的介绍">1、Netty的介绍</h1>
@@ -3028,7 +3032,9 @@ for rapid development of maintainable high performance protocol servers &amp; cl
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210915100204.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210915100204.png" /></p>
-<pre><code>ChannelFuture 在Netty中的所有的I/O操作都是异步执行的，这就意味着任何一个I/O操作会立刻返回，不保证在调用结束的时候操作会执行完成。因此，会返回一个ChannelFuture的实例，通过这个实例可以获取当前I/O操作的状态。
+<pre><code>ChannelFuture 在Netty中的所有的I/O操作都是异步执行的，这就意味着任何一个I/O操作会立刻返
+回，不保证在调用结束的时候操作会执行完成。因此，会返回一个ChannelFuture的实例，通过这个实
+例可以获取当前I/O操作的状态。
 </code></pre>
 <p><strong>服务器端：</strong></p>
 <div class="highlight"><div class="chroma">
@@ -3508,7 +3514,8 @@ for rapid development of maintainable high performance protocol servers &amp; cl
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210915111616.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210915111616.png" />
 3. 非当前Reactor线程调用Channel的各种方法</p>
-<pre><code>    例如在推送系统的业务线程里面，根据用户的表示，找到对应的Channel引用，然后调用Write类方法向该用户推送消息，就会进入到这种场景。最终的Write会提交到任务队列中后被异步消费
+<pre><code>    例如在推送系统的业务线程里面，根据用户的表示，找到对应的Channel引用，然后调用Write类方法
+	向该用户推送消息，就会进入到这种场景。最终的Write会提交到任务队列中后被异步消费
 </code></pre>
 <p>方案再说明：</p>
 <ol>
@@ -3587,7 +3594,8 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 <span class="o">});</span>
 </code></pre></td></tr></table>
 </div>
-</div><pre><code>小结：相比传统阻塞I/O，执行I/O操作后线程会被阻塞住，知道操作完成；异步处理的好处是不会造成线程阻塞，线程在I/O操作期间可以执行别的程序，在高并发情况下会更稳定和更高的吞吐量
+</div><pre><code>小结：相比传统阻塞I/O，执行I/O操作后线程会被阻塞住，知道操作完成；异步处理的好处是不会造成
+线程阻塞，线程在I/O操作期间可以执行别的程序，在高并发情况下会更稳定和更高的吞吐量
 </code></pre>
 <h2 id="510快速入门实例-http服务">5.10、快速入门实例-HTTP服务</h2>
 <p><img
@@ -4010,8 +4018,300 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 	<span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="66pipeline">6.6、Pipeline</h2>
-</div><div class="post-footer" id="post-footer">
+</div><h2 id="66pipeline和channelpipeline">6.6、Pipeline和ChannelPipeline</h2>
+<p><strong>ChannelPipeline 是一个重点：</strong></p>
+<ol>
+<li>ChannelPipeline 是一个 Handler 的集合，它负责处理和拦截 inbound 或者 outbound 的事件和操作，相当于一个贯穿 Netty 的链。(<strong>也可以这样理解：ChannelPipeline 是保存 ChannelHandler 的 List，用于处理或拦截 Channel 的入站事件和出站操作</strong>)</li>
+<li>ChannelPipeline 实现了一种高级形式的拦截过滤器模式，使用户可以完全控制事件的处理方式，以及 Channel 中各个的 ChannelHandler 如何相互交互</li>
+<li>在 Netty 中每个 Channel 都有且仅有一个 ChannelPipeline 与之对应，它们的组成关系如下
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916102025.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916102025.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916102025.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916102025.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916102025.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916102025.png" />
+<ul>
+<li>一个 Channel 包含了一个 ChannelPipeline，而 ChannelPipeline 中又维护了一个由 ChannelHandlerContext 组成的双向链表，并且每个 ChannelHandlerContext 中又关联着一个 ChannelHandler</li>
+<li>入站事件和出站事件在一个双向链表中，<code>入站事件</code>会<strong>从链表 head 往后传递</strong>到最后一个入站的 handler，<code>出站事件</code>会<strong>从链表 tail 往前传递</strong>到最前一个出站的 handler，两种类型的 handler 互不干扰</li>
+</ul>
+</li>
+<li>常用方法
+<ul>
+<li>Channel Pipeline addFirst(ChannelHandler&hellip; handlers)，把一个业务处理类（handler）添加到链中的第一个位置</li>
+<li>Channel Pipeline addLast(ChannelHandler&hellip; handlers)，把一个业务处理类（handler）添加到链中的最后一个位置</li>
+</ul>
+</li>
+</ol>
+<h2 id="67channelhandlercontext">6.7、ChannelHandlerContext</h2>
+<ol>
+<li>保存 Channel 相关的所有上下文信息，同时关联一个 ChannelHandler 对象</li>
+<li>即ChannelHandlerContext 中包含一个具体的事件处理器 ChannelHandler ， 同 时ChannelHandlerContext 中也绑定了对应的 pipeline 和 Channel 的信息，方便对 ChannelHandler进行调用</li>
+<li>常用方法
+<ul>
+<li>ChannelFuture close()，关闭通道</li>
+<li>ChannelOutboundInvoker flush()，刷新</li>
+<li>ChannelFuture writeAndFlush(Object msg) ， 将数据写到ChannelPipeline中当前ChannelHandler 的下一个 ChannelHandler 开始处理 <strong>(出站)</strong></li>
+</ul>
+</li>
+</ol>
+<h2 id="68channeloption">6.8、ChannelOption</h2>
+<ol>
+<li>Netty 在创建 Channel 实例后,一般都需要设置 ChannelOption 参数</li>
+<li>ChannelOption 参数如下:
+<ul>
+<li><strong>ChannelOption.SO_BACKLOG</strong>
+<ul>
+<li>对应TCP/IP协议 listen 函数中的 backlog 参数，用来初始化服务器可连接队列大小。服务端处理客户端连接请求是顺序处理的，所以同一时间只能处理一个客户端连接。多个客户端来的时候，服务端将不能处理的客户端连接请求放在队列中等待处理，backlog参数指定了队列的大小</li>
+</ul>
+</li>
+<li><strong>ChannelOption.SO_KEEPALIVE</strong>
+<ul>
+<li>一直保持连接活动状态</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="69eventloopgroup-和其实现类-nioeventloopgroup">6.9、EventLoopGroup 和其实现类 NioEventLoopGroup</h2>
+<ol>
+<li>EventLoopGroup是一组 EventLoop 的抽象，Netty为了更好的利用多核 CPU 资源，一般会有多个 EventLoop 同时工作，每个EventLoop维护着一个Selector实例</li>
+<li>EventLoopGroup 提供 next 接口，可以从组里面按照一定规则获取其中一个 EventLoop来处理任务。在 Netty 服务器端编程中，我们一般都需要提供两个 EventLoopGroup，例如：BossEventLoopGroup 和 WorkerEventLoopGroup</li>
+<li>通常一个服务端口即一个 ServerSocketChannel对应一个Selector 和一个EventLoop线程。BossEventLoop 负责接收客户端的连接并将 SocketChannel 交给 WorkerEventLoopGroup 来进行 IO 处理，如下图所示
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916111322.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916111322.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916111322.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916111322.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916111322.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916111322.png" />
+<ul>
+<li>BossEventLoopGroup 通常是一个单线程的 EventLoop，Event Loop 维护着一个注册了ServerSocketChannel 的 Selector 实例，BossEventLoop 不断轮询Selector 将连接事件分离出来</li>
+<li>通常是OP_ACCEPT 事件，然后将接收到的 SocketChannel 交给 WorkerEventLoopGroup</li>
+<li>WorkerEventLoopGroup 会由 next 选择其中一个 EventLoop来将这个SocketChannel 注册到其维护的Selector 并对其后续的 IO 事件进行处理</li>
+</ul>
+</li>
+<li>常用方法
+<ul>
+<li>public NioEventLoopGroup()，构造方法</li>
+<li>public Future&lt;&gt; shutdownGracefully()，断开连接，关闭线程</li>
+</ul>
+</li>
+</ol>
+<h2 id="610unpooled类">6.10、Unpooled类</h2>
+<ol>
+<li>Netty 提供一个专门用来<code>操作缓冲区</code>(<strong>即Netty的数据容器</strong>)的工具类</li>
+<li>常用方法如下所示
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//通过给定的数据和字符编码返回一个 ByteBuf 对象（类似于 NIO 中的 ByteBuffer 但有区别）
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">static</span> <span class="n">ByteBuf</span> <span class="nf">copiedBuffer</span><span class="o">(</span><span class="n">CharSequence</span> <span class="n">string</span><span class="o">,</span> <span class="n">Charset</span> <span class="n">charset</span><span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>举例说明Unpooled 获取 Netty的数据容器ByteBuf 的基本使用 <code>(案例说明)</code>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916215409.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916215409.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916215409.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916215409.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916215409.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916215409.png" /></li>
+</ol>
+<p><strong>实例代码一</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.netty.buf</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.netty.buffer.ByteBuf</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.buffer.Unpooled</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NettyByteBuf01</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+      <span class="c1">// 先创建一个ByteBuf
+</span><span class="c1"></span>      <span class="cm">/*
+</span><span class="cm">       * 说明
+</span><span class="cm">       * 1.创建对象，该对象包含一个数组array，是一个byte[10]类型的数组
+</span><span class="cm">       * 2.在netty的buffer中，不需要使用flip反转
+</span><span class="cm">       *    底层维护了 readerIndex 和 writerIndex
+</span><span class="cm">       * 3.通过 readerIndex 和 writerIndex 和 capacity ，将buffer分成三个区域
+</span><span class="cm">       * 0---readerIndex，已经读取的区域
+</span><span class="cm">       * readerIndex --- writerIndex，可以读取的区域
+</span><span class="cm">       * writerIndex --- 0，可写的区域
+</span><span class="cm">       */</span>
+      <span class="n">ByteBuf</span> <span class="n">buf</span> <span class="o">=</span> <span class="n">Unpooled</span><span class="o">.</span><span class="na">buffer</span><span class="o">(</span><span class="n">10</span><span class="o">);</span>
+
+      <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+          <span class="n">buf</span><span class="o">.</span><span class="na">writeByte</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+      <span class="o">}</span>
+
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;capacity=&#34;</span> <span class="o">+</span> <span class="n">buf</span><span class="o">.</span><span class="na">capacity</span><span class="o">());</span>
+
+    <span class="c1">// 输出
+</span><span class="c1"></span>    <span class="c1">//      for (int i = 0; i &lt; buf.capacity(); i++){
+</span><span class="c1"></span>    <span class="c1">//          // 这种方法是通过下标获取对应的值，不会使readerIndex改变值
+</span><span class="c1"></span>    <span class="c1">//          System.out.println(buf.getByte(i));
+</span><span class="c1"></span>    <span class="c1">//      }
+</span><span class="c1"></span>
+      <span class="c1">// 改变readerIndex的输出方式
+</span><span class="c1"></span>      <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">buf</span><span class="o">.</span><span class="na">capacity</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">buf</span><span class="o">.</span><span class="na">readByte</span><span class="o">());</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>实例代码二</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.netty.buf</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.netty.buffer.ByteBuf</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.buffer.Unpooled</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.util.CharsetUtil</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.nio.charset.Charset</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NettyByteBuf02</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+      <span class="c1">//创建ByteBuf
+</span><span class="c1"></span>      <span class="cm">/*
+</span><span class="cm">       * 说明
+</span><span class="cm">       * 第一个参数代表写入内容，第二个代表内容的字符集编码
+</span><span class="cm">       */</span>
+      <span class="n">ByteBuf</span> <span class="n">buf</span> <span class="o">=</span> <span class="n">Unpooled</span><span class="o">.</span><span class="na">copiedBuffer</span><span class="o">(</span><span class="s">&#34;hello,world!&#34;</span><span class="o">,</span> <span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&#34;utf-8&#34;</span><span class="o">));</span>
+
+      <span class="c1">// 使用相关的方法
+</span><span class="c1"></span>      <span class="k">if</span> <span class="o">(</span><span class="n">buf</span><span class="o">.</span><span class="na">hasArray</span><span class="o">()){</span>
+          <span class="c1">// 获取buf的数组
+</span><span class="c1"></span>          <span class="kt">byte</span><span class="o">[]</span> <span class="n">content</span> <span class="o">=</span> <span class="n">buf</span><span class="o">.</span><span class="na">array</span><span class="o">();</span>
+
+          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">content</span><span class="o">,</span><span class="n">CharsetUtil</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">));</span>
+          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;bytebuf=&#34;</span> <span class="o">+</span> <span class="n">buf</span><span class="o">);</span>
+
+          <span class="c1">// 获取数组位移偏移量
+</span><span class="c1"></span>          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">buf</span><span class="o">.</span><span class="na">arrayOffset</span><span class="o">());</span><span class="c1">// 0
+</span><span class="c1"></span>          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">buf</span><span class="o">.</span><span class="na">readerIndex</span><span class="o">());</span><span class="c1">// 0
+</span><span class="c1"></span>          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">buf</span><span class="o">.</span><span class="na">writerIndex</span><span class="o">());</span><span class="c1">// 12
+</span><span class="c1"></span>          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">buf</span><span class="o">.</span><span class="na">capacity</span><span class="o">());</span><span class="c1">// 36
+</span><span class="c1"></span>
+          <span class="c1">//System.out.println(buf.readByte());// 104 这是h代表的ASCII码
+</span><span class="c1"></span>          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">buf</span><span class="o">.</span><span class="na">getByte</span><span class="o">(</span><span class="n">0</span><span class="o">));</span><span class="c1">// 104 这是h代表的ASCII码
+</span><span class="c1"></span>
+          <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">buf</span><span class="o">.</span><span class="na">readableBytes</span><span class="o">();</span><span class="c1">// 获取可读字节数
+</span><span class="c1"></span>          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;len=&#34;</span> <span class="o">+</span> <span class="n">len</span><span class="o">);</span><span class="c1">// 如果在前面没有使用readbyte读取数据，则不会对可读字节产生影响，如果使用就会有影响
+</span><span class="c1"></span>
+          <span class="c1">// 使用for循环取出各个字节
+</span><span class="c1"></span>          <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+              <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">((</span><span class="kt">char</span><span class="o">)</span> <span class="n">buf</span><span class="o">.</span><span class="na">getByte</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+          <span class="o">}</span>
+
+          <span class="c1">// 按照某个范围读取
+</span><span class="c1"></span>          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">buf</span><span class="o">.</span><span class="na">getCharSequence</span><span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&#34;utf-8&#34;</span><span class="o">)));</span>
+          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">buf</span><span class="o">.</span><span class="na">getCharSequence</span><span class="o">(</span><span class="n">4</span><span class="o">,</span><span class="n">6</span><span class="o">,</span><span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&#34;utf-8&#34;</span><span class="o">)));</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
