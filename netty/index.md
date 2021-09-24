@@ -6621,4 +6621,4 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 }
 ~~~
 
-# 8、Netty编解码器和handler的调用机制
+
