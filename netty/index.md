@@ -32,13 +32,13 @@
 
 ## 2.2、I/O模型适用场景
 
-1. BIO方式适用于连接数目比较小且固定的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4以前唯一选择，但是程序简单易理解。
+1. BIO方式适用于**连接数目比较小且固定**的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4以前唯一选择，但是程序简单易理解。
 2. NIO方式适用于**连接数目多且连接比较短**(轻操作)的架构，比如聊天服务器，弹幕系统，服务器间通讯等。编程比较复杂，JDK1.4开始支持。
 3. AIO方式适用于**连接数目多且连接比较长**(重操作)的架构，比如相册服务器，充分调用操作系统参与并发操作，编程比较复杂，JDK7开始支持。
 
 ## 2.3、BIO基本介绍
 
-1. Java BIO就是**传统的java io编程**，其相关的类和接口再java.io
+1. Java BIO就是**传统的java io编程**，其相关的类和接口在java.io
 2. BIO(blocking I/O)：**同步阻塞**，服务器实现模式为一个连接对应一个线程，即客户端有连接请求时服务端就需要启动一个线程进行处理，如果这个连接不做任何事情会造成不必要的线程开销，可以通过**线程池机制**改善(实现多个客户连接服务器)
 
 ## 2.4、BIO工作机制
@@ -153,7 +153,7 @@ public class BIOServer {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210907184240.png)
 
-有连接的就会开在`read`处，但是当你发送数据后又会阻塞再read处，这就会使性能很低
+有连接的就会卡在`read`处，但是当你发送数据后又会阻塞再read处，这就会使性能很低
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210907184527.png)
 
@@ -172,7 +172,7 @@ public class BIOServer {
 3. NIO有三大核心部分：**Channel(通道)**，**Buffer(缓冲区)**，**Selector(选择器)**
 4. NIO是面向**缓冲区，或者面向块**编程的。数据读取到一个它稍后处理的缓冲区，需要时可在缓冲区中前后移动，这就增加了处理过程中的灵活性，使用它可以提供**非阻塞式**的高伸缩性网络。
 5. Java NIO的非阻塞模式，使一个线程从某通道发送请求或者读取数据，但是它仅能得到目前可用的数据，如果目前没有数据可用时，就什么都不会获取，而**不是保持线程阻塞**，所以直至数据变的可以读取之前，该线程可以继续做其它的事情。非阻塞写也是如此，一个线程请求写入一些数据到某通道，但不需要等待它完全写入，这个线程同时可以去做别的事情
-6. 通俗理解：NIO时可以做到用一个线程来处理多个操作的。假设有10000个请求过来，根据实际情况，可以分配50或者100个线程来处理。不像之前的阻塞IO那样，非得分配10000个。
+6. 通俗理解：NIO是可以做到用一个线程来处理多个操作的。假设有10000个请求过来，根据实际情况，可以分配50或者100个线程来处理。不像之前的阻塞IO那样，非得分配10000个。
 7. HTTP2.0使用了**多路复用技术**，做到同一个连接并发处理多个请求，而且并发请求的数量比HTTP1.1大了好几个数量级。
 
 ## 3.2、NIO和BIO的比较
@@ -581,6 +581,9 @@ public class ScatteringAndGatheringTest {
 
           // 将所有的buffer进行clear
           Arrays.asList(byteBuffers).forEach(buffer -> {
+              // 如果数据是全部读取完毕，接着再次往buffer写数据，这时position是上次读取位置，limit是最大可读取位置，全部读取完成position=limit
+              // 那么直接往里面写数据会报错，因为position必须小于limit，而我们也想从0开始存储，并且需要让最大存储限制limit应该是容量capacity
+              // 那我们就需要手动修改position和limit的值。让position=0，而limit=capacity，buffer提供了这个方法clear()
               buffer.clear();
           });
 
@@ -588,6 +591,7 @@ public class ScatteringAndGatheringTest {
       }
   }
 }
+
 ~~~
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210909171320.png)
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210909171205.png)
@@ -606,8 +610,8 @@ public class ScatteringAndGatheringTest {
 **特点再说明：**
 1. Netty的IO线程NioEventLoop聚合了Selector(选择器，也叫多路复用器),可以同时并发处理成百上千个客户端的连接
 2. 当线程从某客户端Socket通道进行读写数据时，若没有数据可读写时，该线程可以进行其它任务。
-3. 线程通常将非阻塞IO的空闲事件用于在其它通道上执行IO操作，所以单独的线程可以管理多个输入和输出通道
-4. 由于读写操作都是非阻塞的，这就可以充分提示IO线程的运行效率，避免由于频繁IO阻塞导致的线程挂起
+3. 线程通常将非阻塞IO的空闲时间用于在其它通道上执行IO操作，所以单独的线程可以管理多个输入和输出通道
+4. 由于读写操作都是非阻塞的，这就可以充分提升IO线程的运行效率，避免由于频繁IO阻塞导致的线程挂起
 5. 一个IO线程可以并发处理N个客户端连接和读写操作，这从根本上解决了传统同步阻塞IO，一个连接一个线程模型，架构的性能、弹性伸缩能力和可靠性都得到了极大的提升。
 
 ### 3.6.3、Selector类相关的方法
@@ -691,7 +695,7 @@ public class NIOServer {
           // 3.通过 selectionKeys 反向获取通道
           Set<SelectionKey> selectionKeys = selector.selectedKeys();
 
-          // 遍历 et<SelectionKey> ，使用迭代器遍历
+          // 遍历<SelectionKey> ，使用迭代器遍历
           Iterator<SelectionKey> keyIterator = selectionKeys.iterator();
 
           while (keyIterator.hasNext()){
@@ -701,7 +705,7 @@ public class NIOServer {
               //根据key对应的通道发生的事件做相应的处理
               if (key.isAcceptable()){
                   // 如果是 OP_ACCEPT，有新的客户端连接
-                  // 给该客户端生成一个ServerSocket
+                  // 给该客户端生成一个SocketChannel
                   // 这里使用 accept 为什么不会产生阻塞？ 因为你原本的判断就已经判定了它时处于哪一个事件，自然不会在去等待
                   SocketChannel socketChannel = serverSocketChannel.accept();
                   System.out.println("客户端连接成功  生成了一个 socketChannel " + socketChannel.hashCode());
@@ -775,6 +779,19 @@ public class NIOClient {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210910111115.png) 
 
+	总结：
+	1.服务器端创建serverSocketChannel，并设置监听端口和非阻塞
+	2.得到一个selector对象，并把serverSocketChannel注册到selector上，并设置关心事件为OP_ACCEPT
+	3.当客户端有连接产生时，先获取到关注的事件，在通过selector.selectedKeys() 返回关注事件的集合(即注册到selector上key的集合)，并使用迭代器进行遍历
+	4.获取selectionKeys集合种的key来判断是什么事件，如果是连接事件，则用accept函数得到socketChannel，并将该channel注册到selector上，同时设为非阻塞，并从集合种移除当前key，防止重复操作
+	5.如果监听到有事件发生，如果是读事件，则通过key获取到对应的channel，该channel与注册到selector上的channel是一样的，读取完数据之后也要进行移除操作，防止重复操作
+	
+**疑问**
+- 为什么进行第一次连接时，服务器端对应的serverSocketChannel注册到selector上得到一个key，而第二个新客户端连接时，与第一次的key一致，不是每次执行完都移除了嘛？
+
+		解答：
+		因为当有连接事件产生时，监听器会监听到是什么事件，然后通过selector.selectedKeys()返回关注事件的集合(即注册到selector上key的集合)，进行完连接事件后就会使用remove函数对当前key进行移除，因为使用的hasnext()方法，防止进行重复操作，因为当前的移除操作执行完毕后，当前该次循环也就结束了，当再次执行连接事件时，又会调用selector.selectedKeys()函数获取key的集合，所以serverSocketChannel对应的key是一致的
+
 ## 3.9、SelectionKey
 1. SelectionKey，表示**Selector和网络通道的注册关系**，共四种：
 	-	int OP_ACCEPT：有新的网络连接可以accept，值为16
@@ -816,7 +833,7 @@ public abstract class ServerSocketChannel extends AbstractSelectableChannel impl
 ~~~
 
 ## 3.11、SocketChannel
-1. SocketChannel，网络IO通道，**具体负责进行读写操作**。NIO包缓冲区的数据写入通道，或者把通道里的数据读到缓冲区
+1. SocketChannel，网络IO通道，**具体负责进行读写操作**。NIO把缓冲区的数据写入通道，或者把通道里的数据读到缓冲区
 2. 相关方法
 
 ~~~Java
@@ -2708,5 +2725,3899 @@ public class MyTextWebSocketFrameHandler extends SimpleChannelInboundHandler<Tex
 </html>
 ~~~
 
+# 7、Google Protobuf
 
+## 7.1、编码和解码的基本介绍
+1. 编写网络应用程序时，因为数据在网络种传输的都是二进制字节码数据，在发送数据时就需要编码，接收数据时就需要解码
+2. codec(编解码器)的组成部分有两个：decoder(解码器)和encoder(编码器)。encoder负责把业务数据转换成字节码数据，decoder负责把字节码数据转换成业务数据
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210924174143.png)
+
+## 7.2、Netty 本身的编码解码的机制和问题分析
+1. Netty 自身提供了一些 codec(编解码器)
+2. Netty 提供的编码器
+	- `StringEncoder`，对字符串数据进行编码
+	- `ObjectEncoder`，对 Java 对象进行编码
+3. Netty 提供的解码器
+	- `StringDecoder`, 对字符串数据进行解码
+	- `ObjectDecoder`，对 Java 对象进行解码
+4. Netty 本身自带的 ObjectDecoder 和 ObjectEncoder 可以用来实现 POJO 对象或各种业务对象的编码和解码，**底层使用的仍是 Java 序列化技术** , 而Java 序列化技术本身效率就不高，存在如下问题
+	- 无法跨语言
+	- 序列化后的体积太大，是二进制编码的 5 倍多
+	- 序列化性能太低
+
+	=> 引出新的解决方案[Google的Protobuf]
+
+ ## 7.3、Protobuf
+
+### 7.3.1、Protobuf基本介绍和使用示意图
+1. Protobuf 是 Google 发布的开源项目，全称 Google Protocol Buffers，是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 **RPC[远程过程调用  remote procedure call ] 数据交换格式 **。
+	
+	目前很多公司 http+json -> tcp+protobuf
+2. [参考文档:语言指南](https://developers.google.com/protocol-buffers/docs/proto)   
+3. Protobuf 是以 message 的方式来管理数据的
+4. 支持跨平台、跨语言，即**客户端和服务器端可以是不同的语言编写的** (支持目前绝大多数语言，例如 C++、C#、Java、python 等)
+5. 高性能，高可靠性
+6. 使用 protobuf 编译器能自动生成代码，Protobuf 是将类的定义使用`.proto`文件进行描述。说明，在idea 中编写 .proto 文件时，会自动提示是否下载 .ptotot 编写插件. 可以让语法高亮
+7. 然后通过 `protoc.exe 编译器`根据.proto 自动生成.java 文件
+8. protobuf 使用示意图 
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210924175929.png)
+
+### 7.3.2、Protobuf快速入门实例1
+
+编写程序，使用Protobuf完成如下功能
+1. 客户端可以发送一个Student  PoJo 对象到服务器 (通过 Protobuf 编码)
+2. 服务端能接收Student PoJo 对象，并显示信息(通过 Protobuf 解码)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210924222204.png)
+
+**ProtoBuf：**
+~~~Java
+syntax = "proto3";// 版本
+option java_outer_classname = "StudentPOJO";// 生成的外部类名，同时也是文件名
+// protobuf使用message管理数据
+message Student{
+  // 会在StudentPOJO外部类中生成一个内部类Student，它是真正发送的POJO对象
+  int32 id =1; // Student类中有一个属性 名字为 id ，类型为int32(protobuf类型)，1表示属性序号，不是值
+  string name =2;
+}
+~~~
+
+**ProtoBuf生成的xxx.java：**
+~~~Java
+package com.clover.netty.codec;
+// Generated by the protocol buffer compiler.  DO NOT EDIT!
+// source: Student.proto
+
+public final class StudentPOJO {
+  private StudentPOJO() {}
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistryLite registry) {
+  }
+
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+        (com.google.protobuf.ExtensionRegistryLite) registry);
+  }
+  public interface StudentOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Student)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * 会在StudentPOJO外部类中生成一个内部类Student，它是真正发送的POJO对象
+     * </pre>
+     *
+     * <code>int32 id = 1;</code>
+     * @return The id.
+     */
+    int getId();
+
+    /**
+     * <code>string name = 2;</code>
+     * @return The name.
+     */
+    java.lang.String getName();
+    /**
+     * <code>string name = 2;</code>
+     * @return The bytes for name.
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+  }
+  /**
+   * <pre>
+   * protobuf使用message管理数据
+   * </pre>
+   *
+   * Protobuf type {@code Student}
+   */
+  public static final class Student extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:Student)
+      StudentOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Student.newBuilder() to construct.
+    private Student(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Student() {
+      name_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Student();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Student(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              id_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return StudentPOJO.internal_static_Student_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return StudentPOJO.internal_static_Student_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              StudentPOJO.Student.class, StudentPOJO.Student.Builder.class);
+    }
+
+    public static final int ID_FIELD_NUMBER = 1;
+    private int id_;
+    /**
+     * <pre>
+     * 会在StudentPOJO外部类中生成一个内部类Student，它时真正发送的POJO对象
+     * </pre>
+     *
+     * <code>int32 id = 1;</code>
+     * @return The id.
+     */
+    @java.lang.Override
+    public int getId() {
+      return id_;
+    }
+
+    public static final int NAME_FIELD_NUMBER = 2;
+    private volatile java.lang.Object name_;
+    /**
+     * <code>string name = 2;</code>
+     * @return The name.
+     */
+    @java.lang.Override
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string name = 2;</code>
+     * @return The bytes for name.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (id_ != 0) {
+        output.writeInt32(1, id_);
+      }
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (id_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, id_);
+      }
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof StudentPOJO.Student)) {
+        return super.equals(obj);
+      }
+      StudentPOJO.Student other = (StudentPOJO.Student) obj;
+
+      if (getId()
+          != other.getId()) return false;
+      if (!getName()
+          .equals(other.getName())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId();
+      hash = (37 * hash) + NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getName().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static StudentPOJO.Student parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static StudentPOJO.Student parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static StudentPOJO.Student parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static StudentPOJO.Student parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static StudentPOJO.Student parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static StudentPOJO.Student parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static StudentPOJO.Student parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static StudentPOJO.Student parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static StudentPOJO.Student parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static StudentPOJO.Student parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static StudentPOJO.Student parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static StudentPOJO.Student parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(StudentPOJO.Student prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * protobuf使用message管理数据
+     * </pre>
+     *
+     * Protobuf type {@code Student}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Student)
+        StudentPOJO.StudentOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return StudentPOJO.internal_static_Student_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return StudentPOJO.internal_static_Student_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                StudentPOJO.Student.class, StudentPOJO.Student.Builder.class);
+      }
+
+      // Construct using StudentPOJO.Student.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        id_ = 0;
+
+        name_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return StudentPOJO.internal_static_Student_descriptor;
+      }
+
+      @java.lang.Override
+      public StudentPOJO.Student getDefaultInstanceForType() {
+        return StudentPOJO.Student.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public StudentPOJO.Student build() {
+        StudentPOJO.Student result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public StudentPOJO.Student buildPartial() {
+        StudentPOJO.Student result = new StudentPOJO.Student(this);
+        result.id_ = id_;
+        result.name_ = name_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof StudentPOJO.Student) {
+          return mergeFrom((StudentPOJO.Student)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(StudentPOJO.Student other) {
+        if (other == StudentPOJO.Student.getDefaultInstance()) return this;
+        if (other.getId() != 0) {
+          setId(other.getId());
+        }
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        StudentPOJO.Student parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (StudentPOJO.Student) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int id_ ;
+      /**
+       * <pre>
+       * 会在StudentPOJO外部类中生成一个内部类Student，它时真正发送的POJO对象
+       * </pre>
+       *
+       * <code>int32 id = 1;</code>
+       * @return The id.
+       */
+      @java.lang.Override
+      public int getId() {
+        return id_;
+      }
+      /**
+       * <pre>
+       * 会在StudentPOJO外部类中生成一个内部类Student，它时真正发送的POJO对象
+       * </pre>
+       *
+       * <code>int32 id = 1;</code>
+       * @param value The id to set.
+       * @return This builder for chaining.
+       */
+      public Builder setId(int value) {
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 会在StudentPOJO外部类中生成一个内部类Student，它时真正发送的POJO对象
+       * </pre>
+       *
+       * <code>int32 id = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearId() {
+        
+        id_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object name_ = "";
+      /**
+       * <code>string name = 2;</code>
+       * @return The name.
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string name = 2;</code>
+       * @return The bytes for name.
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string name = 2;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string name = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string name = 2;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:Student)
+    }
+
+    // @@protoc_insertion_point(class_scope:Student)
+    private static final StudentPOJO.Student DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new StudentPOJO.Student();
+    }
+
+    public static StudentPOJO.Student getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Student>
+        PARSER = new com.google.protobuf.AbstractParser<Student>() {
+      @java.lang.Override
+      public Student parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Student(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Student> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Student> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public StudentPOJO.Student getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Student_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Student_fieldAccessorTable;
+
+  public static com.google.protobuf.Descriptors.FileDescriptor
+      getDescriptor() {
+    return descriptor;
+  }
+  private static  com.google.protobuf.Descriptors.FileDescriptor
+      descriptor;
+  static {
+    java.lang.String[] descriptorData = {
+      "\n\rStudent.proto\"#\n\007Student\022\n\n\002id\030\001 \001(\005\022\014" +
+      "\n\004name\030\002 \001(\tB\rB\013StudentPOJOb\006proto3"
+    };
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+        });
+    internal_static_Student_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_Student_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Student_descriptor,
+        new java.lang.String[] { "Id", "Name", });
+  }
+
+  // @@protoc_insertion_point(outer_class_scope)
+}
+~~~
+
+**服务器端：**
+~~~Java
+package com.clover.netty.codec;
+
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.*;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+
+public class NettyServer {
+  public static void main(String[] args) throws Exception{
+      /*
+       * 说明
+       * 1.创建两个线程组 bossGroup 和 workerGroup
+       * 2.bossGroup 只是处理连接请求，真正的和客户端业务处理，会交给 workerGroup 完成
+       * 3.两个线程组都是无线循环
+       */
+      EventLoopGroup bossGroup = new NioEventLoopGroup();
+      EventLoopGroup workerGroup = new NioEventLoopGroup();
+
+      try {
+          // 创建服务器的启动对象，配置参数
+          ServerBootstrap bootstrap = new ServerBootstrap();
+
+          // 使用链式编程来进行设置
+          bootstrap
+              .group(bossGroup, workerGroup) // 设置两个线程组
+              .channel(NioServerSocketChannel.class) // 使用NioSocketChannel作为服务器的通道实现类型
+              .option(ChannelOption.SO_BACKLOG, 128) // 设置线程队列等待连接个数
+              .childOption(ChannelOption.SO_KEEPALIVE, true) // 设置保持活动连接状态
+              .childHandler(
+                  new ChannelInitializer<SocketChannel>() { // 创建一个通道初始化对象(匿名对象)
+                    // 向workerGroup中EventLoop所关联的通道对应的pipeline设置处理器
+                    @Override
+                    protected void initChannel(SocketChannel ch) throws Exception {
+                        // 在pipeline中加入ProtoBufDecoder
+                        // 指定对哪种对象进行解码
+                        ch.pipeline().addLast("decoder",new ProtobufDecoder(StudentPOJO.Student.getDefaultInstance()));
+
+                        ch.pipeline().addLast(new NettyServerHandler());
+                        // 可以使用一个集合管理SocketChannel，在推送消息时，可以将业务加到各个Channel对应的NIOEventLoop的taskQueue 或者 scheduleTaskQueue
+                        System.out.println("客户SocketChannel hashcode=" + ch.hashCode());
+                    }
+                  }); // 给我们的workerGroup的 EventLoop对应的管道设置处理器
+
+          System.out.println("服务器 is ready");
+
+          /*
+           * ChannelFuture 在Netty中的所有的I/O操作都是异步执行的，这就意味着任何一个I/O操作会立刻返回，不保证在调用结束的时候操作会执行完成。因此，会返回一个ChannelFuture的实例，通过这个实例可以获取当前I/O操作的状态。
+           */
+
+          // 绑定一个端口，并且同步，生成了一个ChannelFuture 对象
+          // 启动服务器(并绑定端口)
+          // 为什么使用同步？因为Netty是基于异步操作的，如果不使用同步，可能服务器还未启动就执行下面的语句了，就会产生异常
+          ChannelFuture cf = bootstrap.bind(6668).sync();
+
+          // 给cf注册监听器，监控我们关心的事件
+          cf.addListener(new ChannelFutureListener() {
+              @Override
+              public void operationComplete(ChannelFuture future) throws Exception {
+                  if(future.isSuccess()){
+                      System.out.println("监听端口 6668成功");
+                  } else {
+                      System.out.println("监听端口 6668失败");
+                  }
+              }
+          });
+
+          // 对关闭通道进行监听(只有当你有一个关闭通道这样的事件发生时，才会去进行处理)
+          // 这里为什么也需要使用同步？因为不适用同步，他就会跳过这个语句直接执行finally中的语句关闭线程组了
+          cf.channel().closeFuture().sync();
+      } finally{
+          bossGroup.shutdownGracefully();
+          workerGroup.shutdownGracefully();
+      }
+  }
+}
+~~~
+
+**服务器端handler：**
+~~~Java
+package com.clover.netty.codec;
+
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.CharsetUtil;
+
+import java.util.concurrent.TimeUnit;
+
+/*
+ * 说明
+ * 1.我们自定义一个Handler需要继承netty规定好的某个HandlerAdapter(规范)
+ * 2.这时我们自定义一个Handler，才能称之为一个handler
+ */
+public class NettyServerHandler extends ChannelInboundHandlerAdapter {
+    /*
+     * 读取数据(这里我们可以读取客户端发送的数据)
+     * 1.ChannelHandlerContext ctx：上下文对象，含有管道pipeline(业务逻辑处理)，通道channel(数据读写处理)，地址
+     * 2.Object msg：就是客户端发送的数据，默认时Object类型
+     */
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        // 读取客户端发送的StudentPOJO.Student
+        StudentPOJO.Student student = (StudentPOJO.Student) msg;
+
+    System.out.println("客户端发送的数据 id =" + student.getId() + "名字=" + student.getName());
+    }
+
+    // 数据读取完毕返回给客户端的消息
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        // writeAndFlush 是 write方法 + flush方法
+        // 将数据写入到缓冲区，并刷新
+        // 一般讲，我们对这个发送的数据需要进行编码
+        ctx.writeAndFlush(Unpooled.copiedBuffer("hello,客户端1",CharsetUtil.UTF_8));
+    }
+
+    // 当出现异常时，一般是需要关闭通道
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        ctx.channel().close();
+    }
+}
+~~~
+
+**客户端：**
+~~~Java
+package com.clover.netty.codec;
+
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+
+public class NettyClient {
+  public static void main(String[] args) throws Exception{
+      // 客户端需要一个事件循环组
+      EventLoopGroup group = new NioEventLoopGroup();
+
+      try {
+          // 创建一个客户端启动对象
+          // 注意客户端使用的不是ServerBootstrap，而是Bootstrap
+          Bootstrap bootstrap = new Bootstrap();
+
+          // 设置相关参数,链式编程
+          bootstrap.group(group) // 设置线程组
+                  .channel(NioSocketChannel.class) // 设置客户端通道的实现类型(将来使用反射处理)
+                  .handler(new ChannelInitializer<SocketChannel>() {
+                      @Override
+                      protected void initChannel(SocketChannel ch) throws Exception {
+                          // 在pipeline中加入我们的编码器ProtoBufEncoder
+                          ch.pipeline().addLast("encoder",new ProtobufEncoder());
+
+                          ch.pipeline().addLast(new NettyClientHandler());// 加入自己的处理器
+                      }
+                  });
+          System.out.println("客户端 is ok");
+
+          // 启动客户端去连接服务器端
+          // 关于 ChannelFuture 后面要分析，涉及到Netty的异步模型
+          ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 6668).sync();
+
+          // 给关闭通道进行监听(sync是让其为非阻塞？？？？？？)
+          channelFuture.channel().closeFuture().sync();
+      }finally{
+          group.shutdownGracefully();
+      }
+  }
+}
+~~~
+
+**客户端handler：**
+~~~Java
+package com.clover.netty.codec;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.CharsetUtil;
+
+public class NettyClientHandler extends ChannelInboundHandlerAdapter {
+    // 当通道就绪时，就会触发该方法
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        // 发送一个Student对象到服务器
+        StudentPOJO.Student student = StudentPOJO.Student.newBuilder().setId(4).setName("林冲").build();
+
+        ctx.writeAndFlush(student);
+    }
+
+    // 当通道有读取事件时，会触发
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        ByteBuf buf = (ByteBuf) msg;
+        System.out.println("输出服务器回复的消息：" + buf.toString(CharsetUtil.UTF_8));
+        System.out.println("服务器端的地址：" + ctx.channel().remoteAddress());
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        cause.printStackTrace();
+        ctx.close();
+    }
+}
+~~~
+
+### 7.3.3、Protobuf快速入门实例2
+
+编写程序，使用Protobuf完成如下功能
+1. 客户端可以随机发送Student  PoJo/ Worker PoJo 对象到服务器 (通过 Protobuf 编码) 
+2. 服务端能接收Student PoJo/ Worker PoJo 对象(需要判断是哪种类型)，并显示信息(通过 Protobuf 解码)
+
+**ProtoBuf：**
+~~~Java
+syntax = "proto3";
+option optimize_for = SPEED;  // 加快解析
+option java_package = "com.clover.netty.codec2";// 指定生成到哪个包下
+option java_outer_classname = "MyDataInfo"; // 指定外部类名称
+
+// protobuf 可以使用message管理其它的message
+message MyMessage{
+  // 定义一个枚举类型
+  enum DateType {
+    StudentType = 0;// 在proto3中，要求enmu下属性的编号从0开始
+    WorkerType = 1;
+  }
+
+  // 用data_type来标识传的是哪一个枚举类型
+  DateType data_type = 1;
+
+  // 表示每次枚举类型最多只能出现Student、Worker中的一个，节省空间
+  oneof dataBody {
+    Student student = 2;
+    Worker worker = 3;
+  }
+}
+
+message Student{
+  int32 id = 1;// Student类的属性
+  string name =2;// Student类的属性
+}
+
+message Worker{
+  string name = 1;
+  int32 age = 2;
+}
+~~~
+
+**ProtoBuf生成的xxx.java：**
+~~~Java
+// Generated by the protocol buffer compiler.  DO NOT EDIT!
+// source: Student.proto
+
+package com.clover.netty.codec2;
+
+public final class MyDataInfo {
+  private MyDataInfo() {}
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistryLite registry) {
+  }
+
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+        (com.google.protobuf.ExtensionRegistryLite) registry);
+  }
+  public interface MyMessageOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:MyMessage)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * 用data_type来标识传的是哪一个枚举类型
+     * </pre>
+     *
+     * <code>.MyMessage.DateType data_type = 1;</code>
+     * @return The enum numeric value on the wire for dataType.
+     */
+    int getDataTypeValue();
+    /**
+     * <pre>
+     * 用data_type来标识传的是哪一个枚举类型
+     * </pre>
+     *
+     * <code>.MyMessage.DateType data_type = 1;</code>
+     * @return The dataType.
+     */
+    com.clover.netty.codec2.MyDataInfo.MyMessage.DateType getDataType();
+
+    /**
+     * <code>.Student student = 2;</code>
+     * @return Whether the student field is set.
+     */
+    boolean hasStudent();
+    /**
+     * <code>.Student student = 2;</code>
+     * @return The student.
+     */
+    com.clover.netty.codec2.MyDataInfo.Student getStudent();
+    /**
+     * <code>.Student student = 2;</code>
+     */
+    com.clover.netty.codec2.MyDataInfo.StudentOrBuilder getStudentOrBuilder();
+
+    /**
+     * <code>.Worker worker = 3;</code>
+     * @return Whether the worker field is set.
+     */
+    boolean hasWorker();
+    /**
+     * <code>.Worker worker = 3;</code>
+     * @return The worker.
+     */
+    com.clover.netty.codec2.MyDataInfo.Worker getWorker();
+    /**
+     * <code>.Worker worker = 3;</code>
+     */
+    com.clover.netty.codec2.MyDataInfo.WorkerOrBuilder getWorkerOrBuilder();
+
+    public com.clover.netty.codec2.MyDataInfo.MyMessage.DataBodyCase getDataBodyCase();
+  }
+  /**
+   * <pre>
+   * protobuf 可以使用message管理其它的message
+   * </pre>
+   *
+   * Protobuf type {@code MyMessage}
+   */
+  public static final class MyMessage extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:MyMessage)
+      MyMessageOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use MyMessage.newBuilder() to construct.
+    private MyMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private MyMessage() {
+      dataType_ = 0;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new MyMessage();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private MyMessage(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+              int rawValue = input.readEnum();
+
+              dataType_ = rawValue;
+              break;
+            }
+            case 18: {
+              com.clover.netty.codec2.MyDataInfo.Student.Builder subBuilder = null;
+              if (dataBodyCase_ == 2) {
+                subBuilder = ((com.clover.netty.codec2.MyDataInfo.Student) dataBody_).toBuilder();
+              }
+              dataBody_ =
+                  input.readMessage(com.clover.netty.codec2.MyDataInfo.Student.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.clover.netty.codec2.MyDataInfo.Student) dataBody_);
+                dataBody_ = subBuilder.buildPartial();
+              }
+              dataBodyCase_ = 2;
+              break;
+            }
+            case 26: {
+              com.clover.netty.codec2.MyDataInfo.Worker.Builder subBuilder = null;
+              if (dataBodyCase_ == 3) {
+                subBuilder = ((com.clover.netty.codec2.MyDataInfo.Worker) dataBody_).toBuilder();
+              }
+              dataBody_ =
+                  input.readMessage(com.clover.netty.codec2.MyDataInfo.Worker.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.clover.netty.codec2.MyDataInfo.Worker) dataBody_);
+                dataBody_ = subBuilder.buildPartial();
+              }
+              dataBodyCase_ = 3;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.clover.netty.codec2.MyDataInfo.internal_static_MyMessage_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.clover.netty.codec2.MyDataInfo.internal_static_MyMessage_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.clover.netty.codec2.MyDataInfo.MyMessage.class, com.clover.netty.codec2.MyDataInfo.MyMessage.Builder.class);
+    }
+
+    /**
+     * <pre>
+     * 定义一个枚举类型
+     * </pre>
+     *
+     * Protobuf enum {@code MyMessage.DateType}
+     */
+    public enum DateType
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <pre>
+       * 在proto3中，要求enmu下属性的编号从0开始
+       * </pre>
+       *
+       * <code>StudentType = 0;</code>
+       */
+      StudentType(0),
+      /**
+       * <code>WorkerType = 1;</code>
+       */
+      WorkerType(1),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <pre>
+       * 在proto3中，要求enmu下属性的编号从0开始
+       * </pre>
+       *
+       * <code>StudentType = 0;</code>
+       */
+      public static final int StudentType_VALUE = 0;
+      /**
+       * <code>WorkerType = 1;</code>
+       */
+      public static final int WorkerType_VALUE = 1;
+
+
+      public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static DateType valueOf(int value) {
+        return forNumber(value);
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       */
+      public static DateType forNumber(int value) {
+        switch (value) {
+          case 0: return StudentType;
+          case 1: return WorkerType;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<DateType>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          DateType> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<DateType>() {
+              public DateType findValueByNumber(int number) {
+                return DateType.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalStateException(
+              "Can't get the descriptor of an unrecognized enum value.");
+        }
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return com.clover.netty.codec2.MyDataInfo.MyMessage.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final DateType[] VALUES = values();
+
+      public static DateType valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private DateType(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:MyMessage.DateType)
+    }
+
+    private int dataBodyCase_ = 0;
+    private java.lang.Object dataBody_;
+    public enum DataBodyCase
+        implements com.google.protobuf.Internal.EnumLite,
+            com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+      STUDENT(2),
+      WORKER(3),
+      DATABODY_NOT_SET(0);
+      private final int value;
+      private DataBodyCase(int value) {
+        this.value = value;
+      }
+      /**
+       * @param value The number of the enum to look for.
+       * @return The enum associated with the given number.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static DataBodyCase valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static DataBodyCase forNumber(int value) {
+        switch (value) {
+          case 2: return STUDENT;
+          case 3: return WORKER;
+          case 0: return DATABODY_NOT_SET;
+          default: return null;
+        }
+      }
+      public int getNumber() {
+        return this.value;
+      }
+    };
+
+    public DataBodyCase
+    getDataBodyCase() {
+      return DataBodyCase.forNumber(
+          dataBodyCase_);
+    }
+
+    public static final int DATA_TYPE_FIELD_NUMBER = 1;
+    private int dataType_;
+    /**
+     * <pre>
+     * 用data_type来标识传的是哪一个枚举类型
+     * </pre>
+     *
+     * <code>.MyMessage.DateType data_type = 1;</code>
+     * @return The enum numeric value on the wire for dataType.
+     */
+    @java.lang.Override public int getDataTypeValue() {
+      return dataType_;
+    }
+    /**
+     * <pre>
+     * 用data_type来标识传的是哪一个枚举类型
+     * </pre>
+     *
+     * <code>.MyMessage.DateType data_type = 1;</code>
+     * @return The dataType.
+     */
+    @java.lang.Override public com.clover.netty.codec2.MyDataInfo.MyMessage.DateType getDataType() {
+      @SuppressWarnings("deprecation")
+      com.clover.netty.codec2.MyDataInfo.MyMessage.DateType result = com.clover.netty.codec2.MyDataInfo.MyMessage.DateType.valueOf(dataType_);
+      return result == null ? com.clover.netty.codec2.MyDataInfo.MyMessage.DateType.UNRECOGNIZED : result;
+    }
+
+    public static final int STUDENT_FIELD_NUMBER = 2;
+    /**
+     * <code>.Student student = 2;</code>
+     * @return Whether the student field is set.
+     */
+    @java.lang.Override
+    public boolean hasStudent() {
+      return dataBodyCase_ == 2;
+    }
+    /**
+     * <code>.Student student = 2;</code>
+     * @return The student.
+     */
+    @java.lang.Override
+    public com.clover.netty.codec2.MyDataInfo.Student getStudent() {
+      if (dataBodyCase_ == 2) {
+         return (com.clover.netty.codec2.MyDataInfo.Student) dataBody_;
+      }
+      return com.clover.netty.codec2.MyDataInfo.Student.getDefaultInstance();
+    }
+    /**
+     * <code>.Student student = 2;</code>
+     */
+    @java.lang.Override
+    public com.clover.netty.codec2.MyDataInfo.StudentOrBuilder getStudentOrBuilder() {
+      if (dataBodyCase_ == 2) {
+         return (com.clover.netty.codec2.MyDataInfo.Student) dataBody_;
+      }
+      return com.clover.netty.codec2.MyDataInfo.Student.getDefaultInstance();
+    }
+
+    public static final int WORKER_FIELD_NUMBER = 3;
+    /**
+     * <code>.Worker worker = 3;</code>
+     * @return Whether the worker field is set.
+     */
+    @java.lang.Override
+    public boolean hasWorker() {
+      return dataBodyCase_ == 3;
+    }
+    /**
+     * <code>.Worker worker = 3;</code>
+     * @return The worker.
+     */
+    @java.lang.Override
+    public com.clover.netty.codec2.MyDataInfo.Worker getWorker() {
+      if (dataBodyCase_ == 3) {
+         return (com.clover.netty.codec2.MyDataInfo.Worker) dataBody_;
+      }
+      return com.clover.netty.codec2.MyDataInfo.Worker.getDefaultInstance();
+    }
+    /**
+     * <code>.Worker worker = 3;</code>
+     */
+    @java.lang.Override
+    public com.clover.netty.codec2.MyDataInfo.WorkerOrBuilder getWorkerOrBuilder() {
+      if (dataBodyCase_ == 3) {
+         return (com.clover.netty.codec2.MyDataInfo.Worker) dataBody_;
+      }
+      return com.clover.netty.codec2.MyDataInfo.Worker.getDefaultInstance();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (dataType_ != com.clover.netty.codec2.MyDataInfo.MyMessage.DateType.StudentType.getNumber()) {
+        output.writeEnum(1, dataType_);
+      }
+      if (dataBodyCase_ == 2) {
+        output.writeMessage(2, (com.clover.netty.codec2.MyDataInfo.Student) dataBody_);
+      }
+      if (dataBodyCase_ == 3) {
+        output.writeMessage(3, (com.clover.netty.codec2.MyDataInfo.Worker) dataBody_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (dataType_ != com.clover.netty.codec2.MyDataInfo.MyMessage.DateType.StudentType.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, dataType_);
+      }
+      if (dataBodyCase_ == 2) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, (com.clover.netty.codec2.MyDataInfo.Student) dataBody_);
+      }
+      if (dataBodyCase_ == 3) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, (com.clover.netty.codec2.MyDataInfo.Worker) dataBody_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.clover.netty.codec2.MyDataInfo.MyMessage)) {
+        return super.equals(obj);
+      }
+      com.clover.netty.codec2.MyDataInfo.MyMessage other = (com.clover.netty.codec2.MyDataInfo.MyMessage) obj;
+
+      if (dataType_ != other.dataType_) return false;
+      if (!getDataBodyCase().equals(other.getDataBodyCase())) return false;
+      switch (dataBodyCase_) {
+        case 2:
+          if (!getStudent()
+              .equals(other.getStudent())) return false;
+          break;
+        case 3:
+          if (!getWorker()
+              .equals(other.getWorker())) return false;
+          break;
+        case 0:
+        default:
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + DATA_TYPE_FIELD_NUMBER;
+      hash = (53 * hash) + dataType_;
+      switch (dataBodyCase_) {
+        case 2:
+          hash = (37 * hash) + STUDENT_FIELD_NUMBER;
+          hash = (53 * hash) + getStudent().hashCode();
+          break;
+        case 3:
+          hash = (37 * hash) + WORKER_FIELD_NUMBER;
+          hash = (53 * hash) + getWorker().hashCode();
+          break;
+        case 0:
+        default:
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.clover.netty.codec2.MyDataInfo.MyMessage parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.MyMessage parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.MyMessage parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.MyMessage parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.MyMessage parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.MyMessage parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.MyMessage parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.MyMessage parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.MyMessage parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.MyMessage parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.MyMessage parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.MyMessage parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.clover.netty.codec2.MyDataInfo.MyMessage prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * protobuf 可以使用message管理其它的message
+     * </pre>
+     *
+     * Protobuf type {@code MyMessage}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:MyMessage)
+        com.clover.netty.codec2.MyDataInfo.MyMessageOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.clover.netty.codec2.MyDataInfo.internal_static_MyMessage_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.clover.netty.codec2.MyDataInfo.internal_static_MyMessage_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.clover.netty.codec2.MyDataInfo.MyMessage.class, com.clover.netty.codec2.MyDataInfo.MyMessage.Builder.class);
+      }
+
+      // Construct using com.clover.netty.codec2.MyDataInfo.MyMessage.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        dataType_ = 0;
+
+        dataBodyCase_ = 0;
+        dataBody_ = null;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.clover.netty.codec2.MyDataInfo.internal_static_MyMessage_descriptor;
+      }
+
+      @java.lang.Override
+      public com.clover.netty.codec2.MyDataInfo.MyMessage getDefaultInstanceForType() {
+        return com.clover.netty.codec2.MyDataInfo.MyMessage.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.clover.netty.codec2.MyDataInfo.MyMessage build() {
+        com.clover.netty.codec2.MyDataInfo.MyMessage result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.clover.netty.codec2.MyDataInfo.MyMessage buildPartial() {
+        com.clover.netty.codec2.MyDataInfo.MyMessage result = new com.clover.netty.codec2.MyDataInfo.MyMessage(this);
+        result.dataType_ = dataType_;
+        if (dataBodyCase_ == 2) {
+          if (studentBuilder_ == null) {
+            result.dataBody_ = dataBody_;
+          } else {
+            result.dataBody_ = studentBuilder_.build();
+          }
+        }
+        if (dataBodyCase_ == 3) {
+          if (workerBuilder_ == null) {
+            result.dataBody_ = dataBody_;
+          } else {
+            result.dataBody_ = workerBuilder_.build();
+          }
+        }
+        result.dataBodyCase_ = dataBodyCase_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.clover.netty.codec2.MyDataInfo.MyMessage) {
+          return mergeFrom((com.clover.netty.codec2.MyDataInfo.MyMessage)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.clover.netty.codec2.MyDataInfo.MyMessage other) {
+        if (other == com.clover.netty.codec2.MyDataInfo.MyMessage.getDefaultInstance()) return this;
+        if (other.dataType_ != 0) {
+          setDataTypeValue(other.getDataTypeValue());
+        }
+        switch (other.getDataBodyCase()) {
+          case STUDENT: {
+            mergeStudent(other.getStudent());
+            break;
+          }
+          case WORKER: {
+            mergeWorker(other.getWorker());
+            break;
+          }
+          case DATABODY_NOT_SET: {
+            break;
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.clover.netty.codec2.MyDataInfo.MyMessage parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.clover.netty.codec2.MyDataInfo.MyMessage) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int dataBodyCase_ = 0;
+      private java.lang.Object dataBody_;
+      public DataBodyCase
+          getDataBodyCase() {
+        return DataBodyCase.forNumber(
+            dataBodyCase_);
+      }
+
+      public Builder clearDataBody() {
+        dataBodyCase_ = 0;
+        dataBody_ = null;
+        onChanged();
+        return this;
+      }
+
+
+      private int dataType_ = 0;
+      /**
+       * <pre>
+       * 用data_type来标识传的是哪一个枚举类型
+       * </pre>
+       *
+       * <code>.MyMessage.DateType data_type = 1;</code>
+       * @return The enum numeric value on the wire for dataType.
+       */
+      @java.lang.Override public int getDataTypeValue() {
+        return dataType_;
+      }
+      /**
+       * <pre>
+       * 用data_type来标识传的是哪一个枚举类型
+       * </pre>
+       *
+       * <code>.MyMessage.DateType data_type = 1;</code>
+       * @param value The enum numeric value on the wire for dataType to set.
+       * @return This builder for chaining.
+       */
+      public Builder setDataTypeValue(int value) {
+        
+        dataType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 用data_type来标识传的是哪一个枚举类型
+       * </pre>
+       *
+       * <code>.MyMessage.DateType data_type = 1;</code>
+       * @return The dataType.
+       */
+      @java.lang.Override
+      public com.clover.netty.codec2.MyDataInfo.MyMessage.DateType getDataType() {
+        @SuppressWarnings("deprecation")
+        com.clover.netty.codec2.MyDataInfo.MyMessage.DateType result = com.clover.netty.codec2.MyDataInfo.MyMessage.DateType.valueOf(dataType_);
+        return result == null ? com.clover.netty.codec2.MyDataInfo.MyMessage.DateType.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       * 用data_type来标识传的是哪一个枚举类型
+       * </pre>
+       *
+       * <code>.MyMessage.DateType data_type = 1;</code>
+       * @param value The dataType to set.
+       * @return This builder for chaining.
+       */
+      public Builder setDataType(com.clover.netty.codec2.MyDataInfo.MyMessage.DateType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        dataType_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 用data_type来标识传的是哪一个枚举类型
+       * </pre>
+       *
+       * <code>.MyMessage.DateType data_type = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearDataType() {
+        
+        dataType_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.clover.netty.codec2.MyDataInfo.Student, com.clover.netty.codec2.MyDataInfo.Student.Builder, com.clover.netty.codec2.MyDataInfo.StudentOrBuilder> studentBuilder_;
+      /**
+       * <code>.Student student = 2;</code>
+       * @return Whether the student field is set.
+       */
+      @java.lang.Override
+      public boolean hasStudent() {
+        return dataBodyCase_ == 2;
+      }
+      /**
+       * <code>.Student student = 2;</code>
+       * @return The student.
+       */
+      @java.lang.Override
+      public com.clover.netty.codec2.MyDataInfo.Student getStudent() {
+        if (studentBuilder_ == null) {
+          if (dataBodyCase_ == 2) {
+            return (com.clover.netty.codec2.MyDataInfo.Student) dataBody_;
+          }
+          return com.clover.netty.codec2.MyDataInfo.Student.getDefaultInstance();
+        } else {
+          if (dataBodyCase_ == 2) {
+            return studentBuilder_.getMessage();
+          }
+          return com.clover.netty.codec2.MyDataInfo.Student.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.Student student = 2;</code>
+       */
+      public Builder setStudent(com.clover.netty.codec2.MyDataInfo.Student value) {
+        if (studentBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          dataBody_ = value;
+          onChanged();
+        } else {
+          studentBuilder_.setMessage(value);
+        }
+        dataBodyCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.Student student = 2;</code>
+       */
+      public Builder setStudent(
+          com.clover.netty.codec2.MyDataInfo.Student.Builder builderForValue) {
+        if (studentBuilder_ == null) {
+          dataBody_ = builderForValue.build();
+          onChanged();
+        } else {
+          studentBuilder_.setMessage(builderForValue.build());
+        }
+        dataBodyCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.Student student = 2;</code>
+       */
+      public Builder mergeStudent(com.clover.netty.codec2.MyDataInfo.Student value) {
+        if (studentBuilder_ == null) {
+          if (dataBodyCase_ == 2 &&
+              dataBody_ != com.clover.netty.codec2.MyDataInfo.Student.getDefaultInstance()) {
+            dataBody_ = com.clover.netty.codec2.MyDataInfo.Student.newBuilder((com.clover.netty.codec2.MyDataInfo.Student) dataBody_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            dataBody_ = value;
+          }
+          onChanged();
+        } else {
+          if (dataBodyCase_ == 2) {
+            studentBuilder_.mergeFrom(value);
+          }
+          studentBuilder_.setMessage(value);
+        }
+        dataBodyCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.Student student = 2;</code>
+       */
+      public Builder clearStudent() {
+        if (studentBuilder_ == null) {
+          if (dataBodyCase_ == 2) {
+            dataBodyCase_ = 0;
+            dataBody_ = null;
+            onChanged();
+          }
+        } else {
+          if (dataBodyCase_ == 2) {
+            dataBodyCase_ = 0;
+            dataBody_ = null;
+          }
+          studentBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.Student student = 2;</code>
+       */
+      public com.clover.netty.codec2.MyDataInfo.Student.Builder getStudentBuilder() {
+        return getStudentFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.Student student = 2;</code>
+       */
+      @java.lang.Override
+      public com.clover.netty.codec2.MyDataInfo.StudentOrBuilder getStudentOrBuilder() {
+        if ((dataBodyCase_ == 2) && (studentBuilder_ != null)) {
+          return studentBuilder_.getMessageOrBuilder();
+        } else {
+          if (dataBodyCase_ == 2) {
+            return (com.clover.netty.codec2.MyDataInfo.Student) dataBody_;
+          }
+          return com.clover.netty.codec2.MyDataInfo.Student.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.Student student = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.clover.netty.codec2.MyDataInfo.Student, com.clover.netty.codec2.MyDataInfo.Student.Builder, com.clover.netty.codec2.MyDataInfo.StudentOrBuilder> 
+          getStudentFieldBuilder() {
+        if (studentBuilder_ == null) {
+          if (!(dataBodyCase_ == 2)) {
+            dataBody_ = com.clover.netty.codec2.MyDataInfo.Student.getDefaultInstance();
+          }
+          studentBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.clover.netty.codec2.MyDataInfo.Student, com.clover.netty.codec2.MyDataInfo.Student.Builder, com.clover.netty.codec2.MyDataInfo.StudentOrBuilder>(
+                  (com.clover.netty.codec2.MyDataInfo.Student) dataBody_,
+                  getParentForChildren(),
+                  isClean());
+          dataBody_ = null;
+        }
+        dataBodyCase_ = 2;
+        onChanged();;
+        return studentBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.clover.netty.codec2.MyDataInfo.Worker, com.clover.netty.codec2.MyDataInfo.Worker.Builder, com.clover.netty.codec2.MyDataInfo.WorkerOrBuilder> workerBuilder_;
+      /**
+       * <code>.Worker worker = 3;</code>
+       * @return Whether the worker field is set.
+       */
+      @java.lang.Override
+      public boolean hasWorker() {
+        return dataBodyCase_ == 3;
+      }
+      /**
+       * <code>.Worker worker = 3;</code>
+       * @return The worker.
+       */
+      @java.lang.Override
+      public com.clover.netty.codec2.MyDataInfo.Worker getWorker() {
+        if (workerBuilder_ == null) {
+          if (dataBodyCase_ == 3) {
+            return (com.clover.netty.codec2.MyDataInfo.Worker) dataBody_;
+          }
+          return com.clover.netty.codec2.MyDataInfo.Worker.getDefaultInstance();
+        } else {
+          if (dataBodyCase_ == 3) {
+            return workerBuilder_.getMessage();
+          }
+          return com.clover.netty.codec2.MyDataInfo.Worker.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.Worker worker = 3;</code>
+       */
+      public Builder setWorker(com.clover.netty.codec2.MyDataInfo.Worker value) {
+        if (workerBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          dataBody_ = value;
+          onChanged();
+        } else {
+          workerBuilder_.setMessage(value);
+        }
+        dataBodyCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.Worker worker = 3;</code>
+       */
+      public Builder setWorker(
+          com.clover.netty.codec2.MyDataInfo.Worker.Builder builderForValue) {
+        if (workerBuilder_ == null) {
+          dataBody_ = builderForValue.build();
+          onChanged();
+        } else {
+          workerBuilder_.setMessage(builderForValue.build());
+        }
+        dataBodyCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.Worker worker = 3;</code>
+       */
+      public Builder mergeWorker(com.clover.netty.codec2.MyDataInfo.Worker value) {
+        if (workerBuilder_ == null) {
+          if (dataBodyCase_ == 3 &&
+              dataBody_ != com.clover.netty.codec2.MyDataInfo.Worker.getDefaultInstance()) {
+            dataBody_ = com.clover.netty.codec2.MyDataInfo.Worker.newBuilder((com.clover.netty.codec2.MyDataInfo.Worker) dataBody_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            dataBody_ = value;
+          }
+          onChanged();
+        } else {
+          if (dataBodyCase_ == 3) {
+            workerBuilder_.mergeFrom(value);
+          }
+          workerBuilder_.setMessage(value);
+        }
+        dataBodyCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.Worker worker = 3;</code>
+       */
+      public Builder clearWorker() {
+        if (workerBuilder_ == null) {
+          if (dataBodyCase_ == 3) {
+            dataBodyCase_ = 0;
+            dataBody_ = null;
+            onChanged();
+          }
+        } else {
+          if (dataBodyCase_ == 3) {
+            dataBodyCase_ = 0;
+            dataBody_ = null;
+          }
+          workerBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.Worker worker = 3;</code>
+       */
+      public com.clover.netty.codec2.MyDataInfo.Worker.Builder getWorkerBuilder() {
+        return getWorkerFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.Worker worker = 3;</code>
+       */
+      @java.lang.Override
+      public com.clover.netty.codec2.MyDataInfo.WorkerOrBuilder getWorkerOrBuilder() {
+        if ((dataBodyCase_ == 3) && (workerBuilder_ != null)) {
+          return workerBuilder_.getMessageOrBuilder();
+        } else {
+          if (dataBodyCase_ == 3) {
+            return (com.clover.netty.codec2.MyDataInfo.Worker) dataBody_;
+          }
+          return com.clover.netty.codec2.MyDataInfo.Worker.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.Worker worker = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.clover.netty.codec2.MyDataInfo.Worker, com.clover.netty.codec2.MyDataInfo.Worker.Builder, com.clover.netty.codec2.MyDataInfo.WorkerOrBuilder> 
+          getWorkerFieldBuilder() {
+        if (workerBuilder_ == null) {
+          if (!(dataBodyCase_ == 3)) {
+            dataBody_ = com.clover.netty.codec2.MyDataInfo.Worker.getDefaultInstance();
+          }
+          workerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.clover.netty.codec2.MyDataInfo.Worker, com.clover.netty.codec2.MyDataInfo.Worker.Builder, com.clover.netty.codec2.MyDataInfo.WorkerOrBuilder>(
+                  (com.clover.netty.codec2.MyDataInfo.Worker) dataBody_,
+                  getParentForChildren(),
+                  isClean());
+          dataBody_ = null;
+        }
+        dataBodyCase_ = 3;
+        onChanged();;
+        return workerBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:MyMessage)
+    }
+
+    // @@protoc_insertion_point(class_scope:MyMessage)
+    private static final com.clover.netty.codec2.MyDataInfo.MyMessage DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.clover.netty.codec2.MyDataInfo.MyMessage();
+    }
+
+    public static com.clover.netty.codec2.MyDataInfo.MyMessage getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<MyMessage>
+        PARSER = new com.google.protobuf.AbstractParser<MyMessage>() {
+      @java.lang.Override
+      public MyMessage parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new MyMessage(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<MyMessage> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<MyMessage> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.clover.netty.codec2.MyDataInfo.MyMessage getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface StudentOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Student)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * Student类的属性
+     * </pre>
+     *
+     * <code>int32 id = 1;</code>
+     * @return The id.
+     */
+    int getId();
+
+    /**
+     * <pre>
+     * Student类的属性
+     * </pre>
+     *
+     * <code>string name = 2;</code>
+     * @return The name.
+     */
+    java.lang.String getName();
+    /**
+     * <pre>
+     * Student类的属性
+     * </pre>
+     *
+     * <code>string name = 2;</code>
+     * @return The bytes for name.
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+  }
+  /**
+   * Protobuf type {@code Student}
+   */
+  public static final class Student extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:Student)
+      StudentOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Student.newBuilder() to construct.
+    private Student(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Student() {
+      name_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Student();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Student(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              id_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.clover.netty.codec2.MyDataInfo.internal_static_Student_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.clover.netty.codec2.MyDataInfo.internal_static_Student_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.clover.netty.codec2.MyDataInfo.Student.class, com.clover.netty.codec2.MyDataInfo.Student.Builder.class);
+    }
+
+    public static final int ID_FIELD_NUMBER = 1;
+    private int id_;
+    /**
+     * <pre>
+     * Student类的属性
+     * </pre>
+     *
+     * <code>int32 id = 1;</code>
+     * @return The id.
+     */
+    @java.lang.Override
+    public int getId() {
+      return id_;
+    }
+
+    public static final int NAME_FIELD_NUMBER = 2;
+    private volatile java.lang.Object name_;
+    /**
+     * <pre>
+     * Student类的属性
+     * </pre>
+     *
+     * <code>string name = 2;</code>
+     * @return The name.
+     */
+    @java.lang.Override
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * Student类的属性
+     * </pre>
+     *
+     * <code>string name = 2;</code>
+     * @return The bytes for name.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (id_ != 0) {
+        output.writeInt32(1, id_);
+      }
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (id_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, id_);
+      }
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.clover.netty.codec2.MyDataInfo.Student)) {
+        return super.equals(obj);
+      }
+      com.clover.netty.codec2.MyDataInfo.Student other = (com.clover.netty.codec2.MyDataInfo.Student) obj;
+
+      if (getId()
+          != other.getId()) return false;
+      if (!getName()
+          .equals(other.getName())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId();
+      hash = (37 * hash) + NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getName().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.clover.netty.codec2.MyDataInfo.Student parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Student parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Student parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Student parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Student parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Student parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Student parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Student parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Student parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Student parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Student parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Student parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.clover.netty.codec2.MyDataInfo.Student prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code Student}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Student)
+        com.clover.netty.codec2.MyDataInfo.StudentOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.clover.netty.codec2.MyDataInfo.internal_static_Student_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.clover.netty.codec2.MyDataInfo.internal_static_Student_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.clover.netty.codec2.MyDataInfo.Student.class, com.clover.netty.codec2.MyDataInfo.Student.Builder.class);
+      }
+
+      // Construct using com.clover.netty.codec2.MyDataInfo.Student.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        id_ = 0;
+
+        name_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.clover.netty.codec2.MyDataInfo.internal_static_Student_descriptor;
+      }
+
+      @java.lang.Override
+      public com.clover.netty.codec2.MyDataInfo.Student getDefaultInstanceForType() {
+        return com.clover.netty.codec2.MyDataInfo.Student.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.clover.netty.codec2.MyDataInfo.Student build() {
+        com.clover.netty.codec2.MyDataInfo.Student result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.clover.netty.codec2.MyDataInfo.Student buildPartial() {
+        com.clover.netty.codec2.MyDataInfo.Student result = new com.clover.netty.codec2.MyDataInfo.Student(this);
+        result.id_ = id_;
+        result.name_ = name_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.clover.netty.codec2.MyDataInfo.Student) {
+          return mergeFrom((com.clover.netty.codec2.MyDataInfo.Student)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.clover.netty.codec2.MyDataInfo.Student other) {
+        if (other == com.clover.netty.codec2.MyDataInfo.Student.getDefaultInstance()) return this;
+        if (other.getId() != 0) {
+          setId(other.getId());
+        }
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.clover.netty.codec2.MyDataInfo.Student parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.clover.netty.codec2.MyDataInfo.Student) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int id_ ;
+      /**
+       * <pre>
+       * Student类的属性
+       * </pre>
+       *
+       * <code>int32 id = 1;</code>
+       * @return The id.
+       */
+      @java.lang.Override
+      public int getId() {
+        return id_;
+      }
+      /**
+       * <pre>
+       * Student类的属性
+       * </pre>
+       *
+       * <code>int32 id = 1;</code>
+       * @param value The id to set.
+       * @return This builder for chaining.
+       */
+      public Builder setId(int value) {
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Student类的属性
+       * </pre>
+       *
+       * <code>int32 id = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearId() {
+        
+        id_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object name_ = "";
+      /**
+       * <pre>
+       * Student类的属性
+       * </pre>
+       *
+       * <code>string name = 2;</code>
+       * @return The name.
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * Student类的属性
+       * </pre>
+       *
+       * <code>string name = 2;</code>
+       * @return The bytes for name.
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * Student类的属性
+       * </pre>
+       *
+       * <code>string name = 2;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Student类的属性
+       * </pre>
+       *
+       * <code>string name = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Student类的属性
+       * </pre>
+       *
+       * <code>string name = 2;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:Student)
+    }
+
+    // @@protoc_insertion_point(class_scope:Student)
+    private static final com.clover.netty.codec2.MyDataInfo.Student DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.clover.netty.codec2.MyDataInfo.Student();
+    }
+
+    public static com.clover.netty.codec2.MyDataInfo.Student getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Student>
+        PARSER = new com.google.protobuf.AbstractParser<Student>() {
+      @java.lang.Override
+      public Student parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Student(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Student> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Student> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.clover.netty.codec2.MyDataInfo.Student getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface WorkerOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Worker)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string name = 1;</code>
+     * @return The name.
+     */
+    java.lang.String getName();
+    /**
+     * <code>string name = 1;</code>
+     * @return The bytes for name.
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <code>int32 age = 2;</code>
+     * @return The age.
+     */
+    int getAge();
+  }
+  /**
+   * Protobuf type {@code Worker}
+   */
+  public static final class Worker extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:Worker)
+      WorkerOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Worker.newBuilder() to construct.
+    private Worker(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Worker() {
+      name_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Worker();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Worker(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+            case 16: {
+
+              age_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.clover.netty.codec2.MyDataInfo.internal_static_Worker_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.clover.netty.codec2.MyDataInfo.internal_static_Worker_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.clover.netty.codec2.MyDataInfo.Worker.class, com.clover.netty.codec2.MyDataInfo.Worker.Builder.class);
+    }
+
+    public static final int NAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object name_;
+    /**
+     * <code>string name = 1;</code>
+     * @return The name.
+     */
+    @java.lang.Override
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string name = 1;</code>
+     * @return The bytes for name.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int AGE_FIELD_NUMBER = 2;
+    private int age_;
+    /**
+     * <code>int32 age = 2;</code>
+     * @return The age.
+     */
+    @java.lang.Override
+    public int getAge() {
+      return age_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
+      }
+      if (age_ != 0) {
+        output.writeInt32(2, age_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
+      }
+      if (age_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, age_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.clover.netty.codec2.MyDataInfo.Worker)) {
+        return super.equals(obj);
+      }
+      com.clover.netty.codec2.MyDataInfo.Worker other = (com.clover.netty.codec2.MyDataInfo.Worker) obj;
+
+      if (!getName()
+          .equals(other.getName())) return false;
+      if (getAge()
+          != other.getAge()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getName().hashCode();
+      hash = (37 * hash) + AGE_FIELD_NUMBER;
+      hash = (53 * hash) + getAge();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.clover.netty.codec2.MyDataInfo.Worker parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Worker parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Worker parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Worker parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Worker parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Worker parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Worker parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Worker parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Worker parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Worker parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Worker parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.clover.netty.codec2.MyDataInfo.Worker parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.clover.netty.codec2.MyDataInfo.Worker prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code Worker}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Worker)
+        com.clover.netty.codec2.MyDataInfo.WorkerOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.clover.netty.codec2.MyDataInfo.internal_static_Worker_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.clover.netty.codec2.MyDataInfo.internal_static_Worker_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.clover.netty.codec2.MyDataInfo.Worker.class, com.clover.netty.codec2.MyDataInfo.Worker.Builder.class);
+      }
+
+      // Construct using com.clover.netty.codec2.MyDataInfo.Worker.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        name_ = "";
+
+        age_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.clover.netty.codec2.MyDataInfo.internal_static_Worker_descriptor;
+      }
+
+      @java.lang.Override
+      public com.clover.netty.codec2.MyDataInfo.Worker getDefaultInstanceForType() {
+        return com.clover.netty.codec2.MyDataInfo.Worker.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.clover.netty.codec2.MyDataInfo.Worker build() {
+        com.clover.netty.codec2.MyDataInfo.Worker result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.clover.netty.codec2.MyDataInfo.Worker buildPartial() {
+        com.clover.netty.codec2.MyDataInfo.Worker result = new com.clover.netty.codec2.MyDataInfo.Worker(this);
+        result.name_ = name_;
+        result.age_ = age_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.clover.netty.codec2.MyDataInfo.Worker) {
+          return mergeFrom((com.clover.netty.codec2.MyDataInfo.Worker)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.clover.netty.codec2.MyDataInfo.Worker other) {
+        if (other == com.clover.netty.codec2.MyDataInfo.Worker.getDefaultInstance()) return this;
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
+        if (other.getAge() != 0) {
+          setAge(other.getAge());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.clover.netty.codec2.MyDataInfo.Worker parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.clover.netty.codec2.MyDataInfo.Worker) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object name_ = "";
+      /**
+       * <code>string name = 1;</code>
+       * @return The name.
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string name = 1;</code>
+       * @return The bytes for name.
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string name = 1;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string name = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string name = 1;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int age_ ;
+      /**
+       * <code>int32 age = 2;</code>
+       * @return The age.
+       */
+      @java.lang.Override
+      public int getAge() {
+        return age_;
+      }
+      /**
+       * <code>int32 age = 2;</code>
+       * @param value The age to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAge(int value) {
+        
+        age_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 age = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAge() {
+        
+        age_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:Worker)
+    }
+
+    // @@protoc_insertion_point(class_scope:Worker)
+    private static final com.clover.netty.codec2.MyDataInfo.Worker DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.clover.netty.codec2.MyDataInfo.Worker();
+    }
+
+    public static com.clover.netty.codec2.MyDataInfo.Worker getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Worker>
+        PARSER = new com.google.protobuf.AbstractParser<Worker>() {
+      @java.lang.Override
+      public Worker parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Worker(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Worker> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Worker> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.clover.netty.codec2.MyDataInfo.Worker getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_MyMessage_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_MyMessage_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Student_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Student_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Worker_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Worker_fieldAccessorTable;
+
+  public static com.google.protobuf.Descriptors.FileDescriptor
+      getDescriptor() {
+    return descriptor;
+  }
+  private static  com.google.protobuf.Descriptors.FileDescriptor
+      descriptor;
+  static {
+    java.lang.String[] descriptorData = {
+      "\n\rStudent.proto\"\244\001\n\tMyMessage\022&\n\tdata_ty" +
+      "pe\030\001 \001(\0162\023.MyMessage.DateType\022\033\n\007student" +
+      "\030\002 \001(\0132\010.StudentH\000\022\031\n\006worker\030\003 \001(\0132\007.Wor" +
+      "kerH\000\"+\n\010DateType\022\017\n\013StudentType\020\000\022\016\n\nWo" +
+      "rkerType\020\001B\n\n\010dataBody\"#\n\007Student\022\n\n\002id\030" +
+      "\001 \001(\005\022\014\n\004name\030\002 \001(\t\"#\n\006Worker\022\014\n\004name\030\001 " +
+      "\001(\t\022\013\n\003age\030\002 \001(\005B\'\n\027com.clover.netty.cod" +
+      "ec2B\nMyDataInfoH\001b\006proto3"
+    };
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+        });
+    internal_static_MyMessage_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_MyMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_MyMessage_descriptor,
+        new java.lang.String[] { "DataType", "Student", "Worker", "DataBody", });
+    internal_static_Student_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_Student_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Student_descriptor,
+        new java.lang.String[] { "Id", "Name", });
+    internal_static_Worker_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_Worker_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Worker_descriptor,
+        new java.lang.String[] { "Name", "Age", });
+  }
+
+  // @@protoc_insertion_point(outer_class_scope)
+}
+~~~
+
+**服务器端：**
+~~~Java
+package com.clover.netty.codec2;
+
+import com.clover.netty.codec.StudentPOJO;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.*;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+
+public class NettyServer {
+  public static void main(String[] args) throws Exception{
+      /*
+       * 说明
+       * 1.创建两个线程组 bossGroup 和 workerGroup
+       * 2.bossGroup 只是处理连接请求，真正的和客户端业务处理，会交给 workerGroup 完成
+       * 3.两个线程组都是无线循环
+       */
+      EventLoopGroup bossGroup = new NioEventLoopGroup();
+      EventLoopGroup workerGroup = new NioEventLoopGroup();
+
+      try {
+          // 创建服务器的启动对象，配置参数
+          ServerBootstrap bootstrap = new ServerBootstrap();
+
+          // 使用链式编程来进行设置
+          bootstrap
+              .group(bossGroup, workerGroup) // 设置两个线程组
+              .channel(NioServerSocketChannel.class) // 使用NioSocketChannel作为服务器的通道实现类型
+              .option(ChannelOption.SO_BACKLOG, 128) // 设置线程队列等待连接个数
+              .childOption(ChannelOption.SO_KEEPALIVE, true) // 设置保持活动连接状态
+              .childHandler(
+                  new ChannelInitializer<SocketChannel>() { // 创建一个通道初始化对象(匿名对象)
+                    // 向workerGroup中EventLoop所关联的通道对应的pipeline设置处理器
+                    @Override
+                    protected void initChannel(SocketChannel ch) throws Exception {
+                        // 在pipeline中加入ProtoBufDecoder
+                        // 指定对哪种对象进行解码
+                        ch.pipeline().addLast("decoder",new ProtobufDecoder(MyDataInfo.MyMessage.getDefaultInstance()));
+
+                        ch.pipeline().addLast(new NettyServerHandler());
+                        // 可以使用一个集合管理SocketChannel，在推送消息时，可以将业务加到各个Channel对应的NIOEventLoop的taskQueue 或者 scheduleTaskQueue
+                        System.out.println("客户SocketChannel hashcode=" + ch.hashCode());
+                    }
+                  }); // 给我们的workerGroup的 EventLoop对应的管道设置处理器
+
+          System.out.println("服务器 is ready");
+
+          /*
+           * ChannelFuture 在Netty中的所有的I/O操作都是异步执行的，这就意味着任何一个I/O操作会立刻返回，不保证在调用结束的时候操作会执行完成。因此，会返回一个ChannelFuture的实例，通过这个实例可以获取当前I/O操作的状态。
+           */
+
+          // 绑定一个端口，并且同步，生成了一个ChannelFuture 对象
+          // 启动服务器(并绑定端口)
+          // 为什么使用同步？因为Netty是基于异步操作的，如果不使用同步，可能服务器还未启动就执行下面的语句了，就会产生异常
+          ChannelFuture cf = bootstrap.bind(6668).sync();
+
+          // 给cf注册监听器，监控我们关心的事件
+          cf.addListener(new ChannelFutureListener() {
+              @Override
+              public void operationComplete(ChannelFuture future) throws Exception {
+                  if(future.isSuccess()){
+                      System.out.println("监听端口 6668成功");
+                  } else {
+                      System.out.println("监听端口 6668失败");
+                  }
+              }
+          });
+
+          // 对关闭通道进行监听(只有当你有一个关闭通道这样的事件发生时，才会去进行处理)
+          // 这里为什么也需要使用同步？因为不适用同步，他就会跳过这个语句直接执行finally中的语句关闭线程组了
+          cf.channel().closeFuture().sync();
+      } finally{
+          bossGroup.shutdownGracefully();
+          workerGroup.shutdownGracefully();
+      }
+  }
+}
+~~~
+
+**服务器端handler：**
+~~~Java
+package com.clover.netty.codec2;
+
+import com.clover.netty.codec.StudentPOJO;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.CharsetUtil;
+
+/*
+ * 说明
+ * 1.我们自定义一个Handler需要继承netty规定好的某个HandlerAdapter(规范)
+ * 2.这时我们自定义一个Handler，才能称之为一个handler
+ */
+public class NettyServerHandler extends ChannelInboundHandlerAdapter {
+    /*
+     * 读取数据(这里我们可以读取客户端发送的数据)
+     * 1.ChannelHandlerContext ctx：上下文对象，含有管道pipeline(业务逻辑处理)，通道channel(数据读写处理)，地址
+     * 2.Object msg：就是客户端发送的数据，默认时Object类型
+     */
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        // 读取客户端发送的MyDataInfo.MyMessage
+        MyDataInfo.MyMessage myMessage = (MyDataInfo.MyMessage) msg;
+
+        // 根据dataType来显示不同的信息
+        MyDataInfo.MyMessage.DateType dataType = myMessage.getDataType();
+        if (dataType == MyDataInfo.MyMessage.DateType.StudentType){
+            MyDataInfo.Student student = myMessage.getStudent();
+            System.out.println("学生 id =" + student.getId() + "名字=" + student.getName());
+        } else if(dataType == MyDataInfo.MyMessage.DateType.WorkerType){
+            MyDataInfo.Worker worker = myMessage.getWorker();
+            System.out.println("工人 名字 =" + worker.getName() + "年龄=" + worker.getAge());
+        } else {
+            System.out.println("传输的类型不正确，需要检测！！！");
+        }
+
+//    System.out.println("客户端发送的数据 id =" + myMessage.getId() + "名字=" + student.getName());
+    }
+
+    // 数据读取完毕返回给客户端的消息
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        // writeAndFlush 是 write方法 + flush方法
+        // 将数据写入到缓冲区，并刷新
+        // 一般讲，我们对这个发送的数据需要进行编码
+        ctx.writeAndFlush(Unpooled.copiedBuffer("hello,客户端1",CharsetUtil.UTF_8));
+    }
+
+    // 当出现异常时，一般是需要关闭通道
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        ctx.channel().close();
+    }
+}
+~~~
+
+**客户端：**
+~~~Java
+package com.clover.netty.codec2;
+
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+
+public class NettyClient {
+  public static void main(String[] args) throws Exception{
+      // 客户端需要一个事件循环组
+      EventLoopGroup group = new NioEventLoopGroup();
+
+      try {
+          // 创建一个客户端启动对象
+          // 注意客户端使用的不是ServerBootstrap，而是Bootstrap
+          Bootstrap bootstrap = new Bootstrap();
+
+          // 设置相关参数,链式编程
+          bootstrap.group(group) // 设置线程组
+                  .channel(NioSocketChannel.class) // 设置客户端通道的实现类型(将来使用反射处理)
+                  .handler(new ChannelInitializer<SocketChannel>() {
+                      @Override
+                      protected void initChannel(SocketChannel ch) throws Exception {
+                          // 在pipeline中加入我们的编码器ProtoBufEncoder
+                          ch.pipeline().addLast("encoder",new ProtobufEncoder());
+
+                          ch.pipeline().addLast(new NettyClientHandler());// 加入自己的处理器
+                      }
+                  });
+          System.out.println("客户端 is ok");
+
+          // 启动客户端去连接服务器端
+          // 关于 ChannelFuture 后面要分析，涉及到Netty的异步模型
+          ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 6668).sync();
+
+          // 给关闭通道进行监听(sync是让其为非阻塞？？？？？？)
+          channelFuture.channel().closeFuture().sync();
+      }finally{
+          group.shutdownGracefully();
+      }
+  }
+}
+~~~
+
+**客户端handler：**
+~~~Java
+package com.clover.netty.codec2;
+
+import com.clover.netty.codec.StudentPOJO;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.CharsetUtil;
+
+import java.util.Random;
+
+public class NettyClientHandler extends ChannelInboundHandlerAdapter {
+    // 当通道就绪时，就会触发该方法
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        // 随机的发送Student或者Worker对象到服务器
+        int random = new Random().nextInt(3);
+        MyDataInfo.MyMessage myMessage = null;
+
+        if(0 == random){
+            // 发送一个Student对象
+            myMessage = MyDataInfo.MyMessage.newBuilder().setDataType(MyDataInfo.MyMessage.DateType.StudentType).setStudent(MyDataInfo.Student.newBuilder().setId(0).setName("威少").build()).build();
+        } else {
+            // 发送一个Worker对象
+            myMessage = MyDataInfo.MyMessage.newBuilder().setDataType(MyDataInfo.MyMessage.DateType.WorkerType).setWorker(MyDataInfo.Worker.newBuilder().setAge(18).setName("科比").build()).build();
+        }
+
+        ctx.writeAndFlush(myMessage);
+    }
+
+    // 当通道有读取事件时，会触发
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        ByteBuf buf = (ByteBuf) msg;
+        System.out.println("输出服务器回复的消息：" + buf.toString(CharsetUtil.UTF_8));
+        System.out.println("服务器端的地址：" + ctx.channel().remoteAddress());
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        cause.printStackTrace();
+        ctx.close();
+    }
+}
+~~~
 
