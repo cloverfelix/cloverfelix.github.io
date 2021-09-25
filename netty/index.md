@@ -7497,3 +7497,5 @@ public class MyClientHandler extends SimpleChannelInboundHandler<MessageProtocol
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210925212618.png)
 
 # 10、Netty核心源码刨析
+
+## 10.1、基本说明
