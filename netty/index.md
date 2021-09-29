@@ -7614,16 +7614,23 @@ public final class EchoServer {
 	2.重点分析创建的两个EventLoopGroup对象
 		EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
-		1.这两个对象是整个Netty的核心对象，可以说，整个Netty的运作都依赖于他们。bossGroup用于接收TCP请求，它会将请求交给workerGroup，workerGroup会获取到真正的连接，然后和连接进行通信，比如读写解码编码等操作
-		2.EventLoopGroup是  事件循环组(线程组) 含有多个EventLoop，可以注册channel，用于在事件循环中去进行选择(和选择器相关)  [debug查看]
-		3.new NioEventLoopGroup(1);这个1表示bossGroup 事件组有一个线程你可以指定，如果new NioEventLoopGroup() 不给参数，会有默认个线程cpu核数*2，即可以充分利用多核的优势
+		1.这两个对象是整个Netty的核心对象，可以说，整个Netty的运作都依赖于他们。bossGroup用于接收TCP请求，它会将
+		请求交给workerGroup，workerGroup会获取到真正的连接，然后和连接进行通信，比如读写解码编码等操作
+		2.EventLoopGroup是事件循环组(线程组) 含有多个EventLoop，可以注册channel，
+		用于在事件循环中去进行选择(和选择器相关)  [debug查看]
+		3.new NioEventLoopGroup(1);这个1表示bossGroup事件组有一个线程你可以指定，如果new NioEventLoopGroup(); 
+		不给参数，会有默认个线程cpu核数*2，即可以充分利用多核的优势
 		DEFAULT_EVENT_LOOP_THREADS = Math.max(1, SystemPropertyUtil.getInt(
                 "io.netty.eventLoopThreads", NettyRuntime.availableProcessors() * 2));
 	    4.会创建EventExecutor数组 children = new EventExecutor[nThreads]; [debug查看]
 		5.每个元素的类型就是NioEventLoop，NioEventLoop 实现了 EventLoop 接口和 Executor 接口
-		6.try代码块中创建了一个ServerBootstrap对象，它是一个引导类，用于启动服务器和引导整个程序的初始化(看下源码 allow easy bootstrap of {@link ServerChannel})，它和ServerChannel关联，而ServerChannel继承了Channel，有一些remoteAddress等	[debug查看]
-		随后，变量b调用了group方法将两个group放入自己的字段中，用于后期引导使用
-		7.然后添加了一个channel，其中一个参数是Class对象，引导类将通过这个Class对象反射创建ChannelFactory。然后添加了一些TCP参数。[说明：Channel的创建在bind方法，可以Debug下bind，会找到channel = channelFactory.newChannel();]
+		6.try代码块中创建了一个ServerBootstrap对象，它是一个引导类，用于启动服务器和引导整个程序的初始化
+		(看下源码 allow easy bootstrap of {@link ServerChannel})，它和ServerChannel关联，而ServerChannel继承了
+		Channel，有一些remoteAddress等	[debug查看] 随后，变量b调用了group方法将两个group放入自己的字段中，
+		用于后期引导使用
+		7.然后添加了一个channel，其中一个参数是Class对象，引导类将通过这个Class对象反射创建ChannelFactory。
+		然后添加了一些TCP参数。[说明：Channel的创建在bind方法，可以Debug下bind，
+		会找到channel = channelFactory.newChannel();]
 		8.再添加了一个服务器专属的日志处理器handler
 		9.再添加一个SocketChannel(不是ServerSocketChannel)的handler
 		10.然后绑定端口并阻塞成功。
@@ -7696,7 +7703,8 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 ~~~
 
 	说明：
-	1.这是一个普通的处理器类，用于处理客户端发送来的消息，在我们这里，我们简单的解析出客户端传过来的内容，然后打印，最后发送字符串给客户端
+	1.这是一个普通的处理器类，用于处理客户端发送来的消息，在我们这里，我们简单的解析出客户端传过来的内容，
+	然后打印，最后发送字符串给客户端
 	
 
 ~~~Java
@@ -8351,7 +8359,8 @@ Netty 中的 `ChannelPipeline` 、 `ChannelHandler` 和 `ChannelHandlerContext` 
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210928101618.png)
 
-	1、上图中：ChannelSocket 和 ChannelPipeline 是一对一的关联关系，而 pipeline 内部的多个 Context 形成了链表，Context 只是对 Handler 的封装
+	1、上图中：ChannelSocket 和 ChannelPipeline 是一对一的关联关系，而 pipeline 内部的多个 Context 形成了链表，
+	Context 只是对 Handler 的封装
 	2、当一个请求进来的时候，会进入 Socket 对应的pipeline，并经过 pipeline 所有的 handler 对，就是设计模式中的过滤器模式
 	
 2、**ChannelPipeline 作用及设计**
