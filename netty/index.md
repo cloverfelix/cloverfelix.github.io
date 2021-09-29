@@ -782,15 +782,21 @@ public class NIOClient {
 	总结：
 	1.服务器端创建serverSocketChannel，并设置监听端口和非阻塞
 	2.得到一个selector对象，并把serverSocketChannel注册到selector上，并设置关心事件为OP_ACCEPT
-	3.当客户端有连接产生时，先获取到关注的事件，在通过selector.selectedKeys() 返回关注事件的集合(即注册到selector上key的集合)，并使用迭代器进行遍历
-	4.获取selectionKeys集合种的key来判断是什么事件，如果是连接事件，则用accept函数得到socketChannel，并将该channel注册到selector上，同时设为非阻塞，并从集合种移除当前key，防止重复操作
-	5.如果监听到有事件发生，如果是读事件，则通过key获取到对应的channel，该channel与注册到selector上的channel是一样的，读取完数据之后也要进行移除操作，防止重复操作
+	3.当客户端有连接产生时，先获取到关注的事件，在通过selector.selectedKeys() 返回关注事件的
+	集合(即注册到selector上key的集合)，并使用迭代器进行遍历
+	4.获取selectionKeys集合种的key来判断是什么事件，如果是连接事件，则用accept函数得到socketChannel，并将该
+	channel注册到selector上，同时设为非阻塞，并从集合种移除当前key，防止重复操作
+	5.如果监听到有事件发生，如果是读事件，则通过key获取到对应的channel，该channel与注册到selector上的channel是
+	一样的，读取完数据之后也要进行移除操作，防止重复操作
 	
 **疑问**
-- 为什么进行第一次连接时，服务器端对应的serverSocketChannel注册到selector上得到一个key，而第二个新客户端连接时，与第一次的key一致，不是每次执行完都移除了嘛？
+为什么进行第一次连接时，服务器端对应的serverSocketChannel注册到selector上得到一个key，而第二个新客户端连接时，与第一次的key一致，不是每次执行完都移除了嘛？
 
-		解答：
-		因为当有连接事件产生时，监听器会监听到是什么事件，然后通过selector.selectedKeys()返回关注事件的集合(即注册到selector上key的集合)，进行完连接事件后就会使用remove函数对当前key进行移除，因为使用的hasnext()方法，防止进行重复操作，因为当前的移除操作执行完毕后，当前该次循环也就结束了，当再次执行连接事件时，又会调用selector.selectedKeys()函数获取key的集合，所以serverSocketChannel对应的key是一致的
+	解答：
+	因为当有连接事件产生时，监听器会监听到是什么事件，然后通过selector.selectedKeys()返回关注事件的集合(即注册
+	到selector上key的集合)，进行完连接事件后就会使用remove函数对当前key进行移除，因为使用的hasnext()方法，防止进
+	行重复操作，因为当前的移除操作执行完毕后，当前该次循环也就结束了，当再次执行连接事件时，又会调用
+	selector.selectedKeys()函数获取key的集合，所以serverSocketChannel对应的key是一致的
 
 ## 3.9、SelectionKey
 1. SelectionKey，表示**Selector和网络通道的注册关系**，共四种：
