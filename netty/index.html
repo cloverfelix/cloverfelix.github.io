@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/netty\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Netty","wordcount":  79681 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Netty","wordcount":  79708 ,
         "url": "https:\/\/cloverfelix.github.io\/netty\/","datePublished": "2021-07-04T16:44:07+08:00","dateModified": "2021-07-04T16:44:07+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Netty</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/netty/"><i class="far fa-folder fa-fw"></i>Netty</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 79681 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 79708 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 160 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -15167,35 +15167,67 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><pre><code>说明：
-1.先看启动类：main方法中，首先创建了关于SSL的配置类
-2.重点分析创建的两个EventLoopGroup对象
-	EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-    EventLoopGroup workerGroup = new NioEventLoopGroup();
-	1.这两个对象是整个Netty的核心对象，可以说，整个Netty的运作都依赖于他们。bossGroup用于接收TCP请求，它会将
-	请求交给workerGroup，workerGroup会获取到真正的连接，然后和连接进行通信，比如读写解码编码等操作
-	2.EventLoopGroup是事件循环组(线程组) 含有多个EventLoop，可以注册channel，
-	用于在事件循环中去进行选择(和选择器相关)  [debug查看]
-	3.new NioEventLoopGroup(1);这个1表示bossGroup事件组有一个线程你可以指定，如果new NioEventLoopGroup(); 
-	不给参数，会有默认个线程cpu核数*2，即可以充分利用多核的优势
-	DEFAULT_EVENT_LOOP_THREADS = Math.max(1, SystemPropertyUtil.getInt(
-            &quot;io.netty.eventLoopThreads&quot;, NettyRuntime.availableProcessors() * 2));
-    4.会创建EventExecutor数组 children = new EventExecutor[nThreads]; [debug查看]
-	5.每个元素的类型就是NioEventLoop，NioEventLoop 实现了 EventLoop 接口和 Executor 接口
-	6.try代码块中创建了一个ServerBootstrap对象，它是一个引导类，用于启动服务器和引导整个程序的初始化
-	(看下源码 allow easy bootstrap of {@link ServerChannel})，它和ServerChannel关联，而ServerChannel继承了
-	Channel，有一些remoteAddress等	[debug查看] 随后，变量b调用了group方法将两个group放入自己的字段中，
-	用于后期引导使用
-	7.然后添加了一个channel，其中一个参数是Class对象，引导类将通过这个Class对象反射创建ChannelFactory。
-	然后添加了一些TCP参数。[说明：Channel的创建在bind方法，可以Debug下bind，
-	会找到channel = channelFactory.newChannel();]
-	8.再添加了一个服务器专属的日志处理器handler
-	9.再添加一个SocketChannel(不是ServerSocketChannel)的handler
-	10.然后绑定端口并阻塞成功。
-	11.最后main线程阻塞等待关闭
-	12.finally块中的代码将在服务器关闭时优雅关闭所有资源
-</code></pre>
-<p>第二点debug结果：</p>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">说明：
+	1.先看启动类：main方法中，首先创建了关于SSL的配置类
+	2.重点分析创建的两个EventLoopGroup对象
+		EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
+		1.这两个对象是整个Netty的核心对象，可以说，整个Netty的运作都依赖于他们。bossGroup用于接收TCP请求，它会将
+		请求交给workerGroup，workerGroup会获取到真正的连接，然后和连接进行通信，比如读写解码编码等操作
+		2.EventLoopGroup是事件循环组(线程组) 含有多个EventLoop，可以注册channel，
+		用于在事件循环中去进行选择(和选择器相关)  [debug查看]
+		3.new NioEventLoopGroup(1);这个1表示bossGroup事件组有一个线程你可以指定，如果new NioEventLoopGroup(); 
+		不给参数，会有默认个线程cpu核数*2，即可以充分利用多核的优势
+		DEFAULT_EVENT_LOOP_THREADS = Math.max(1, SystemPropertyUtil.getInt(
+                &#34;io.netty.eventLoopThreads&#34;, NettyRuntime.availableProcessors() * 2));
+	    4.会创建EventExecutor数组 children = new EventExecutor[nThreads]; [debug查看]
+		5.每个元素的类型就是NioEventLoop，NioEventLoop 实现了 EventLoop 接口和 Executor 接口
+		6.try代码块中创建了一个ServerBootstrap对象，它是一个引导类，用于启动服务器和引导整个程序的初始化
+		(看下源码 allow easy bootstrap of {@link ServerChannel})，它和ServerChannel关联，而ServerChannel继承了
+		Channel，有一些remoteAddress等	[debug查看] 随后，变量b调用了group方法将两个group放入自己的字段中，
+		用于后期引导使用
+		7.然后添加了一个channel，其中一个参数是Class对象，引导类将通过这个Class对象反射创建ChannelFactory。
+		然后添加了一些TCP参数。[说明：Channel的创建在bind方法，可以Debug下bind，
+		会找到channel = channelFactory.newChannel();]
+		8.再添加了一个服务器专属的日志处理器handler
+		9.再添加一个SocketChannel(不是ServerSocketChannel)的handler
+		10.然后绑定端口并阻塞成功。
+		11.最后main线程阻塞等待关闭
+		12.finally块中的代码将在服务器关闭时优雅关闭所有资源
+</code></pre></td></tr></table>
+</div>
+</div><p>第二点debug结果：</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"

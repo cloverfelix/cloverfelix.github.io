@@ -7609,7 +7609,8 @@ public final class EchoServer {
 }
 ~~~
 
-	说明：
+~~~ html
+说明：
 	1.先看启动类：main方法中，首先创建了关于SSL的配置类
 	2.重点分析创建的两个EventLoopGroup对象
 		EventLoopGroup bossGroup = new NioEventLoopGroup(1);
@@ -7636,6 +7637,7 @@ public final class EchoServer {
 		10.然后绑定端口并阻塞成功。
 		11.最后main线程阻塞等待关闭
 		12.finally块中的代码将在服务器关闭时优雅关闭所有资源
+~~~
 
 第二点debug结果：
 
