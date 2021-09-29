@@ -9505,7 +9505,7 @@ static void invokeChannelRead(final AbstractChannelHandlerContext next, Object m
 3. 各有优劣，从灵活性考虑，第一种较好
 
 # 11、用 Netty 自己实现 dubbo RPC
-## 10.1、RPC 基本介绍
+## 11.1、RPC 基本介绍
 1. `RPC（Remote Procedure Call）`— 远程过程调用，是一个计算机通信协议。该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程
 2. 两个或多个应用程序都分布在不同的服务器上，它们之间的调用都像是本地方法调用一样(如图)
 
@@ -9513,7 +9513,7 @@ static void invokeChannelRead(final AbstractChannelHandlerContext next, Object m
 
 2. 常见的 RPC 框架有: 比较知名的如阿里的Dubbo、google的g RPC、Go语言的rpcx、Apache的thrift， Spring 旗下的 Spring Cloud
 
-## 10.2、RPC调用流程
+## 11.2、RPC调用流程
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173608.png)
 
@@ -9532,13 +9532,13 @@ static void invokeChannelRead(final AbstractChannelHandlerContext next, Object m
 **小结：RPC 的目标就是将 2-8 这些步骤都封装起来，用户无需关心这些细节，可以像调
 用本地方法一样即可完成远程服务调用**
 
-## 10.2、自己实现 dubbo RPC (基于 Netty)
+## 11.3、自己实现 dubbo RPC (基于 Netty)
 
-### 10.2.1、需求说明
+### 11.3.1、需求说明
 1. dubbo 底层使用了 Netty 作为网络通讯框架，要求用 Netty 实现一个简单的 RPC 框架
 2. 模仿 dubbo，`消费者和提供者约定接口和协议`，消费者远程调用提供者的服务，提供者返回一个字符串，消费者打印提供者返回的数据。底层网络通信使用 Netty 4.1.20
 
-### 10.2.2、设计说明
+### 11.3.2、设计说明
 1. 创建一个接口，定义抽象方法。用于消费者和提供者之间的约定
 2. 创建一个提供者，该类需要监听消费者的请求，并按照约定返回数据
 3. 创建一个消费者，该类需要透明的调用自己不存在的方法，内部需要使用 Netty 请求提供者返回数据
@@ -9547,7 +9547,7 @@ static void invokeChannelRead(final AbstractChannelHandlerContext next, Object m
 
 	这个里面的难点在于代理对象的创建
 
-## 10.3、代码实现
+## 11.4、代码实现
 
 **公共接口**
 ~~~Java
