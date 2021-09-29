@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/netty\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Netty","wordcount":  73826 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Netty","wordcount":  79687 ,
         "url": "https:\/\/cloverfelix.github.io\/netty\/","datePublished": "2021-07-04T16:44:07+08:00","dateModified": "2021-07-04T16:44:07+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Netty</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/netty/"><i class="far fa-folder fa-fw"></i>Netty</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 73826 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 148 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 79687 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 160 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -341,6 +341,27 @@
         <li><a href="#1071源码剖析">10.7.1、源码剖析</a></li>
       </ul>
     </li>
+    <li><a href="#108handler-中加入线程池和-context-中添加线程池的源码剖析">10.8、Handler 中加入线程池和 Context 中添加线程池的源码剖析</a>
+      <ul>
+        <li><a href="#1081源码剖析目的">10.8.1、源码剖析目的</a></li>
+        <li><a href="#1082第一种方式">10.8.2、第一种方式</a></li>
+        <li><a href="#1083write-方法的源码在-abstractchannelhandlercontext-类">10.8.3、write 方法的源码(在 AbstractChannelHandlerContext 类)</a></li>
+        <li><a href="#1084第二种方式">10.8.4、第二种方式</a></li>
+        <li><a href="#1085两种方式的比较">10.8.5、两种方式的比较</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#101rpc-基本介绍">10.1、RPC 基本介绍</a></li>
+    <li><a href="#102rpc调用流程">10.2、RPC调用流程</a></li>
+    <li><a href="#102自己实现-dubbo-rpc-基于-netty">10.2、自己实现 dubbo RPC (基于 Netty)</a>
+      <ul>
+        <li><a href="#1021需求说明">10.2.1、需求说明</a></li>
+        <li><a href="#1022设计说明">10.2.2、设计说明</a></li>
+      </ul>
+    </li>
+    <li><a href="#103代码实现">10.3、代码实现</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="1netty的介绍">1、Netty的介绍</h1>
@@ -16097,6 +16118,7 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 </span><span class="lnt">67
 </span><span class="lnt">68
 </span><span class="lnt">69
+</span><span class="lnt">70
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Override</span>
@@ -16167,7 +16189,8 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 <span class="n">3</span><span class="err">、</span><span class="n">循环容器</span><span class="err">，</span><span class="n">执行</span> <span class="n">pipeline</span><span class="o">.</span><span class="na">fireChannelRead</span><span class="o">(</span><span class="n">readBuf</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
 <span class="n">4</span><span class="err">、</span><span class="n">doReadMessages</span> <span class="n">是读取</span> <span class="n">boss</span> <span class="n">线程中</span> <span class="n">NioServerSockerChannel</span> <span class="n">接收到的请求</span><span class="err">。</span><span class="n">并把这些请求放进容器</span>
 <span class="n">5</span><span class="err">、</span><span class="n">循环遍历容器中的所有请求</span><span class="err">，</span><span class="n">调用</span> <span class="n">pipeline</span> <span class="n">的</span> <span class="n">fireChannelRead</span> <span class="n">方法</span><span class="err">，</span><span class="n">用于处理这些接受的请求或者其它事件</span><span class="err">，</span>
-	<span class="n">在</span> <span class="n">read</span> <span class="n">方法中</span><span class="err">，</span><span class="n">循环调用</span> <span class="n">ServerSocket</span> <span class="n">的</span> <span class="n">pipeline</span> <span class="n">的</span> <span class="n">fireChannelRead</span> <span class="n">方法</span><span class="err">，</span><span class="n">开始执行管道中</span> <span class="n">handler</span> <span class="n">的ChannelRead</span> <span class="n">方法进入</span>
+<span class="n">在</span> <span class="n">read</span> <span class="n">方法中</span><span class="err">，</span><span class="n">循环调用</span> <span class="n">ServerSocket</span> <span class="n">的</span> <span class="n">pipeline</span> <span class="n">的</span> <span class="n">fireChannelRead</span> <span class="n">方法</span><span class="err">，</span><span class="n">开始执行管道中</span> <span class="n">handler</span> <span class="n">的</span>
+<span class="n">ChannelRead</span> <span class="n">方法进入</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>6、追踪 doReadMessages 方法</p>
@@ -16846,17 +16869,17 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 
 <span class="n">说明</span><span class="err">：</span>
 <span class="n">1</span><span class="err">、</span><span class="n">pipeline</span> <span class="n">添加</span> <span class="n">handler</span><span class="err">，</span><span class="n">参数是线程池</span><span class="err">，</span><span class="n">name</span> <span class="n">是</span> <span class="kc">null</span><span class="err">，</span><span class="n">handler</span> <span class="n">是我们或者系统传入的handler</span><span class="err">。</span>
-	 <span class="n">Netty</span> <span class="n">为了防止多个线程导致安全问题</span><span class="err">，</span><span class="n">同步了这段代码</span><span class="err">，</span><span class="n">步骤如下</span>
+<span class="n">Netty</span> <span class="n">为了防止多个线程导致安全问题</span><span class="err">，</span><span class="n">同步了这段代码</span><span class="err">，</span><span class="n">步骤如下</span>
 <span class="n">2</span><span class="err">、</span><span class="n">检查这个</span> <span class="n">handler</span> <span class="n">实例是否是共享的</span><span class="err">，</span><span class="n">如果不是</span><span class="err">，</span><span class="n">并且已经被别的</span> <span class="n">pipeline</span> <span class="n">使用了</span><span class="err">，</span><span class="n">则抛出异常</span>
 <span class="n">3</span><span class="err">、</span> <span class="n">调用</span> <span class="n">newCtx</span> <span class="o">=</span> <span class="n">newContext</span><span class="o">(</span><span class="n">group</span><span class="o">,</span> <span class="n">filterName</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">handler</span><span class="o">),</span> <span class="n">handler</span><span class="o">)</span> <span class="n">方法</span><span class="err">，</span><span class="n">创建一个</span> <span class="n">Context</span><span class="err">。</span>
-	  <span class="n">从这里可以看出来</span><span class="err">，</span><span class="n">每次添加一个</span> <span class="n">handler</span> <span class="n">都会创建一个</span> <span class="n">Context</span> <span class="n">关联</span>
+<span class="n">从这里可以看出来</span><span class="err">，</span><span class="n">每次添加一个</span> <span class="n">handler</span> <span class="n">都会创建一个</span> <span class="n">Context</span> <span class="n">关联</span>
 <span class="n">4</span><span class="err">、</span><span class="n">调用</span> <span class="n">addLast</span> <span class="n">方法</span><span class="err">，</span><span class="n">将</span> <span class="n">Context</span> <span class="n">追加到链表中</span>
 <span class="n">5</span><span class="err">、</span><span class="n">如果这个通道还没有注册到</span> <span class="n">selector</span> <span class="n">上</span><span class="err">，</span><span class="n">就将这个</span> <span class="n">Context</span> <span class="n">添加到</span> <span class="n">这个</span> <span class="n">pipeline</span> <span class="n">的待办任务中</span><span class="err">。</span>
-	 <span class="n">当注册好了以后</span><span class="err">，</span><span class="n">就会调用</span> <span class="n">callHandlerAdded0</span> <span class="nf">方法</span> <span class="o">(</span><span class="n">默认是什么都不做</span><span class="err">，</span><span class="n">用户可实现该方法</span><span class="o">)</span>
+<span class="n">当注册好了以后</span><span class="err">，</span><span class="n">就会调用</span> <span class="n">callHandlerAdded0</span> <span class="nf">方法</span> <span class="o">(</span><span class="n">默认是什么都不做</span><span class="err">，</span><span class="n">用户可实现该方法</span><span class="o">)</span>
 <span class="n">6</span><span class="err">、</span><span class="n">到这里</span><span class="err">，</span><span class="n">针对三对象创建过程</span><span class="err">，</span><span class="n">基本了解</span><span class="err">，</span><span class="n">和最初说的一样</span><span class="err">，</span><span class="n">每当创建</span> <span class="n">ChannelSocket</span> <span class="n">的时候都会创建一个绑定的</span>
-	 <span class="n">pipeline</span><span class="err">，</span><span class="n">一对一的关系</span><span class="err">，</span><span class="n">创建</span> <span class="n">pipeline</span> <span class="n">的时候也会创建</span> <span class="n">tail</span> <span class="n">节点和</span> <span class="n">head</span> <span class="n">节点</span><span class="err">，</span><span class="n">形成最初的链表</span><span class="err">，</span><span class="n">tail</span> <span class="n">是入站inbound</span>
-	 <span class="n">类型的</span> <span class="n">handler</span><span class="err">，</span><span class="n">head</span> <span class="n">既是</span> <span class="n">inbound</span> <span class="n">也是</span> <span class="n">outbound</span> <span class="n">类型的</span> <span class="n">handler</span><span class="err">。</span><span class="n">在调用</span> <span class="n">pipeline</span> <span class="n">的</span> <span class="n">addLast</span> <span class="n">方法的时候</span>
-	 <span class="n">会根据给定的</span> <span class="n">handler</span> <span class="n">创建一个</span> <span class="n">Context</span><span class="err">，</span><span class="n">然后</span><span class="err">，</span><span class="n">将这个</span> <span class="n">Context</span> <span class="nf">插入到链表的尾端</span><span class="o">(</span><span class="n">tail前面</span><span class="o">)</span>
+<span class="n">pipeline</span><span class="err">，</span><span class="n">一对一的关系</span><span class="err">，</span><span class="n">创建</span> <span class="n">pipeline</span> <span class="n">的时候也会创建</span> <span class="n">tail</span> <span class="n">节点和</span> <span class="n">head</span> <span class="n">节点</span><span class="err">，</span><span class="n">形成最初的链表</span><span class="err">，</span><span class="n">tail</span> <span class="n">是入站inbound</span>
+<span class="n">类型的</span> <span class="n">handler</span><span class="err">，</span><span class="n">head</span> <span class="n">既是</span> <span class="n">inbound</span> <span class="n">也是</span> <span class="n">outbound</span> <span class="n">类型的</span> <span class="n">handler</span><span class="err">。</span><span class="n">在调用</span> <span class="n">pipeline</span> <span class="n">的</span> <span class="n">addLast</span> <span class="n">方法的时候会根据</span>
+<span class="n">给定的</span> <span class="n">handler</span> <span class="n">创建一个</span> <span class="n">Context</span><span class="err">，</span><span class="n">然后</span><span class="err">，</span><span class="n">将这个</span> <span class="n">Context</span> <span class="nf">插入到链表的尾端</span><span class="o">(</span><span class="n">tail前面</span><span class="o">)</span>
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="1043pipeline-handler-handlercontext-创建过程梳理">10.4.3、Pipeline Handler HandlerContext 创建过程梳理</h3>
@@ -17116,8 +17139,8 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 <span class="n">说明</span><span class="err">：</span>
 <span class="n">1</span><span class="err">、</span><span class="n">这些都是出站的实现</span><span class="err">，</span><span class="n">但是调用的是</span> <span class="n">outbound</span> <span class="n">类型的</span> <span class="n">tail</span> <span class="n">handler</span> <span class="n">来进行处理的</span><span class="err">，</span><span class="n">因为这些都是</span> <span class="n">outbound</span> <span class="n">事件</span>
 <span class="n">2</span><span class="err">、</span><span class="n">出站是</span> <span class="n">tail</span> <span class="n">开始</span><span class="err">，</span><span class="n">入站从</span> <span class="n">head</span> <span class="n">开始</span><span class="err">。</span><span class="n">因为出站是从内部向外面写</span><span class="err">，</span><span class="n">从</span> <span class="n">tail</span> <span class="n">开始</span><span class="err">，</span><span class="n">能够让前面的</span> <span class="n">handler</span> <span class="n">进行处理</span><span class="err">，</span>
-	  <span class="n">防止</span> <span class="n">handler</span> <span class="n">被遗漏</span><span class="err">，</span><span class="n">比如编码</span><span class="err">。</span><span class="n">反之</span><span class="err">，</span><span class="n">入站当然是从</span> <span class="n">head</span> <span class="n">往内部输入</span><span class="err">，</span><span class="n">让后面的</span> <span class="n">handler</span> <span class="n">能够处理这些输入的数</span>
-	  <span class="n">据</span><span class="err">。</span><span class="n">比如解码</span><span class="err">。</span><span class="n">因此虽然</span> <span class="n">head</span> <span class="n">也实现了</span> <span class="n">outbound</span> <span class="n">接口</span><span class="err">，</span><span class="n">单不是从</span> <span class="n">head</span> <span class="n">开始执行出站任务</span>
+<span class="n">防止</span> <span class="n">handler</span> <span class="n">被遗漏</span><span class="err">，</span><span class="n">比如编码</span><span class="err">。</span><span class="n">反之</span><span class="err">，</span><span class="n">入站当然是从</span> <span class="n">head</span> <span class="n">往内部输入</span><span class="err">，</span><span class="n">让后面的</span> <span class="n">handler</span> <span class="n">能够处理这些输入的数据</span><span class="err">。</span>
+<span class="n">比如解码</span><span class="err">。</span><span class="n">因此虽然</span> <span class="n">head</span> <span class="n">也实现了</span> <span class="n">outbound</span> <span class="n">接口</span><span class="err">，</span><span class="n">单不是从</span> <span class="n">head</span> <span class="n">开始执行出站任务</span>
 </code></pre></td></tr></table>
 </div>
 </div><p><img
@@ -17131,7 +17154,7 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 <pre><code>说明：
 1、pipeline 首先会调用 Context 的静态方法 fireXXX，并传入 Context
 2、然后，静态方法调用 Context 的 invoker 方法，而 invoker 方法内部会调用该 Context 所包含的 Handler 的真正 XXX 
-      方法，调用结束后，如果还需要继续往后传递，就调用 Context 的 fireXXX2 方法，循环往复
+方法，调用结束后，如果还需要继续往后传递，就调用 Context 的 fireXXX2 方法，循环往复
 </code></pre>
 <h3 id="1054channel-pipeline-调度-handler-梳理">10.5.4、Channel Pipeline 调度 handler 梳理</h3>
 <ol>
@@ -17407,12 +17430,12 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 <span class="n">说明</span><span class="err">：</span>
 <span class="n">1</span><span class="err">、</span><span class="n">得到用户设置的超时事件</span>
 <span class="n">2</span><span class="err">、</span><span class="n">如果读取操作结束了</span><span class="o">(</span><span class="n">执行了</span> <span class="n">channelReadComplete</span> <span class="n">方法设置</span><span class="o">)</span><span class="err">，</span><span class="n">就用设置时间</span><span class="o">-(</span><span class="n">给定时间</span><span class="o">-</span><span class="n">上次最后一次读的</span>
-	 <span class="n">时间的结果</span><span class="o">)</span><span class="err">，</span><span class="n">如果小于</span> <span class="n">0</span> <span class="err">，</span><span class="n">就触发事件</span><span class="err">。</span><span class="n">反之</span><span class="err">，</span><span class="n">继续放入队列</span><span class="err">。</span><span class="n">间隔时间是新的计算时间</span>
+<span class="n">时间的结果</span><span class="o">)</span><span class="err">，</span><span class="n">如果小于</span> <span class="n">0</span> <span class="err">，</span><span class="n">就触发事件</span><span class="err">。</span><span class="n">反之</span><span class="err">，</span><span class="n">继续放入队列</span><span class="err">。</span><span class="n">间隔时间是新的计算时间</span>
 <span class="n">3</span><span class="err">、</span><span class="n">触发的逻辑是</span><span class="err">：</span><span class="n">首先将任务再次放到队列</span><span class="err">，</span><span class="n">时间是设置的超时时间</span><span class="err">，</span><span class="n">返回一个</span> <span class="n">promise</span> <span class="n">对象</span><span class="err">，</span><span class="n">用于做取消操作</span><span class="err">，</span>
-	 <span class="n">然后</span><span class="err">，</span><span class="n">设置</span> <span class="n">first</span> <span class="n">属性为</span> <span class="kc">false</span><span class="err">，</span><span class="n">表示下一次读取不再是第一次了</span><span class="err">，</span><span class="n">这个属性在</span> <span class="n">channelRead</span> <span class="n">方法会被改成</span> <span class="kc">true</span>
+<span class="n">然后</span><span class="err">，</span><span class="n">设置</span> <span class="n">first</span> <span class="n">属性为</span> <span class="kc">false</span><span class="err">，</span><span class="n">表示下一次读取不再是第一次了</span><span class="err">，</span><span class="n">这个属性在</span> <span class="n">channelRead</span> <span class="n">方法会被改成</span> <span class="kc">true</span>
 <span class="n">4</span><span class="err">、</span><span class="n">创建一个</span> <span class="n">IdleStateEvent</span> <span class="n">类型的写事件对象</span><span class="err">，</span><span class="n">将次对象传递给用户的</span> <span class="n">UserEventTriggered</span> <span class="n">方法</span><span class="err">，</span><span class="n">完成触发事件操作</span>
 <span class="n">5</span><span class="err">、</span><span class="n">总的来说</span><span class="err">，</span><span class="n">每次读取操作都会记录一个时间</span><span class="err">，</span><span class="n">定时任务时间到了</span><span class="err">，</span><span class="n">会计算当前时间和最后一次读的时间的间隔</span><span class="err">，</span><span class="n">如果</span>
-	 <span class="n">时间间隔超过了设置的时间</span><span class="err">，</span><span class="n">就触发</span> <span class="n">UserEventTriggered</span> <span class="n">方法</span><span class="err">（</span><span class="n">前面写心跳机制案例时提到过的自定义handler名</span><span class="err">）</span>
+<span class="n">时间间隔超过了设置的时间</span><span class="err">，</span><span class="n">就触发</span> <span class="n">UserEventTriggered</span> <span class="n">方法</span><span class="err">（</span><span class="n">前面写心跳机制案例时提到过的自定义handler名</span><span class="err">）</span>
 </code></pre></td></tr></table>
 </div>
 </div><ol start="5">
@@ -17625,7 +17648,8 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 1、ScheduledExecutorService 接口表示是一个定时任务接口，EventLoop可以接受定时任务。
 2、EventLoop 接口:Netty接口文档说明该接口作用:一旦 Channel 注册了，就处理该Channel对应的所有I/O操作
 3、SingleThreadEventExecutor 表示这是一个单个线程的线程池
-4、 EventLoop是一个单例的线程池，里面含有一个死循环的线程不断的做着3件事情:监听端口，处理端口事件，处理队列事件。每个 EventLoop都可以绑定多个Channel，而每个Channel 始终只能由一个EventLoop 来处理
+4、EventLoop是一个单例的线程池，里面含有一个死循环的线程不断的做着3件事情:监听端口，处理端口
+事件，处理队列事件。每个 EventLoop都可以绑定多个Channel，而每个Channel 始终只能由一个EventLoop 来处理
 </code></pre>
 <ol start="2">
 <li>NioEventLoop 的使用 - execute 方法
@@ -17700,10 +17724,10 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 
 <span class="n">说明</span>
 <span class="n">1</span><span class="err">、</span><span class="n">首先判断该</span> <span class="n">EventLoop</span> <span class="n">的线程是否是当前线程</span><span class="err">，</span><span class="n">如果是</span><span class="err">，</span><span class="n">直接添加到任务队列中去</span><span class="err">，</span><span class="n">如果不是</span><span class="err">，</span><span class="n">则尝试启动线程</span><span class="err">（</span><span class="n">但</span>
-	 <span class="n">由于线程是单个的</span><span class="err">，</span><span class="n">因此只能启动一次</span><span class="err">），</span><span class="n">随后再将任务添加到队列中去</span><span class="err">。</span>
+<span class="n">由于线程是单个的</span><span class="err">，</span><span class="n">因此只能启动一次</span><span class="err">），</span><span class="n">随后再将任务添加到队列中去</span><span class="err">。</span>
 <span class="n">2</span><span class="err">、</span><span class="n">如果线程已经停止</span><span class="err">，</span><span class="n">并且删除任务失败</span><span class="err">，</span><span class="n">则执行拒绝策略</span><span class="err">，</span><span class="n">默认是抛出异常</span><span class="err">。</span>
 <span class="n">3</span><span class="err">、</span><span class="n">如果</span> <span class="n">addTaskWakesUp</span> <span class="n">是false</span><span class="err">，</span><span class="n">并且任务不是</span> <span class="n">NonWakeupRunnable</span> <span class="n">类型的</span><span class="err">，</span><span class="n">就尝试唤醒</span> <span class="n">selector</span> <span class="err">。</span><span class="n">这个时候</span><span class="err">，</span>
-	 <span class="n">阻塞在</span> <span class="n">selector</span> <span class="n">的线程就会立即返回</span>
+<span class="n">阻塞在</span> <span class="n">selector</span> <span class="n">的线程就会立即返回</span>
 <span class="n">4</span><span class="err">、</span><span class="n">可以下断点来追踪</span>
 </code></pre></td></tr></table>
 </div>
@@ -17924,19 +17948,1414 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 
 <span class="n">说明</span><span class="err">：</span>
 <span class="n">1</span><span class="err">、</span><span class="n">首先调用executor</span> <span class="n">的execute方法</span><span class="err">，</span><span class="n">这个executor</span> <span class="n">就是在创建Event</span> <span class="n">LoopGroup</span> <span class="n">的时候创建的</span>
-	 <span class="n">ThreadPerTaskExecutor类</span><span class="err">。</span><span class="n">该execute方法会将Runnable包装成Netty的</span> <span class="n">FastThreadLocalThread</span><span class="err">。</span>
+<span class="n">ThreadPerTaskExecutor类</span><span class="err">。</span><span class="n">该execute方法会将Runnable包装成Netty的</span> <span class="n">FastThreadLocalThread</span><span class="err">。</span>
 <span class="n">2</span><span class="err">、</span><span class="n">任务中</span><span class="err">，</span><span class="n">首先判断线程中断状态</span><span class="err">，</span><span class="n">然后设置最后一次的执行时间</span>
 <span class="n">3</span><span class="err">、</span><span class="n">执行当前NioEventLoop</span> <span class="n">的</span> <span class="n">run方法</span><span class="err">，</span><span class="n">注意</span><span class="o">:</span><span class="n">这个方法是个死循环</span><span class="err">，</span><span class="n">是整个EventLoop</span> <span class="n">的核心</span>
 <span class="n">4</span><span class="err">、</span><span class="n">在finally</span> <span class="n">块中</span><span class="err">，</span><span class="n">使用CAS</span> <span class="n">不断修改</span> <span class="n">state</span> <span class="n">状态</span><span class="err">，</span><span class="n">改成ST_SHUTTING_DOWN</span><span class="err">。</span><span class="n">也就是当线程Loop</span> <span class="n">结束的时候</span><span class="err">。</span><span class="n">关闭</span>
-	 <span class="n">线程</span><span class="err">。</span><span class="n">最后还要死循环确认是否关闭</span><span class="err">，</span><span class="n">否则不会</span> <span class="k">break</span><span class="err">。</span><span class="n">然后</span><span class="err">，</span><span class="n">执行</span> <span class="n">cleanup操作</span><span class="err">，</span><span class="n">更新状态为</span> <span class="n">ST_TERMINATED</span><span class="err">，</span>
-	 <span class="n">并释放当前线程锁</span><span class="err">。</span><span class="n">如果任务队列不是空</span><span class="err">，</span><span class="n">则打印队列中还有多少个未完成的任务</span><span class="err">。</span><span class="n">并回调terminationFuture方法</span><span class="err">。</span>
+<span class="n">线程</span><span class="err">。</span><span class="n">最后还要死循环确认是否关闭</span><span class="err">，</span><span class="n">否则不会</span> <span class="k">break</span><span class="err">。</span><span class="n">然后</span><span class="err">，</span><span class="n">执行</span> <span class="n">cleanup操作</span><span class="err">，</span><span class="n">更新状态为</span> <span class="n">ST_TERMINATED</span><span class="err">，</span>
+<span class="n">并释放当前线程锁</span><span class="err">。</span><span class="n">如果任务队列不是空</span><span class="err">，</span><span class="n">则打印队列中还有多少个未完成的任务</span><span class="err">。</span><span class="n">并回调terminationFuture方法</span><span class="err">。</span>
 <span class="n">5</span><span class="err">、</span><span class="n">其实最核心的就是</span> <span class="n">Event</span> <span class="n">Loop自身的run方法</span><span class="err">。</span><span class="n">再继续深入run方法</span>
 </code></pre></td></tr></table>
 </div>
 </div><ol start="4">
 <li>EventLoop 中的 Loop 是靠 run 实现的，我们分析下 run 方法（该方法在 NioEventLoop）</li>
 </ol>
-</div><div class="post-footer" id="post-footer">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+	<span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="k">switch</span> <span class="o">(</span><span class="n">selectStrategy</span><span class="o">.</span><span class="na">calculateStrategy</span><span class="o">(</span><span class="n">selectNowSupplier</span><span class="o">,</span> <span class="n">hasTasks</span><span class="o">()))</span> <span class="o">{</span>
+				<span class="k">case</span> <span class="n">SelectStrategy</span><span class="o">.</span><span class="na">CONTINUE</span><span class="o">:</span>
+					<span class="k">continue</span><span class="o">;</span>
+				<span class="k">case</span> <span class="n">SelectStrategy</span><span class="o">.</span><span class="na">SELECT</span><span class="o">:</span>
+					<span class="n">select</span><span class="o">(</span><span class="n">wakenUp</span><span class="o">.</span><span class="na">getAndSet</span><span class="o">(</span><span class="kc">false</span><span class="o">));</span>
+
+					<span class="c1">// &#39;wakenUp.compareAndSet(false, true)&#39; is always evaluated
+</span><span class="c1"></span>					<span class="c1">// before calling &#39;selector.wakeup()&#39; to reduce the wake-up
+</span><span class="c1"></span>					<span class="c1">// overhead. (Selector.wakeup() is an expensive operation.)
+</span><span class="c1"></span>					<span class="c1">//
+</span><span class="c1"></span>					<span class="c1">// However, there is a race condition in this approach.
+</span><span class="c1"></span>					<span class="c1">// The race condition is triggered when &#39;wakenUp&#39; is set to
+</span><span class="c1"></span>					<span class="c1">// true too early.
+</span><span class="c1"></span>					<span class="c1">//
+</span><span class="c1"></span>					<span class="c1">// &#39;wakenUp&#39; is set to true too early if:
+</span><span class="c1"></span>					<span class="c1">// 1) Selector is waken up between &#39;wakenUp.set(false)&#39; and
+</span><span class="c1"></span>					<span class="c1">//    &#39;selector.select(...)&#39;. (BAD)
+</span><span class="c1"></span>					<span class="c1">// 2) Selector is waken up between &#39;selector.select(...)&#39; and
+</span><span class="c1"></span>					<span class="c1">//    &#39;if (wakenUp.get()) { ... }&#39;. (OK)
+</span><span class="c1"></span>					<span class="c1">//
+</span><span class="c1"></span>					<span class="c1">// In the first case, &#39;wakenUp&#39; is set to true and the
+</span><span class="c1"></span>					<span class="c1">// following &#39;selector.select(...)&#39; will wake up immediately.
+</span><span class="c1"></span>					<span class="c1">// Until &#39;wakenUp&#39; is set to false again in the next round,
+</span><span class="c1"></span>					<span class="c1">// &#39;wakenUp.compareAndSet(false, true)&#39; will fail, and therefore
+</span><span class="c1"></span>					<span class="c1">// any attempt to wake up the Selector will fail, too, causing
+</span><span class="c1"></span>					<span class="c1">// the following &#39;selector.select(...)&#39; call to block
+</span><span class="c1"></span>					<span class="c1">// unnecessarily.
+</span><span class="c1"></span>					<span class="c1">//
+</span><span class="c1"></span>					<span class="c1">// To fix this problem, we wake up the selector again if wakenUp
+</span><span class="c1"></span>					<span class="c1">// is true immediately after selector.select(...).
+</span><span class="c1"></span>					<span class="c1">// It is inefficient in that it wakes up the selector for both
+</span><span class="c1"></span>					<span class="c1">// the first case (BAD - wake-up required) and the second case
+</span><span class="c1"></span>					<span class="c1">// (OK - no wake-up required).
+</span><span class="c1"></span>
+					<span class="k">if</span> <span class="o">(</span><span class="n">wakenUp</span><span class="o">.</span><span class="na">get</span><span class="o">())</span> <span class="o">{</span>
+						<span class="n">selector</span><span class="o">.</span><span class="na">wakeup</span><span class="o">();</span>
+					<span class="o">}</span>
+					<span class="c1">// fall through
+</span><span class="c1"></span>				<span class="k">default</span><span class="o">:</span>
+			<span class="o">}</span>
+
+			<span class="n">cancelledKeys</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+			<span class="n">needsToSelectAgain</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+			<span class="kd">final</span> <span class="kt">int</span> <span class="n">ioRatio</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">ioRatio</span><span class="o">;</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">ioRatio</span> <span class="o">==</span> <span class="n">100</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">try</span> <span class="o">{</span>
+					<span class="n">processSelectedKeys</span><span class="o">();</span>
+				<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+					<span class="c1">// Ensure we always run tasks.
+</span><span class="c1"></span>					<span class="n">runAllTasks</span><span class="o">();</span>
+				<span class="o">}</span>
+			<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+				<span class="kd">final</span> <span class="kt">long</span> <span class="n">ioStartTime</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">();</span>
+				<span class="k">try</span> <span class="o">{</span>
+					<span class="n">processSelectedKeys</span><span class="o">();</span>
+				<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+					<span class="c1">// Ensure we always run tasks.
+</span><span class="c1"></span>					<span class="kd">final</span> <span class="kt">long</span> <span class="n">ioTime</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">()</span> <span class="o">-</span> <span class="n">ioStartTime</span><span class="o">;</span>
+					<span class="n">runAllTasks</span><span class="o">(</span><span class="n">ioTime</span> <span class="o">*</span> <span class="o">(</span><span class="n">100</span> <span class="o">-</span> <span class="n">ioRatio</span><span class="o">)</span> <span class="o">/</span> <span class="n">ioRatio</span><span class="o">);</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Throwable</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">handleLoopException</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="c1">// Always handle shutdown even if the loop processing threw an exception.
+</span><span class="c1"></span>		<span class="k">try</span> <span class="o">{</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">isShuttingDown</span><span class="o">())</span> <span class="o">{</span>
+				<span class="n">closeAll</span><span class="o">();</span>
+				<span class="k">if</span> <span class="o">(</span><span class="n">confirmShutdown</span><span class="o">())</span> <span class="o">{</span>
+					<span class="k">return</span><span class="o">;</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Throwable</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">handleLoopException</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">说明</span><span class="err">：</span>
+<span class="n">1</span><span class="err">、</span><span class="n">从上面的步骤可以看出</span><span class="err">，</span><span class="n">整个run方法做了3件事情</span><span class="o">:</span>
+		<span class="n">1</span><span class="o">.</span><span class="na">select</span> <span class="n">获取感兴趣的事件</span><span class="err">。</span>
+		<span class="n">2</span><span class="o">.</span><span class="na">processSelectedKeys</span> <span class="n">处理事件</span><span class="err">。</span>
+		<span class="n">3</span><span class="o">.</span><span class="na">runAllTasks执行队列中的任务</span><span class="err">。</span>
+<span class="n">2</span><span class="err">、</span><span class="n">上面的三个方法</span><span class="err">，</span><span class="n">我们就追一下select</span> <span class="nf">方法</span><span class="o">(</span><span class="n">体现非阻塞</span><span class="o">)</span><span class="n">核心select方法解析</span>
+
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">select</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">oldWakenUp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+	<span class="n">Selector</span> <span class="n">selector</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">selector</span><span class="o">;</span>
+	<span class="k">try</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">selectCnt</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+		<span class="kt">long</span> <span class="n">currentTimeNanos</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">();</span>
+		<span class="kt">long</span> <span class="n">selectDeadLineNanos</span> <span class="o">=</span> <span class="n">currentTimeNanos</span> <span class="o">+</span> <span class="n">delayNanos</span><span class="o">(</span><span class="n">currentTimeNanos</span><span class="o">);</span>
+		<span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
+			<span class="kt">long</span> <span class="n">timeoutMillis</span> <span class="o">=</span> <span class="o">(</span><span class="n">selectDeadLineNanos</span> <span class="o">-</span> <span class="n">currentTimeNanos</span> <span class="o">+</span> <span class="n">500000L</span><span class="o">)</span> <span class="o">/</span> <span class="n">1000000L</span><span class="o">;</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">timeoutMillis</span> <span class="o">&lt;=</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">if</span> <span class="o">(</span><span class="n">selectCnt</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+					<span class="n">selector</span><span class="o">.</span><span class="na">selectNow</span><span class="o">();</span>
+					<span class="n">selectCnt</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+				<span class="o">}</span>
+				<span class="k">break</span><span class="o">;</span>
+			<span class="o">}</span>
+
+			<span class="c1">// If a task was submitted when wakenUp value was true, the task didn&#39;t get a chance to call
+</span><span class="c1"></span>			<span class="c1">// Selector#wakeup. So we need to check task queue again before executing select operation.
+</span><span class="c1"></span>			<span class="c1">// If we don&#39;t, the task might be pended until select operation was timed out.
+</span><span class="c1"></span>			<span class="c1">// It might be pended until idle timeout if IdleStateHandler existed in pipeline.
+</span><span class="c1"></span>			<span class="k">if</span> <span class="o">(</span><span class="n">hasTasks</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">wakenUp</span><span class="o">.</span><span class="na">compareAndSet</span><span class="o">(</span><span class="kc">false</span><span class="o">,</span> <span class="kc">true</span><span class="o">))</span> <span class="o">{</span>
+				<span class="n">selector</span><span class="o">.</span><span class="na">selectNow</span><span class="o">();</span>
+				<span class="n">selectCnt</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+				<span class="k">break</span><span class="o">;</span>
+			<span class="o">}</span>
+
+			<span class="kt">int</span> <span class="n">selectedKeys</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="na">select</span><span class="o">(</span><span class="n">timeoutMillis</span><span class="o">);</span>
+			<span class="n">selectCnt</span> <span class="o">++;</span>
+
+			<span class="c1">// 如果 1 秒后返回，有返回值 || select 被用户唤醒 || 任务队列有任务 || 有定时任务即将被执行；则跳出循环
+</span><span class="c1"></span>			<span class="k">if</span> <span class="o">(</span><span class="n">selectedKeys</span> <span class="o">!=</span> <span class="n">0</span> <span class="o">||</span> <span class="n">oldWakenUp</span> <span class="o">||</span> <span class="n">wakenUp</span><span class="o">.</span><span class="na">get</span><span class="o">()</span> <span class="o">||</span> <span class="n">hasTasks</span><span class="o">()</span> <span class="o">||</span> <span class="n">hasScheduledTasks</span><span class="o">())</span> <span class="o">{</span>
+				<span class="c1">// - Selected something,
+</span><span class="c1"></span>				<span class="c1">// - waken up by user, or
+</span><span class="c1"></span>				<span class="c1">// - the task queue has a pending task.
+</span><span class="c1"></span>				<span class="c1">// - a scheduled task is ready for processing
+</span><span class="c1"></span>				<span class="k">break</span><span class="o">;</span>
+			<span class="o">}</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">interrupted</span><span class="o">())</span> <span class="o">{</span>
+				<span class="c1">// Thread was interrupted so reset selected keys and break so we not run into a busy loop.
+</span><span class="c1"></span>				<span class="c1">// As this is most likely a bug in the handler of the user or it&#39;s client library we will
+</span><span class="c1"></span>				<span class="c1">// also log it.
+</span><span class="c1"></span>				<span class="c1">//
+</span><span class="c1"></span>				<span class="c1">// See https://github.com/netty/netty/issues/2426
+</span><span class="c1"></span>				<span class="k">if</span> <span class="o">(</span><span class="n">logger</span><span class="o">.</span><span class="na">isDebugEnabled</span><span class="o">())</span> <span class="o">{</span>
+					<span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">&#34;Selector.select() returned prematurely because &#34;</span> <span class="o">+</span>
+							<span class="s">&#34;Thread.currentThread().interrupt() was called. Use &#34;</span> <span class="o">+</span>
+							<span class="s">&#34;NioEventLoop.shutdownGracefully() to shutdown the NioEventLoop.&#34;</span><span class="o">);</span>
+				<span class="o">}</span>
+				<span class="n">selectCnt</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+				<span class="k">break</span><span class="o">;</span>
+			<span class="o">}</span>
+
+			<span class="kt">long</span> <span class="n">time</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">();</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">time</span> <span class="o">-</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">.</span><span class="na">toNanos</span><span class="o">(</span><span class="n">timeoutMillis</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="n">currentTimeNanos</span><span class="o">)</span> <span class="o">{</span>
+				<span class="c1">// timeoutMillis elapsed without anything selected.
+</span><span class="c1"></span>				<span class="n">selectCnt</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+			<span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">SELECTOR_AUTO_REBUILD_THRESHOLD</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="o">&amp;&amp;</span>
+					<span class="n">selectCnt</span> <span class="o">&gt;=</span> <span class="n">SELECTOR_AUTO_REBUILD_THRESHOLD</span><span class="o">)</span> <span class="o">{</span>
+				<span class="c1">// The selector returned prematurely many times in a row.
+</span><span class="c1"></span>				<span class="c1">// Rebuild the selector to work around the problem.
+</span><span class="c1"></span>				<span class="n">logger</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span>
+						<span class="s">&#34;Selector.select() returned prematurely {} times in a row; rebuilding Selector {}.&#34;</span><span class="o">,</span>
+						<span class="n">selectCnt</span><span class="o">,</span> <span class="n">selector</span><span class="o">);</span>
+
+				<span class="n">rebuildSelector</span><span class="o">();</span>
+				<span class="n">selector</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">selector</span><span class="o">;</span>
+
+				<span class="c1">// Select again to populate selectedKeys.
+</span><span class="c1"></span>				<span class="n">selector</span><span class="o">.</span><span class="na">selectNow</span><span class="o">();</span>
+				<span class="n">selectCnt</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+				<span class="k">break</span><span class="o">;</span>
+			<span class="o">}</span>
+
+			<span class="n">currentTimeNanos</span> <span class="o">=</span> <span class="n">time</span><span class="o">;</span>
+		<span class="o">}</span>
+
+		<span class="k">if</span> <span class="o">(</span><span class="n">selectCnt</span> <span class="o">&gt;</span> <span class="n">MIN_PREMATURE_SELECTOR_RETURNS</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">logger</span><span class="o">.</span><span class="na">isDebugEnabled</span><span class="o">())</span> <span class="o">{</span>
+				<span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">&#34;Selector.select() returned prematurely {} times in a row for Selector {}.&#34;</span><span class="o">,</span>
+						<span class="n">selectCnt</span> <span class="o">-</span> <span class="n">1</span><span class="o">,</span> <span class="n">selector</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">CancelledKeyException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">if</span> <span class="o">(</span><span class="n">logger</span><span class="o">.</span><span class="na">isDebugEnabled</span><span class="o">())</span> <span class="o">{</span>
+			<span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="n">CancelledKeyException</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getSimpleName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34; raised by a Selector {} - JDK bug?&#34;</span><span class="o">,</span>
+					<span class="n">selector</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="c1">// Harmless exception - log anyway
+</span><span class="c1"></span>	<span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">说明</span><span class="err">：</span>
+<span class="n">调用</span> <span class="n">selector</span> <span class="n">的</span> <span class="n">select方法</span><span class="err">，</span><span class="n">默认阻塞1秒钟</span><span class="err">，</span><span class="n">如果有定时任务</span><span class="err">，</span><span class="n">则在定时任务剩余时间的基础上在加上0</span><span class="o">.</span><span class="na">5秒进行阻塞</span><span class="err">。</span>
+<span class="n">当执行execute方法的时候</span><span class="err">，</span><span class="n">也就是添加任务的时候</span><span class="err">，</span><span class="n">selector</span><span class="err">，</span><span class="n">防止</span> <span class="n">selector</span> <span class="n">阻塞时间过长</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="6">
+<li>
+<p>EventLoop 作为 Netty 的核心运行机制小结</p>
+<p>1、每次执行 ececute 方法都是向队列中添加任务。当第一次添加时就启动线程，执行 run方法，而 run 方法是整个 EventLoop 的核心，就像 EventLoop 的名字一样，Loop Loop ，不停的 Loop ,Loop做什么呢?做3件事情。</p>
+<ul>
+<li>调用 selector 的 select方法，默认阻塞一秒钟，如果有定时任务，则在定时任务剩余时间的基础上在加上0.5秒进行阻塞。当执行 execute方法的时候，也就是添加任务的时候，唤醒 selector，防止 selector 阻塞时间过长。</li>
+<li>当 selector 返回的时候，回调用 processSelectedKeys 方法对 selectKey 进行处理。</li>
+<li>当 processSelectedKeys 方法执行结束后，则按照 ioRatio 的比例执行 runAllTasks方法，默认是IO 任务时间和非IO 任务时间是相同的，你也可以根据你的应用特点进行调优。比如非IO任务比较多，那么你就将 ioRatio 调小一点，这样非IO任务就能执行的长一点，防止队列积攒过多任务</li>
+</ul>
+</li>
+</ol>
+<h2 id="108handler-中加入线程池和-context-中添加线程池的源码剖析">10.8、Handler 中加入线程池和 Context 中添加线程池的源码剖析</h2>
+<h3 id="1081源码剖析目的">10.8.1、源码剖析目的</h3>
+<ol>
+<li>在Netty中做耗时的，不可预料的操作，比如数据库，网络请求，会严重影响Netty对Socket 的处理速度。</li>
+<li>而解决方法就是将耗时任务添加到异步线程池中。但就添加线程池这步操作来讲，可以有2种方式，而且这2种方式实现的区别也蛮大的</li>
+<li>处理耗时业务的第一种方式&mdash;handler中加入线程池</li>
+<li>处理耗时业务的第二种方式&mdash;Context中添加线程池</li>
+<li>我们就来分析下两种方式</li>
+</ol>
+<h3 id="1082第一种方式">10.8.2、第一种方式</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="cm">/*
+</span><span class="cm"> * Copyright 2012 The Netty Project
+</span><span class="cm"> *
+</span><span class="cm"> * The Netty Project licenses this file to you under the Apache License,
+</span><span class="cm"> * version 2.0 (the &#34;License&#34;); you may not use this file except in compliance
+</span><span class="cm"> * with the License. You may obtain a copy of the License at:
+</span><span class="cm"> *
+</span><span class="cm"> *   http://www.apache.org/licenses/LICENSE-2.0
+</span><span class="cm"> *
+</span><span class="cm"> * Unless required by applicable law or agreed to in writing, software
+</span><span class="cm"> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS, WITHOUT
+</span><span class="cm"> * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+</span><span class="cm"> * License for the specific language governing permissions and limitations
+</span><span class="cm"> * under the License.
+</span><span class="cm"> */</span>
+<span class="kn">package</span> <span class="nn">com.clover.netty.source.echo2</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.netty.buffer.ByteBuf</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.buffer.Unpooled</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelHandler.Sharable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelHandlerContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelInboundHandlerAdapter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.util.CharsetUtil</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.util.concurrent.DefaultEventExecutorGroup</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.util.concurrent.EventExecutorGroup</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Callable</span><span class="o">;</span>
+
+<span class="cm">/**
+</span><span class="cm"> * Handler implementation for the echo server.
+</span><span class="cm"> */</span>
+<span class="nd">@Sharable</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">EchoServerHandler</span> <span class="kd">extends</span> <span class="n">ChannelInboundHandlerAdapter</span> <span class="o">{</span>
+
+    <span class="kd">static</span> <span class="kd">final</span> <span class="n">EventExecutorGroup</span> <span class="n">group</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DefaultEventExecutorGroup</span><span class="o">(</span><span class="n">16</span><span class="o">);</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">channelRead</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="n">Object</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;EchoServerHandler 的线程是 =&#34;</span> <span class="o">+</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">());</span>
+
+        <span class="c1">// 将任务提交到 group 线程池
+</span><span class="c1"></span>        <span class="n">group</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="k">new</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;()</span> <span class="o">{</span>
+              <span class="nd">@Override</span>
+              <span class="kd">public</span> <span class="n">Object</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+                  <span class="n">ByteBuf</span> <span class="n">buf</span> <span class="o">=</span> <span class="o">(</span><span class="n">ByteBuf</span><span class="o">)</span> <span class="n">msg</span><span class="o">;</span>
+                  <span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">buf</span><span class="o">.</span><span class="na">readableBytes</span><span class="o">()];</span>
+                  <span class="n">buf</span><span class="o">.</span><span class="na">readBytes</span><span class="o">(</span><span class="n">bytes</span><span class="o">);</span>
+                  <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">bytes</span><span class="o">,</span> <span class="s">&#34;UTF-8&#34;</span><span class="o">);</span>
+                  <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">3</span> <span class="o">*</span> <span class="n">1000</span><span class="o">);</span>
+                  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;EchoServerHandler 中 group.submit 的线程是 =&#34;</span> <span class="o">+</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">());</span>
+                  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;s =&#34;</span> <span class="o">+</span> <span class="n">s</span><span class="o">);</span>
+                  <span class="n">ctx</span><span class="o">.</span><span class="na">writeAndFlush</span><span class="o">(</span><span class="n">Unpooled</span><span class="o">.</span><span class="na">copiedBuffer</span><span class="o">((</span><span class="s">&#34;hello,clover&#34;</span><span class="o">).</span><span class="na">getBytes</span><span class="o">()));</span>
+                  <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+              <span class="o">}</span>
+        <span class="o">});</span>
+		
+		<span class="c1">// 普通方式
+</span><span class="c1"></span>        <span class="n">ByteBuf</span> <span class="n">buf</span> <span class="o">=</span> <span class="o">(</span><span class="n">ByteBuf</span><span class="o">)</span> <span class="n">msg</span><span class="o">;</span>
+        <span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">buf</span><span class="o">.</span><span class="na">readableBytes</span><span class="o">()];</span>
+        <span class="n">buf</span><span class="o">.</span><span class="na">readBytes</span><span class="o">(</span><span class="n">bytes</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">bytes</span><span class="o">,</span> <span class="s">&#34;UTF-8&#34;</span><span class="o">);</span>
+        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">3</span> <span class="o">*</span> <span class="n">1000</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;EchoServerHandler 中 普通方式 的线程是 =&#34;</span> <span class="o">+</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">());</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="na">writeAndFlush</span><span class="o">(</span><span class="n">Unpooled</span><span class="o">.</span><span class="na">copiedBuffer</span><span class="o">((</span><span class="s">&#34;hello,clover&#34;</span><span class="o">).</span><span class="na">getBytes</span><span class="o">()));</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;go on&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">channelReadComplete</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">exceptionCaught</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="n">Throwable</span> <span class="n">cause</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Close the connection when an exception is raised.
+</span><span class="c1"></span>        <span class="n">cause</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">说明</span><span class="err">：</span>
+<span class="n">1</span><span class="err">、</span><span class="n">在</span> <span class="n">channelRead</span> <span class="n">方法</span><span class="err">，</span><span class="n">模拟了一个耗时</span> <span class="n">10</span> <span class="n">秒的操作</span><span class="err">，</span><span class="n">这里</span><span class="err">，</span><span class="n">将这个任务提交到了一个自定义的业务线程池中</span><span class="err">，</span><span class="n">这样就</span>
+<span class="n">不会阻塞</span> <span class="n">Netty</span> <span class="n">的</span> <span class="n">IO</span> <span class="n">线程</span>
+<span class="n">2</span><span class="err">、</span><span class="n">当你运行多个</span> <span class="n">group</span><span class="o">.</span><span class="na">submit</span> <span class="n">方法时</span><span class="err">，</span><span class="n">在</span> <span class="n">group</span> <span class="n">线程池中也会使用多个</span> <span class="n">线程</span><span class="err">，</span><span class="n">而不是共用一个线程</span><span class="err">，</span><span class="n">而</span> <span class="n">handler</span> <span class="n">是共</span>
+<span class="n">用一个线程</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这样处理后，整个程序的逻辑图</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929120904.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929120904.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929120904.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929120904.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929120904.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929120904.png" /></p>
+<p>说明：</p>
+<ol>
+<li>解释一下上图，当 IO 线程轮询到一个 socket 事件，然后，IO 线程开始处理，当走到耗时 handler 的时候，将耗时任务交给业务线程池</li>
+<li>当耗时任务执行完毕再执行 pipeline write 方法的时候，(代码中使用的是 context 的 write方法，上图画的是执行 pipeline 方法，是一个意思)会将这个任务交给IO线程</li>
+</ol>
+<h3 id="1083write-方法的源码在-abstractchannelhandlercontext-类">10.8.3、write 方法的源码(在 AbstractChannelHandlerContext 类)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">write</span><span class="o">(</span><span class="n">Object</span> <span class="n">msg</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">flush</span><span class="o">,</span> <span class="n">ChannelPromise</span> <span class="n">promise</span><span class="o">)</span> <span class="o">{</span>
+	<span class="n">AbstractChannelHandlerContext</span> <span class="n">next</span> <span class="o">=</span> <span class="n">findContextOutbound</span><span class="o">();</span>
+	<span class="kd">final</span> <span class="n">Object</span> <span class="n">m</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="na">touch</span><span class="o">(</span><span class="n">msg</span><span class="o">,</span> <span class="n">next</span><span class="o">);</span>
+	<span class="n">EventExecutor</span> <span class="n">executor</span> <span class="o">=</span> <span class="n">next</span><span class="o">.</span><span class="na">executor</span><span class="o">();</span>
+	<span class="c1">// 重点！！！！！！！
+</span><span class="c1"></span>	<span class="k">if</span> <span class="o">(</span><span class="n">executor</span><span class="o">.</span><span class="na">inEventLoop</span><span class="o">())</span> <span class="o">{</span>
+		<span class="k">if</span> <span class="o">(</span><span class="n">flush</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">next</span><span class="o">.</span><span class="na">invokeWriteAndFlush</span><span class="o">(</span><span class="n">m</span><span class="o">,</span> <span class="n">promise</span><span class="o">);</span>
+		<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+			<span class="n">next</span><span class="o">.</span><span class="na">invokeWrite</span><span class="o">(</span><span class="n">m</span><span class="o">,</span> <span class="n">promise</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+		<span class="n">AbstractWriteTask</span> <span class="n">task</span><span class="o">;</span>
+		<span class="k">if</span> <span class="o">(</span><span class="n">flush</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">task</span> <span class="o">=</span> <span class="n">WriteAndFlushTask</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="n">next</span><span class="o">,</span> <span class="n">m</span><span class="o">,</span> <span class="n">promise</span><span class="o">);</span>
+		<span class="o">}</span>  <span class="k">else</span> <span class="o">{</span>
+			<span class="n">task</span> <span class="o">=</span> <span class="n">WriteTask</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="n">next</span><span class="o">,</span> <span class="n">m</span><span class="o">,</span> <span class="n">promise</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="c1">// 重点！！！！！！！
+</span><span class="c1"></span>		<span class="n">safeExecute</span><span class="o">(</span><span class="n">executor</span><span class="o">,</span> <span class="n">task</span><span class="o">,</span> <span class="n">promise</span><span class="o">,</span> <span class="n">m</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">说明</span><span class="err">：</span>
+<span class="n">1</span><span class="err">、</span><span class="n">当判定下个</span> <span class="n">outbound</span> <span class="n">的</span> <span class="n">executor</span> <span class="n">线程不是当前线程的时候</span><span class="err">，</span><span class="n">会将当前的工作封装成task</span> <span class="o">,</span><span class="n">然后放入mpsc队列中</span><span class="err">，</span><span class="n">等</span>
+<span class="n">待IO任务执行完毕后执行队列中的任务</span><span class="err">。</span>
+<span class="n">2</span><span class="err">、</span><span class="n">这里可以Debug</span> <span class="nf">来验证</span><span class="o">(</span><span class="n">提醒</span><span class="o">:</span><span class="n">Debug时</span><span class="err">，</span><span class="n">服务器端Debug</span> <span class="o">,</span><span class="n">客户端Run</span> <span class="n">的方式</span><span class="o">)</span><span class="err">，</span><span class="n">当我们使用了</span> <span class="n">group</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="k">new</span> 
+<span class="n">Callable</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;()</span><span class="n">在</span> <span class="n">handler中加入线程池</span><span class="err">，</span><span class="n">就会进入到</span> <span class="nf">safeExecute</span><span class="o">(</span><span class="n">executor</span><span class="o">;</span><span class="n">task</span><span class="o">,</span><span class="n">promise</span><span class="o">,</span> <span class="n">m</span><span class="o">);</span><span class="n">如果去掉这段代</span>
+<span class="n">码</span><span class="err">，</span><span class="n">而使用普通方式来执行耗时的业务</span><span class="err">，</span><span class="n">那么就不会进入到</span> <span class="nf">safeExecute</span><span class="o">(</span><span class="n">executor</span><span class="o">,</span><span class="n">task</span><span class="o">,</span> <span class="n">promise</span><span class="o">,</span><span class="n">m</span><span class="o">);</span><span class="err">（</span><span class="n">说明</span><span class="o">:</span><span class="n">普通方式执</span>
+<span class="n">行耗时代码</span><span class="err">，</span><span class="n">看我准备好的案例即可</span><span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="1084第二种方式">10.8.4、第二种方式</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">static</span> <span class="kd">final</span> <span class="n">EventExecutorGroup</span> <span class="n">group</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DefaultEventExecutorGroup</span><span class="o">(</span><span class="n">2</span><span class="o">);</span>
+<span class="n">ServerBootstrap</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ServerBootstrap</span><span class="o">();</span>
+<span class="n">b</span><span class="o">.</span><span class="na">group</span><span class="o">(</span><span class="n">bossGroup</span><span class="o">,</span> <span class="n">workerGroup</span><span class="o">)</span>
+ <span class="o">.</span><span class="na">channel</span><span class="o">(</span><span class="n">NioServerSocketChannel</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+ <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="n">ChannelOption</span><span class="o">.</span><span class="na">SO_BACKLOG</span><span class="o">,</span> <span class="n">100</span><span class="o">)</span>
+ <span class="o">.</span><span class="na">handler</span><span class="o">(</span><span class="k">new</span> <span class="n">LoggingHandler</span><span class="o">(</span><span class="n">LogLevel</span><span class="o">.</span><span class="na">INFO</span><span class="o">))</span>
+ <span class="o">.</span><span class="na">childHandler</span><span class="o">(</span><span class="k">new</span> <span class="n">ChannelInitializer</span><span class="o">&lt;</span><span class="n">SocketChannel</span><span class="o">&gt;()</span> <span class="o">{</span>
+	 <span class="nd">@Override</span>
+	 <span class="kd">public</span> <span class="kt">void</span> <span class="nf">initChannel</span><span class="o">(</span><span class="n">SocketChannel</span> <span class="n">ch</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+		 <span class="n">ChannelPipeline</span> <span class="n">p</span> <span class="o">=</span> <span class="n">ch</span><span class="o">.</span><span class="na">pipeline</span><span class="o">();</span>
+		 <span class="k">if</span> <span class="o">(</span><span class="n">sslCtx</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+			 <span class="n">p</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="n">sslCtx</span><span class="o">.</span><span class="na">newHandler</span><span class="o">(</span><span class="n">ch</span><span class="o">.</span><span class="na">alloc</span><span class="o">()));</span>
+		 <span class="o">}</span>
+		 <span class="c1">//p.addLast(new LoggingHandler(LogLevel.INFO));
+</span><span class="c1"></span>		 <span class="c1">//p.addLast(new EchoServerHandler());
+</span><span class="c1"></span>		 <span class="cm">/*
+</span><span class="cm">		  * 说明：如果我们在addLast 添加 handler，前面有指定 EventExecutorGroup
+</span><span class="cm">		  *       那么该 Handler，会优先加入到该线程池中
+</span><span class="cm">		  */</span>
+		 <span class="n">p</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="n">group</span><span class="o">,</span><span class="k">new</span> <span class="n">EchoServerHandler</span><span class="o">());</span>
+	 <span class="o">}</span>
+ <span class="o">});</span>
+ 
+<span class="n">说明</span><span class="err">：</span>
+<span class="n">1</span><span class="err">、</span><span class="n">handler中的代码就使用普通的方式来处理耗时业务</span>
+<span class="n">2</span><span class="err">、</span><span class="n">当我们在调用</span> <span class="n">addLast</span> <span class="n">方法添加线程池后</span><span class="err">，</span><span class="n">handler</span> <span class="n">将优先使用这个线程池</span><span class="err">，</span><span class="n">如果不添加</span><span class="err">，</span><span class="n">将使用IO</span> <span class="n">线程</span>
+<span class="n">3</span><span class="err">、</span><span class="n">当走到</span> <span class="n">AbstractChannelHandlerContext</span> <span class="n">的</span> <span class="n">invokeChannelRead</span> <span class="n">方法的时候</span><span class="err">，</span><span class="n">executor</span><span class="o">.</span><span class="na">inEventLoop</span><span class="o">()</span> <span class="n">是不会通过</span>
+<span class="n">的</span><span class="o">,</span><span class="n">因为当前线程是IO</span> <span class="nf">线程Context</span><span class="o">(</span><span class="n">也就是Handler</span><span class="err">）</span><span class="n">的</span> <span class="n">executor</span> <span class="n">是业务线程</span><span class="o">,</span><span class="n">所以会异步执行</span><span class="o">,</span> <span class="n">debug下源码</span>
+
+<span class="kd">static</span> <span class="kt">void</span> <span class="nf">invokeChannelRead</span><span class="o">(</span><span class="kd">final</span> <span class="n">AbstractChannelHandlerContext</span> <span class="n">next</span><span class="o">,</span> <span class="n">Object</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+	<span class="kd">final</span> <span class="n">Object</span> <span class="n">m</span> <span class="o">=</span> <span class="n">next</span><span class="o">.</span><span class="na">pipeline</span><span class="o">.</span><span class="na">touch</span><span class="o">(</span><span class="n">ObjectUtil</span><span class="o">.</span><span class="na">checkNotNull</span><span class="o">(</span><span class="n">msg</span><span class="o">,</span> <span class="s">&#34;msg&#34;</span><span class="o">),</span> <span class="n">next</span><span class="o">);</span>
+	<span class="n">EventExecutor</span> <span class="n">executor</span> <span class="o">=</span> <span class="n">next</span><span class="o">.</span><span class="na">executor</span><span class="o">();</span>
+	<span class="c1">// 重点！！！！！
+</span><span class="c1"></span>	<span class="k">if</span> <span class="o">(</span><span class="n">executor</span><span class="o">.</span><span class="na">inEventLoop</span><span class="o">())</span> <span class="o">{</span>
+		<span class="n">next</span><span class="o">.</span><span class="na">invokeChannelRead</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
+	<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+		<span class="n">executor</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span><span class="c1">// 执行 run 方法
+</span><span class="c1"></span>			<span class="nd">@Override</span>
+			<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+				<span class="n">next</span><span class="o">.</span><span class="na">invokeChannelRead</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">});</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">说明</span><span class="err">：</span>
+<span class="n">1</span><span class="err">、</span><span class="n">验证时</span><span class="err">，</span><span class="n">我们如果去掉</span> <span class="n">p</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="n">group</span><span class="o">,</span><span class="k">new</span> <span class="n">EchoServerHandler</span><span class="o">());</span> <span class="n">改成</span> <span class="n">p</span><span class="o">.</span><span class="na">addLastnewEchoServerHandler</span><span class="o">();</span> <span class="n">你</span>
+<span class="n">会发现代码不会进行异步执行</span>
+<span class="n">2</span><span class="err">、</span><span class="n">后面的整个流程就变成和第一个方式一样了</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="1085两种方式的比较">10.8.5、两种方式的比较</h3>
+<ol>
+<li>第一种方式在 handler 中添加异步，<code>可能更加的自由</code>，比如如果需要访问数据库，那我就异步，如果不需要，就不异步，<code>异步会拖长接口响应时间</code>。因为需要将任务放进mpscTask 中。如果IO 时间很短，task 很多，能一个循环下来，都没时间执行整个task，导致响应时间达不到指标。</li>
+<li>第二种方式是 Netty 标准方式(即加入到队列)，但是，这么做会将整个handler 都交给业务线程池。<code>不论耗时不耗时，都加入到队列里，不够灵活</code>。</li>
+<li>各有优劣，从灵活性考虑，第一种较好</li>
+</ol>
+<h1 id="11用-netty-自己实现-dubbo-rpc">11、用 Netty 自己实现 dubbo RPC</h1>
+<h2 id="101rpc-基本介绍">10.1、RPC 基本介绍</h2>
+<ol>
+<li><code>RPC（Remote Procedure Call）</code>— 远程过程调用，是一个计算机通信协议。该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程</li>
+<li>两个或多个应用程序都分布在不同的服务器上，它们之间的调用都像是本地方法调用一样(如图)</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173923.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173923.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173923.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173923.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173923.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173923.png" /></p>
+<ol start="2">
+<li>常见的 RPC 框架有: 比较知名的如阿里的Dubbo、google的g RPC、Go语言的rpcx、Apache的thrift， Spring 旗下的 Spring Cloud</li>
+</ol>
+<h2 id="102rpc调用流程">10.2、RPC调用流程</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173608.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173608.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173608.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173608.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173608.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173608.png" /></p>
+<pre><code>术语说明：在RPC中，Client 叫服务消费者，Server 叫服务提供者
+</code></pre>
+<ol>
+<li><strong>服务消费方(client)以本地调用方式调用服务</strong></li>
+<li>client stub 接收到调用后负责将方法、参数等封装成能够进行网络传输的消息体</li>
+<li>client stub 将消息进行编码并发送到服务端</li>
+<li>server stub 收到消息后进行解码</li>
+<li>server stub 根据解码结果调用本地的服务</li>
+<li>本地服务执行并将结果返回给 server stub</li>
+<li>server stub 将返回导入结果进行编码并发送至消费方</li>
+<li>client stub 接收到消息并进行解码</li>
+<li><strong>服务消费方(client)得到结果</strong></li>
+</ol>
+<p><strong>小结：RPC 的目标就是将 2-8 这些步骤都封装起来，用户无需关心这些细节，可以像调
+用本地方法一样即可完成远程服务调用</strong></p>
+<h2 id="102自己实现-dubbo-rpc-基于-netty">10.2、自己实现 dubbo RPC (基于 Netty)</h2>
+<h3 id="1021需求说明">10.2.1、需求说明</h3>
+<ol>
+<li>dubbo 底层使用了 Netty 作为网络通讯框架，要求用 Netty 实现一个简单的 RPC 框架</li>
+<li>模仿 dubbo，<code>消费者和提供者约定接口和协议</code>，消费者远程调用提供者的服务，提供者返回一个字符串，消费者打印提供者返回的数据。底层网络通信使用 Netty 4.1.20</li>
+</ol>
+<h3 id="1022设计说明">10.2.2、设计说明</h3>
+<ol>
+<li>创建一个接口，定义抽象方法。用于消费者和提供者之间的约定</li>
+<li>创建一个提供者，该类需要监听消费者的请求，并按照约定返回数据</li>
+<li>创建一个消费者，该类需要透明的调用自己不存在的方法，内部需要使用 Netty 请求提供者返回数据</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929211840.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929211840.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929211840.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929211840.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929211840.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929211840.png" /></p>
+<pre><code>这个里面的难点在于代理对象的创建
+</code></pre>
+<h2 id="103代码实现">10.3、代码实现</h2>
+<p><strong>公共接口</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.netty.dubborpc.publicinterface</span><span class="o">;</span>
+
+<span class="c1">// 这个是接口，是 服务提供方 和 消费者方 都需要的
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">HelloService</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="nf">hello</span><span class="o">(</span><span class="n">String</span> <span class="n">msg</span><span class="o">);</span>
+<span class="o">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>服务提供方实现接口</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.netty.dubborpc.provider</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.netty.dubborpc.publicinterface.HelloService</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloServiceImpl</span> <span class="kd">implements</span> <span class="n">HelloService</span> <span class="o">{</span>
+
+    <span class="c1">// 如果你想在此统计客户端发送了多少次消息，你可以设置一个变量，但是你不设置为静态变量是无法统计到的
+</span><span class="c1"></span>    <span class="c1">// 因为它每次都是调用的一个新的 HelloServiceImpl 对象，并不是每次使用的是同一个
+</span><span class="c1"></span>
+    <span class="c1">// 当有消费方调用该方法时，就返回一个结果
+</span><span class="c1"></span>    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="o">(</span><span class="n">String</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;收到客户端消息：&#34;</span> <span class="o">+</span> <span class="n">msg</span><span class="o">);</span>
+        <span class="c1">// 根据 msg 返回不同的结果
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">msg</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="s">&#34;你好客户端，我已经收到你的消息 [&#34;</span> <span class="o">+</span> <span class="n">msg</span> <span class="o">+</span><span class="s">&#34;]&#34;</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="s">&#34;你好客户端，我已经收到你的消息 &#34;</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>服务提供方(服务器端)启动类</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.netty.dubborpc.provider</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.netty.dubborpc.netty.NettyServer</span><span class="o">;</span>
+
+<span class="c1">// ServerBootstrap 会启动一个服务提供者，就是 NettyServer
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ServerBootstrap</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">NettyServer</span><span class="o">.</span><span class="na">startServer</span><span class="o">(</span><span class="s">&#34;127.0.0.1&#34;</span><span class="o">,</span><span class="n">7000</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>NettyServer</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.netty.dubborpc.netty</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.netty.bootstrap.ServerBootstrap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelFuture</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelInitializer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelPipeline</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.EventLoopGroup</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.nio.NioEventLoopGroup</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.socket.SocketChannel</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.socket.nio.NioServerSocketChannel</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.handler.codec.string.StringDecoder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.handler.codec.string.StringEncoder</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NettyServer</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">startServer</span><span class="o">(</span><span class="n">String</span> <span class="n">hostName</span><span class="o">,</span><span class="kt">int</span> <span class="n">port</span><span class="o">){</span>
+        <span class="n">startServer0</span><span class="o">(</span><span class="n">hostName</span><span class="o">,</span> <span class="n">port</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">startServer0</span><span class="o">(</span><span class="n">String</span> <span class="n">hostname</span><span class="o">,</span><span class="kt">int</span> <span class="n">port</span><span class="o">){</span>
+        <span class="n">EventLoopGroup</span> <span class="n">bossGroup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NioEventLoopGroup</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+        <span class="n">EventLoopGroup</span> <span class="n">workerGroup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NioEventLoopGroup</span><span class="o">();</span>
+
+        <span class="k">try</span><span class="o">{</span>
+
+            <span class="n">ServerBootstrap</span> <span class="n">serverBootstrap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ServerBootstrap</span><span class="o">();</span>
+
+            <span class="n">serverBootstrap</span><span class="o">.</span><span class="na">group</span><span class="o">(</span><span class="n">bossGroup</span><span class="o">,</span><span class="n">workerGroup</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">channel</span><span class="o">(</span><span class="n">NioServerSocketChannel</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">childHandler</span><span class="o">(</span><span class="k">new</span> <span class="n">ChannelInitializer</span><span class="o">&lt;</span><span class="n">SocketChannel</span><span class="o">&gt;()</span> <span class="o">{</span>
+                        <span class="nd">@Override</span>
+                        <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">initChannel</span><span class="o">(</span><span class="n">SocketChannel</span> <span class="n">ch</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+                            <span class="n">ChannelPipeline</span> <span class="n">pipeline</span> <span class="o">=</span> <span class="n">ch</span><span class="o">.</span><span class="na">pipeline</span><span class="o">();</span>
+
+                            <span class="n">pipeline</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="n">StringDecoder</span><span class="o">());</span>
+                            <span class="n">pipeline</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="n">StringEncoder</span><span class="o">());</span>
+                            <span class="n">pipeline</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="n">NettyServerHandler</span><span class="o">());</span>
+                        <span class="o">}</span>
+                    <span class="o">});</span>
+            <span class="n">ChannelFuture</span> <span class="n">channelFuture</span> <span class="o">=</span> <span class="n">serverBootstrap</span><span class="o">.</span><span class="na">bind</span><span class="o">(</span><span class="n">7000</span><span class="o">).</span><span class="na">sync</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;服务提供方开始提供服务&#34;</span><span class="o">);</span>
+            <span class="n">channelFuture</span><span class="o">.</span><span class="na">channel</span><span class="o">().</span><span class="na">closeFuture</span><span class="o">().</span><span class="na">sync</span><span class="o">();</span>
+
+        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span><span class="k">finally</span><span class="o">{</span>
+            <span class="n">bossGroup</span><span class="o">.</span><span class="na">shutdownGracefully</span><span class="o">();</span>
+            <span class="n">workerGroup</span><span class="o">.</span><span class="na">shutdownGracefully</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>NettyServerHandler</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.netty.dubborpc.netty</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.netty.dubborpc.provider.HelloServiceImpl</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelHandlerContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelInboundHandlerAdapter</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NettyServerHandler</span> <span class="kd">extends</span> <span class="n">ChannelInboundHandlerAdapter</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">channelRead</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="n">Object</span> <span class="n">msg</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="c1">// 获取客户端发送的消息，并调用服务
+</span><span class="c1"></span>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;msg =&#34;</span> <span class="o">+</span> <span class="n">msg</span><span class="o">);</span>
+
+        <span class="c1">// 客户端在调用服务器的 api 时，我们需要定义一个协议
+</span><span class="c1"></span>        <span class="c1">// 比如我们要求 每次发送消息时都必须以某个字符串开头 &#34;CloverFelix#hello#xxxx&#34;
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">startsWith</span><span class="o">(</span><span class="s">&#34;CloverFelix#hello#&#34;</span><span class="o">)){</span>
+            <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HelloServiceImpl</span><span class="o">().</span><span class="na">hello</span><span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">substring</span><span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">lastIndexOf</span><span class="o">(</span><span class="s">&#34;#&#34;</span><span class="o">)</span> <span class="o">+</span> <span class="n">1</span><span class="o">));</span>
+            <span class="n">ctx</span><span class="o">.</span><span class="na">writeAndFlush</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">exceptionCaught</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="n">Throwable</span> <span class="n">cause</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="na">channel</span><span class="o">().</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>NettyCLient</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.netty.dubborpc.netty</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.netty.bootstrap.Bootstrap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelInitializer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelOption</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelPipeline</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.nio.NioEventLoopGroup</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.socket.SocketChannel</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.socket.nio.NioSocketChannel</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.handler.codec.string.StringDecoder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.handler.codec.string.StringEncoder</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.lang.reflect.Proxy</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.ExecutorService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Executors</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NettyClient</span> <span class="o">{</span>
+    <span class="c1">// 创建线程池
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kd">static</span> <span class="n">ExecutorService</span> <span class="n">executor</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newFixedThreadPool</span><span class="o">(</span><span class="n">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">().</span><span class="na">availableProcessors</span><span class="o">());</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">NettyClientHandler</span> <span class="n">client</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">getBean</span><span class="o">(</span><span class="kd">final</span> <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">serviceClass</span><span class="o">,</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">providerName</span><span class="o">){</span>
+        <span class="k">return</span> <span class="n">Proxy</span><span class="o">.</span><span class="na">newProxyInstance</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getContextClassLoader</span><span class="o">(),</span><span class="k">new</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]{</span><span class="n">serviceClass</span><span class="o">},(</span><span class="n">proxy</span><span class="o">,</span> <span class="n">method</span><span class="o">,</span> <span class="n">args</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="c1">//{} 这部分代码，客户端每调用一次 hello，就会进入到该代码
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">client</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+               <span class="n">initClient</span><span class="o">();</span>
+            <span class="o">}</span>
+
+            <span class="c1">// 设置要发送给服务器端的消息
+</span><span class="c1"></span>            <span class="c1">// providerName 就是协议头，args[0] 就是客户端调用 api 时，传入的参数
+</span><span class="c1"></span>            <span class="n">client</span><span class="o">.</span><span class="na">setParam</span><span class="o">(</span><span class="n">providerName</span> <span class="o">+</span> <span class="n">args</span><span class="o">[</span><span class="n">0</span><span class="o">]);</span>
+
+            <span class="c1">// 将 client 提交到线程池中去执行，并获取到返回结果
+</span><span class="c1"></span>            <span class="k">return</span> <span class="n">executor</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="n">client</span><span class="o">).</span><span class="na">get</span><span class="o">();</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 初始化客户端
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">initClient</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NettyClientHandler</span><span class="o">();</span>
+        <span class="c1">// 创建 EventLoopGroup
+</span><span class="c1"></span>        <span class="n">NioEventLoopGroup</span> <span class="n">group</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NioEventLoopGroup</span><span class="o">();</span>
+
+        <span class="n">Bootstrap</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Bootstrap</span><span class="o">();</span>
+
+        <span class="n">bootstrap</span><span class="o">.</span><span class="na">group</span><span class="o">(</span><span class="n">group</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">channel</span><span class="o">(</span><span class="n">NioSocketChannel</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="n">ChannelOption</span><span class="o">.</span><span class="na">TCP_NODELAY</span><span class="o">,</span><span class="kc">true</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">handler</span><span class="o">(</span><span class="k">new</span> <span class="n">ChannelInitializer</span><span class="o">&lt;</span><span class="n">SocketChannel</span><span class="o">&gt;()</span> <span class="o">{</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">initChannel</span><span class="o">(</span><span class="n">SocketChannel</span> <span class="n">ch</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+                        <span class="n">ChannelPipeline</span> <span class="n">pipeline</span> <span class="o">=</span> <span class="n">ch</span><span class="o">.</span><span class="na">pipeline</span><span class="o">();</span>
+
+                        <span class="n">pipeline</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="n">StringEncoder</span><span class="o">());</span>
+                        <span class="n">pipeline</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="n">StringDecoder</span><span class="o">());</span>
+                        <span class="n">pipeline</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="n">client</span><span class="o">);</span>
+                    <span class="o">}</span>
+                <span class="o">});</span>
+
+        <span class="n">bootstrap</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="s">&#34;127.0.0.1&#34;</span><span class="o">,</span> <span class="n">7000</span><span class="o">).</span><span class="na">sync</span><span class="o">();</span>
+<span class="c1">//            channelFuture.channel().closeFuture().sync();
+</span><span class="c1"></span>    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>NettyCLientHandler</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.netty.dubborpc.netty</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelHandlerContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelInboundHandlerAdapter</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Callable</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NettyClientHandler</span> <span class="kd">extends</span> <span class="n">ChannelInboundHandlerAdapter</span> <span class="kd">implements</span> <span class="n">Callable</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">ChannelHandlerContext</span> <span class="n">context</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">result</span><span class="o">;</span><span class="c1">// 返回的结果
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">param</span><span class="o">;</span><span class="c1">// 客户端调用方法时，传入的参数
+</span><span class="c1"></span>
+    <span class="c1">// 与服务器的连接创建后，就会被调用
+</span><span class="c1"></span>    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">channelActive</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;channelActive 被调用&#34;</span><span class="o">);</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">;</span><span class="c1">// 因为我在其它方法也会使用到 ctx
+</span><span class="c1"></span>    <span class="o">}</span>
+
+    <span class="c1">// 收到服务器数据后，调用该方法
+</span><span class="c1"></span>    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">channelRead</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="n">Object</span> <span class="n">msg</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;channelRead 被调用&#34;</span><span class="o">);</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+        <span class="cm">/*
+</span><span class="cm">         * 说明：
+</span><span class="cm">         * 1、因为客户端启动时，向服务器会传送一个消息，是通过 proxy 对象，即代理对象调用 call 方法
+</span><span class="cm">         * 2、call 方法会将数据传递给服务端，但是服务端并没有立即返回结果消息，所以就使用了 wait 方法，让其沉睡等待结果
+</span><span class="cm">         * 3、而服务器返回结果消息是发送给客户端handler中的 channelRead 方法，所以当我们拿到消息后，就需要唤醒等待线程，让其继续执行下去
+</span><span class="cm">         */</span>
+        <span class="n">notify</span><span class="o">();</span><span class="c1">// 唤醒等待线程
+</span><span class="c1"></span>    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">exceptionCaught</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="n">Throwable</span> <span class="n">cause</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="na">channel</span><span class="o">().</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 被代理对象调用，发送数据给服务器，然后使用wait方法沉睡，并且等待被唤醒(被 channelRead 唤醒)，在返回结果
+</span><span class="c1"></span>    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kd">synchronized</span> <span class="n">Object</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;call1 被调用&#34;</span><span class="o">);</span>
+        <span class="n">context</span><span class="o">.</span><span class="na">writeAndFlush</span><span class="o">(</span><span class="n">param</span><span class="o">);</span>
+        <span class="c1">// 进行 wait
+</span><span class="c1"></span>        <span class="n">wait</span><span class="o">();</span><span class="c1">// 等待 channelRead 获取到服务器的结果后唤醒
+</span><span class="c1"></span>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;call2 被调用&#34;</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span><span class="c1">// 服务方返回的结果
+</span><span class="c1"></span>    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setParam</span><span class="o">(</span><span class="n">String</span> <span class="n">param</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;setParam 被调用&#34;</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">param</span> <span class="o">=</span> <span class="n">param</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>服务消费方(客户端)启动类</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.netty.dubborpc.customer</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.netty.dubborpc.netty.NettyClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.netty.dubborpc.publicinterface.HelloService</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ClientBootstrap</span> <span class="o">{</span>
+
+    <span class="c1">// 这里定义协议头
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">providerName</span> <span class="o">=</span> <span class="s">&#34;CloverFelix#hello#&#34;</span><span class="o">;</span>
+
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="c1">// 创建一个消费者
+</span><span class="c1"></span>        <span class="n">NettyClient</span> <span class="n">customer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NettyClient</span><span class="o">();</span>
+
+        <span class="c1">// 创建代理对象
+</span><span class="c1"></span>        <span class="n">HelloService</span> <span class="n">service</span> <span class="o">=</span> <span class="o">(</span><span class="n">HelloService</span><span class="o">)</span> <span class="n">customer</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="n">HelloService</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">providerName</span><span class="o">);</span>
+
+        <span class="c1">// 通过代理对象调用服务提供者的方法(服务)
+</span><span class="c1"></span>        <span class="n">String</span> <span class="n">res</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">hello</span><span class="o">(</span><span class="s">&#34;你好，dubbo&#34;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;调用的结果 res= &#34;</span> <span class="o">+</span> <span class="n">res</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

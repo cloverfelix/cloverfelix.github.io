@@ -8162,7 +8162,8 @@ public void read() {
 3、循环容器，执行 pipeline.fireChannelRead(readBuf.get(i));
 4、doReadMessages 是读取 boss 线程中 NioServerSockerChannel 接收到的请求。并把这些请求放进容器
 5、循环遍历容器中的所有请求，调用 pipeline 的 fireChannelRead 方法，用于处理这些接受的请求或者其它事件，
-	在 read 方法中，循环调用 ServerSocket 的 pipeline 的 fireChannelRead 方法，开始执行管道中 handler 的ChannelRead 方法进入
+在 read 方法中，循环调用 ServerSocket 的 pipeline 的 fireChannelRead 方法，开始执行管道中 handler 的
+ChannelRead 方法进入
 ~~~
 
 6、追踪 doReadMessages 方法
@@ -8526,17 +8527,17 @@ public final ChannelPipeline addLast(EventExecutorGroup group, String name, Chan
 
 说明：
 1、pipeline 添加 handler，参数是线程池，name 是 null，handler 是我们或者系统传入的handler。
-	 Netty 为了防止多个线程导致安全问题，同步了这段代码，步骤如下
+Netty 为了防止多个线程导致安全问题，同步了这段代码，步骤如下
 2、检查这个 handler 实例是否是共享的，如果不是，并且已经被别的 pipeline 使用了，则抛出异常
 3、 调用 newCtx = newContext(group, filterName(name, handler), handler) 方法，创建一个 Context。
-	  从这里可以看出来，每次添加一个 handler 都会创建一个 Context 关联
+从这里可以看出来，每次添加一个 handler 都会创建一个 Context 关联
 4、调用 addLast 方法，将 Context 追加到链表中
 5、如果这个通道还没有注册到 selector 上，就将这个 Context 添加到 这个 pipeline 的待办任务中。
-	 当注册好了以后，就会调用 callHandlerAdded0 方法 (默认是什么都不做，用户可实现该方法)
+当注册好了以后，就会调用 callHandlerAdded0 方法 (默认是什么都不做，用户可实现该方法)
 6、到这里，针对三对象创建过程，基本了解，和最初说的一样，每当创建 ChannelSocket 的时候都会创建一个绑定的
-	 pipeline，一对一的关系，创建 pipeline 的时候也会创建 tail 节点和 head 节点，形成最初的链表，tail 是入站inbound
-	 类型的 handler，head 既是 inbound 也是 outbound 类型的 handler。在调用 pipeline 的 addLast 方法的时候
-	 会根据给定的 handler 创建一个 Context，然后，将这个 Context 插入到链表的尾端(tail前面)
+pipeline，一对一的关系，创建 pipeline 的时候也会创建 tail 节点和 head 节点，形成最初的链表，tail 是入站inbound
+类型的 handler，head 既是 inbound 也是 outbound 类型的 handler。在调用 pipeline 的 addLast 方法的时候会根据
+给定的 handler 创建一个 Context，然后，将这个 Context 插入到链表的尾端(tail前面)
 ~~~
 
 ### 10.4.3、Pipeline Handler HandlerContext 创建过程梳理
@@ -8675,8 +8676,8 @@ public final ChannelFuture disconnect(ChannelPromise promise) {
 说明：
 1、这些都是出站的实现，但是调用的是 outbound 类型的 tail handler 来进行处理的，因为这些都是 outbound 事件
 2、出站是 tail 开始，入站从 head 开始。因为出站是从内部向外面写，从 tail 开始，能够让前面的 handler 进行处理，
-	  防止 handler 被遗漏，比如编码。反之，入站当然是从 head 往内部输入，让后面的 handler 能够处理这些输入的数
-	  据。比如解码。因此虽然 head 也实现了 outbound 接口，单不是从 head 开始执行出站任务
+防止 handler 被遗漏，比如编码。反之，入站当然是从 head 往内部输入，让后面的 handler 能够处理这些输入的数据。
+比如解码。因此虽然 head 也实现了 outbound 接口，单不是从 head 开始执行出站任务
 ~~~
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210928162603.png)
@@ -8684,7 +8685,7 @@ public final ChannelFuture disconnect(ChannelPromise promise) {
 	说明：
 	1、pipeline 首先会调用 Context 的静态方法 fireXXX，并传入 Context
 	2、然后，静态方法调用 Context 的 invoker 方法，而 invoker 方法内部会调用该 Context 所包含的 Handler 的真正 XXX 
-		  方法，调用结束后，如果还需要继续往后传递，就调用 Context 的 fireXXX2 方法，循环往复
+	方法，调用结束后，如果还需要继续往后传递，就调用 Context 的 fireXXX2 方法，循环往复
 
 ### 10.5.4、Channel Pipeline 调度 handler 梳理
 1. Context 包装 handler，多个 Context 在 pipeline 中形成了`双向链表`，`入站方向叫 inbound`，**由 head 节点开始**，`出站方法叫 outbound` ，**由 tail 节点开始**
@@ -8814,12 +8815,12 @@ private final class ReaderIdleTimeoutTask extends AbstractIdleTask {
 说明：
 1、得到用户设置的超时事件
 2、如果读取操作结束了(执行了 channelReadComplete 方法设置)，就用设置时间-(给定时间-上次最后一次读的
-	 时间的结果)，如果小于 0 ，就触发事件。反之，继续放入队列。间隔时间是新的计算时间
+时间的结果)，如果小于 0 ，就触发事件。反之，继续放入队列。间隔时间是新的计算时间
 3、触发的逻辑是：首先将任务再次放到队列，时间是设置的超时时间，返回一个 promise 对象，用于做取消操作，
-	 然后，设置 first 属性为 false，表示下一次读取不再是第一次了，这个属性在 channelRead 方法会被改成 true
+然后，设置 first 属性为 false，表示下一次读取不再是第一次了，这个属性在 channelRead 方法会被改成 true
 4、创建一个 IdleStateEvent 类型的写事件对象，将次对象传递给用户的 UserEventTriggered 方法，完成触发事件操作
 5、总的来说，每次读取操作都会记录一个时间，定时任务时间到了，会计算当前时间和最后一次读的时间的间隔，如果
-	 时间间隔超过了设置的时间，就触发 UserEventTriggered 方法（前面写心跳机制案例时提到过的自定义handler名）
+时间间隔超过了设置的时间，就触发 UserEventTriggered 方法（前面写心跳机制案例时提到过的自定义handler名）
 ~~~
 
 5. **写事件的 run 方法(即 WriterIdleTimeoutTask 的run 方法)分析**
@@ -8935,7 +8936,8 @@ private final class AllIdleTimeoutTask extends AbstractIdleTask {
 	1、ScheduledExecutorService 接口表示是一个定时任务接口，EventLoop可以接受定时任务。
 	2、EventLoop 接口:Netty接口文档说明该接口作用:一旦 Channel 注册了，就处理该Channel对应的所有I/O操作
 	3、SingleThreadEventExecutor 表示这是一个单个线程的线程池
-	4、 EventLoop是一个单例的线程池，里面含有一个死循环的线程不断的做着3件事情:监听端口，处理端口事件，处理队列事件。每个 EventLoop都可以绑定多个Channel，而每个Channel 始终只能由一个EventLoop 来处理
+	4、EventLoop是一个单例的线程池，里面含有一个死循环的线程不断的做着3件事情:监听端口，处理端口
+	事件，处理队列事件。每个 EventLoop都可以绑定多个Channel，而每个Channel 始终只能由一个EventLoop 来处理
 	
 2. NioEventLoop 的使用 - execute 方法
 	- execute 源码解析
@@ -8968,10 +8970,10 @@ public void execute(Runnable task) {
 
 说明
 1、首先判断该 EventLoop 的线程是否是当前线程，如果是，直接添加到任务队列中去，如果不是，则尝试启动线程（但
-	 由于线程是单个的，因此只能启动一次），随后再将任务添加到队列中去。
+由于线程是单个的，因此只能启动一次），随后再将任务添加到队列中去。
 2、如果线程已经停止，并且删除任务失败，则执行拒绝策略，默认是抛出异常。
 3、如果 addTaskWakesUp 是false，并且任务不是 NonWakeupRunnable 类型的，就尝试唤醒 selector 。这个时候，
-	 阻塞在 selector 的线程就会立即返回
+阻塞在 selector 的线程就会立即返回
 4、可以下断点来追踪
 ~~~
 
@@ -9079,13 +9081,745 @@ private void doStartThread() {
 
 说明：
 1、首先调用executor 的execute方法，这个executor 就是在创建Event LoopGroup 的时候创建的
-	 ThreadPerTaskExecutor类。该execute方法会将Runnable包装成Netty的 FastThreadLocalThread。
+ThreadPerTaskExecutor类。该execute方法会将Runnable包装成Netty的 FastThreadLocalThread。
 2、任务中，首先判断线程中断状态，然后设置最后一次的执行时间
 3、执行当前NioEventLoop 的 run方法，注意:这个方法是个死循环，是整个EventLoop 的核心
 4、在finally 块中，使用CAS 不断修改 state 状态，改成ST_SHUTTING_DOWN。也就是当线程Loop 结束的时候。关闭
-	 线程。最后还要死循环确认是否关闭，否则不会 break。然后，执行 cleanup操作，更新状态为 ST_TERMINATED，
-	 并释放当前线程锁。如果任务队列不是空，则打印队列中还有多少个未完成的任务。并回调terminationFuture方法。
+线程。最后还要死循环确认是否关闭，否则不会 break。然后，执行 cleanup操作，更新状态为 ST_TERMINATED，
+并释放当前线程锁。如果任务队列不是空，则打印队列中还有多少个未完成的任务。并回调terminationFuture方法。
 5、其实最核心的就是 Event Loop自身的run方法。再继续深入run方法
 ~~~
 
 4. EventLoop 中的 Loop 是靠 run 实现的，我们分析下 run 方法（该方法在 NioEventLoop）
+~~~ Java
+@Override
+protected void run() {
+	for (;;) {
+		try {
+			switch (selectStrategy.calculateStrategy(selectNowSupplier, hasTasks())) {
+				case SelectStrategy.CONTINUE:
+					continue;
+				case SelectStrategy.SELECT:
+					select(wakenUp.getAndSet(false));
+
+					// 'wakenUp.compareAndSet(false, true)' is always evaluated
+					// before calling 'selector.wakeup()' to reduce the wake-up
+					// overhead. (Selector.wakeup() is an expensive operation.)
+					//
+					// However, there is a race condition in this approach.
+					// The race condition is triggered when 'wakenUp' is set to
+					// true too early.
+					//
+					// 'wakenUp' is set to true too early if:
+					// 1) Selector is waken up between 'wakenUp.set(false)' and
+					//    'selector.select(...)'. (BAD)
+					// 2) Selector is waken up between 'selector.select(...)' and
+					//    'if (wakenUp.get()) { ... }'. (OK)
+					//
+					// In the first case, 'wakenUp' is set to true and the
+					// following 'selector.select(...)' will wake up immediately.
+					// Until 'wakenUp' is set to false again in the next round,
+					// 'wakenUp.compareAndSet(false, true)' will fail, and therefore
+					// any attempt to wake up the Selector will fail, too, causing
+					// the following 'selector.select(...)' call to block
+					// unnecessarily.
+					//
+					// To fix this problem, we wake up the selector again if wakenUp
+					// is true immediately after selector.select(...).
+					// It is inefficient in that it wakes up the selector for both
+					// the first case (BAD - wake-up required) and the second case
+					// (OK - no wake-up required).
+
+					if (wakenUp.get()) {
+						selector.wakeup();
+					}
+					// fall through
+				default:
+			}
+
+			cancelledKeys = 0;
+			needsToSelectAgain = false;
+			final int ioRatio = this.ioRatio;
+			if (ioRatio == 100) {
+				try {
+					processSelectedKeys();
+				} finally {
+					// Ensure we always run tasks.
+					runAllTasks();
+				}
+			} else {
+				final long ioStartTime = System.nanoTime();
+				try {
+					processSelectedKeys();
+				} finally {
+					// Ensure we always run tasks.
+					final long ioTime = System.nanoTime() - ioStartTime;
+					runAllTasks(ioTime * (100 - ioRatio) / ioRatio);
+				}
+			}
+		} catch (Throwable t) {
+			handleLoopException(t);
+		}
+		// Always handle shutdown even if the loop processing threw an exception.
+		try {
+			if (isShuttingDown()) {
+				closeAll();
+				if (confirmShutdown()) {
+					return;
+				}
+			}
+		} catch (Throwable t) {
+			handleLoopException(t);
+		}
+	}
+}
+
+说明：
+1、从上面的步骤可以看出，整个run方法做了3件事情:
+		1.select 获取感兴趣的事件。
+		2.processSelectedKeys 处理事件。
+		3.runAllTasks执行队列中的任务。
+2、上面的三个方法，我们就追一下select 方法(体现非阻塞)核心select方法解析
+
+private void select(boolean oldWakenUp) throws IOException {
+	Selector selector = this.selector;
+	try {
+		int selectCnt = 0;
+		long currentTimeNanos = System.nanoTime();
+		long selectDeadLineNanos = currentTimeNanos + delayNanos(currentTimeNanos);
+		for (;;) {
+			long timeoutMillis = (selectDeadLineNanos - currentTimeNanos + 500000L) / 1000000L;
+			if (timeoutMillis <= 0) {
+				if (selectCnt == 0) {
+					selector.selectNow();
+					selectCnt = 1;
+				}
+				break;
+			}
+
+			// If a task was submitted when wakenUp value was true, the task didn't get a chance to call
+			// Selector#wakeup. So we need to check task queue again before executing select operation.
+			// If we don't, the task might be pended until select operation was timed out.
+			// It might be pended until idle timeout if IdleStateHandler existed in pipeline.
+			if (hasTasks() && wakenUp.compareAndSet(false, true)) {
+				selector.selectNow();
+				selectCnt = 1;
+				break;
+			}
+
+			int selectedKeys = selector.select(timeoutMillis);
+			selectCnt ++;
+
+			// 如果 1 秒后返回，有返回值 || select 被用户唤醒 || 任务队列有任务 || 有定时任务即将被执行；则跳出循环
+			if (selectedKeys != 0 || oldWakenUp || wakenUp.get() || hasTasks() || hasScheduledTasks()) {
+				// - Selected something,
+				// - waken up by user, or
+				// - the task queue has a pending task.
+				// - a scheduled task is ready for processing
+				break;
+			}
+			if (Thread.interrupted()) {
+				// Thread was interrupted so reset selected keys and break so we not run into a busy loop.
+				// As this is most likely a bug in the handler of the user or it's client library we will
+				// also log it.
+				//
+				// See https://github.com/netty/netty/issues/2426
+				if (logger.isDebugEnabled()) {
+					logger.debug("Selector.select() returned prematurely because " +
+							"Thread.currentThread().interrupt() was called. Use " +
+							"NioEventLoop.shutdownGracefully() to shutdown the NioEventLoop.");
+				}
+				selectCnt = 1;
+				break;
+			}
+
+			long time = System.nanoTime();
+			if (time - TimeUnit.MILLISECONDS.toNanos(timeoutMillis) >= currentTimeNanos) {
+				// timeoutMillis elapsed without anything selected.
+				selectCnt = 1;
+			} else if (SELECTOR_AUTO_REBUILD_THRESHOLD > 0 &&
+					selectCnt >= SELECTOR_AUTO_REBUILD_THRESHOLD) {
+				// The selector returned prematurely many times in a row.
+				// Rebuild the selector to work around the problem.
+				logger.warn(
+						"Selector.select() returned prematurely {} times in a row; rebuilding Selector {}.",
+						selectCnt, selector);
+
+				rebuildSelector();
+				selector = this.selector;
+
+				// Select again to populate selectedKeys.
+				selector.selectNow();
+				selectCnt = 1;
+				break;
+			}
+
+			currentTimeNanos = time;
+		}
+
+		if (selectCnt > MIN_PREMATURE_SELECTOR_RETURNS) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("Selector.select() returned prematurely {} times in a row for Selector {}.",
+						selectCnt - 1, selector);
+			}
+		}
+	} catch (CancelledKeyException e) {
+		if (logger.isDebugEnabled()) {
+			logger.debug(CancelledKeyException.class.getSimpleName() + " raised by a Selector {} - JDK bug?",
+					selector, e);
+		}
+		// Harmless exception - log anyway
+	}
+}
+
+说明：
+调用 selector 的 select方法，默认阻塞1秒钟，如果有定时任务，则在定时任务剩余时间的基础上在加上0.5秒进行阻塞。
+当执行execute方法的时候，也就是添加任务的时候，selector，防止 selector 阻塞时间过长
+~~~
+
+6. EventLoop 作为 Netty 的核心运行机制小结
+
+	1、每次执行 ececute 方法都是向队列中添加任务。当第一次添加时就启动线程，执行 run方法，而 run 方法是整个 EventLoop 的核心，就像 EventLoop 的名字一样，Loop Loop ，不停的 Loop ,Loop做什么呢?做3件事情。
+	- 调用 selector 的 select方法，默认阻塞一秒钟，如果有定时任务，则在定时任务剩余时间的基础上在加上0.5秒进行阻塞。当执行 execute方法的时候，也就是添加任务的时候，唤醒 selector，防止 selector 阻塞时间过长。
+	- 当 selector 返回的时候，回调用 processSelectedKeys 方法对 selectKey 进行处理。
+	- 当 processSelectedKeys 方法执行结束后，则按照 ioRatio 的比例执行 runAllTasks方法，默认是IO 任务时间和非IO 任务时间是相同的，你也可以根据你的应用特点进行调优。比如非IO任务比较多，那么你就将 ioRatio 调小一点，这样非IO任务就能执行的长一点，防止队列积攒过多任务
+
+
+## 10.8、Handler 中加入线程池和 Context 中添加线程池的源码剖析
+
+### 10.8.1、源码剖析目的
+1. 在Netty中做耗时的，不可预料的操作，比如数据库，网络请求，会严重影响Netty对Socket 的处理速度。
+2. 而解决方法就是将耗时任务添加到异步线程池中。但就添加线程池这步操作来讲，可以有2种方式，而且这2种方式实现的区别也蛮大的
+3. 处理耗时业务的第一种方式---handler中加入线程池
+4. 处理耗时业务的第二种方式---Context中添加线程池
+5. 我们就来分析下两种方式
+
+
+### 10.8.2、第一种方式
+
+~~~ java
+/*
+ * Copyright 2012 The Netty Project
+ *
+ * The Netty Project licenses this file to you under the Apache License,
+ * version 2.0 (the "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at:
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
+package com.clover.netty.source.echo2;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.CharsetUtil;
+import io.netty.util.concurrent.DefaultEventExecutorGroup;
+import io.netty.util.concurrent.EventExecutorGroup;
+
+import java.util.concurrent.Callable;
+
+/**
+ * Handler implementation for the echo server.
+ */
+@Sharable
+public class EchoServerHandler extends ChannelInboundHandlerAdapter {
+
+    static final EventExecutorGroup group = new DefaultEventExecutorGroup(16);
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        System.out.println("EchoServerHandler 的线程是 =" + Thread.currentThread().getName());
+
+        // 将任务提交到 group 线程池
+        group.submit(new Callable<Object>() {
+              @Override
+              public Object call() throws Exception {
+                  ByteBuf buf = (ByteBuf) msg;
+                  byte[] bytes = new byte[buf.readableBytes()];
+                  buf.readBytes(bytes);
+                  String s = new String(bytes, "UTF-8");
+                  Thread.sleep(3 * 1000);
+                  System.out.println("EchoServerHandler 中 group.submit 的线程是 =" + Thread.currentThread().getName());
+                  System.out.println("s =" + s);
+                  ctx.writeAndFlush(Unpooled.copiedBuffer(("hello,clover").getBytes()));
+                  return null;
+              }
+        });
+		
+		// 普通方式
+        ByteBuf buf = (ByteBuf) msg;
+        byte[] bytes = new byte[buf.readableBytes()];
+        buf.readBytes(bytes);
+        String s = new String(bytes, "UTF-8");
+        Thread.sleep(3 * 1000);
+        System.out.println("EchoServerHandler 中 普通方式 的线程是 =" + Thread.currentThread().getName());
+        ctx.writeAndFlush(Unpooled.copiedBuffer(("hello,clover").getBytes()));
+
+        System.out.println("go on");
+    }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) {
+        ctx.flush();
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        // Close the connection when an exception is raised.
+        cause.printStackTrace();
+        ctx.close();
+    }
+}
+
+说明：
+1、在 channelRead 方法，模拟了一个耗时 10 秒的操作，这里，将这个任务提交到了一个自定义的业务线程池中，这样就
+不会阻塞 Netty 的 IO 线程
+2、当你运行多个 group.submit 方法时，在 group 线程池中也会使用多个 线程，而不是共用一个线程，而 handler 是共
+用一个线程
+~~~
+
+这样处理后，整个程序的逻辑图
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929120904.png)
+
+说明：
+
+1. 解释一下上图，当 IO 线程轮询到一个 socket 事件，然后，IO 线程开始处理，当走到耗时 handler 的时候，将耗时任务交给业务线程池
+2. 当耗时任务执行完毕再执行 pipeline write 方法的时候，(代码中使用的是 context 的 write方法，上图画的是执行 pipeline 方法，是一个意思)会将这个任务交给IO线程
+
+### 10.8.3、write 方法的源码(在 AbstractChannelHandlerContext 类)
+
+~~~Java
+private void write(Object msg, boolean flush, ChannelPromise promise) {
+	AbstractChannelHandlerContext next = findContextOutbound();
+	final Object m = pipeline.touch(msg, next);
+	EventExecutor executor = next.executor();
+	// 重点！！！！！！！
+	if (executor.inEventLoop()) {
+		if (flush) {
+			next.invokeWriteAndFlush(m, promise);
+		} else {
+			next.invokeWrite(m, promise);
+		}
+	} else {
+		AbstractWriteTask task;
+		if (flush) {
+			task = WriteAndFlushTask.newInstance(next, m, promise);
+		}  else {
+			task = WriteTask.newInstance(next, m, promise);
+		}
+		// 重点！！！！！！！
+		safeExecute(executor, task, promise, m);
+	}
+}
+
+说明：
+1、当判定下个 outbound 的 executor 线程不是当前线程的时候，会将当前的工作封装成task ,然后放入mpsc队列中，等
+待IO任务执行完毕后执行队列中的任务。
+2、这里可以Debug 来验证(提醒:Debug时，服务器端Debug ,客户端Run 的方式)，当我们使用了 group.submit(new 
+Callable<Object>()在 handler中加入线程池，就会进入到 safeExecute(executor;task,promise, m);如果去掉这段代
+码，而使用普通方式来执行耗时的业务，那么就不会进入到 safeExecute(executor,task, promise,m);（说明:普通方式执
+行耗时代码，看我准备好的案例即可)
+~~~
+
+### 10.8.4、第二种方式
+
+~~~Java
+static final EventExecutorGroup group = new DefaultEventExecutorGroup(2);
+ServerBootstrap b = new ServerBootstrap();
+b.group(bossGroup, workerGroup)
+ .channel(NioServerSocketChannel.class)
+ .option(ChannelOption.SO_BACKLOG, 100)
+ .handler(new LoggingHandler(LogLevel.INFO))
+ .childHandler(new ChannelInitializer<SocketChannel>() {
+	 @Override
+	 public void initChannel(SocketChannel ch) throws Exception {
+		 ChannelPipeline p = ch.pipeline();
+		 if (sslCtx != null) {
+			 p.addLast(sslCtx.newHandler(ch.alloc()));
+		 }
+		 //p.addLast(new LoggingHandler(LogLevel.INFO));
+		 //p.addLast(new EchoServerHandler());
+		 /*
+		  * 说明：如果我们在addLast 添加 handler，前面有指定 EventExecutorGroup
+		  *       那么该 Handler，会优先加入到该线程池中
+		  */
+		 p.addLast(group,new EchoServerHandler());
+	 }
+ });
+ 
+说明：
+1、handler中的代码就使用普通的方式来处理耗时业务
+2、当我们在调用 addLast 方法添加线程池后，handler 将优先使用这个线程池，如果不添加，将使用IO 线程
+3、当走到 AbstractChannelHandlerContext 的 invokeChannelRead 方法的时候，executor.inEventLoop() 是不会通过
+的,因为当前线程是IO 线程Context(也就是Handler）的 executor 是业务线程,所以会异步执行, debug下源码
+
+static void invokeChannelRead(final AbstractChannelHandlerContext next, Object msg) {
+	final Object m = next.pipeline.touch(ObjectUtil.checkNotNull(msg, "msg"), next);
+	EventExecutor executor = next.executor();
+	// 重点！！！！！
+	if (executor.inEventLoop()) {
+		next.invokeChannelRead(m);
+	} else {
+		executor.execute(new Runnable() {// 执行 run 方法
+			@Override
+			public void run() {
+				next.invokeChannelRead(m);
+			}
+		});
+	}
+}
+
+说明：
+1、验证时，我们如果去掉 p.addLast(group,new EchoServerHandler()); 改成 p.addLastnewEchoServerHandler(); 你
+会发现代码不会进行异步执行
+2、后面的整个流程就变成和第一个方式一样了
+~~~
+
+### 10.8.5、两种方式的比较
+1. 第一种方式在 handler 中添加异步，`可能更加的自由`，比如如果需要访问数据库，那我就异步，如果不需要，就不异步，`异步会拖长接口响应时间`。因为需要将任务放进mpscTask 中。如果IO 时间很短，task 很多，能一个循环下来，都没时间执行整个task，导致响应时间达不到指标。
+2. 第二种方式是 Netty 标准方式(即加入到队列)，但是，这么做会将整个handler 都交给业务线程池。`不论耗时不耗时，都加入到队列里，不够灵活`。
+3. 各有优劣，从灵活性考虑，第一种较好
+
+# 11、用 Netty 自己实现 dubbo RPC
+## 10.1、RPC 基本介绍
+1. `RPC（Remote Procedure Call）`— 远程过程调用，是一个计算机通信协议。该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程
+2. 两个或多个应用程序都分布在不同的服务器上，它们之间的调用都像是本地方法调用一样(如图)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173923.png)
+
+2. 常见的 RPC 框架有: 比较知名的如阿里的Dubbo、google的g RPC、Go语言的rpcx、Apache的thrift， Spring 旗下的 Spring Cloud
+
+## 10.2、RPC调用流程
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173608.png)
+
+	术语说明：在RPC中，Client 叫服务消费者，Server 叫服务提供者
+
+1. **服务消费方(client)以本地调用方式调用服务**
+2. client stub 接收到调用后负责将方法、参数等封装成能够进行网络传输的消息体
+3. client stub 将消息进行编码并发送到服务端
+4. server stub 收到消息后进行解码
+5. server stub 根据解码结果调用本地的服务
+6. 本地服务执行并将结果返回给 server stub
+7. server stub 将返回导入结果进行编码并发送至消费方
+8. client stub 接收到消息并进行解码
+9. **服务消费方(client)得到结果**
+
+**小结：RPC 的目标就是将 2-8 这些步骤都封装起来，用户无需关心这些细节，可以像调
+用本地方法一样即可完成远程服务调用**
+
+## 10.2、自己实现 dubbo RPC (基于 Netty)
+
+### 10.2.1、需求说明
+1. dubbo 底层使用了 Netty 作为网络通讯框架，要求用 Netty 实现一个简单的 RPC 框架
+2. 模仿 dubbo，`消费者和提供者约定接口和协议`，消费者远程调用提供者的服务，提供者返回一个字符串，消费者打印提供者返回的数据。底层网络通信使用 Netty 4.1.20
+
+### 10.2.2、设计说明
+1. 创建一个接口，定义抽象方法。用于消费者和提供者之间的约定
+2. 创建一个提供者，该类需要监听消费者的请求，并按照约定返回数据
+3. 创建一个消费者，该类需要透明的调用自己不存在的方法，内部需要使用 Netty 请求提供者返回数据
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929211840.png)
+
+	这个里面的难点在于代理对象的创建
+
+## 10.3、代码实现
+
+**公共接口**
+~~~Java
+package com.clover.netty.dubborpc.publicinterface;
+
+// 这个是接口，是 服务提供方 和 消费者方 都需要的
+public interface HelloService {
+    String hello(String msg);
+}
+
+~~~
+
+**服务提供方实现接口**
+~~~Java
+package com.clover.netty.dubborpc.provider;
+
+import com.clover.netty.dubborpc.publicinterface.HelloService;
+
+public class HelloServiceImpl implements HelloService {
+
+    // 如果你想在此统计客户端发送了多少次消息，你可以设置一个变量，但是你不设置为静态变量是无法统计到的
+    // 因为它每次都是调用的一个新的 HelloServiceImpl 对象，并不是每次使用的是同一个
+
+    // 当有消费方调用该方法时，就返回一个结果
+    @Override
+    public String hello(String msg) {
+        System.out.println("收到客户端消息：" + msg);
+        // 根据 msg 返回不同的结果
+        if (msg != null){
+            return "你好客户端，我已经收到你的消息 [" + msg +"]";
+        } else {
+            return "你好客户端，我已经收到你的消息 ";
+        }
+    }
+}
+~~~
+
+**服务提供方(服务器端)启动类**
+~~~Java
+package com.clover.netty.dubborpc.provider;
+
+import com.clover.netty.dubborpc.netty.NettyServer;
+
+// ServerBootstrap 会启动一个服务提供者，就是 NettyServer
+public class ServerBootstrap {
+    public static void main(String[] args) {
+        NettyServer.startServer("127.0.0.1",7000);
+    }
+}
+~~~
+
+**NettyServer**
+~~~Java
+package com.clover.netty.dubborpc.netty;
+
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
+
+public class NettyServer {
+    public static void startServer(String hostName,int port){
+        startServer0(hostName, port);
+    }
+
+    public static void startServer0(String hostname,int port){
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
+
+        try{
+
+            ServerBootstrap serverBootstrap = new ServerBootstrap();
+
+            serverBootstrap.group(bossGroup,workerGroup)
+                    .channel(NioServerSocketChannel.class)
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        protected void initChannel(SocketChannel ch) throws Exception {
+                            ChannelPipeline pipeline = ch.pipeline();
+
+                            pipeline.addLast(new StringDecoder());
+                            pipeline.addLast(new StringEncoder());
+                            pipeline.addLast(new NettyServerHandler());
+                        }
+                    });
+            ChannelFuture channelFuture = serverBootstrap.bind(7000).sync();
+            System.out.println("服务提供方开始提供服务");
+            channelFuture.channel().closeFuture().sync();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally{
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+        }
+    }
+}
+~~~
+
+**NettyServerHandler**
+~~~Java
+package com.clover.netty.dubborpc.netty;
+
+import com.clover.netty.dubborpc.provider.HelloServiceImpl;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+
+public class NettyServerHandler extends ChannelInboundHandlerAdapter {
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        // 获取客户端发送的消息，并调用服务
+        System.out.println("msg =" + msg);
+
+        // 客户端在调用服务器的 api 时，我们需要定义一个协议
+        // 比如我们要求 每次发送消息时都必须以某个字符串开头 "CloverFelix#hello#xxxx"
+        if (msg.toString().startsWith("CloverFelix#hello#")){
+            String result = new HelloServiceImpl().hello(msg.toString().substring(msg.toString().lastIndexOf("#") + 1));
+            ctx.writeAndFlush(result);
+        }
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        ctx.channel().close();
+    }
+}
+~~~
+
+**NettyCLient**
+~~~Java
+package com.clover.netty.dubborpc.netty;
+
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
+
+import java.lang.reflect.Proxy;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class NettyClient {
+    // 创建线程池
+    private static ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+    private static NettyClientHandler client;
+
+    public Object getBean(final Class<?> serviceClass, final String providerName){
+        return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),new Class<?>[]{serviceClass},(proxy, method, args) -> {
+            //{} 这部分代码，客户端每调用一次 hello，就会进入到该代码
+            if (client == null){
+               initClient();
+            }
+
+            // 设置要发送给服务器端的消息
+            // providerName 就是协议头，args[0] 就是客户端调用 api 时，传入的参数
+            client.setParam(providerName + args[0]);
+
+            // 将 client 提交到线程池中去执行，并获取到返回结果
+            return executor.submit(client).get();
+        });
+    }
+
+    // 初始化客户端
+    private static void initClient() throws InterruptedException {
+        client = new NettyClientHandler();
+        // 创建 EventLoopGroup
+        NioEventLoopGroup group = new NioEventLoopGroup();
+
+        Bootstrap bootstrap = new Bootstrap();
+
+        bootstrap.group(group)
+                .channel(NioSocketChannel.class)
+                .option(ChannelOption.TCP_NODELAY,true)
+                .handler(new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    protected void initChannel(SocketChannel ch) throws Exception {
+                        ChannelPipeline pipeline = ch.pipeline();
+
+                        pipeline.addLast(new StringEncoder());
+                        pipeline.addLast(new StringDecoder());
+                        pipeline.addLast(client);
+                    }
+                });
+
+        bootstrap.connect("127.0.0.1", 7000).sync();
+//            channelFuture.channel().closeFuture().sync();
+    }
+}
+~~~
+
+**NettyCLientHandler**
+~~~Java
+package com.clover.netty.dubborpc.netty;
+
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+
+import java.util.concurrent.Callable;
+
+public class NettyClientHandler extends ChannelInboundHandlerAdapter implements Callable {
+
+    private ChannelHandlerContext context;
+    private String result;// 返回的结果
+    private String param;// 客户端调用方法时，传入的参数
+
+    // 与服务器的连接创建后，就会被调用
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("channelActive 被调用");
+        context = ctx;// 因为我在其它方法也会使用到 ctx
+    }
+
+    // 收到服务器数据后，调用该方法
+    @Override
+    public synchronized void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        System.out.println("channelRead 被调用");
+        result = msg.toString();
+        /*
+         * 说明：
+         * 1、因为客户端启动时，向服务器会传送一个消息，是通过 proxy 对象，即代理对象调用 call 方法
+         * 2、call 方法会将数据传递给服务端，但是服务端并没有立即返回结果消息，所以就使用了 wait 方法，让其沉睡等待结果
+         * 3、而服务器返回结果消息是发送给客户端handler中的 channelRead 方法，所以当我们拿到消息后，就需要唤醒等待线程，让其继续执行下去
+         */
+        notify();// 唤醒等待线程
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        ctx.channel().close();
+    }
+
+    // 被代理对象调用，发送数据给服务器，然后使用wait方法沉睡，并且等待被唤醒(被 channelRead 唤醒)，在返回结果
+    @Override
+    public synchronized Object call() throws Exception {
+        System.out.println("call1 被调用");
+        context.writeAndFlush(param);
+        // 进行 wait
+        wait();// 等待 channelRead 获取到服务器的结果后唤醒
+        System.out.println("call2 被调用");
+        return result;// 服务方返回的结果
+    }
+
+    public void setParam(String param) {
+        System.out.println("setParam 被调用");
+        this.param = param;
+    }
+}
+~~~
+
+**服务消费方(客户端)启动类**
+~~~Java
+package com.clover.netty.dubborpc.customer;
+
+import com.clover.netty.dubborpc.netty.NettyClient;
+import com.clover.netty.dubborpc.publicinterface.HelloService;
+
+public class ClientBootstrap {
+
+    // 这里定义协议头
+    public static final String providerName = "CloverFelix#hello#";
+
+
+    public static void main(String[] args) {
+
+        // 创建一个消费者
+        NettyClient customer = new NettyClient();
+
+        // 创建代理对象
+        HelloService service = (HelloService) customer.getBean(HelloService.class, providerName);
+
+        // 通过代理对象调用服务提供者的方法(服务)
+        String res = service.hello("你好，dubbo");
+        System.out.println("调用的结果 res= " + res);
+    }
+}
+~~~
+
+ 
