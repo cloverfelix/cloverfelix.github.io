@@ -1363,7 +1363,7 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 # 5、Netty高性能框架设计
 
 ## 5.1、线程模型基本介绍
-1. 不同的线程模式，对程序的性能有很大影响，为了搞清楚Netty线程模式，我们来系统的讲解下各个 线程模式，最后看看Netty线程模型有什么优越性
+1. 不同的线程模式，对程序的性能有很大影响，为了搞清楚Netty线程模式，我们来系统的讲解下各个线程模式，最后看看Netty线程模型有什么优越性
 2. 目前存在的线程模型有：**传统阻塞I/O服务模型**、**Reactor模式**
 3. **根据Reactor的数量和处理资源池线程数量的不同，有三种典型的实现**
 	- 单Reactor 单线程
@@ -1419,15 +1419,11 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 前面所写的NIO群聊系统就是一个单Reactor 单线程模式
 
 ### 5.4.1、方案说明
-1.Select是前面I/O复用模型介绍的标准网络编程API，可以实现应用程序通过一个阻塞对象监听多路连接请求
-
-2.Reactor对象通过Select监听客户端请求事件，收到事件后通过Dispatch进行分发
-
-3.如果是建立连接请求事件，则由Acceptor通过Accept处理连接请求，然后创建一个Handler对象处理连接完成后的后续业务处理
-
-4.如果不是建立连接事件，则Reactor会分发调用对应的Handler来响应
-
-5.Handler会完成Read->业务处理->Send的完整业务流程
+1. Select是前面I/O复用模型介绍的标准网络编程API，可以实现应用程序通过一个阻塞对象监听多路连接请求
+2. Reactor对象通过Select监听客户端请求事件，收到事件后通过Dispatch进行分发
+3. 如果是建立连接请求事件，则由Acceptor通过Accept处理连接请求，然后创建一个Handler对象处理连接完成后的后续业务处理
+4. 如果不是建立连接事件，则Reactor会分发调用对应的Handler来响应
+5. Handler会完成Read->业务处理->Send的完整业务流程
 
 结合实例；服务器端用一个线程通过多路复用搞定所有的IO操作(包括连接、读、写等)，编码简单，清晰明了，但是如果客户端连接数量较多，将无法支撑，前面的NIO群聊系统就属于这种类型
 	
@@ -1511,8 +1507,8 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 1. Netty抽象出两组线程池BossGroup：专门负责接收客户端的连接，WorkGroup：专门负责网络的读写
 2. BossGroup和WorkGroup类型都是`NioEventLoopGroup`
 3. NioEventLoopGroup相当于一个事件循环组，这个组中含有多个事件循环，每一个事件循环是NioEventLoop
-4. NioEventLoop表示一个不断循环的执行处理任务的线程，每个NioEventLoop都有一个`Selector`，用于监听绑定在其上的socket的网络通讯
-5. NioEventLoopGroup可以有多个线程，既可以含有多个NioEventLoop
+4. NioEventLoop表示一个不断循环执行处理任务的线程，每个NioEventLoop都有一个`Selector`，用于监听绑定在其上的socket的网络通讯
+5. NioEventLoopGroup可以有多个线程，即可以含有多个NioEventLoop
 6. 每个Boss NioEventLoop循环执行的步骤有3步
 	1. 轮询accept事件
 	2. 处理accept事件，与client建立连接，生成`NioSocketChannel`，`并将其注册到某个WorkerNioEventLoop`上的`Selector`
@@ -1526,7 +1522,7 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 ### 5.8.4、Netty快速入门实例-TCP服务
 1. 实例要求：使用IDEA创建Netty项目
 2. Netty服务器在6668端口监听，客户端能发送消息给服务器"hello,服务器"
-3. 服务器可以恢复消息给客户端"hello,客户器"
+3. 服务器可以回复消息给客户端"hello,客户器"
 4. 目的：对Netty线程模型有一个初步认识
 5. 说明：创建Maven项目，并引入Netty包
 
@@ -1537,6 +1533,8 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 	ChannelFuture 在Netty中的所有的I/O操作都是异步执行的，这就意味着任何一个I/O操作会立刻返
 	回，不保证在调用结束的时候操作会执行完成。因此，会返回一个ChannelFuture的实例，通过这个实
 	例可以获取当前I/O操作的状态。
+	当我们要关闭 channel 时，可以调用 `channel.close()` 方法进行关闭。但是该方法也是一个异步方法。
+	真正的关闭操作并不是在调用该方法的线程中执行的，而是在 NIO 线程中执行真正的关闭操作
 
 **服务器端：**
 ~~~Java
@@ -1592,6 +1590,8 @@ public class NettyServer {
 
           // 对关闭通道进行监听(只有当你有一个关闭通道这样的事件发生时，才会去进行处理)
           // 这里为什么也需要使用同步？因为不适用同步，他就会跳过这个语句直接执行finally中的语句关闭线程组了
+		  // closeFuture().sync() 不是用于关闭 Channel ，而是允许你阻塞直到 Channel 关闭，然后执行一些额外的操作  
+		  // 它有一个监听的作用，当通道关闭的时候，它会返回一个 ChannelFuture,这个里面包含了IO操作的状态
           cf.channel().closeFuture().sync();
       } finally{
           bossGroup.shutdownGracefully();
@@ -1686,7 +1686,7 @@ public class NettyClient {
           // 关于 ChannelFuture 后面要分析，涉及到Netty的异步模型
           ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 6668).sync();
 
-          // 给关闭通道进行监听(sync是让其为非阻塞？？？？？？)
+          // 给关闭通道进行监听(sync是让其为阻塞到通道关闭后做额外的操作)
           channelFuture.channel().closeFuture().sync();
       }finally{
           group.shutdownGracefully();
@@ -1786,7 +1786,7 @@ ctx.channel()
 - NioEventLoopGroup下包含多个NioEventLoop
 - 每个NioEventLoop中包含一个Selector，一个taskQueue
 - 每个NioEventLoop的Selector上可以注册监听多个NioSocketChannel
-- 每个NioSocketChannel只会绑定再唯一的NioEventLoop上
+- 每个NioSocketChannel只会绑定在唯一的NioEventLoop上
 - 每个NioSocketChannel都会绑定有一个自己的ChannelPipeline
 
 ## 5.9、异步模型
@@ -1795,16 +1795,17 @@ ctx.channel()
 1. 异步的概念和同步相对。当一个异步过程调用发出后，调用者不能立刻得到结果。实际处理这个调用的组件在完成后，通过状态、通知和回调来通知调用者
 2. **Netty中的IO操作是异步的**，包括Bind、Write、Connect等操作会简单的返回一个ChannelFuture
 3. 调用者并不能立刻获得结果，而是通过Future-Listener机制，用户可以方便的主动获取或者通过通知机制获得IO操作结果
-4. Netty的异步模型是建立在future和callback之上的，callback就是回调。重点说Future，它的核心思想是：假设一个方法fun，计算过程可能非常耗时，等待fun返回显然不合适。那么可以在调用fun 的时候，立马返回一个Future，后续可以通过Future区监控方法fun的处理过程(即：Future-Listener机制)
+4. Netty的异步模型是建立在future和callback之上的，callback就是回调。重点说Future，它的核心思想是：假设一个方法fun，计算过程可能非常耗时，等待fun返回显然不合适。那么可以在调用fun 的时候，立马返回一个Future，后续可以通过Future去监控方法fun的处理过程(即：Future-Listener机制)
 
 ### 5.9.2、Future说明
 1. 表示**异步的执行结果**，可以通过它提供的方法来检测执行是否完成
-2. ChannelFuture是一个接口：public interface ChannelFuture ,我们可以添加监听器，当监听的时间发生时，就会通知到监听器.**案例说明**
+2. ChannelFuture是一个接口：public interface ChannelFuture ,我们可以添加监听器，当监听的事件发生时，就会通知到监听器
+3. **案例说明**
 
 ### 5.9.3、工作原理示意图
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210915183944.png)
 **说明:**
-1. 在使用Netty进行编程时，拦截操作和转换出入站数据只需要您提供callback或利用future即可。这使得**链式操作**简单、高效，并有利于编写可重用的、通用的代码。
+1. 在使用Netty进行编程时，拦截操作和转换出入站数据只需要提供 callback 或利用 future 即可。这使得**链式操作**简单、高效，并有利于编写可重用的、通用的代码。
 2. Netty框架的目标就是让你的业务逻辑从网络基础应用编码中分离出来、解脱出来
 
 
@@ -1815,7 +1816,7 @@ ctx.channel()
 
 **举例说明：**
 
-演示：绑定端口是异步操作，当绑定操作处理完，将会调用相应的监听器处理逻辑+
+演示：绑定端口是异步操作，当绑定操作处理完，将会调用相应的监听器处理逻辑
 
 ~~~Java
 cf.addListener(new ChannelFutureListener() {
@@ -1830,7 +1831,7 @@ cf.addListener(new ChannelFutureListener() {
 });
 ~~~
 
-	小结：相比传统阻塞I/O，执行I/O操作后线程会被阻塞住，知道操作完成；异步处理的好处是不会造成
+	小结：相比传统阻塞I/O，执行I/O操作后线程会被阻塞住，直到操作完成；异步处理的好处是不会造成
 	线程阻塞，线程在I/O操作期间可以执行别的程序，在高并发情况下会更稳定和更高的吞吐量
 	
 ## 5.10、快速入门实例-HTTP服务
@@ -2007,6 +2008,7 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210915220803.png)
 	- ChannelInboundHandler 用于处理入站 I/O 事件
 	- ChannelOutboundHandler 用于处理出站 I/O 操作
+
 	`适配器`
 	- ChannelInboundHandlerAdapter 用于处理入站 I/O 事件
 	- ChannelOutboundHandlerAdapter 用于处理出站 I/O 操作
@@ -2071,11 +2073,11 @@ implements Channel InboundHandler {
 
 ## 6.7、ChannelHandlerContext
 1. 保存 Channel 相关的所有上下文信息，同时关联一个 ChannelHandler 对象
-2. 即ChannelHandlerContext 中包含一个具体的事件处理器 ChannelHandler ， 同 时ChannelHandlerContext 中也绑定了对应的 pipeline 和 Channel 的信息，方便对 ChannelHandler进行调用
+2. 即 ChannelHandlerContext 中包含一个具体的事件处理器 ChannelHandler ， 同 时ChannelHandlerContext 中也绑定了对应的 pipeline 和 Channel 的信息，方便对 ChannelHandler进行调用
 3. 常用方法
 	- ChannelFuture close()，关闭通道
 	- ChannelOutboundInvoker flush()，刷新
-	- ChannelFuture writeAndFlush(Object msg) ， 将数据写到ChannelPipeline中当前ChannelHandler 的下一个 ChannelHandler 开始处理 **(出站)**
+	- ChannelFuture writeAndFlush(Object msg) ， 将数据写到 ChannelPipeline 中当前ChannelHandler 的下一个 ChannelHandler 开始处理 **(出站)**
 
  
 ## 6.8、ChannelOption
@@ -2087,13 +2089,13 @@ implements Channel InboundHandler {
 		- 一直保持连接活动状态
 
 ## 6.9、EventLoopGroup 和其实现类 NioEventLoopGroup
-1. EventLoopGroup是一组 EventLoop 的抽象，Netty为了更好的利用多核 CPU 资源，一般会有多个 EventLoop 同时工作，每个EventLoop维护着一个Selector实例
+1. EventLoopGroup 是一组 EventLoop 的抽象，Netty为了更好的利用多核 CPU 资源，一般会有多个 EventLoop 同时工作，每个 EventLoop 维护着一个Selector实例
 2. EventLoopGroup 提供 next 接口，可以从组里面按照一定规则获取其中一个 EventLoop来处理任务。在 Netty 服务器端编程中，我们一般都需要提供两个 EventLoopGroup，例如：BossEventLoopGroup 和 WorkerEventLoopGroup
-3. 通常一个服务端口即一个 ServerSocketChannel对应一个Selector 和一个EventLoop线程。BossEventLoop 负责接收客户端的连接并将 SocketChannel 交给 WorkerEventLoopGroup 来进行 IO 处理，如下图所示
+3. 通常一个服务端口即一个 ServerSocketChannel 对应一个 Selector 和一个 EventLoop 线程。BossEventLoopGroup 负责接收客户端的连接并将 SocketChannel 交给 WorkerEventLoopGroup 来进行 IO 处理，如下图所示
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210916111322.png)
-	- BossEventLoopGroup 通常是一个单线程的 EventLoop，Event Loop 维护着一个注册了ServerSocketChannel 的 Selector 实例，BossEventLoop 不断轮询Selector 将连接事件分离出来
+	- BossEventLoopGroup 通常是一个单线程的 EventLoop，EventLoop 维护着一个注册了ServerSocketChannel 的 Selector 实例，BossEventLoop 不断轮询Selector 将连接事件分离出来
 	- 通常是OP_ACCEPT 事件，然后将接收到的 SocketChannel 交给 WorkerEventLoopGroup
-	- WorkerEventLoopGroup 会由 next 选择其中一个 EventLoop来将这个SocketChannel 注册到其维护的Selector 并对其后续的 IO 事件进行处理
+	- WorkerEventLoopGroup 会由 next 选择其中一个 EventLoop来将这个SocketChannel 注册到其维护的 Selector 并对其后续的 IO 事件进行处理
 4. 常用方法
 	- public NioEventLoopGroup()，构造方法
 	- public Future<> shutdownGracefully()，断开连接，关闭线程
@@ -8101,7 +8103,11 @@ if ((readyOps & (SelectionKey.OP_READ | SelectionKey.OP_ACCEPT)) != 0 || readyOp
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210927165049.png)
 
-4、这个 unsafe 是 boss 线程中 NioServerSocketChannel 的子类 AbstractNioMessageChannel$NioMessageUnsafe 对象，进入到  AbstractNioMessageChannel￥NioMessageUnsafe 的read 方法中
+4、这个 unsafe 是 boss 线程中 NioServerSocketChannel 继承了 AbstractNioMessageChannel 类中内部类 NioMessageUnsafe 对象，进入到  AbstractNioMessageChannel 类的内部类 NioMessageUnsafe 的read 方法中
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210930163128.png)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210930163111.png)
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210927165312.png)
 
@@ -8266,7 +8272,7 @@ public void channelRead(ChannelHandlerContext ctx, Object msg) {
 
 8、**进入 register 方法查看(步步追踪)**
 
-~~~Java
+~~~ Java
 @Override
 public final void register(EventLoop eventLoop, final ChannelPromise promise) {
 	if (eventLoop == null) {
