@@ -5,7 +5,7 @@
 
 setState更新状态的2种写法
 
-**1.对象式setState：**setState是一个由我们自己去调用的同步方法，但是调用完setState后，需要react帮我们根据参数去修改状态，并且重新渲染页面，这个是异步的，也就是react不会在调用setState后立马去改变状态和重新渲染。但是setState第二个参数————函数，是在react在调用setState后更新完组件并且重新渲染页面后被调用的，如果需要一更新完状态就查看状态的需求，就可以在这个函数中写输出语句
+**1.对象式setState:** setState是一个由我们自己去调用的同步方法，但是调用完setState后，需要react帮我们根据参数去修改状态，并且重新渲染页面，这个是异步的，也就是react不会在调用setState后立马去改变状态和重新渲染。但是setState第二个参数————函数，是在react在调用setState后更新完组件并且重新渲染页面后被调用的，如果需要一更新完状态就查看状态的需求，就可以在这个函数中写输出语句
 
 **setState(stateChange, [callback])------对象式的setState**
 

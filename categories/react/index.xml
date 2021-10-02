@@ -9,7 +9,7 @@
     <pubDate>Sat, 02 Oct 2021 11:07:16 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://cloverfelix.github.io/reactexpand/</guid>
-    <description><![CDATA[1. setState setState更新状态的2种写法 **1.对象式setState：**setState是一个由我们自己去调用的同步方法，但是调用完set]]></description>
+    <description><![CDATA[1. setState setState更新状态的2种写法 1.对象式setState: setState是一个由我们自己去调用的同步方法，但是调用完setStat]]></description>
 </item><item>
     <title>React</title>
     <link>https://cloverfelix.github.io/react/</link>
