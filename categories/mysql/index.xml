@@ -3,7 +3,14 @@
         <title>Mysql - 分类 - clover</title>
         <link>https://cloverfelix.github.io/categories/mysql/</link>
         <description>Mysql - 分类 - clover</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 04 Jul 2021 16:33:35 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/categories/mysql/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 04 Jul 2021 16:34:29 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/categories/mysql/" rel="self" type="application/rss+xml" /><item>
+    <title>SQL常见问题</title>
+    <link>https://cloverfelix.github.io/sql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Sun, 04 Jul 2021 16:34:29 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/sql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[SQL常见问题 建立新连接时报错：can&rsquo;t connect to mysql server on ‘localhost’ 原因：是因为本地服务器没开启 解决：用系统管理员打开命令]]></description>
+</item><item>
     <title>Mysql</title>
     <link>https://cloverfelix.github.io/mysql/</link>
     <pubDate>Sun, 04 Jul 2021 16:33:35 &#43;0800</pubDate>
