@@ -3,7 +3,21 @@
         <title>所有文章 - clover</title>
         <link>https://cloverfelix.github.io/posts/</link>
         <description>所有文章 | clover</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 18 Aug 2021 11:18:38 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 02 Oct 2021 11:07:16 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>ReactExpand</title>
+    <link>https://cloverfelix.github.io/reactexpand/</link>
+    <pubDate>Sat, 02 Oct 2021 11:07:16 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/reactexpand/</guid>
+    <description><![CDATA[1. setState setState更新状态的2种写法 **1.对象式setState：**setState是一个由我们自己去调用的同步方法，但是调用完set]]></description>
+</item><item>
+    <title>React</title>
+    <link>https://cloverfelix.github.io/react/</link>
+    <pubDate>Sat, 02 Oct 2021 09:48:23 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/react/</guid>
+    <description><![CDATA[React 注意事项: 使用脚手架创建react项目后，运行项目只认名为src目录，如果修改了src的目录文件名，那么运行时就找不到src目录。 reac]]></description>
+</item><item>
     <title>DockerDeploy</title>
     <link>https://cloverfelix.github.io/dockerdeploy/</link>
     <pubDate>Wed, 18 Aug 2021 11:18:38 &#43;0800</pubDate>
@@ -59,19 +73,5 @@
     <author>作者</author>
     <guid>https://cloverfelix.github.io/springboot/</guid>
     <description><![CDATA[SpringBoot原理探讨 创建一个Controller时，让其返回一个字符串，有两种方式 1、使用@RestController注解 2、使用]]></description>
-</item><item>
-    <title>Redis</title>
-    <link>https://cloverfelix.github.io/redis/</link>
-    <pubDate>Sun, 04 Jul 2021 16:36:09 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://cloverfelix.github.io/redis/</guid>
-    <description><![CDATA[NoSQL概述 1、单机Mysql的年代 90年代，一个基本的网站访问量不会太大，单个数据库完全足够 那个时候，更多的去使用静态网页HTML~ 服务]]></description>
-</item><item>
-    <title>MutiNodeLinux</title>
-    <link>https://cloverfelix.github.io/mutinodelinux/</link>
-    <pubDate>Sun, 04 Jul 2021 16:35:24 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://cloverfelix.github.io/mutinodelinux/</guid>
-    <description><![CDATA[部署项目到服务器 使用的是ruoyi进行试验 第一步 首先将项目后端的数据库以及一些配置文件配置好 数据库配置： 对于这里的数据库必须使用远程的数据库]]></description>
 </item></channel>
 </rss>

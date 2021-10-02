@@ -1,0 +1,21 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>React - 分类 - clover</title>
+        <link>https://cloverfelix.github.io/categories/react/</link>
+        <description>React - 分类 - clover</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 02 Oct 2021 11:07:16 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/categories/react/" rel="self" type="application/rss+xml" /><item>
+    <title>ReactExpand</title>
+    <link>https://cloverfelix.github.io/reactexpand/</link>
+    <pubDate>Sat, 02 Oct 2021 11:07:16 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/reactexpand/</guid>
+    <description><![CDATA[1. setState setState更新状态的2种写法 **1.对象式setState：**setState是一个由我们自己去调用的同步方法，但是调用完set]]></description>
+</item><item>
+    <title>React</title>
+    <link>https://cloverfelix.github.io/react/</link>
+    <pubDate>Sat, 02 Oct 2021 09:48:23 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/react/</guid>
+    <description><![CDATA[React 注意事项: 使用脚手架创建react项目后，运行项目只认名为src目录，如果修改了src的目录文件名，那么运行时就找不到src目录。 reac]]></description>
+</item></channel>
+</rss>

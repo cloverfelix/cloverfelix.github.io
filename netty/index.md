@@ -2073,7 +2073,7 @@ implements Channel InboundHandler {
 
 ## 6.7、ChannelHandlerContext
 1. 保存 Channel 相关的所有上下文信息，同时关联一个 ChannelHandler 对象
-2. 即 ChannelHandlerContext 中包含一个具体的事件处理器 ChannelHandler ， 同 时ChannelHandlerContext 中也绑定了对应的 pipeline 和 Channel 的信息，方便对 ChannelHandler进行调用
+2. 即 ChannelHandlerContext 中包含一个具体的事件处理器 ChannelHandler ， 同时ChannelHandlerContext 中也绑定了对应的 pipeline 和 Channel 的信息，方便对 ChannelHandler进行调用
 3. 常用方法
 	- ChannelFuture close()，关闭通道
 	- ChannelOutboundInvoker flush()，刷新
