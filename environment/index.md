@@ -543,3 +543,50 @@ flush privileges;
 
 ~~~bash
 ~~~
+
+
+## 7、安装Zookeeper
+
+去官网下载Zookeeper：[http://zookeeper.apache.org/releases.html](https://link.segmentfault.com/?enc=8Tkzuju4DJX4iYvscGDqFQ%3D%3D.pM8NEyK2DagtZQj1lr%2FGo2X62Pe3gk11N%2FtErad3Np0T%2BxoF7V%2Fwc96hA3IKP4WL)
+
+先在`/usr/local`下创建一个zookeeper文件，然后将root目录下的zookeeper解压到当前zookeeper目录下
+
+~~~bash
+cd /usr/local/ 
+mkdir zookeeper
+cd zookeeper
+tar -zxvf /root/zookeeper-3.4.9.tar.gz -C ./
+~~~
+
+解压完成后，进入zookeeper目录下的`conf`
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018154836.png)
+
+~~~bash
+cp zoo_sample.cfg zoo.cfg
+vim zoo.cfg
+~~~
+
+修改`zoo.cfg`文件，加入以下两个
+
+~~~bash
+dataDir=/usr/local/zookeeper-3.4.9/data
+dataLogDir=/usr/local/zookeeper-3.4.9/logs
+~~~
+
+进入`bin`目录
+~~~bash
+./zkServer.sh start
+./zkServer.sh stop
+./zkServer.sh restart
+./zkServer.sh status
+~~~
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155151.png)
+
+启动`Cli`，执行成功后得到以下响应
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155227.png)
+
+
+

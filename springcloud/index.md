@@ -1797,3 +1797,715 @@ mybatis:
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018113352.png)
 
+
+# 5、Zookeeper服务注册与发现
+
+## 5.1、SpringCloud整合Zookeeper代替Eureka
+
+### 5.1.1、注册中心Zookeeper
+
+- zookeeper是一个分布式协调工具，可以实现注册中心功能
+- 关闭Linux服务器防火墙后启动zookeeper服务器
+- zookeeper服务器取代Eureka服务器，zk作为服务注册中心
+
+### 5.1.2、服务提供者
+
+1、新建cloud-provider-payment8004
+
+2、修改POM
+
+~~~xml
+<dependencies>
+        <!-- SpringBoot整合Web组件 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->
+            <groupId>com.clover.springcloud</groupId>
+            <artifactId>cloud-api-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- SpringBoot整合zookeeper客户端 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+~~~
+3、编写YML
+
+~~~yml
+#8004表示注册到zookeeper服务器的支付服务提供者端口号
+server:
+  port: 8004
+
+#服务别名----注册zookeeper到注册中心名称
+spring:
+  application:
+    name: cloud-provider-payment
+  cloud:
+    zookeeper:
+      connect-string: 192.168.167.48:2181
+~~~
+4、创建主启动类
+
+~~~Java
+package com.clover.springcloud;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient //该注解用于向使用consul或者zookeeper作为注册中心时注册服务
+public class PaymentMain8004 {
+    public static void main(String[] args)
+    {
+        SpringApplication.run(PaymentMain8004.class,args);
+    }
+
+}
+~~~
+5、编写Controller
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
+
+@RestController
+@Slf4j
+public class PaymentController {
+    @Value("${server.port}")
+    private String serverPort;
+
+    @GetMapping(value = "/payment/zk")
+    public String paymentzk()
+    {
+        return "springcloud with zookeeper:" + serverPort + "\t" + UUID.randomUUID().toString();
+    }
+}
+~~~
+6、启动8004注册进zookeeper
+- 启动后问题
+	- 成功关闭了Linux防火墙时出现的问题
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018163705.png)
+	- 如果你没有关闭防火墙就运行，会出现该报错
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161906.png)
+
+7、why？
+- 解决zookeeper版本jar包冲突问题
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161954.png)
+- 排出zk冲突后的新POM
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SpringCloud</artifactId>
+        <groupId>com.clover.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-provider-payment8004</artifactId>
+
+
+    <dependencies>
+        <!-- SpringBoot整合Web组件 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->
+            <groupId>com.clover.springcloud</groupId>
+            <artifactId>cloud-api-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- SpringBoot整合zookeeper客户端 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
+            <!--先排除自带的zookeeper3.5.3-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.zookeeper</groupId>
+                    <artifactId>zookeeper</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--添加zookeeper3.4.9版本-->
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+~~~
+
+
+8、验证测试1：http://localhost:8004/payment/zk
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164421.png)
+
+9、验证测试2：
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164305.png)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164355.png)
+
+	注意：如果你运行的时候出现该错误，说明你没有关闭Linux上的防火墙导致的
+
+[参考博客](https://blog.csdn.net/zjy15203167987/article/details/79029934)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018162922.png)
+
+10、思考：`服务节点是临时节点还是持久节点？`
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018170107.png)
+
+	说明这是一个临时结点，当你关闭了提供者后，zookeeper会保留一段时间后，在去除，而当你在启动提供者时，
+	它会生成一个新的序列号
+	
+### 5.1.3、服务消费者
+
+1、新建cloud-consumerzk-order80
+
+2、修改POM
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SpringCloud</artifactId>
+        <groupId>com.clover.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-consumerzk-order80</artifactId>
+
+
+    <dependencies>
+        <!-- SpringBoot整合Web组件 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->
+            <groupId>com.clover.springcloud</groupId>
+            <artifactId>cloud-api-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- SpringBoot整合zookeeper客户端 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
+            <!--先排除自带的zookeeper-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.zookeeper</groupId>
+                    <artifactId>zookeeper</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--添加zookeeper3.4.9版本-->
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+~~~
+
+3、修改YML
+
+~~~yml
+server:
+  port: 80
+
+spring:
+  application:
+    name: cloud-consumer-order
+  cloud:
+    #注册到zookeeper地址
+    zookeeper:
+      connect-string: 192.168.167.48:2181
+~~~
+
+4、编写主启动类
+
+~~~java
+package com.clover.springcloud;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+public class OrderZKMain80 {
+    public static void main(String[] args)
+    {
+        SpringApplication.run(OrderZKMain80.class,args);
+    }
+}
+~~~
+
+5、编写业务类
+- 配置Bean
+
+~~~Java
+package com.clover.springcloud.config;
+
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+
+@Configuration
+public class ApplicationContextConfig {
+
+    @Bean
+    @LoadBalanced
+    public RestTemplate getRestTemplate()
+    {
+        return new RestTemplate();
+    }
+}
+~~~
+- Controller
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import javax.annotation.Resource;
+
+@RestController
+@Slf4j
+public class OrderZKController {
+
+    private static final String INVOKE_URL = "http://cloud-provider-payment";
+
+    @Resource
+    private RestTemplate restTemplate;
+
+    @GetMapping(value = "/consumer/payment/zk")
+    public String paymentInfo()
+    {
+        String result = restTemplate.getForObject(INVOKE_URL + "/payment/zk", String.class);
+
+        log.info("消费者调用支付服务(zookeeper)--->result:" + result);
+
+        return result;
+    }
+}
+~~~
+
+
+6、验证测试
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172445.png)
+
+7、访问测试地址
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172512.png)
+
+# 6、Consul服务注册与发现
+
+## 6.1、Consul简介
+
+1. Consul是什么？
+[官网](https://www.consul.io/intro/index.html)
+2. Consul能干嘛
+	- 服务发现：提供HTTP和DNS两种发现方式。
+	- 健康监测：支持多种方式，HTTP、TCP、Docker、Shell脚本定制化监控
+	- KV存储：Key、Value的存储方式
+	- 多数据中心：Consul支持多数据中心
+	- 可视化Web界面
+3. Consul去哪下
+[下载地址](https://www.consul.io/downloads.html)
+4. Consul怎么玩
+[Consul中文文档](https://www.springcloud.cc/spring-cloud-consul.html)
+
+
+## 6.2、安装并运行Consul
+
+[官网安装说明](https://learn.hashicorp.com/consul/getting-started/install.html)
+
+下载完成后只有一个consul.exe文件，硬盘路径下双击运行，查看版本号信息
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018204826.png)
+
+使用开发模式启动
+- consul agent -dev
+- 通过以下地址可以访问Consul的首页：http://localhost:8500
+- 结果页面
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018205022.png)]
+
+## 6.3、服务提供者
+
+1、新建 cloud-providerconsul-payment8006
+
+2、修改POM
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SpringCloud</artifactId>
+        <groupId>com.clover.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-providerconsul-payment8006</artifactId>
+
+
+    <dependencies>
+        <!--SpringCloud consul-server -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+        </dependency>
+        <!-- SpringBoot整合Web组件 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--日常通用jar包配置-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+~~~
+
+3、编写YML
+
+~~~yml
+###consul服务端口号
+server:
+  port: 8006
+
+spring:
+  application:
+    name: consul-provider-payment
+  ####consul注册中心地址
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        #hostname: 127.0.0.1
+        service-name: ${spring.application.name}
+~~~
+
+4、编写主启动类
+
+~~~Java
+package com.clover.springcloud;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+public class PaymentMain8006 {
+    public static void main(String[] args)
+    {
+        SpringApplication.run(PaymentMain8006.class,args);
+    }
+}
+~~~
+
+5、编写Controller
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
+
+@RestController
+@Slf4j
+public class PaymentController {
+    @Value("${server.port}")
+    private String serverPort;
+
+    @GetMapping("/payment/consul")
+    public String paymentInfo()
+    {
+        return "springcloud with consul: "+serverPort+"\t\t"+ UUID.randomUUID().toString();
+    }
+}
+~~~
+
+6、验证测试：http://localhost:8006/payment/consul
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018212259.png)
+
+## 6.4、服务消费者
+
+1、新建 cloud-consumerconsul-order80
+
+2、修改POM
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SpringCloud</artifactId>
+        <groupId>com.clover.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-consumerconsul-order80</artifactId>
+
+
+    <dependencies>
+        <!--SpringCloud consul-server -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+        </dependency>
+        <!-- SpringBoot整合Web组件 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+~~~
+
+3、编写YML
+
+~~~yml
+###consul服务端口号
+server:
+  port: 80
+
+spring:
+  application:
+    name: consul-consumer-order
+  ####consul注册中心地址
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        #hostname: 127.0.0.1
+        service-name: ${spring.application.name}
+~~~
+
+4、编写主启动类
+
+~~~Java
+package com.clover.springcloud;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient //该注解用于向使用consul或者zookeeper作为注册中心时注册服务
+public class OrderConsulMain80 {
+    public static void main(String[] args)
+    {
+        SpringApplication.run(OrderConsulMain80.class,args);
+    }
+}
+~~~
+
+5、配置Bean
+
+~~~Java
+package com.clover.springcloud.config;
+
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+
+@Configuration
+public class ApplicationContextConfig {
+
+    @Bean
+    @LoadBalanced
+    public RestTemplate getRestTemplate()
+    {
+        return new RestTemplate();
+    }
+}
+~~~
+
+6、编写Controller
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import javax.annotation.Resource;
+
+@RestController
+@Slf4j
+public class OrderConsulController {
+    private static final String INVOKE_URL = "http://consul-provider-payment";
+
+    @Resource
+    private RestTemplate restTemplate;
+
+    @GetMapping(value = "/consumer/payment/consul")
+    public String paymentInfo()
+    {
+        String result = restTemplate.getForObject(INVOKE_URL + "/payment/consul", String.class);
+
+        log.info("消费者调用支付服务(consul)--->result:" + result);
+
+        return result;
+    }
+}
+~~~
+
+7、验证测试
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213820.png)
+
+8、访问测试地址：http://localhost/consumer/payment/consul
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213847.png)
+
+
+## 6.5、三个注册中心异同点
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215113.png)
+
+１、CAP
+
+- **C:Consistency（强一致性）**
+- **A:Availability（可用性）**
+- **P:Partition tolerance（分区容错性）**
+- CAP理论关注粒度是数据，而不是整体系统设计的策略
+
+２、经典CAP图
+
+**最多只能同时较好的满足两个。**
+
+CAP理论的核心是：`一个分布式系统不可能同时很好的满足一致性，可用性和分区容错性这三个需求，`
+
+因此，根据 CAP 原理将 NoSQL 数据库分成了满足 CA 原则、满足 CP 原则和满足 AP 原则
+
+三大类：
+- CA - 单点集群，满足一致性，可用性的系统，通常在可扩展性上不太强大。
+- CP -  满足一致性，分区容忍必的系统，通常性能不是特别高。
+- AP -  满足可用性，分区容忍性的系统，通常可能对一致性要求低一些。
+
+1. **AP(Eureka)**
+	- AP架构
+
+	当网络分区出现后，为了保证可用性，系统B**可以返回旧值**，保证系统的可用性。
+
+		结论：违背了一致性C的要求，只满足可用性和分区容错，即AP
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018220001.png)
+
+2. **CP(Zookeeper/Consul)**
+	- CP架构
+	
+	当网络分区出现后，为了保证一致性，就必须拒接请求，否则无法保证一致性
+	
+		结论：违背了可用性A的要求，只满足一致性和分区容错，即CP
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215844.png)

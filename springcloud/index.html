@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/springcloud\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  14948 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  18696 ,
         "url": "https:\/\/cloverfelix.github.io\/springcloud\/","datePublished": "2021-10-14T10:38:04+08:00","dateModified": "2021-10-14T10:38:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Springcloud</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/springcloud/"><i class="far fa-folder fa-fw"></i>SpringCloud</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 14948 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 30 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 18696 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 38 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -206,6 +206,24 @@
         </li>
       </ul>
     </li>
+  </ul>
+
+  <ul>
+    <li><a href="#51springcloud整合zookeeper代替eureka">5.1、SpringCloud整合Zookeeper代替Eureka</a>
+      <ul>
+        <li><a href="#511注册中心zookeeper">5.1.1、注册中心Zookeeper</a></li>
+        <li><a href="#512服务提供者">5.1.2、服务提供者</a></li>
+        <li><a href="#513服务消费者">5.1.3、服务消费者</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#61consul简介">6.1、Consul简介</a></li>
+    <li><a href="#62安装并运行consul">6.2、安装并运行Consul</a></li>
+    <li><a href="#63服务提供者">6.3、服务提供者</a></li>
+    <li><a href="#64服务消费者">6.4、服务消费者</a></li>
+    <li><a href="#65三个注册中心异同点">6.5、三个注册中心异同点</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="1从22x和h版本开始说起">1、从2.2.x和H版本开始说起</h1>
@@ -3423,6 +3441,1331 @@ RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018113352.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018113352.png" /></p>
+<h1 id="5zookeeper服务注册与发现">5、Zookeeper服务注册与发现</h1>
+<h2 id="51springcloud整合zookeeper代替eureka">5.1、SpringCloud整合Zookeeper代替Eureka</h2>
+<h3 id="511注册中心zookeeper">5.1.1、注册中心Zookeeper</h3>
+<ul>
+<li>zookeeper是一个分布式协调工具，可以实现注册中心功能</li>
+<li>关闭Linux服务器防火墙后启动zookeeper服务器</li>
+<li>zookeeper服务器取代Eureka服务器，zk作为服务注册中心</li>
+</ul>
+<h3 id="512服务提供者">5.1.2、服务提供者</h3>
+<p>1、新建cloud-provider-payment8004</p>
+<p>2、修改POM</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependencies&gt;</span>
+        <span class="c">&lt;!-- SpringBoot整合Web组件 --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span><span class="c">&lt;!-- 引入自己定义的api通用包，可以使用Payment支付Entity --&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>cloud-api-commons<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>${project.version}<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!-- SpringBoot整合zookeeper客户端 --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-zookeeper-discovery<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-devtools<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
+            <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、编写YML</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="c">#8004表示注册到zookeeper服务器的支付服务提供者端口号</span><span class="w">
+</span><span class="w"></span><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8004</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#服务别名----注册zookeeper到注册中心名称</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-provider-payment</span><span class="w">
+</span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">zookeeper</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">connect-string</span><span class="p">:</span><span class="w"> </span><span class="m">192.168.167.48</span><span class="p">:</span><span class="m">2181</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>4、创建主启动类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.discovery.EnableDiscoveryClient</span><span class="o">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableDiscoveryClient</span> <span class="c1">//该注解用于向使用consul或者zookeeper作为注册中心时注册服务
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentMain8004</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">PaymentMain8004</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>5、编写Controller</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.UUID</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentController</span> <span class="o">{</span>
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${server.port}&#34;</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">serverPort</span><span class="o">;</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/zk&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentzk</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&#34;springcloud with zookeeper:&#34;</span> <span class="o">+</span> <span class="n">serverPort</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span> <span class="o">+</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6、启动8004注册进zookeeper</p>
+<ul>
+<li>启动后问题
+<ul>
+<li>成功关闭了Linux防火墙时出现的问题
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018163705.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018163705.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018163705.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018163705.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018163705.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018163705.png" /></li>
+<li>如果你没有关闭防火墙就运行，会出现该报错
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161906.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161906.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161906.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161906.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161906.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161906.png" /></li>
+</ul>
+</li>
+</ul>
+<p>7、why？</p>
+<ul>
+<li>解决zookeeper版本jar包冲突问题
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161954.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161954.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161954.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161954.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161954.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161954.png" /></li>
+<li>排出zk冲突后的新POM</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>SpringCloud<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+    <span class="nt">&lt;artifactId&gt;</span>cloud-provider-payment8004<span class="nt">&lt;/artifactId&gt;</span>
+
+
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="c">&lt;!-- SpringBoot整合Web组件 --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span><span class="c">&lt;!-- 引入自己定义的api通用包，可以使用Payment支付Entity --&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>cloud-api-commons<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>${project.version}<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!-- SpringBoot整合zookeeper客户端 --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-zookeeper-discovery<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="c">&lt;!--先排除自带的zookeeper3.5.3--&gt;</span>
+            <span class="nt">&lt;exclusions&gt;</span>
+                <span class="nt">&lt;exclusion&gt;</span>
+                    <span class="nt">&lt;groupId&gt;</span>org.apache.zookeeper<span class="nt">&lt;/groupId&gt;</span>
+                    <span class="nt">&lt;artifactId&gt;</span>zookeeper<span class="nt">&lt;/artifactId&gt;</span>
+                <span class="nt">&lt;/exclusion&gt;</span>
+            <span class="nt">&lt;/exclusions&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--添加zookeeper3.4.9版本--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.apache.zookeeper<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>zookeeper<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>3.4.9<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>8、验证测试1：http://localhost:8004/payment/zk</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164421.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164421.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164421.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164421.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164421.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164421.png" /></p>
+<p>9、验证测试2：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164305.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164305.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164305.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164305.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164305.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164305.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164355.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164355.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164355.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164355.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164355.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018164355.png" /></p>
+<pre><code>注意：如果你运行的时候出现该错误，说明你没有关闭Linux上的防火墙导致的
+</code></pre>
+<p><a href="https://blog.csdn.net/zjy15203167987/article/details/79029934" target="_blank" rel="noopener noreffer">参考博客</a></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018162922.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018162922.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018162922.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018162922.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018162922.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018162922.png" /></p>
+<p>10、思考：<code>服务节点是临时节点还是持久节点？</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018170107.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018170107.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018170107.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018170107.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018170107.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018170107.png" /></p>
+<pre><code>说明这是一个临时结点，当你关闭了提供者后，zookeeper会保留一段时间后，在去除，而当你在启动提供者时，
+它会生成一个新的序列号
+</code></pre>
+<h3 id="513服务消费者">5.1.3、服务消费者</h3>
+<p>1、新建cloud-consumerzk-order80</p>
+<p>2、修改POM</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>SpringCloud<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+    <span class="nt">&lt;artifactId&gt;</span>cloud-consumerzk-order80<span class="nt">&lt;/artifactId&gt;</span>
+
+
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="c">&lt;!-- SpringBoot整合Web组件 --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span><span class="c">&lt;!-- 引入自己定义的api通用包，可以使用Payment支付Entity --&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>cloud-api-commons<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>${project.version}<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!-- SpringBoot整合zookeeper客户端 --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-zookeeper-discovery<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="c">&lt;!--先排除自带的zookeeper--&gt;</span>
+            <span class="nt">&lt;exclusions&gt;</span>
+                <span class="nt">&lt;exclusion&gt;</span>
+                    <span class="nt">&lt;groupId&gt;</span>org.apache.zookeeper<span class="nt">&lt;/groupId&gt;</span>
+                    <span class="nt">&lt;artifactId&gt;</span>zookeeper<span class="nt">&lt;/artifactId&gt;</span>
+                <span class="nt">&lt;/exclusion&gt;</span>
+            <span class="nt">&lt;/exclusions&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--添加zookeeper3.4.9版本--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.apache.zookeeper<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>zookeeper<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>3.4.9<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、修改YML</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-consumer-order</span><span class="w">
+</span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="c">#注册到zookeeper地址</span><span class="w">
+</span><span class="w">    </span><span class="nt">zookeeper</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">connect-string</span><span class="p">:</span><span class="w"> </span><span class="m">192.168.167.48</span><span class="p">:</span><span class="m">2181</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>4、编写主启动类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.clover.springcloud</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.discovery.EnableDiscoveryClient</span><span class="o">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableDiscoveryClient</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderZKMain80</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">OrderZKMain80</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>5、编写业务类</p>
+<ul>
+<li>配置Bean</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.config</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.loadbalancer.LoadBalanced</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.client.RestTemplate</span><span class="o">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ApplicationContextConfig</span> <span class="o">{</span>
+
+    <span class="nd">@Bean</span>
+    <span class="nd">@LoadBalanced</span>
+    <span class="kd">public</span> <span class="n">RestTemplate</span> <span class="nf">getRestTemplate</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">RestTemplate</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Controller</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.client.RestTemplate</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderZKController</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">INVOKE_URL</span> <span class="o">=</span> <span class="s">&#34;http://cloud-provider-payment&#34;</span><span class="o">;</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">RestTemplate</span> <span class="n">restTemplate</span><span class="o">;</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/consumer/payment/zk&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentInfo</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="n">INVOKE_URL</span> <span class="o">+</span> <span class="s">&#34;/payment/zk&#34;</span><span class="o">,</span> <span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;消费者调用支付服务(zookeeper)---&gt;result:&#34;</span> <span class="o">+</span> <span class="n">result</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6、验证测试</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172445.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172445.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172445.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172445.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172445.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172445.png" /></p>
+<p>7、访问测试地址</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172512.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172512.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172512.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172512.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172512.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172512.png" /></p>
+<h1 id="6consul服务注册与发现">6、Consul服务注册与发现</h1>
+<h2 id="61consul简介">6.1、Consul简介</h2>
+<ol>
+<li>Consul是什么？
+<a href="https://www.consul.io/intro/index.html" target="_blank" rel="noopener noreffer">官网</a></li>
+<li>Consul能干嘛
+<ul>
+<li>服务发现：提供HTTP和DNS两种发现方式。</li>
+<li>健康监测：支持多种方式，HTTP、TCP、Docker、Shell脚本定制化监控</li>
+<li>KV存储：Key、Value的存储方式</li>
+<li>多数据中心：Consul支持多数据中心</li>
+<li>可视化Web界面</li>
+</ul>
+</li>
+<li>Consul去哪下
+<a href="https://www.consul.io/downloads.html" target="_blank" rel="noopener noreffer">下载地址</a></li>
+<li>Consul怎么玩
+<a href="https://www.springcloud.cc/spring-cloud-consul.html" target="_blank" rel="noopener noreffer">Consul中文文档</a></li>
+</ol>
+<h2 id="62安装并运行consul">6.2、安装并运行Consul</h2>
+<p><a href="https://learn.hashicorp.com/consul/getting-started/install.html" target="_blank" rel="noopener noreffer">官网安装说明</a></p>
+<p>下载完成后只有一个consul.exe文件，硬盘路径下双击运行，查看版本号信息</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018204826.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018204826.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018204826.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018204826.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018204826.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018204826.png" /></p>
+<p>使用开发模式启动</p>
+<ul>
+<li>consul agent -dev</li>
+<li>通过以下地址可以访问Consul的首页：http://localhost:8500</li>
+<li>结果页面
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018205022.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018205022.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018205022.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018205022.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018205022.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018205022.png" />]</li>
+</ul>
+<h2 id="63服务提供者">6.3、服务提供者</h2>
+<p>1、新建 cloud-providerconsul-payment8006</p>
+<p>2、修改POM</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>SpringCloud<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+    <span class="nt">&lt;artifactId&gt;</span>cloud-providerconsul-payment8006<span class="nt">&lt;/artifactId&gt;</span>
+
+
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="c">&lt;!--SpringCloud consul-server --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-consul-discovery<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!-- SpringBoot整合Web组件 --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--日常通用jar包配置--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、编写YML</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="c">###consul服务端口号</span><span class="w">
+</span><span class="w"></span><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8006</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">consul-provider-payment</span><span class="w">
+</span><span class="w">  </span><span class="c">####consul注册中心地址</span><span class="w">
+</span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">consul</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l">localhost</span><span class="w">
+</span><span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8500</span><span class="w">
+</span><span class="w">      </span><span class="nt">discovery</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="c">#hostname: 127.0.0.1</span><span class="w">
+</span><span class="w">        </span><span class="nt">service-name</span><span class="p">:</span><span class="w"> </span><span class="l">${spring.application.name}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>4、编写主启动类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.discovery.EnableDiscoveryClient</span><span class="o">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableDiscoveryClient</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentMain8006</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">PaymentMain8006</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>5、编写Controller</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.UUID</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentController</span> <span class="o">{</span>
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${server.port}&#34;</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">serverPort</span><span class="o">;</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/payment/consul&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentInfo</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&#34;springcloud with consul: &#34;</span><span class="o">+</span><span class="n">serverPort</span><span class="o">+</span><span class="s">&#34;\t\t&#34;</span><span class="o">+</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6、验证测试：http://localhost:8006/payment/consul</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018212259.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018212259.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018212259.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018212259.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018212259.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018212259.png" /></p>
+<h2 id="64服务消费者">6.4、服务消费者</h2>
+<p>1、新建 cloud-consumerconsul-order80</p>
+<p>2、修改POM</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>SpringCloud<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+    <span class="nt">&lt;artifactId&gt;</span>cloud-consumerconsul-order80<span class="nt">&lt;/artifactId&gt;</span>
+
+
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="c">&lt;!--SpringCloud consul-server --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-consul-discovery<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!-- SpringBoot整合Web组件 --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、编写YML</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="c">###consul服务端口号</span><span class="w">
+</span><span class="w"></span><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">consul-consumer-order</span><span class="w">
+</span><span class="w">  </span><span class="c">####consul注册中心地址</span><span class="w">
+</span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">consul</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l">localhost</span><span class="w">
+</span><span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8500</span><span class="w">
+</span><span class="w">      </span><span class="nt">discovery</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="c">#hostname: 127.0.0.1</span><span class="w">
+</span><span class="w">        </span><span class="nt">service-name</span><span class="p">:</span><span class="w"> </span><span class="l">${spring.application.name}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>4、编写主启动类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.discovery.EnableDiscoveryClient</span><span class="o">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableDiscoveryClient</span> <span class="c1">//该注解用于向使用consul或者zookeeper作为注册中心时注册服务
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderConsulMain80</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">OrderConsulMain80</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>5、配置Bean</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.config</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.loadbalancer.LoadBalanced</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.client.RestTemplate</span><span class="o">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ApplicationContextConfig</span> <span class="o">{</span>
+
+    <span class="nd">@Bean</span>
+    <span class="nd">@LoadBalanced</span>
+    <span class="kd">public</span> <span class="n">RestTemplate</span> <span class="nf">getRestTemplate</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">RestTemplate</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6、编写Controller</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.client.RestTemplate</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderConsulController</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">INVOKE_URL</span> <span class="o">=</span> <span class="s">&#34;http://consul-provider-payment&#34;</span><span class="o">;</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">RestTemplate</span> <span class="n">restTemplate</span><span class="o">;</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/consumer/payment/consul&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentInfo</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="n">INVOKE_URL</span> <span class="o">+</span> <span class="s">&#34;/payment/consul&#34;</span><span class="o">,</span> <span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;消费者调用支付服务(consul)---&gt;result:&#34;</span> <span class="o">+</span> <span class="n">result</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>7、验证测试</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213820.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213820.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213820.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213820.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213820.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213820.png" /></p>
+<p>8、访问测试地址：http://localhost/consumer/payment/consul</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213847.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213847.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213847.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213847.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213847.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213847.png" /></p>
+<h2 id="65三个注册中心异同点">6.5、三个注册中心异同点</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215113.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215113.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215113.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215113.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215113.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215113.png" /></p>
+<p>１、CAP</p>
+<ul>
+<li><strong>C:Consistency（强一致性）</strong></li>
+<li><strong>A:Availability（可用性）</strong></li>
+<li><strong>P:Partition tolerance（分区容错性）</strong></li>
+<li>CAP理论关注粒度是数据，而不是整体系统设计的策略</li>
+</ul>
+<p>２、经典CAP图</p>
+<p><strong>最多只能同时较好的满足两个。</strong></p>
+<p>CAP理论的核心是：<code>一个分布式系统不可能同时很好的满足一致性，可用性和分区容错性这三个需求，</code></p>
+<p>因此，根据 CAP 原理将 NoSQL 数据库分成了满足 CA 原则、满足 CP 原则和满足 AP 原则</p>
+<p>三大类：</p>
+<ul>
+<li>CA - 单点集群，满足一致性，可用性的系统，通常在可扩展性上不太强大。</li>
+<li>CP -  满足一致性，分区容忍必的系统，通常性能不是特别高。</li>
+<li>AP -  满足可用性，分区容忍性的系统，通常可能对一致性要求低一些。</li>
+</ul>
+<ol>
+<li>
+<p><strong>AP(Eureka)</strong></p>
+<ul>
+<li>AP架构</li>
+</ul>
+<p>当网络分区出现后，为了保证可用性，系统B<strong>可以返回旧值</strong>，保证系统的可用性。</p>
+<pre><code> 结论：违背了一致性C的要求，只满足可用性和分区容错，即AP
+</code></pre>
+</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018220001.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018220001.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018220001.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018220001.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018220001.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018220001.png" /></p>
+<ol start="2">
+<li>
+<p><strong>CP(Zookeeper/Consul)</strong></p>
+<ul>
+<li>CP架构</li>
+</ul>
+<p>当网络分区出现后，为了保证一致性，就必须拒接请求，否则无法保证一致性</p>
+<pre><code> 结论：违背了可用性A的要求，只满足一致性和分区容错，即CP
+</code></pre>
+</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215844.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215844.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215844.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215844.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215844.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215844.png" /></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

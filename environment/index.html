@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/environment\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Environment","wordcount":  3056 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Environment","wordcount":  3296 ,
         "url": "https:\/\/cloverfelix.github.io\/environment\/","datePublished": "2021-07-05T16:55:21+08:00","dateModified": "2021-07-05T16:55:21+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Environment</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-05">2021-07-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3056 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-05">2021-07-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3296 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -122,6 +122,7 @@
     <li><a href="#5安装nginx">5、安装Nginx</a></li>
     <li><a href="#6安装mysql">6、安装Mysql</a></li>
     <li><a href="#6安装tomcat">6、安装Tomcat</a></li>
+    <li><a href="#7安装zookeeper">7、安装Zookeeper</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="linux编程环境和软件安装">Linux编程环境和软件安装</h1>
@@ -1035,7 +1036,86 @@ flush privileges<span class="p">;</span>
 <td class="lntd">
 <pre class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><h2 id="7安装zookeeper">7、安装Zookeeper</h2>
+<p>去官网下载Zookeeper：<a href="https://link.segmentfault.com/?enc=8Tkzuju4DJX4iYvscGDqFQ%3D%3D.pM8NEyK2DagtZQj1lr%2FGo2X62Pe3gk11N%2FtErad3Np0T%2BxoF7V%2Fwc96hA3IKP4WL" target="_blank" rel="noopener noreffer">http://zookeeper.apache.org/releases.html</a></p>
+<p>先在<code>/usr/local</code>下创建一个zookeeper文件，然后将root目录下的zookeeper解压到当前zookeeper目录下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /usr/local/ 
+mkdir zookeeper
+<span class="nb">cd</span> zookeeper
+tar -zxvf /root/zookeeper-3.4.9.tar.gz -C ./
+</code></pre></td></tr></table>
+</div>
+</div><p>解压完成后，进入zookeeper目录下的<code>conf</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018154836.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018154836.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018154836.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018154836.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018154836.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018154836.png" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">cp zoo_sample.cfg zoo.cfg
+vim zoo.cfg
+</code></pre></td></tr></table>
+</div>
+</div><p>修改<code>zoo.cfg</code>文件，加入以下两个</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">dataDir</span><span class="o">=</span>/usr/local/zookeeper-3.4.9/data
+<span class="nv">dataLogDir</span><span class="o">=</span>/usr/local/zookeeper-3.4.9/logs
+</code></pre></td></tr></table>
+</div>
+</div><p>进入<code>bin</code>目录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">./zkServer.sh start
+./zkServer.sh stop
+./zkServer.sh restart
+./zkServer.sh status
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155151.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155151.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155151.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155151.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155151.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155151.png" /></p>
+<p>启动<code>Cli</code>，执行成功后得到以下响应</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155227.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155227.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155227.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155227.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155227.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155227.png" /></p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
