@@ -1100,7 +1100,8 @@ ReactDOM.render(<Demo/>,document.getElementById("test"))
                     this.state={'isHot':true};
 
                     //构造函数中的this一定是指向实例对象的
-                    //调用实例对象中的demo函数的bind方法，将类中的demo函数中的this修改为指向实例对象，再将返回新函数，将它添加到每一个实例对象中。这样每个实例对象中都有一个demo1函数，Weather原型对象中有一个demo函数
+					// 调用实例对象中 demo 函数的bind方法，将类中 demo 函数中的this修改为指向实例对象
+					 // 再返回新函数，将它添加到每一个实例对象中。这样每个实例对象中都有一个 demo 函数，Weather 实例对象中有一个 demo 函数
                     this.demo1=this.demo.bind(this);
                 }
 
@@ -1959,7 +1960,7 @@ props属性存在于每一个类组件的实例对象中，可以**在类外部�
 
 ##### 5.event.target  省略ref
 
-当为一个结点绑定事件时，改结点事件触发的回调函数的参数，默认就是event
+当为一个结点绑定事件时，该结点事件触发的回调函数的参数，默认就是event
 
 ```html
 <!DOCTYPE html>
@@ -3257,6 +3258,7 @@ componentWillUnmount(){}
 #### 1.引出ditting
 
 页面开始：
+
         1.生成虚拟DOM
         2.赋给真实DOM，渲染到页面
         3.更新状态
@@ -3341,6 +3343,7 @@ componentWillUnmount(){}
 #### 2.key的作用(1)
 
 页面开始：
+
         1.生成虚拟DOM
         2.赋给真实DOM，渲染到页面
         3.更新状态
@@ -3465,6 +3468,7 @@ componentWillUnmount(){}
 #### 3.key的作用(2)
 
 页面开始：
+
         1.生成虚拟DOM
         2.赋给真实DOM，渲染到页面
         3.更新状态
@@ -3641,7 +3645,7 @@ index.html中
 
 - **App.css**：作用于App.js的外部样式
 
-- **App.js**：实际上是定义了一个类式组件，类名叫做App，该组件被默认暴露，在index.js中被渲染到index.html中的div节点中。（注意：index.js只把这一个组件渲染到index.html中，其他的组件全部为App.js的子组件）
+- **App.js**：实际上是定义了一个函数式组件，函数名叫做App，该组件被默认暴露，在index.js中被渲染到index.html中的div节点中。（注意：index.js只把这一个组件渲染到index.html中，其他的组件全部为App.js的子组件）
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002103227.png)
 
@@ -3680,7 +3684,7 @@ index.html中
 
 分别暴露：暴露组件内的某个东西，比如方法、属性等等，引入： **import {名字} from 路径**  ,但是这里的{}不是结构化赋值，这里表示如果是获得分别暴露的东西，那么取的时候就需要加上{}
 
-如果一个出现import 组件别名,{名字} from ‘路径’  这种引入方式，则表示这个组件内有多种暴露方式
+如果一个出现`import 组件别名,{名字} from ‘路径’` 这种引入方式，则表示这个组件内有多种暴露方式
 
 ## 7.一个简单的hello组件
 
@@ -3814,7 +3818,7 @@ react中区分组件js文件和普通js文件：
 
 ## 8.样式模块化
 
-正真项目开发中一般每个子组件对应的文件夹下的js和css都命名为index.js和index.css。
+真正项目开发中一般每个子组件对应的文件夹下的js和css都命名为index.js和index.css。
 
 不管用不用index命名，如果每个组件内都没有与别的组件内的节点的className名发生重名的话，那就没有任何问题。但是如果存在某个组件内与另一个组件内的某个节点的className同名，那么会造成一个问题：
 
@@ -4450,9 +4454,9 @@ export default class List extends Component {
 
 **可以做到任何组件之间的数据直接传递**
 
-之前的思想：Search组件中的搜索举动影响着List组件中的展示，但由于兄弟组件之间无法直接传递数据，所以借助App父组件，讲所有数据都放在App父组件的state中，Search的举动影响着那些状态属性，所以每改变一次，就将改变的状态属性传给父组件，父组件再去修改自己状态中的相应属性，然后传给List子组件去动态展示
+`之前的思想：`Search组件中的搜索举动影响着List组件中的展示，但由于兄弟组件之间无法直接传递数据，所以借助App父组件，将所有数据都放在App父组件的state中，Search的举动影响着那些状态属性，所以每改变一次，就将改变的状态属性传给父组件，父组件再去修改自己状态中的相应属性，然后传给List子组件去动态展示
 
-现在的思想：利用消息发布与订阅，Search组件负责发布消息，List组件负责订阅消息，所以将所有的数据放在List组件的State中。Search的举动影响着那些状态属性，所以每改变一次，就将改变的状态属性数据发布一次，那么List组件就会动态订阅消息，再进行setState状态修改，进而驱动页面动态显示数据
+`现在的思想`：利用消息发布与订阅，Search组件负责发布消息，List组件负责订阅消息，所以将所有的数据放在List组件的State中。Search的举动影响着那些状态属性，所以每改变一次，就将改变的状态属性数据发布一次，那么List组件就会动态订阅消息，再进行setState状态修改，进而驱动页面动态显示数据
 
 
 
@@ -4460,7 +4464,7 @@ export default class List extends Component {
 
 - 消息的订阅一般放在componentDidMount，组件挂载后
 
-- subscribe方法中第二个参数：回调函数，**函数的参数必须是两个，第一个为消息名，第二个为数据**，如果没有用到某个参数，可以用_占位符代替那个参数
+- subscribe方法中第二个参数：回调函数，**函数的参数必须是两个，第一个为消息名，第二个为数据**，如果没有用到某个参数，可以用`_`占位符代替那个参数
 
 - 一般需要指定一个变量接收消息订阅，方便在取消订阅的时候能找的到取消的是哪一个消息订阅。如this.token=PubSub.subscribe('stateObj',(_,data)=>{this.setState(data)});
 
@@ -5390,7 +5394,7 @@ localhost:3000是react脚手架内置的一个服务器，是由webpack、devSer
 
 **解决方法：**
 
-1. 去掉html中引入bootstrap库路径最前面的**.**     （将相对路径改为绝对路径）
+1. 去掉html中引入bootstrap库路径最前面的`.`     （将相对路径改为绝对路径）
 
    index.html
 
@@ -5416,7 +5420,7 @@ localhost:3000是react脚手架内置的一个服务器，是由webpack、devSer
    </html>
    ```
 
-2. 用%PUBLIC_URL%代替. （只适合在react脚手架里面这么写，在其他地方没有这东西）    （将相对路径改为绝对路径）
+2. 用`%PUBLIC_URL%`代替`.` （只适合在react脚手架里面这么写，在其他地方没有这东西）    （将相对路径改为绝对路径）
 
    index.html
 
@@ -5468,7 +5472,7 @@ localhost:3000是react脚手架内置的一个服务器，是由webpack、devSer
 
 
 
-路由默认是模糊匹配的，exact="false"，给的路径不少于要的路径，且顺序位置要对应上
+路由默认是模糊匹配的，`exact="false"`，给的路径不少于要的路径，且顺序位置要对应上
 
 情况一：给的路径少于要的路径，就不能匹配
 
@@ -5496,7 +5500,7 @@ localhost:3000是react脚手架内置的一个服务器，是由webpack、devSer
 
 
 
-解决：开启严格匹配，在路由上加一个exact属性，默认为false，设置其为true即可开启严格匹配。
+解决：开启严格匹配，在路由上加一个`exact属性`，默认为false，设置其为true即可开启严格匹配。
 
 ​	<MyNavLink to="/about/a/b">About</MyNavLink>
 
@@ -5504,7 +5508,7 @@ localhost:3000是react脚手架内置的一个服务器，是由webpack、devSer
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002104625.png)
 
-但是严格匹配不能随便开启。开启时机：模糊匹配出问题的时候再开启严格匹配。因为随意开启严格匹配有时候会出现问题，比如多级路由的时候（详见15.13嵌套路由）
+**但是严格匹配不能随便开启。开启时机：模糊匹配出问题的时候再开启严格匹配。因为随意开启严格匹配有时候会出现问题，比如多级路由的时候（详见15.13嵌套路由）**
 
 ### 15.12 Redirect重定向
 
@@ -8199,5 +8203,13 @@ export default connect(
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002110524.png)
 
 成功后直接访问5000
+
+运行serve build 报错；**serve : 无法将“serve”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确，然后再试一次**
+
+解决方法：
+
+- 使用`yarn`语法进行服务器安装`yarn add serve`，安装完毕后执行`yarn serve build`即可成功
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211010210840.png)
 
 

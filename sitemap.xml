@@ -2,13 +2,16 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://cloverfelix.github.io/categories/</loc><lastmod>2021-10-02T11:07:16&#43;08:00</lastmod></url><url>
-            <loc>https://cloverfelix.github.io/</loc><lastmod>2021-10-02T11:07:16&#43;08:00</lastmod></url><url>
-            <loc>https://cloverfelix.github.io/posts/</loc><lastmod>2021-10-02T11:07:16&#43;08:00</lastmod></url><url>
+            <loc>https://cloverfelix.github.io/categories/</loc><lastmod>2021-10-14T10:38:04&#43;08:00</lastmod></url><url>
+            <loc>https://cloverfelix.github.io/</loc><lastmod>2021-10-14T10:38:04&#43;08:00</lastmod></url><url>
+            <loc>https://cloverfelix.github.io/posts/</loc><lastmod>2021-10-14T10:38:04&#43;08:00</lastmod></url><url>
+            <loc>https://cloverfelix.github.io/tags/springcloud/</loc><lastmod>2021-10-14T10:38:04&#43;08:00</lastmod></url><url>
+            <loc>https://cloverfelix.github.io/categories/springcloud/</loc><lastmod>2021-10-14T10:38:04&#43;08:00</lastmod></url><url>
+            <loc>https://cloverfelix.github.io/springcloud/</loc><lastmod>2021-10-14T10:38:04&#43;08:00</lastmod></url><url>
+            <loc>https://cloverfelix.github.io/tags/</loc><lastmod>2021-10-14T10:38:04&#43;08:00</lastmod></url><url>
             <loc>https://cloverfelix.github.io/tags/react/</loc><lastmod>2021-10-02T11:07:16&#43;08:00</lastmod></url><url>
             <loc>https://cloverfelix.github.io/categories/react/</loc><lastmod>2021-10-02T11:07:16&#43;08:00</lastmod></url><url>
             <loc>https://cloverfelix.github.io/reactexpand/</loc><lastmod>2021-10-02T11:07:16&#43;08:00</lastmod></url><url>
-            <loc>https://cloverfelix.github.io/tags/</loc><lastmod>2021-10-02T11:07:16&#43;08:00</lastmod></url><url>
             <loc>https://cloverfelix.github.io/react/</loc><lastmod>2021-10-02T09:48:23&#43;08:00</lastmod></url><url>
             <loc>https://cloverfelix.github.io/categories/docker/</loc><lastmod>2021-08-18T11:18:38&#43;08:00</lastmod></url><url>
             <loc>https://cloverfelix.github.io/tags/dockerdeploy/</loc><lastmod>2021-08-18T11:18:38&#43;08:00</lastmod></url><url>

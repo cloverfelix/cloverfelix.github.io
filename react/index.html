@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/react\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "React","wordcount":  94772 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "React","wordcount":  94889 ,
         "url": "https:\/\/cloverfelix.github.io\/react\/","datePublished": "2021-10-02T09:48:23+08:00","dateModified": "2021-10-02T09:48:23+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">React</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/react/"><i class="far fa-folder fa-fw"></i>React</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-02">2021-10-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 94772 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-02">2021-10-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 94889 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 190 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -2413,6 +2413,7 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
 </span><span class="lnt">51
 </span><span class="lnt">52
 </span><span class="lnt">53
+</span><span class="lnt">54
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
@@ -2444,7 +2445,8 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
 </span><span class="c1"></span>                    <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;isHot&#39;</span><span class="o">:</span><span class="kc">true</span><span class="p">};</span>
 
                     <span class="c1">//构造函数中的this一定是指向实例对象的
-</span><span class="c1"></span>                    <span class="c1">//调用实例对象中的demo函数的bind方法，将类中的demo函数中的this修改为指向实例对象，再将返回新函数，将它添加到每一个实例对象中。这样每个实例对象中都有一个demo1函数，Weather原型对象中有一个demo函数
+</span><span class="c1"></span>					<span class="c1">// 调用实例对象中 demo 函数的bind方法，将类中 demo 函数中的this修改为指向实例对象
+</span><span class="c1"></span>					 <span class="c1">// 再返回新函数，将它添加到每一个实例对象中。这样每个实例对象中都有一个 demo 函数，Weather 实例对象中有一个 demo 函数
 </span><span class="c1"></span>                    <span class="k">this</span><span class="p">.</span><span class="nx">demo1</span><span class="o">=</span><span class="k">this</span><span class="p">.</span><span class="nx">demo</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
                 <span class="p">}</span>
 
@@ -4118,7 +4120,7 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002102329.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002102329.png" /></p>
 <h5 id="5eventtarget--省略ref">5.event.target  省略ref</h5>
-<p>当为一个结点绑定事件时，改结点事件触发的回调函数的参数，默认就是event</p>
+<p>当为一个结点绑定事件时，该结点事件触发的回调函数的参数，默认就是event</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -6599,18 +6601,19 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
 </ul>
 <h3 id="315-dom的ditting算法">3.15 Dom的ditting算法</h3>
 <h4 id="1引出ditting">1.引出ditting</h4>
-<p>页面开始：
-1.生成虚拟DOM
-2.赋给真实DOM，渲染到页面
-3.更新状态
-4.生成新的虚拟DOM
-5.将新的虚拟DOM中节点的key与旧的虚拟DOM中节点的key比较：
-1.key不同：将新虚拟DOM中的节点添加到真实DOM中
-2.key相同：
-(1)如果新虚拟DOM中的内容为文本，则直接进行替换
-(2)如果相同的key对应的节点内容也相同，那么就直接采用真实DOM中的这个节点
-(3)如果相同的key对应的节点的内容不同，那么就将新的虚拟DOM中的这个节点覆盖真实DOM中的这个节点
-(4)如果相同的key中存在子节点，那么子节点则继续进行如上规则的判断</p>
+<p>页面开始：</p>
+<pre><code>    1.生成虚拟DOM
+    2.赋给真实DOM，渲染到页面
+    3.更新状态
+    4.生成新的虚拟DOM
+    5.将新的虚拟DOM中节点的key与旧的虚拟DOM中节点的key比较：
+        1.key不同：将新虚拟DOM中的节点添加到真实DOM中
+        2.key相同：
+            (1)如果新虚拟DOM中的内容为文本，则直接进行替换
+            (2)如果相同的key对应的节点内容也相同，那么就直接采用真实DOM中的这个节点
+            (3)如果相同的key对应的节点的内容不同，那么就将新的虚拟DOM中的这个节点覆盖真实DOM中的这个节点
+            (4)如果相同的key中存在子节点，那么子节点则继续进行如上规则的判断
+</code></pre>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -6754,18 +6757,19 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002102939.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002102939.png" /></p>
 <h4 id="2key的作用1">2.key的作用(1)</h4>
-<p>页面开始：
-1.生成虚拟DOM
-2.赋给真实DOM，渲染到页面
-3.更新状态
-4.生成新的虚拟DOM
-5.将新的虚拟DOM中节点的key与旧的虚拟DOM中节点的key比较：
-1.key不同：先将新虚拟DOM中的节点添加到真实DOM中，再将旧虚拟DOM中存在，但新虚拟DOM中不存在的节点删除
-2.key相同：
-(1)如果新虚拟DOM中的内容为文本，则直接进行替换
-(2)如果相同的key对应的节点内容也相同，那么就直接采用真实DOM中的这个节点
-(3)如果相同的key对应的节点的内容不同，那么就将新的虚拟DOM中的这个节点覆盖真实DOM中的这个节点
-(4)如果相同的key中存在子节点，那么子节点则继续进行如上规则的判断</p>
+<p>页面开始：</p>
+<pre><code>    1.生成虚拟DOM
+    2.赋给真实DOM，渲染到页面
+    3.更新状态
+    4.生成新的虚拟DOM
+    5.将新的虚拟DOM中节点的key与旧的虚拟DOM中节点的key比较：
+        1.key不同：先将新虚拟DOM中的节点添加到真实DOM中，再将旧虚拟DOM中存在，但新虚拟DOM中不存在的节点删除
+        2.key相同：
+            (1)如果新虚拟DOM中的内容为文本，则直接进行替换
+            (2)如果相同的key对应的节点内容也相同，那么就直接采用真实DOM中的这个节点
+            (3)如果相同的key对应的节点的内容不同，那么就将新的虚拟DOM中的这个节点覆盖真实DOM中的这个节点
+            (4)如果相同的key中存在子节点，那么子节点则继续进行如上规则的判断
+</code></pre>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">  1
@@ -6989,18 +6993,19 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002102955.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002102955.png" /></p>
 <h4 id="3key的作用2">3.key的作用(2)</h4>
-<p>页面开始：
-1.生成虚拟DOM
-2.赋给真实DOM，渲染到页面
-3.更新状态
-4.生成新的虚拟DOM
-5.将新的虚拟DOM中节点的key与旧的虚拟DOM中节点的key比较：
-1.key不同：先将新虚拟DOM中的节点添加到真实DOM中，再将旧虚拟DOM中存在，但新虚拟DOM中不存在的节点删除
-2.key相同：
-(1)如果新虚拟DOM中的内容为文本，则直接进行替换
-(2)如果相同的key对应的节点内容也相同，那么就直接采用真实DOM中的这个节点
-(3)如果相同的key对应的节点的内容不同，那么就将新的虚拟DOM中的这个节点覆盖真实DOM中的这个节点
-(4)如果相同的key中存在子节点，那么子节点则继续进行如上规则的判断</p>
+<p>页面开始：</p>
+<pre><code>    1.生成虚拟DOM
+    2.赋给真实DOM，渲染到页面
+    3.更新状态
+    4.生成新的虚拟DOM
+    5.将新的虚拟DOM中节点的key与旧的虚拟DOM中节点的key比较：
+        1.key不同：先将新虚拟DOM中的节点添加到真实DOM中，再将旧虚拟DOM中存在，但新虚拟DOM中不存在的节点删除
+        2.key相同：
+            (1)如果新虚拟DOM中的内容为文本，则直接进行替换
+            (2)如果相同的key对应的节点内容也相同，那么就直接采用真实DOM中的这个节点
+            (3)如果相同的key对应的节点的内容不同，那么就将新的虚拟DOM中的这个节点覆盖真实DOM中的这个节点
+            (4)如果相同的key中存在子节点，那么子节点则继续进行如上规则的判断
+</code></pre>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">  1
@@ -7342,7 +7347,7 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
 <p><strong>App.css</strong>：作用于App.js的外部样式</p>
 </li>
 <li>
-<p><strong>App.js</strong>：实际上是定义了一个类式组件，类名叫做App，该组件被默认暴露，在index.js中被渲染到index.html中的div节点中。（注意：index.js只把这一个组件渲染到index.html中，其他的组件全部为App.js的子组件）</p>
+<p><strong>App.js</strong>：实际上是定义了一个函数式组件，函数名叫做App，该组件被默认暴露，在index.js中被渲染到index.html中的div节点中。（注意：index.js只把这一个组件渲染到index.html中，其他的组件全部为App.js的子组件）</p>
 </li>
 </ul>
 <p><img
@@ -7415,7 +7420,7 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
 <h2 id="6分别暴露和默认暴露">6.分别暴露和默认暴露</h2>
 <p>默认暴露：直接暴露一整个组件，你可以在另一个页面先引入这个组件  <strong>import 组件别名 from 路径</strong>  ，然后可以用  <strong>const {组件里的东西}=组件</strong>  的形式从组件中获取东西，这里的{}表示结构化赋值。</p>
 <p>分别暴露：暴露组件内的某个东西，比如方法、属性等等，引入： <strong>import {名字} from 路径</strong>  ,但是这里的{}不是结构化赋值，这里表示如果是获得分别暴露的东西，那么取的时候就需要加上{}</p>
-<p>如果一个出现import 组件别名,{名字} from ‘路径’  这种引入方式，则表示这个组件内有多种暴露方式</p>
+<p>如果一个出现<code>import 组件别名,{名字} from ‘路径’</code> 这种引入方式，则表示这个组件内有多种暴露方式</p>
 <h2 id="7一个简单的hello组件">7.一个简单的hello组件</h2>
 <p>react中区分组件js文件和普通js文件：</p>
 <ol>
@@ -7668,7 +7673,7 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002103324.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002103324.png" /></p>
 <h2 id="8样式模块化">8.样式模块化</h2>
-<p>正真项目开发中一般每个子组件对应的文件夹下的js和css都命名为index.js和index.css。</p>
+<p>真正项目开发中一般每个子组件对应的文件夹下的js和css都命名为index.js和index.css。</p>
 <p>不管用不用index命名，如果每个组件内都没有与别的组件内的节点的className名发生重名的话，那就没有任何问题。但是如果存在某个组件内与另一个组件内的某个节点的className同名，那么会造成一个问题：</p>
 <p>比如两个组件内都有一个className为hello的节点，并且两个组件对应的样式表都对这个节点进行了修改，都为.hello{}。那么最终子组件被引入到App主组件时，主组件采用的永远是后引入的子组件对应的重名样式</p>
 <p><img
@@ -8788,15 +8793,15 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
 </ol>
 <h3 id="1优化github搜索案例">1.优化github搜索案例</h3>
 <p><strong>可以做到任何组件之间的数据直接传递</strong></p>
-<p>之前的思想：Search组件中的搜索举动影响着List组件中的展示，但由于兄弟组件之间无法直接传递数据，所以借助App父组件，讲所有数据都放在App父组件的state中，Search的举动影响着那些状态属性，所以每改变一次，就将改变的状态属性传给父组件，父组件再去修改自己状态中的相应属性，然后传给List子组件去动态展示</p>
-<p>现在的思想：利用消息发布与订阅，Search组件负责发布消息，List组件负责订阅消息，所以将所有的数据放在List组件的State中。Search的举动影响着那些状态属性，所以每改变一次，就将改变的状态属性数据发布一次，那么List组件就会动态订阅消息，再进行setState状态修改，进而驱动页面动态显示数据</p>
+<p><code>之前的思想：</code>Search组件中的搜索举动影响着List组件中的展示，但由于兄弟组件之间无法直接传递数据，所以借助App父组件，将所有数据都放在App父组件的state中，Search的举动影响着那些状态属性，所以每改变一次，就将改变的状态属性传给父组件，父组件再去修改自己状态中的相应属性，然后传给List子组件去动态展示</p>
+<p><code>现在的思想</code>：利用消息发布与订阅，Search组件负责发布消息，List组件负责订阅消息，所以将所有的数据放在List组件的State中。Search的举动影响着那些状态属性，所以每改变一次，就将改变的状态属性数据发布一次，那么List组件就会动态订阅消息，再进行setState状态修改，进而驱动页面动态显示数据</p>
 <p>注意事项：</p>
 <ul>
 <li>
 <p>消息的订阅一般放在componentDidMount，组件挂载后</p>
 </li>
 <li>
-<p>subscribe方法中第二个参数：回调函数，<strong>函数的参数必须是两个，第一个为消息名，第二个为数据</strong>，如果没有用到某个参数，可以用_占位符代替那个参数</p>
+<p>subscribe方法中第二个参数：回调函数，<strong>函数的参数必须是两个，第一个为消息名，第二个为数据</strong>，如果没有用到某个参数，可以用<code>_</code>占位符代替那个参数</p>
 </li>
 <li>
 <p>一般需要指定一个变量接收消息订阅，方便在取消订阅的时候能找的到取消的是哪一个消息订阅。如this.token=PubSub.subscribe(&lsquo;stateObj&rsquo;,(_,data)=&gt;{this.setState(data)});</p>
@@ -10470,7 +10475,7 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
 <p><strong>解决方法：</strong></p>
 <ol>
 <li>
-<p>去掉html中引入bootstrap库路径最前面的**.**     （将相对路径改为绝对路径）</p>
+<p>去掉html中引入bootstrap库路径最前面的<code>.</code>     （将相对路径改为绝对路径）</p>
 <p>index.html</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -10518,7 +10523,7 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
 </div>
 </div></li>
 <li>
-<p>用%PUBLIC_URL%代替. （只适合在react脚手架里面这么写，在其他地方没有这东西）    （将相对路径改为绝对路径）</p>
+<p>用<code>%PUBLIC_URL%</code>代替<code>.</code> （只适合在react脚手架里面这么写，在其他地方没有这东西）    （将相对路径改为绝对路径）</p>
 <p>index.html</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -10611,7 +10616,7 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002104533.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002104533.png" /></p>
-<p>路由默认是模糊匹配的，exact=&ldquo;false&rdquo;，给的路径不少于要的路径，且顺序位置要对应上</p>
+<p>路由默认是模糊匹配的，<code>exact=&quot;false&quot;</code>，给的路径不少于要的路径，且顺序位置要对应上</p>
 <p>情况一：给的路径少于要的路径，就不能匹配</p>
 <p>​	<MyNavLink to="/about">About</MyNavLink></p>
 <p>​	<Route path='/about/a/a' component={About}/></p>
@@ -10645,7 +10650,7 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002104614.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002104614.png" /></p>
-<p>解决：开启严格匹配，在路由上加一个exact属性，默认为false，设置其为true即可开启严格匹配。</p>
+<p>解决：开启严格匹配，在路由上加一个<code>exact属性</code>，默认为false，设置其为true即可开启严格匹配。</p>
 <p>​	<MyNavLink to="/about/a/b">About</MyNavLink></p>
 <p>​	<Route exact path='/about/' component={About}/></p>
 <p><img
@@ -10656,7 +10661,7 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002104625.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002104625.png" /></p>
-<p>但是严格匹配不能随便开启。开启时机：模糊匹配出问题的时候再开启严格匹配。因为随意开启严格匹配有时候会出现问题，比如多级路由的时候（详见15.13嵌套路由）</p>
+<p><strong>但是严格匹配不能随便开启。开启时机：模糊匹配出问题的时候再开启严格匹配。因为随意开启严格匹配有时候会出现问题，比如多级路由的时候（详见15.13嵌套路由）</strong></p>
 <h3 id="1512-redirect重定向">15.12 Redirect重定向</h3>
 <p><img
         class="lazyload"
@@ -15674,6 +15679,19 @@ ReactDOM.render(VDOM,document.getElementById(&#39;test&#39;))
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002110524.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211002110524.png" /></p>
 <p>成功后直接访问5000</p>
+<p>运行serve build 报错；<strong>serve : 无法将“serve”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确，然后再试一次</strong></p>
+<p>解决方法：</p>
+<ul>
+<li>使用<code>yarn</code>语法进行服务器安装<code>yarn add serve</code>，安装完毕后执行<code>yarn serve build</code>即可成功</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211010210840.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211010210840.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211010210840.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211010210840.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211010210840.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211010210840.png" /></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

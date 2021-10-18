@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>SpringCloud - 分类 - clover</title>
+        <link>https://cloverfelix.github.io/categories/springcloud/</link>
+        <description>SpringCloud - 分类 - clover</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 14 Oct 2021 10:38:04 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/categories/springcloud/" rel="self" type="application/rss+xml" /><item>
+    <title>Springcloud</title>
+    <link>https://cloverfelix.github.io/springcloud/</link>
+    <pubDate>Thu, 14 Oct 2021 10:38:04 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/springcloud/</guid>
+    <description><![CDATA[1、从2.2.x和H版本开始说起 1.1、SpringBoot版本选择 GitHub源码地址 SpringBoot2.0新特性 通过上面官网发现，B]]></description>
+</item></channel>
+</rss>

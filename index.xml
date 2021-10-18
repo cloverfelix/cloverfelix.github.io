@@ -3,9 +3,16 @@
         <title>clover</title>
         <link>https://cloverfelix.github.io/</link>
         <description>记录笔记</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 02 Oct 2021 11:07:16 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 14 Oct 2021 10:38:04 &#43;0800</lastBuildDate>
             <atom:link href="https://cloverfelix.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Springcloud</title>
+    <link>https://cloverfelix.github.io/springcloud/</link>
+    <pubDate>Thu, 14 Oct 2021 10:38:04 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/springcloud/</guid>
+    <description><![CDATA[1、从2.2.x和H版本开始说起 1.1、SpringBoot版本选择 GitHub源码地址 SpringBoot2.0新特性 通过上面官网发现，B]]></description>
+</item><item>
     <title>ReactExpand</title>
     <link>https://cloverfelix.github.io/reactexpand/</link>
     <pubDate>Sat, 02 Oct 2021 11:07:16 &#43;0800</pubDate>
@@ -68,12 +75,5 @@
     <author>作者</author>
     <guid>https://cloverfelix.github.io/spring/</guid>
     <description><![CDATA[1.Spring 1.1 简介 下载spring所有版本信息的地址入口：https://docs.spring.io/spring-framework/docs/4]]></description>
-</item><item>
-    <title>Springboot</title>
-    <link>https://cloverfelix.github.io/springboot/</link>
-    <pubDate>Sun, 04 Jul 2021 16:38:24 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://cloverfelix.github.io/springboot/</guid>
-    <description><![CDATA[SpringBoot原理探讨 创建一个Controller时，让其返回一个字符串，有两种方式 1、使用@RestController注解 2、使用]]></description>
 </item></channel>
 </rss>

@@ -1580,7 +1580,9 @@ public class NettyServer {
           System.out.println("服务器 is ready");
 
           /*
-           * ChannelFuture 在Netty中的所有的I/O操作都是异步执行的，这就意味着任何一个I/O操作会立刻返回，不保证在调用结束的时候操作会执行完成。因此，会返回一个ChannelFuture的实例，通过这个实例可以获取当前I/O操作的状态。
+           * ChannelFuture 在Netty中的所有的I/O操作都是异步执行的，这就意味着任何一个I/O操作会立刻返回，不保证
+		   * 在调用结束的时候操作会执行完成。因此，会返回一个ChannelFuture的实例，通过这个实例可以获取当前I/O操
+		   * 作的状态。
            */
 
           // 绑定一个端口，并且同步，生成了一个ChannelFuture 对象
@@ -2354,6 +2356,9 @@ public class GroupChatServerHandler extends SimpleChannelInboundHandler<String> 
         ctx.channel().close();
     }
 }
+
+说明：
+先执行 handlerAdd 再执行 handlerActive
 ~~~
 
 **客户端：**
@@ -2617,7 +2622,7 @@ public class MyServer {
                            * 1.对应的websocket，它的数据是以 帧(frame) 形式传递
                            * 2.可以看到WebSocketFrame 下面有六个子类
                            * 3.浏览器请求时 ws://localhost:7000/xxx 表示请求的qurl
-                           * 4.WebSocketServerProtocolHandler 核心功能是将http协议审计为ws协议，即保持长连接
+                           * 4.WebSocketServerProtocolHandler 核心功能是将http协议升级为ws协议，即保持长连接
                            * 5.是通过一个 状态码 101
                            */
                           pipeline.addLast(new WebSocketServerProtocolHandler("/hello"));
@@ -2765,7 +2770,7 @@ public class MyTextWebSocketFrameHandler extends SimpleChannelInboundHandler<Tex
  ## 7.3、Protobuf
 
 ### 7.3.1、Protobuf基本介绍和使用示意图
-1. Protobuf 是 Google 发布的开源项目，全称 Google Protocol Buffers，是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 **RPC[远程过程调用  remote procedure call ] 数据交换格式 **。
+1. Protobuf 是 Google 发布的开源项目，全称 Google Protocol Buffers，是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 **RPC(远程过程调用  remote procedure call)数据交换格式**。
 	
 	目前很多公司 http+json -> tcp+protobuf
 2. [参考文档:语言指南](https://developers.google.com/protocol-buffers/docs/proto)   
@@ -3543,7 +3548,7 @@ public class NettyServer {
           // 使用链式编程来进行设置
           bootstrap
               .group(bossGroup, workerGroup) // 设置两个线程组
-              .channel(NioServerSocketChannel.class) // 使用NioSocketChannel作为服务器的通道实现类型
+              .channel(NioServerSocketChannel.class) // 使用NioServerSocketChannel作为服务器的通道实现类型
               .option(ChannelOption.SO_BACKLOG, 128) // 设置线程队列等待连接个数
               .childOption(ChannelOption.SO_KEEPALIVE, true) // 设置保持活动连接状态
               .childHandler(
@@ -3615,14 +3620,14 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
     /*
      * 读取数据(这里我们可以读取客户端发送的数据)
      * 1.ChannelHandlerContext ctx：上下文对象，含有管道pipeline(业务逻辑处理)，通道channel(数据读写处理)，地址
-     * 2.Object msg：就是客户端发送的数据，默认时Object类型
+     * 2.Object msg：就是客户端发送的数据，默认是Object类型
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         // 读取客户端发送的StudentPOJO.Student
         StudentPOJO.Student student = (StudentPOJO.Student) msg;
 
-    System.out.println("客户端发送的数据 id =" + student.getId() + "名字=" + student.getName());
+    	System.out.println("客户端发送的数据 id =" + student.getId() + "名字=" + student.getName());
     }
 
     // 数据读取完毕返回给客户端的消息

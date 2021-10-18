@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/netty\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Netty","wordcount":  79736 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Netty","wordcount":  79759 ,
         "url": "https:\/\/cloverfelix.github.io\/netty\/","datePublished": "2021-07-04T16:44:07+08:00","dateModified": "2021-07-04T16:44:07+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Netty</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/netty/"><i class="far fa-folder fa-fw"></i>Netty</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 79736 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 79759 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 160 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -3241,6 +3241,8 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 </span><span class="lnt">59
 </span><span class="lnt">60
 </span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.netty.simple</span><span class="o">;</span>
@@ -3285,7 +3287,9 @@ for rapid development of maintainable high performance protocol servers &amp; cl
           <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;服务器 is ready&#34;</span><span class="o">);</span>
 
           <span class="cm">/*
-</span><span class="cm">           * ChannelFuture 在Netty中的所有的I/O操作都是异步执行的，这就意味着任何一个I/O操作会立刻返回，不保证在调用结束的时候操作会执行完成。因此，会返回一个ChannelFuture的实例，通过这个实例可以获取当前I/O操作的状态。
+</span><span class="cm">           * ChannelFuture 在Netty中的所有的I/O操作都是异步执行的，这就意味着任何一个I/O操作会立刻返回，不保证
+</span><span class="cm">		   * 在调用结束的时候操作会执行完成。因此，会返回一个ChannelFuture的实例，通过这个实例可以获取当前I/O操
+</span><span class="cm">		   * 作的状态。
 </span><span class="cm">           */</span>
 
           <span class="c1">// 绑定一个端口，并且同步，生成了一个ChannelFuture 对象
@@ -4678,6 +4682,9 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 </span><span class="lnt">73
 </span><span class="lnt">74
 </span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.netty.groupchat</span><span class="o">;</span>
@@ -4755,6 +4762,9 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 </span><span class="c1"></span>        <span class="n">ctx</span><span class="o">.</span><span class="na">channel</span><span class="o">().</span><span class="na">close</span><span class="o">();</span>
     <span class="o">}</span>
 <span class="o">}</span>
+
+<span class="n">说明</span><span class="err">：</span>
+<span class="n">先执行</span> <span class="n">handlerAdd</span> <span class="n">再执行</span> <span class="n">handlerActive</span>
 </code></pre></td></tr></table>
 </div>
 </div><p><strong>客户端：</strong></p>
@@ -5284,7 +5294,7 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 </span><span class="cm">                           * 1.对应的websocket，它的数据是以 帧(frame) 形式传递
 </span><span class="cm">                           * 2.可以看到WebSocketFrame 下面有六个子类
 </span><span class="cm">                           * 3.浏览器请求时 ws://localhost:7000/xxx 表示请求的qurl
-</span><span class="cm">                           * 4.WebSocketServerProtocolHandler 核心功能是将http协议审计为ws协议，即保持长连接
+</span><span class="cm">                           * 4.WebSocketServerProtocolHandler 核心功能是将http协议升级为ws协议，即保持长连接
 </span><span class="cm">                           * 5.是通过一个 状态码 101
 </span><span class="cm">                           */</span>
                           <span class="n">pipeline</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="n">WebSocketServerProtocolHandler</span><span class="o">(</span><span class="s">&#34;/hello&#34;</span><span class="o">));</span>
@@ -5551,7 +5561,7 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 <h3 id="731protobuf基本介绍和使用示意图">7.3.1、Protobuf基本介绍和使用示意图</h3>
 <ol>
 <li>
-<p>Protobuf 是 Google 发布的开源项目，全称 Google Protocol Buffers，是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 **RPC[远程过程调用  remote procedure call ] 数据交换格式 **。</p>
+<p>Protobuf 是 Google 发布的开源项目，全称 Google Protocol Buffers，是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 <strong>RPC(远程过程调用  remote procedure call)数据交换格式</strong>。</p>
 <p>目前很多公司 http+json -&gt; tcp+protobuf</p>
 </li>
 <li>
@@ -7161,7 +7171,7 @@ for rapid development of maintainable high performance protocol servers &amp; cl
           <span class="c1">// 使用链式编程来进行设置
 </span><span class="c1"></span>          <span class="n">bootstrap</span>
               <span class="o">.</span><span class="na">group</span><span class="o">(</span><span class="n">bossGroup</span><span class="o">,</span> <span class="n">workerGroup</span><span class="o">)</span> <span class="c1">// 设置两个线程组
-</span><span class="c1"></span>              <span class="o">.</span><span class="na">channel</span><span class="o">(</span><span class="n">NioServerSocketChannel</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="c1">// 使用NioSocketChannel作为服务器的通道实现类型
+</span><span class="c1"></span>              <span class="o">.</span><span class="na">channel</span><span class="o">(</span><span class="n">NioServerSocketChannel</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="c1">// 使用NioServerSocketChannel作为服务器的通道实现类型
 </span><span class="c1"></span>              <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="n">ChannelOption</span><span class="o">.</span><span class="na">SO_BACKLOG</span><span class="o">,</span> <span class="n">128</span><span class="o">)</span> <span class="c1">// 设置线程队列等待连接个数
 </span><span class="c1"></span>              <span class="o">.</span><span class="na">childOption</span><span class="o">(</span><span class="n">ChannelOption</span><span class="o">.</span><span class="na">SO_KEEPALIVE</span><span class="o">,</span> <span class="kc">true</span><span class="o">)</span> <span class="c1">// 设置保持活动连接状态
 </span><span class="c1"></span>              <span class="o">.</span><span class="na">childHandler</span><span class="o">(</span>
@@ -7279,14 +7289,14 @@ for rapid development of maintainable high performance protocol servers &amp; cl
     <span class="cm">/*
 </span><span class="cm">     * 读取数据(这里我们可以读取客户端发送的数据)
 </span><span class="cm">     * 1.ChannelHandlerContext ctx：上下文对象，含有管道pipeline(业务逻辑处理)，通道channel(数据读写处理)，地址
-</span><span class="cm">     * 2.Object msg：就是客户端发送的数据，默认时Object类型
+</span><span class="cm">     * 2.Object msg：就是客户端发送的数据，默认是Object类型
 </span><span class="cm">     */</span>
     <span class="nd">@Override</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">channelRead</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="n">Object</span> <span class="n">msg</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
         <span class="c1">// 读取客户端发送的StudentPOJO.Student
 </span><span class="c1"></span>        <span class="n">StudentPOJO</span><span class="o">.</span><span class="na">Student</span> <span class="n">student</span> <span class="o">=</span> <span class="o">(</span><span class="n">StudentPOJO</span><span class="o">.</span><span class="na">Student</span><span class="o">)</span> <span class="n">msg</span><span class="o">;</span>
 
-    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;客户端发送的数据 id =&#34;</span> <span class="o">+</span> <span class="n">student</span><span class="o">.</span><span class="na">getId</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;名字=&#34;</span> <span class="o">+</span> <span class="n">student</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+    	<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;客户端发送的数据 id =&#34;</span> <span class="o">+</span> <span class="n">student</span><span class="o">.</span><span class="na">getId</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;名字=&#34;</span> <span class="o">+</span> <span class="n">student</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
     <span class="o">}</span>
 
     <span class="c1">// 数据读取完毕返回给客户端的消息
