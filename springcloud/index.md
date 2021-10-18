@@ -66,34 +66,34 @@ Camden 构建于 Spring Boot 1.4.x，但依然能支持 Spring Boot 1.5.x
 	
 - X版本常用的组件pom
 
-	~~~xml
-	<dependencies>
-      <!--spring boot 2.2.2-->
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>2.2.2.RELEASE</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!--spring cloud Hoxton.SR1-->
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>Hoxton.SR1</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!--spring cloud alibaba 2.1.0.RELEASE-->
-      <dependency>
-        <groupId>com.alibaba.cloud</groupId>
-        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-        <version>2.1.0.RELEASE</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-	</dependencies>
-	~~~
+~~~xml
+<dependencies>
+  <!--spring boot 2.2.2-->
+  <dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-dependencies</artifactId>
+	<version>2.2.2.RELEASE</version>
+	<type>pom</type>
+	<scope>import</scope>
+  </dependency>
+  <!--spring cloud Hoxton.SR1-->
+  <dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-dependencies</artifactId>
+	<version>Hoxton.SR1</version>
+	<type>pom</type>
+	<scope>import</scope>
+  </dependency>
+  <!--spring cloud alibaba 2.1.0.RELEASE-->
+  <dependency>
+	<groupId>com.alibaba.cloud</groupId>
+	<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+	<version>2.1.0.RELEASE</version>
+	<type>pom</type>
+	<scope>import</scope>
+  </dependency>
+</dependencies>
+~~~
 	
 # 2、关于Cloud各种组件的停更/升级/替换
 
@@ -253,7 +253,9 @@ Maven 会沿着父子层次向上走，直到找到一个拥有 dependencyManage
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211016161035.png)
 
 	这样做的好处就是：
-		如果有多个子项目都引用同一样依赖，则可以避免在每个使用的子项目里都声明一个版本号，这样当想升级或切换到另一个版本时，只需要在顶层父容器里更新，而不需要一个一个子项目的修改;另外如果某个子项目需要另外的一个版本，只需要声明version就可。
+		如果有多个子项目都引用同一样依赖，则可以避免在每个使用的子项目里都声明一个版本号，这样当想升级或切换到另一
+		个版本时，只需要在顶层父容器里更新，而不需要一个一个子项目的修改;另外如果某个子项目需要另外的一个版本，只需
+		要声明version就可。
 
 - `dependencyManagement` 里只是声明依赖，**并不实现引入**，因此子项目需要显示的声明需要用的依赖。
 - **如果不在子项目中声明依赖，是不会从父项目中继承下来的；只有在子项目中写了该依赖项，并且没有指定具体版本，才会从父项目中继承该项，并且version和scope都读取自父pom;**
@@ -263,19 +265,19 @@ Maven 会沿着父子层次向上走，直到找到一个拥有 dependencyManage
 
 1. 配置
 
-	~~~xml
-	<build><!-- maven中跳过单元测试 -->
-    	<plugins>
-        	<plugin>
-            	<groupId>org.apache.maven.plugins</groupId>
-            	<artifactId>maven-surefire-plugin</artifactId>
-            	<configuration>
-                	<skip>true</skip>
-            	</configuration>
-        	</plugin>
-    	</plugins>
-	</build>
-	~~~
+~~~xml
+<build><!-- maven中跳过单元测试 -->
+	<plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<configuration>
+				<skip>true</skip>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+~~~
 2. IDEA工具支持 **(推荐)**
 	
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211016161438.png)
@@ -398,7 +400,9 @@ public class PaymentMain8001 {
 
 1、为什么`DAO层`传入参数时为什么使用`@Param注解`
 
-	因为java没有保存行参的记录，java在运行的时候会把List queryAll(int offset,int limit);中的参数变成这样:queryAll(int arg0,int arg1),这样我们就没有办法去传递多个参数。所以需要使用@Param注解给方法参数命名，然后在xml文件的该dao层方法对应的sql语句中就可以正常使用@Param注解的参数名。
+	因为java没有保存行参的记录，java在运行的时候会把List queryAll(int offset,int limit);中的参数变成这样:
+	queryAll(int arg0,int arg1),这样我们就没有办法去传递多个参数。所以需要使用@Param注解给方法参数命名，然后在xml
+	文件的该dao层方法对应的sql语句中就可以正常使用@Param注解的参数名。
 	还可以传入多个参数
 
 [参考博客](https://blog.csdn.net/zijikanwa/article/details/103056857)
