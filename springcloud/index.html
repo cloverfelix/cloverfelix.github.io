@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/springcloud\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  29861 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  30005 ,
         "url": "https:\/\/cloverfelix.github.io\/springcloud\/","datePublished": "2021-10-14T10:38:04+08:00","dateModified": "2021-10-14T10:38:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Springcloud</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/springcloud/"><i class="far fa-folder fa-fw"></i>SpringCloud</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 29861 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 30005 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 60 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -7284,12 +7284,48 @@ List [0] instances = 127.0.0.1:8002
 <p>2  我们能接受3秒钟，它运行5秒钟，超时异常</p>
 <p><strong>当前服务不可用了，做服务降级，兜底的方案都是</strong><code>paymentInfo_TimeOutHandler</code></p>
 </li>
-</ul>
-<p>4、主启动类激活</p>
+<li>
+<p>主启动类激活</p>
 <ul>
 <li><strong>添加新注解@EnableCircuitBreaker</strong></li>
 </ul>
-</div><div class="post-footer" id="post-footer">
+</li>
+</ul>
+<p>4、80fallback</p>
+<ul>
+<li>80订单微服务，也可以更好的保护自己，自己也依样画葫芦进行客户端降级保护</li>
+<li><code>题外话，切记</code>
+<ul>
+<li>我们自己配置过的热部署方式对java代码的改动明显，但对<code>@HystrixCommand内属性的修改建议重启微服务</code></li>
+</ul>
+</li>
+<li>修改YML</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>修改主启动类
+<ul>
+<li>加入<code>@EnableHystrix注解</code></li>
+</ul>
+</li>
+<li>修改业务类</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java">
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

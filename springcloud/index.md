@@ -3908,6 +3908,23 @@ public class OrderHystirxController {
    
    **当前服务不可用了，做服务降级，兜底的方案都是**`paymentInfo_TimeOutHandler`
 
-4、主启动类激活
+- 主启动类激活
 
-- **添加新注解@EnableCircuitBreaker**
+	- **添加新注解@EnableCircuitBreaker**
+
+4、80fallback
+- 80订单微服务，也可以更好的保护自己，自己也依样画葫芦进行客户端降级保护
+- `题外话，切记`
+	- 我们自己配置过的热部署方式对java代码的改动明显，但对`@HystrixCommand内属性的修改建议重启微服务`
+- 修改YML
+
+~~~yml
+
+~~~
+- 修改主启动类
+	- 加入`@EnableHystrix注解`
+- 修改业务类
+
+~~~java 
+
+~~~
