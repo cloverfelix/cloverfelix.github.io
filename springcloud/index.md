@@ -3919,7 +3919,18 @@ public class OrderHystirxController {
 - 修改YML
 
 ~~~yml
+server:
+  port: 80
 
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/
+      
+feign:
+  hystrix:
+    enabled: true
 ~~~
 - 修改主启动类
 	- 加入`@EnableHystrix注解`
