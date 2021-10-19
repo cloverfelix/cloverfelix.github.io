@@ -2170,15 +2170,15 @@ public class OrderZKController {
 
 1. Consul是什么？
 [官网](https://www.consul.io/intro/index.html)
-2. Consul能干嘛
+2. Consul能干嘛？
 	- 服务发现：提供HTTP和DNS两种发现方式。
 	- 健康监测：支持多种方式，HTTP、TCP、Docker、Shell脚本定制化监控
 	- KV存储：Key、Value的存储方式
 	- 多数据中心：Consul支持多数据中心
 	- 可视化Web界面
-3. Consul去哪下
+3. Consul去哪下？
 [下载地址](https://www.consul.io/downloads.html)
-4. Consul怎么玩
+4. Consul怎么玩？
 [Consul中文文档](https://www.springcloud.cc/spring-cloud-consul.html)
 
 
@@ -2509,3 +2509,1405 @@ CAP理论的核心是：`一个分布式系统不可能同时很好的满足一�
 		结论：违背了可用性A的要求，只满足一致性和分区容错，即CP
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215844.png)
+
+
+# 7、Ribbon负载均衡服务调用
+
+## 7.1、概述
+
+1. Ribbon是什么？
+
+	- SpringCloud Ribbon是基于Netflix Ribbon实现的**一套客户端**       **负载均衡的工具**。
+	- 简单的说，Ribbon是Netflix发布的开源项目，主要功能是提供**客户端的软件负载均衡算法和服务调用**。Ribbon客户端组件提供一系列完善的配置项如连接超时，重试等。简单的说，就是在配置文件中列出`LoadBalancer（简称LB）`后面所有的机器，Ribbon会自动的帮助你基于某种规则（如简单轮询，随机连接等）去连接这些机器。我们很容易使用Ribbon实现自定义的负载均衡算法
+
+2. 官网资料
+
+	[官方资料](https://github.com/Netflix/ribbon/wiki/Getting-Started)
+	
+	Ribbon目前也进入维护模式
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019102224.png)
+	
+	未来替换方案
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019102313.png)
+
+3. 能干吗？
+
+	- LB(负载均衡)
+		- 集中式LB
+			- 即在服务的消费方和提供方之间使用独立的LB设施(可以是硬件，如F5, 也可以是软件，如nginx), 由该设施负责把访问请求通过某种策略转发至服务的提供方
+		- 进程内LB
+			- 将LB逻辑集成到消费方，消费方从服务注册中心获知有哪些地址可用，然后自己再从这些地址中选择出一个合适的服务器
+			- **Ribbon就属于进程内LB**，它只是一个类库，**集成于消费方进程**，消费方通过它来获取到服务提供方的地址
+	- 前面我们讲解过了80通过轮询负载访问8001/8002
+	- 一句话：**负载均衡+RestTemplate调用**
+
+ 
+**LB负载均衡(Load Balance)是什么**
+
+简单的说就是将用户的请求平摊的分配到多个服务上，从而达到系统的HA（高可用）。
+常见的负载均衡有软件Nginx，LVS，硬件 F5等。
+ 
+**Ribbon本地负载均衡客户端 VS Nginx服务端负载均衡区别**
+
+ Nginx是服务器负载均衡，客户端所有请求都会交给nginx，然后由nginx实现转发请求。即负载均衡是由服务端实现的。
+ 
+ Ribbon本地负载均衡，在调用微服务接口时候，会在注册中心上获取注册信息服务列表之后缓存到JVM本地，从而在本地实现RPC远程服务调用技术。
+ 
+ 
+ ## 7.2、Ribbon负载均衡演示
+ 
+ ### 7.2.1、架构说明
+ 
+ ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104119.png)
+ 
+ Ribbon在工作时分成两步
+- 第一步先选择 EurekaServer ,它优先选择在同一个区域内负载较少的server.
+- 第二步再根据用户指定的策略，在从server取到的服务注册列表中选择一个地址。
+
+其中Ribbon提供了多种策略：比如轮询、随机和根据响应时间加权。
+ 
+ `总结`：**Ribbon其实就是一个软负载均衡的客户端组件，他可以和其他所需请求的客户端结合使用，和
+ eureka结合只是其中的一个实例。**
+ 
+ 
+### 7.2.2、POM
+
+之前写`cloud-consumer-order80`样例时候没有引入spring-cloud-starter-ribbon也可以使用ribbon
+
+~~~xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+</dependency>
+~~~
+
+猜测spring-cloud-starter-netflix-eureka-client自带了spring-cloud-starter-ribbon引用，
+
+证明如下： `可以看到spring-cloud-starter-netflix-eureka-client 确实引入了Ribbon`
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104718.png)
+
+### 7.2.3、二说RestTemplate的使用
+
+[官网](https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html)
+
+#### 7.2.3.1、getForObject方法/getForEntity方法
+
+**返回对象为响应体中数据转化成的对象，基本上可以理解为Json**
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019105055.png)
+
+**返回对象为ResponseEntity对象，包含了响应中的一些重要信息，比如响应头，状态码、响应体等**
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110324.png)
+
+#### 7.2.3.2、postForObject/postForEntity方法
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110504.png)
+
+## 7.3、Ribbon核心组件IRule
+
+### 7.3.1、IRule：根据特定算法中从服务列表中选取一个要访问的服务
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110952.png)
+
+`com.netflix.loadbalancer.RoundRobinRule`：**轮询**
+
+`com.netflix.loadbalancer.RandomRule`：**随机**
+
+`com.netflix.loadbalancer.RetryRule`：**先按照RoundRobinRule的策略获取服务，如果获取服务失败则在指定时间内会进行重试，获取可用的服务**
+
+`WeightedResponseTimeRule`：**对RoundRobinRule的扩展，响应速度越快的实例选择权重越大，越容易被选择**
+
+`BestAvailableRule`：**会先过滤掉由于多次访问故障而处于断路器跳闸状态的服务，然后选择一个并发量最小的服务**
+
+`AvailabilityFilteringRule`：**先过滤掉故障实例，再选择并发较小的实例**
+
+`ZoneAvoidanceRule`：**默认规则,复合判断server所在区域的性能和server的可用性选择服务器**
+
+### 7.3.2、如何替换
+
+1、修改cloud-consumer-order80
+
+2、注意配置细节
+
+**官方文档明确给出了警告：**
+- 这个自定义配置类不能放在`@ComponentScan所扫描的当前包下以及子包下`，
+- 否则我们自定义的这个配置类就会被所有的Ribbon客户端所共享，达不到特殊化定制的目的了。
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019111846.png)
+
+3、新建package ：com.clover.myrule
+
+4、上面包下新建MySelfRule规则类
+
+~~~Java
+package com.clover.myrule;
+
+import com.netflix.loadbalancer.IRule;
+import com.netflix.loadbalancer.RandomRule;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MySelfRule
+{
+    @Bean
+    public IRule myRule()
+    {
+        return new RandomRule();//定义为随机
+    }
+}
+~~~
+
+5、**主启动类添加@RibbonClient**
+
+~~~Java
+package com.clover.springcloud;
+
+import com.clover.myrule.MySelfRule;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
+
+@SpringBootApplication
+@EnableEurekaClient
+@EnableDiscoveryClient
+@RibbonClient(name = "CLOUD-PAYMENT-SERVICE",configuration= MySelfRule.class)
+public class PaymentMain8001 {
+
+    public static void main(String[] args) {
+        SpringApplication.run(PaymentMain8001.class,args);
+    }
+}
+~~~
+
+6、测试：http://localhost/consumer/payment/get/1
+
+## 7.4、Ribbon负载均衡算法
+
+### 7.4.1、原理
+
+负载均衡算法：
+
+	rest接口第几次请求数 % 服务器集群总数量 = 实际调用服务器位置下标  ，每次服务重启动后rest接口计数从1开始。
+ 
+List<> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+ 
+如：   
+	List [0] instances = 127.0.0.1:8002
+　List [1] instances = 127.0.0.1:8001
+ 
+8001+ 8002 组合成为集群，它们共计2台机器，集群总数为2， 按照轮询算法原理：
+ 
+当总请求数为1时： 1 % 2 =1 对应下标位置为1 ，则获得服务地址为127.0.0.1:8001
+
+当总请求数位2时： 2 % 2 =0 对应下标位置为0 ，则获得服务地址为127.0.0.1:8002
+
+当总请求数位3时： 3 % 2 =1 对应下标位置为1 ，则获得服务地址为127.0.0.1:8001
+
+当总请求数位4时： 4 % 2 =0 对应下标位置为0 ，则获得服务地址为127.0.0.1:8002
+
+如此类推......
+
+ 
+### 7.4.2、手写一个本地负载均衡器
+
+1、先启动7001/7002集群
+
+2、8001/8002微服务改造
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import com.clover.springcloud.entities.CommonResult;
+import com.clover.springcloud.entities.Payment;
+import com.clover.springcloud.service.PaymentService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+@RestController
+@Slf4j
+public class PaymentController {
+
+    @Resource
+    public PaymentService paymentService;
+
+    @Value("${server.port}")
+    private String serverPort;
+
+    @Resource
+    private DiscoveryClient discoveryClient;
+
+    @PostMapping(value = "/payment/create")
+    public CommonResult create(@RequestBody Payment payment)
+    {
+        int result = paymentService.create(payment);
+        log.info("********插入操作结果："+ result);
+        if (result > 0){
+            return new CommonResult(200,"插入数据成功，serverPort：" + serverPort,result);
+        }else {
+            return new CommonResult(404,"插入数据失败",null);
+        }
+    }
+
+    @GetMapping(value = "/payment/get/{id}")
+    public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id)
+    {
+        Payment payment = paymentService.getPaymentById(id);
+        log.info("********查询结果："+ payment);
+        if (payment !=null){
+            return new CommonResult(200,"查询成功，serverPort：" + serverPort,payment);
+        }else {
+            return new CommonResult(404,"查询失败",null);
+        }
+    }
+
+    @GetMapping(value = "/payment/discovery")
+    public Object discovery()
+    {
+        // 用于查询Eureka上有几个服务
+        List<String> services = discoveryClient.getServices();
+        for (String element: services) {
+            log.info("***************element:" + element);
+        }
+
+        // 用于查询某一个名称下的实例
+        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+        for (ServiceInstance element: instances) {
+            log.info(element.getServiceId() + "\t" + element.getHost() + "\t" + element.getPort() + "\t" + element.getUri());
+        }
+
+        return this.discoveryClient;
+    }
+
+    @GetMapping(value = "/payment/lb")
+    public String getPaymentLB()
+    {
+        return serverPort;
+    }
+
+}
+~~~
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import com.clover.springcloud.entities.CommonResult;
+import com.clover.springcloud.entities.Payment;
+import com.clover.springcloud.service.PaymentService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+
+@RestController
+@Slf4j
+public class PaymentController {
+
+    @Resource
+    public PaymentService paymentService;
+
+    @Value("${server.port}")
+    private String serverPort;
+
+    @PostMapping(value = "/payment/create")
+    public CommonResult create(@RequestBody Payment payment)
+    {
+        int result = paymentService.create(payment);
+        log.info("********插入操作结果："+ result);
+        if (result > 0){
+            return new CommonResult(200,"插入数据成功，serverPort：" + serverPort,result);
+        }else {
+            return new CommonResult(404,"插入数据失败",null);
+        }
+    }
+
+    @GetMapping(value = "/payment/get/{id}")
+    public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id)
+    {
+        Payment payment = paymentService.getPaymentById(id);
+        log.info("********查询结果："+ payment);
+        if (payment !=null){
+            return new CommonResult(200,"查询成功，serverPort：" + serverPort,payment);
+        }else {
+            return new CommonResult(404,"查询失败",null);
+        }
+    }
+
+    @GetMapping(value = "/payment/lb")
+    public String getPaymentLB()
+    {
+        return serverPort;
+    }
+
+}
+~~~
+
+3、80订单微服务改造
+
+1. ApplicationContextBean 去掉`注解@LoadBalanced`
+2. 编写` LoadBalancer 接口`
+
+~~~interface
+package com.clover.springcloud.lb;
+
+import org.springframework.cloud.client.ServiceInstance;
+
+import java.util.List;
+
+public interface LoadBalancer {
+    ServiceInstance instences(List<ServiceInstance> serviceInstances);
+}
+~~~
+3. 实现 LoadBalancer 接口的实现类
+
+~~~Java
+package com.clover.springcloud.lb;
+
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+@Component
+public class MyLB implements LoadBalancer {
+
+    private AtomicInteger atomicInteger = new AtomicInteger(0);
+
+    public final int getAndIncrement()
+    {
+        int current;
+        int next;
+
+        /*
+         * CAS是Compare And Set的一个简称，如下理解
+         * 1、一致当前内存里面的值current和预期要修改成的值next传入
+         * 2、内存中 AtomicInteger 对象地址对应的真实值(因为有可能被修改)real与current对比，
+         *    相等标识real违被修改过，是"安全"的，将next赋给real结束然后返回
+         *    不相等说明real以及被修改，结束并重新执行1知道修改成功
+         * CAS相比 Synchronized，避免了锁的使用，总体性能比 Synchronized 高很多
+         */
+        do{
+            // 获取当前值
+            current = this.atomicInteger.get();
+            // 设置期望值
+            next = current >= 2147483647 ? 0 : current + 1;
+        }while (!this.atomicInteger.compareAndSet(current,next));//调用Native方法compareAndSet，执行CAS操作
+        System.out.println("************第几次出现：next" + next);
+        return next;
+    }
+
+
+
+    @Override
+    public ServiceInstance instences(List<ServiceInstance> serviceInstances) {
+        int index = getAndIncrement() % serviceInstances.size();
+        return serviceInstances.get(index);
+    }
+}
+~~~
+4. 修改 OrderController
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import com.clover.springcloud.entities.CommonResult;
+import com.clover.springcloud.entities.Payment;
+import com.clover.springcloud.lb.LoadBalancer;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import javax.annotation.Resource;
+import java.net.URI;
+import java.util.List;
+
+@RestController
+@Slf4j
+public class OrderController {
+    //public static final String Payment_URL = "http://localhost:8001";
+
+    // 通过在eureka上注册过的微服务名称调用
+    public static final String Payment_URL = "http://CLOUD-PAYMENT-SERVICE";
+
+    @Resource
+    private RestTemplate restTemplate;
+
+    @Resource
+    private DiscoveryClient discoveryClient;
+
+    @Resource
+    private LoadBalancer loadBalancer;
+
+    //客户端用浏览器是get请求，但是底层实质发送post调用服务端8001
+    @GetMapping("/consumer/payment/create")
+    public CommonResult create(Payment payment)
+    {
+        return restTemplate.postForObject(Payment_URL + "/payment/create",payment,CommonResult.class);
+        // return restTemplate.postForEntity(Payment_URL + "/payment/create",payment,CommonResult.class).getBody();
+    }
+
+    @GetMapping("/consumer/payment/get/{id}")
+    public CommonResult getPaymentById(@PathVariable("id") Long id)
+    {
+        return restTemplate.getForObject(Payment_URL + "/payment/get/" + id,CommonResult.class);
+    }
+
+    @GetMapping("/consumer/payment/getForEntity/{id}")
+    public CommonResult getPayment(@PathVariable("id") Long id)
+    {
+        ResponseEntity<CommonResult> entity = restTemplate.getForEntity(Payment_URL + "/payment/get/" + id, CommonResult.class);
+        System.out.println("-----------------");
+        System.out.println(entity.getHeaders());
+        System.out.println(entity.getBody());
+        if(entity.getStatusCode().is2xxSuccessful()){
+            return entity.getBody();
+        }else {
+            return new CommonResult(444,"操作失败");
+        }
+    }
+
+    @GetMapping(value = "/consumer/payment/lb")
+    public String getPaymentLB()
+    {
+        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+
+        if(instances == null || instances.size()<=0) {
+            return null;
+        }
+        ServiceInstance serviceInstance = loadBalancer.instences(instances);
+        URI uri = serviceInstance.getUri();
+
+        return restTemplate.getForObject(uri+"/payment/lb",String.class);
+    }
+}
+~~~
+5. 测试：http://localhost/consumer/payment/lb
+	
+
+ 		注意：在这个手写负载均衡中使用到了一个方法CompareAndSet，这个是AtomicInteger类compareAndSet
+		AtomicInteger类compareAndSet通过原子操作实现了CAS操作，最底层基于汇编语言实现
+		CAS是Compare And Set的一个简称，如下理解：
+		1，已知当前内存里面的值current和预期要修改成的值new传入
+		2，内存中AtomicInteger对象地址对应的真实值(因为有可能别修改)real与current对比，
+		相等表示real未被修改过，是“安全”的，将new赋给real结束然后返回；
+		不相等说明real已经被修改，结束并重新执行1直到修改成功
+ 		 
+		 
+ 
+ 
+ # 8、OpenFeign服务接口调用
+
+## 8.1、概述
+
+### 8.1.1、OpenFeign是什么？
+
+1. Feign是一个声明式的Web服务客户端，让编写Web服务客户端变得非常容易，**只需创建一个接口并在接口上添加注解即可**
+2. [源码地址](https://github.com/spring-cloud/spring-cloud-openfeign)
+
+[官网解释](https://cloud.spring.io/spring-cloud-static/Hoxton.SR1/reference/htmlsingle/#spring-cloud-openfeign)
+
+Feign是一个声明式WebService客户端。使用Feign能让编写WebService客户端更加简单。
+它的使用方法是**定义一个服务接口然后在上面添加注解**。Feign也支持可拔插式的编码器和解码器。SpringCloud对Feign进行了封装，使其支持了Spring MVC标准注解和HttpMessageConverters。**Feign可以与Eureka和Ribbon组合使用以支持负载均衡**
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171123.png)
+
+### 8.1.2、能干嘛？
+
+Feign旨在使编写Java Http客户端变得更容易。
+
+前面在使用Ribbon+RestTemplate时，利用 RestTemplate 对http请求的封装处理，形成了一套模版化的调用方法。但是在实际开发中，由于对服务依赖的调用可能不止一处，**往往一个接口会被多处调用，所以通常都会针对每个微服务自行封装一些客户端类来包装这些依赖服务的调用**。所以，Feign在此基础上做了进一步封装，由他来帮助我们定义和实现依赖服务接口的定义。在Feign的实现下，**我们只需创建一个接口并使用注解的方式来配置它(以前是Dao接口上面标注Mapper注解,现在是一个微服务接口上面标注一个Feign注解即可)**，即可完成对服务提供方的接口绑定，简化了Spring cloud 使用Ribbon时，自动封装服务调用客户端的开发量。
+
+`Feign集成了Ribbon`
+
+利用Ribbon维护了Payment的服务列表信息，并且通过轮询实现了客户端的负载均衡。而与Ribbon不同的是，**通过feign只需要定义服务绑定接口且以声明式的方法**，优雅而简单的实现了服务调用
+
+### 8.1.3、Feign和OpenFeign两者区别
+ 
+ ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171433.png)
+ 
+ 
+ ## 8.2、OpenFeign使用步骤
+ 
+ 1、接口 + 注解：**微服务调用接口+@FeignClient**
+ 
+2、新建 cloud-consumer-feign-order80
+
+- Feign在消费端使用
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019174703.png)
+
+3、修改POM
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SpringCloud</artifactId>
+        <groupId>com.clover.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-consumer-feign-order80</artifactId>
+
+
+    <dependencies>
+        <!--openfeign-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!--eureka client-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->
+        <dependency>
+            <groupId>com.clover.springcloud</groupId>
+            <artifactId>cloud-api-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--web-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+
+</project>
+~~~
+
+4、编写主启动类
+
+~~~Java
+package com.clover.springcloud;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+
+@SpringBootApplication
+@EnableFeignClients // 开启FeignClients注解的使用
+public class OrderFeignMain80 {
+    public static void main(String[] args)
+    {
+        SpringApplication.run(OrderFeignMain80.class,args);
+    }
+}
+~~~
+
+5、业务类
+- 业务逻辑接口+**@FeignClient配置调用provider服务**
+- 新建PaymentFeignService接口并新增注解@FeignClient
+
+~~~Java
+package com.clover.springcloud.service;
+
+import com.clover.springcloud.entities.CommonResult;
+import com.clover.springcloud.entities.Payment;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+@FeignClient(value = "CLOUD-PAYMENT-SERVICE")
+public interface PaymentFeignService {
+    @GetMapping(value = "/payment/get/{id}")
+    CommonResult<Payment> getPaymentById(@PathVariable("id") Long id);
+}
+~~~
+- 控制层Controller
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import com.clover.springcloud.entities.CommonResult;
+import com.clover.springcloud.entities.Payment;
+import com.clover.springcloud.service.PaymentFeignService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+
+@RestController
+public class OrderFeignController
+{
+    @Resource
+    private PaymentFeignService paymentFeignService;
+
+    @GetMapping(value = "/consumer/payment/get/{id}")
+    public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id)
+    {
+        return paymentFeignService.getPaymentById(id);
+    }
+}
+~~~
+
+6、测试
+- 先启动2个eureka集群7001/7002
+- 再启动2个微服务8001/8002
+- 启动OpenFeign
+- http://localhost/consumer/payment/get/1
+- **Feign自带负载均衡配置项**
+
+7、总结
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019175149.png)
+
+## 8.3、OpenFeign超时控制
+
+### 8.3.1、超时设置，故意设置超时演示出错情况
+- 服务提供方8001故意写暂停程序
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import com.clover.springcloud.entities.CommonResult;
+import com.clover.springcloud.entities.Payment;
+import com.clover.springcloud.service.PaymentService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+@RestController
+@Slf4j
+public class PaymentController {
+
+    @Resource
+    public PaymentService paymentService;
+
+    @Value("${server.port}")
+    private String serverPort;
+
+    @Resource
+    private DiscoveryClient discoveryClient;
+
+    @PostMapping(value = "/payment/create")
+    public CommonResult create(@RequestBody Payment payment)
+    {
+        int result = paymentService.create(payment);
+        log.info("********插入操作结果："+ result);
+        if (result > 0){
+            return new CommonResult(200,"插入数据成功，serverPort：" + serverPort,result);
+        }else {
+            return new CommonResult(404,"插入数据失败",null);
+        }
+    }
+
+    @GetMapping(value = "/payment/get/{id}")
+    public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id)
+    {
+        Payment payment = paymentService.getPaymentById(id);
+        log.info("********查询结果："+ payment);
+        if (payment !=null){
+            return new CommonResult(200,"查询成功，serverPort：" + serverPort,payment);
+        }else {
+            return new CommonResult(404,"查询失败",null);
+        }
+    }
+
+    @GetMapping(value = "/payment/discovery")
+    public Object discovery()
+    {
+        // 用于查询Eureka上有几个服务
+        List<String> services = discoveryClient.getServices();
+        for (String element: services) {
+            log.info("***************element:" + element);
+        }
+
+        // 用于查询某一个名称下的实例
+        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+        for (ServiceInstance element: instances) {
+            log.info(element.getServiceId() + "\t" + element.getHost() + "\t" + element.getPort() + "\t" + element.getUri());
+        }
+
+        return this.discoveryClient;
+    }
+
+    @GetMapping(value = "/payment/lb")
+    public String getPaymentLB()
+    {
+        return serverPort;
+    }
+
+    @GetMapping(value = "/payment/feign/timeout")
+    public String paymentFeignTimeOut()
+    {
+        System.out.println("*****paymentFeignTimeOut from port: "+serverPort);
+        //暂停几秒钟线程
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return serverPort;
+    }
+
+}
+~~~
+- 服务消费方80添加超时方法 PaymentFeignService
+
+~~~Java
+package com.clover.springcloud.service;
+
+import com.clover.springcloud.entities.CommonResult;
+import com.clover.springcloud.entities.Payment;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+@FeignClient(value = "CLOUD-PAYMENT-SERVICE")
+public interface PaymentFeignService {
+    @GetMapping(value = "/payment/get/{id}")
+    CommonResult<Payment> getPaymentById(@PathVariable("id") Long id);
+
+    @GetMapping(value = "/payment/feign/timeout")
+    String paymentFeignTimeOut();
+}
+~~~
+- 服务消费方80添加超时方法OrderFeignController
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import com.clover.springcloud.entities.CommonResult;
+import com.clover.springcloud.entities.Payment;
+import com.clover.springcloud.service.PaymentFeignService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+
+@RestController
+public class OrderFeignController
+{
+    @Resource
+    private PaymentFeignService paymentFeignService;
+
+    @GetMapping(value = "/consumer/payment/get/{id}")
+    public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id)
+    {
+        return paymentFeignService.getPaymentById(id);
+    }
+
+    @GetMapping(value = "/payment/feign/timeout")
+    public String paymentFeignTimeOut()
+    {
+        return paymentFeignService.paymentFeignTimeOut();
+    }
+
+}
+~~~
+- 测试
+	- http://localhost/consumer/payment/feign/timeout
+	- 错误页面
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019182910.png)
+
+### 8.3.2、OpenFeign默认等待1秒钟，超过后报错 
+
+### 8.3.3、是什么？
+
+**Feign客户端默认只等待一秒钟**，但是服务端处理需要超过1秒钟，导致Feign客户端不想等待了，直接返回报错。
+为了避免这样的情况，有时候我们需要设置Feign客户端的超时控制。
+ 
+yml文件中开启配置，`OpenFeign默认支持Ribbon`
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019183128.png)
+
+
+### 8.3.4、YML文件里需要开启OpenFeign客户端超时控制
+
+~~~yml
+server:
+  port: 80
+
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
+
+#设置feign客户端超时时间(OpenFeign默认支持ribbon)
+ribbon:
+  #指的是建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间
+  ReadTimeout: 5000
+  #指的是建立连接后从服务器读取到可用资源所用的时间
+  ConnectTimeout: 5000
+~~~
+
+## 8.4、OpenFeign日志打印功能
+
+### 8.4.1、是什么？
+ 
+Feign 提供了日志打印功能，我们可以通过配置来调整日志级别，从而了解 Feign 中 Http 请求的细节。
+
+说白了就是**对Feign接口的调用情况进行监控和输出**
+ 
+ 
+ ### 8.4.2、日志级别
+- NONE：默认的，不显示任何日志；
+- BASIC：仅记录请求方法、URL、响应状态码及执行时间；
+- HEADERS：除了 BASIC 中定义的信息之外，还有请求和响应的头信息；
+- FULL：除了 HEADERS 中定义的信息之外，还有请求和响应的正文及元数据。
+
+### 8.4.3、配置日志bean
+~~~Java
+package com.clover.springcloud.config;
+
+import feign.Logger;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+
+@Configuration
+public class FeignConfig {
+
+    @Bean
+    Logger.Level feignLoggerLevel()
+    {
+        return Logger.Level.FULL;
+    }
+}
+~~~
+
+### 8.3.4、YML文件里需要开启日志的Feign客户端
+
+~~~yml
+server:
+  port: 80
+
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
+
+#设置feign客户端超时时间(OpenFeign默认支持ribbon)
+ribbon:
+  #指的是建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间
+  ReadTimeout: 5000
+  #指的是建立连接后从服务器读取到可用资源所用的时间
+  ConnectTimeout: 5000
+
+logging:
+  level:
+    # feign日志以什么级别监控哪个接口
+    com.clover.springcloud.service.PaymentFeignService: debug
+~~~
+
+### 8.3.5、后台日志查看
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019184913.png)
+ 
+# 9、Hystrix断路器
+
+## 9.1、概述
+
+### 9.1.1、分布式系统面临的问题
+
+**复杂分布式体系结构中的应用程序有数十个依赖关系，每个依赖关系在某些时候将不可避免地失败**
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019200403.png)
+
+服务雪崩
+
+多个微服务之间调用的时候，假设微服务A调用微服务B和微服务C，微服务B和微服务C又调用其它的微服务，这就是所谓的**扇出**。如果扇出的链路上某个微服务的调用响应时间过长或者不可用，对微服务A的调用就会占用越来越多的系统资源，进而引起系统崩溃，所谓的“雪崩效应”.
+ 
+对于高流量的应用来说，单一的后端依赖可能会导致所有服务器上的所有资源都在几秒钟内饱和。比失败更糟糕的是，这些应用程序还可能导致服务之间的延迟增加，备份队列，线程和其他系统资源紧张，导致整个系统发生更多的级联故障。这些都表示需要对故障和延迟进行隔离和管理，以便单个依赖关系的失败，不能取消整个应用程序或系统。
+所以，通常当你发现一个模块下的某个实例失败后，这时候这个模块依然还会接收流量，然后这个有问题的模块还调用了其他的模块，这样就会**发生级联故障，或者叫雪崩**。
+
+### 9.1.2、Hystrix是什么？
+ 
+Hystrix是一个用于处理分布式系统的**延迟**和**容错**的开源库，在分布式系统里，许多依赖不可避免的会调用失败，比如超时、异常等，Hystrix能够保证在一个依赖出问题的情况下，**不会导致整体服务失败，避免级联故障，以提高分布式系统的弹性**。
+ 
+“断路器”本身是一种开关装置，当某个服务单元发生故障之后，通过断路器的故障监控（类似熔断保险丝），**向调用方返回一个符合预期的、可处理的备选响应（FallBack），而不是长时间的等待或者抛出调用方无法处理的异常**，这样就保证了服务调用方的线程不会被长时间、不必要地占用，从而避免了故障在分布式系统中的蔓延，乃至雪崩。
+
+### 9.1.3、Hystrix能干嘛？
+- 服务降级
+- 服务熔断
+- 接近实时的监控
+ 
+ ### 9.1.4、官网资料
+ 
+ [官方资料](https://github.com/Netflix/Hystrix/wiki/How-To-Use)
+ 
+ 
+## 9.2、Hystrix重要概念
+
+### 9.2.1、服务降级
+
+- 服务器忙，请稍后再试，不让客户端等待并立刻返回一个友好提示，fallback
+- 哪些情况会触发降级
+	- 程序运行异常
+	- 超时
+	- 服务熔断触发降级
+	- 线程池/信号量打满也会导致服务降级
+
+### 9.2.2、服务熔断
+
+- 类比保险丝达到最大服务访问后，直接拒绝访问，拉闸限电，然后调用服务降级的方法并返回友好提示
+- 就是保险丝
+	- 服务的降级->进而熔断->恢复调用链路
+
+### 9.2.3、服务限流
+- 服务限流
+	- 秒杀高并发等操作，严禁一窝蜂的过来拥挤，大家排队，一秒钟N个，有序进行
+
+## 9.3、hystrix案例
+
+### 9.3.1、构建
+
+1、新建 cloud-provider-hystrix-payment8001
+
+2、修改POM
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SpringCloud</artifactId>
+        <groupId>com.clover.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-provider-hystrix-payment8001</artifactId>
+
+
+    <dependencies>
+        <!--hystrix-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <!--eureka client-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <!--web-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->
+            <groupId>com.clover.springcloud</groupId>
+            <artifactId>cloud-api-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>
+~~~
+
+3、编写YML
+
+~~~yml
+server:
+  port: 8001
+
+spring:
+  application:
+    name: cloud-provider-hystrix-payment
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      #defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
+      defaultZone: http://eureka7001.com:7001/eureka
+~~~
+
+4、编写主启动类
+
+~~~Java
+package com.clover.springcloud;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+
+@SpringBootApplication
+@EnableEurekaClient//本服务启动后会自动注册进eureka服务中
+public class PaymentHystrixMain8001 {
+    public static void main(String[] args)
+    {
+        SpringApplication.run(PaymentHystrixMain8001.class,args);
+    }
+}
+~~~
+
+5、编写业务类
+- service
+
+~~~Java
+package com.clover.springcloud.service;
+
+import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
+
+@Service
+public class PaymentService {
+
+    /**
+     * 正常访问，一切OK
+     */
+    public String paymentInfo_OK(Integer id)
+    {
+        return "线程池：" + Thread.currentThread().getName() + "paymentInfo_OK,id:" + id;
+    }
+
+    /*
+     * 超时访问，演示降级
+     */
+    public String paymentInfo_Timeout(Integer id)
+    {
+        int timeoutNumber = 3;
+        //暂停几秒钟线程
+        try {
+            TimeUnit.SECONDS.sleep(timeoutNumber);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "线程池：" + Thread.currentThread().getName() + "paymentInfo_Timeout,id:" + id + "耗费时间：" + timeoutNumber + "秒";
+    }
+}
+~~~
+- controller
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import com.clover.springcloud.service.PaymentService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+
+@RestController
+@Slf4j
+public class PaymentController {
+
+    @Resource
+    private PaymentService paymentService;
+
+    @Value("${server.port}")
+    private String serverPort;
+
+    @GetMapping(value = "/payment/hystrix/ok/{id}")
+    public String paymentInfo_OK(@PathVariable("id") Integer id)
+    {
+        String result = paymentService.paymentInfo_OK(id);
+        log.info("*********result:" + result);
+        return result;
+    }
+
+    @GetMapping(value = "/payment/hystrix/timeout/{id}")
+    public String paymentInfo_Timeout(@PathVariable("id") Integer id)
+    {
+        String result = paymentService.paymentInfo_Timeout(id);
+        log.info("*********result:" + result);
+        return result;
+    }
+}
+~~~
+
+6、正常测试
+- 启动eureka7001
+- 启动cloud-provider-hystrix-payment8001
+- 访问
+	- success的方法：http://localhost:8001/payment/hystrix/ok/1
+	- 每次调用耗费3秒钟：http://localhost:8001/payment/hystrix/timeout/1
+- 上述module均OK
+	- 以上述为根基平台，从正确->错误->降级熔断->恢复
+
+
+### 9.3.2、高并发测试
+
+1、Jmeter压测测试
+- 开启Jmeter，来20000个并发压死8001，20000个请求都去访问paymentInfo_TimeOut服务
+- 再来一个访问：http://localhost:8001/payment/hystrix/ok/1
+- 看演示结果
+	- 两个都在自己转圈圈
+	- 为什么会被卡死
+		- tomcat的默认的工作线程数被打满 了，没有多余的线程来分解压力和处理
+
+2、Jmeter压测结论
+
+上面还是服务**提供者8001自己测试**，假如此时外部的消费者80也来访问，那**消费者**只能干等，最终导致消费端80不满意，服务端8001直接被拖死
+
+3、看热闹不嫌弃事大，80新建加入
+
+1. 新建 cloud-consumer-feign-hystrix-order80
+2. 修改POM
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SpringCloud</artifactId>
+        <groupId>com.clover.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-consumer-feign-hystrix-order80</artifactId>
+
+
+    <dependencies>
+        <!--openfeign-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!--hystrix-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <!--eureka client-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->
+        <dependency>
+            <groupId>com.clover.springcloud</groupId>
+            <artifactId>cloud-api-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--web-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--一般基础通用配置-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+
+</project>
+~~~
+3. 编写YML
+
+~~~yml
+server:
+  port: 80
+
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/
+~~~
+4. 编写主启动类
+
+~~~Java
+package com.clover.springcloud;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+
+@SpringBootApplication
+@EnableFeignClients
+public class OrderHystrixMain80 {
+    public static void main(String[] args)
+    {
+        SpringApplication.run(OrderHystrixMain80.class,args);
+    }
+}
+~~~
+5. 编写业务类
+- PaymentHystrixService
+
+~~~Java
+package com.clover.springcloud.service;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+@Component
+@FeignClient(value = "CLOUD-PROVIDER-HYSTRIX-PAYMENT")
+public interface PaymentHystrixService {
+
+    @GetMapping("/payment/hystrix/ok/{id}")
+    public String paymentInfo_OK(@PathVariable("id") Integer id);
+
+    @GetMapping("/payment/hystrix/timeout/{id}")
+    public String paymentInfo_Timeout(@PathVariable("id") Integer id);
+}
+
+~~~
+-  OrderHystirxController
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import com.clover.springcloud.service.PaymentHystrixService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+
+@RestController
+@Slf4j
+public class OrderHystirxController {
+
+    @Resource
+    private PaymentHystrixService paymentHystrixService;
+
+    @GetMapping("/consumer/payment/hystrix/ok/{id}")
+    public String paymentInfo_OK(@PathVariable("id") Integer id)
+    {
+        return paymentHystrixService.paymentInfo_OK(id);
+    }
+
+    @GetMapping("/consumer/payment/hystrix/timeout/{id}")
+    public String paymentInfo_Timeout(@PathVariable("id") Integer id)
+    {
+        return paymentHystrixService.paymentInfo_Timeout(id);
+    }
+}
+~~~
+6. 正常测试：http://localhost/consumer/payment/hystrix/ok/1
+7. 高并发测试
+	1. 2W个线程压8001
+	2. 消费端80微服务再去访问正常的Ok微服务8001地址
+	3. http://localhost/consumer/payment/hystrix/ok/1
+	4. 消费者80
+		1. 要么转圈圈等待
+		2. 要么消费端报超时错误
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019212820.png)
+
+### 9.3.3、故障现象和导致原因
+1. 8001同一层次的其它接口服务被困死，**因为tomcat线程池里面的工作线程已经被挤占完毕**
+2. 80此时调用8001，客户端访问响应缓慢，转圈圈
+
+### 9.3.4、上诉结论
+
+正因为有上述故障或不佳表现才有我们的`降级/容错/限流等`技术诞生
+
+### 9.3.5、如何解决？解决的要求
+
+1. 超时导致服务器变慢(转圈)	超时不再等待
+2. 出错(宕机或程序运行出错)	出错要有兜底
+3. 解决
+	1. 对方服务(8001)超时了，调用者(80)不能一直卡死等待，必须有服务降级
+	2. 对方服务(8001)down机了，调用者(80)不能一直卡死等待，必须有服务降级
+	3. 对方服务(8001)OK，调用者(80)自己出故障或有自我要求（自己的等待时间小于服务提供者），自己处理降级
+
+
+### 9.3.6、服务降级
+
+1、降级配置  **@HystrixCommand**
+
+2、8001先从自身找问题
+
+- 设置自身调用超时时间的峰值，峰值内可以正常运行，超过了需要有兜底的方法处理，作服务降级fallback
+
+3、8001fallback
+
+- 业务类启用
+	- **@HystrixCommand**报异常后如何处理
+		- 一旦调用服务方法失败并抛出了错误信息后，会自动调用`@HystrixCommand`标注好的`fallbackMethod`调用类中的指定方法
+
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019215259.png)
+	
+	上图故意制造两个异常：
+	
+   1  int age = 10/0; 计算异常
+   
+   2  我们能接受3秒钟，它运行5秒钟，超时异常
+   
+   **当前服务不可用了，做服务降级，兜底的方案都是**`paymentInfo_TimeOutHandler`
+
+4、主启动类激活
+
+- **添加新注解@EnableCircuitBreaker**

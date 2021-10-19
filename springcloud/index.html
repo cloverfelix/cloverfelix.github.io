@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/springcloud\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  18696 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  29861 ,
         "url": "https:\/\/cloverfelix.github.io\/springcloud\/","datePublished": "2021-10-14T10:38:04+08:00","dateModified": "2021-10-14T10:38:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Springcloud</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/springcloud/"><i class="far fa-folder fa-fw"></i>SpringCloud</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 18696 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 38 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 29861 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 60 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -224,6 +224,90 @@
     <li><a href="#63服务提供者">6.3、服务提供者</a></li>
     <li><a href="#64服务消费者">6.4、服务消费者</a></li>
     <li><a href="#65三个注册中心异同点">6.5、三个注册中心异同点</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#71概述">7.1、概述</a></li>
+    <li><a href="#72ribbon负载均衡演示">7.2、Ribbon负载均衡演示</a>
+      <ul>
+        <li><a href="#721架构说明">7.2.1、架构说明</a></li>
+        <li><a href="#722pom">7.2.2、POM</a></li>
+        <li><a href="#723二说resttemplate的使用">7.2.3、二说RestTemplate的使用</a>
+          <ul>
+            <li><a href="#7231getforobject方法getforentity方法">7.2.3.1、getForObject方法/getForEntity方法</a></li>
+            <li><a href="#7232postforobjectpostforentity方法">7.2.3.2、postForObject/postForEntity方法</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#73ribbon核心组件irule">7.3、Ribbon核心组件IRule</a>
+      <ul>
+        <li><a href="#731irule根据特定算法中从服务列表中选取一个要访问的服务">7.3.1、IRule：根据特定算法中从服务列表中选取一个要访问的服务</a></li>
+        <li><a href="#732如何替换">7.3.2、如何替换</a></li>
+      </ul>
+    </li>
+    <li><a href="#74ribbon负载均衡算法">7.4、Ribbon负载均衡算法</a>
+      <ul>
+        <li><a href="#741原理">7.4.1、原理</a></li>
+        <li><a href="#742手写一个本地负载均衡器">7.4.2、手写一个本地负载均衡器</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#81概述">8.1、概述</a>
+      <ul>
+        <li><a href="#811openfeign是什么">8.1.1、OpenFeign是什么？</a></li>
+        <li><a href="#812能干嘛">8.1.2、能干嘛？</a></li>
+        <li><a href="#813feign和openfeign两者区别">8.1.3、Feign和OpenFeign两者区别</a></li>
+      </ul>
+    </li>
+    <li><a href="#82openfeign使用步骤">8.2、OpenFeign使用步骤</a></li>
+    <li><a href="#83openfeign超时控制">8.3、OpenFeign超时控制</a>
+      <ul>
+        <li><a href="#831超时设置故意设置超时演示出错情况">8.3.1、超时设置，故意设置超时演示出错情况</a></li>
+        <li><a href="#832openfeign默认等待1秒钟超过后报错">8.3.2、OpenFeign默认等待1秒钟，超过后报错</a></li>
+        <li><a href="#833是什么">8.3.3、是什么？</a></li>
+        <li><a href="#834yml文件里需要开启openfeign客户端超时控制">8.3.4、YML文件里需要开启OpenFeign客户端超时控制</a></li>
+      </ul>
+    </li>
+    <li><a href="#84openfeign日志打印功能">8.4、OpenFeign日志打印功能</a>
+      <ul>
+        <li><a href="#841是什么">8.4.1、是什么？</a></li>
+        <li><a href="#842日志级别">8.4.2、日志级别</a></li>
+        <li><a href="#843配置日志bean">8.4.3、配置日志bean</a></li>
+        <li><a href="#834yml文件里需要开启日志的feign客户端">8.3.4、YML文件里需要开启日志的Feign客户端</a></li>
+        <li><a href="#835后台日志查看">8.3.5、后台日志查看</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#91概述">9.1、概述</a>
+      <ul>
+        <li><a href="#911分布式系统面临的问题">9.1.1、分布式系统面临的问题</a></li>
+        <li><a href="#912hystrix是什么">9.1.2、Hystrix是什么？</a></li>
+        <li><a href="#913hystrix能干嘛">9.1.3、Hystrix能干嘛？</a></li>
+        <li><a href="#914官网资料">9.1.4、官网资料</a></li>
+      </ul>
+    </li>
+    <li><a href="#92hystrix重要概念">9.2、Hystrix重要概念</a>
+      <ul>
+        <li><a href="#921服务降级">9.2.1、服务降级</a></li>
+        <li><a href="#922服务熔断">9.2.2、服务熔断</a></li>
+        <li><a href="#923服务限流">9.2.3、服务限流</a></li>
+      </ul>
+    </li>
+    <li><a href="#93hystrix案例">9.3、hystrix案例</a>
+      <ul>
+        <li><a href="#931构建">9.3.1、构建</a></li>
+        <li><a href="#932高并发测试">9.3.2、高并发测试</a></li>
+        <li><a href="#933故障现象和导致原因">9.3.3、故障现象和导致原因</a></li>
+        <li><a href="#934上诉结论">9.3.4、上诉结论</a></li>
+        <li><a href="#935如何解决解决的要求">9.3.5、如何解决？解决的要求</a></li>
+        <li><a href="#936服务降级">9.3.6、服务降级</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="1从22x和h版本开始说起">1、从2.2.x和H版本开始说起</h1>
@@ -4157,7 +4241,7 @@ RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED
 <ol>
 <li>Consul是什么？
 <a href="https://www.consul.io/intro/index.html" target="_blank" rel="noopener noreffer">官网</a></li>
-<li>Consul能干嘛
+<li>Consul能干嘛？
 <ul>
 <li>服务发现：提供HTTP和DNS两种发现方式。</li>
 <li>健康监测：支持多种方式，HTTP、TCP、Docker、Shell脚本定制化监控</li>
@@ -4166,9 +4250,9 @@ RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED
 <li>可视化Web界面</li>
 </ul>
 </li>
-<li>Consul去哪下
+<li>Consul去哪下？
 <a href="https://www.consul.io/downloads.html" target="_blank" rel="noopener noreffer">下载地址</a></li>
-<li>Consul怎么玩
+<li>Consul怎么玩？
 <a href="https://www.springcloud.cc/spring-cloud-consul.html" target="_blank" rel="noopener noreffer">Consul中文文档</a></li>
 </ol>
 <h2 id="62安装并运行consul">6.2、安装并运行Consul</h2>
@@ -4766,6 +4850,2445 @@ RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215844.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215844.png" /></p>
+<h1 id="7ribbon负载均衡服务调用">7、Ribbon负载均衡服务调用</h1>
+<h2 id="71概述">7.1、概述</h2>
+<ol>
+<li>
+<p>Ribbon是什么？</p>
+<ul>
+<li>SpringCloud Ribbon是基于Netflix Ribbon实现的<strong>一套客户端</strong>       <strong>负载均衡的工具</strong>。</li>
+<li>简单的说，Ribbon是Netflix发布的开源项目，主要功能是提供<strong>客户端的软件负载均衡算法和服务调用</strong>。Ribbon客户端组件提供一系列完善的配置项如连接超时，重试等。简单的说，就是在配置文件中列出<code>LoadBalancer（简称LB）</code>后面所有的机器，Ribbon会自动的帮助你基于某种规则（如简单轮询，随机连接等）去连接这些机器。我们很容易使用Ribbon实现自定义的负载均衡算法</li>
+</ul>
+</li>
+<li>
+<p>官网资料</p>
+<p><a href="https://github.com/Netflix/ribbon/wiki/Getting-Started" target="_blank" rel="noopener noreffer">官方资料</a></p>
+<p>Ribbon目前也进入维护模式</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019102224.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019102224.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019102224.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019102224.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019102224.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019102224.png" /></p>
+<p>未来替换方案</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019102313.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019102313.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019102313.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019102313.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019102313.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019102313.png" /></p>
+</li>
+<li>
+<p>能干吗？</p>
+<ul>
+<li>LB(负载均衡)
+<ul>
+<li>集中式LB
+<ul>
+<li>即在服务的消费方和提供方之间使用独立的LB设施(可以是硬件，如F5, 也可以是软件，如nginx), 由该设施负责把访问请求通过某种策略转发至服务的提供方</li>
+</ul>
+</li>
+<li>进程内LB
+<ul>
+<li>将LB逻辑集成到消费方，消费方从服务注册中心获知有哪些地址可用，然后自己再从这些地址中选择出一个合适的服务器</li>
+<li><strong>Ribbon就属于进程内LB</strong>，它只是一个类库，<strong>集成于消费方进程</strong>，消费方通过它来获取到服务提供方的地址</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>前面我们讲解过了80通过轮询负载访问8001/8002</li>
+<li>一句话：<strong>负载均衡+RestTemplate调用</strong></li>
+</ul>
+</li>
+</ol>
+<p><strong>LB负载均衡(Load Balance)是什么</strong></p>
+<p>简单的说就是将用户的请求平摊的分配到多个服务上，从而达到系统的HA（高可用）。
+常见的负载均衡有软件Nginx，LVS，硬件 F5等。</p>
+<p><strong>Ribbon本地负载均衡客户端 VS Nginx服务端负载均衡区别</strong></p>
+<p>Nginx是服务器负载均衡，客户端所有请求都会交给nginx，然后由nginx实现转发请求。即负载均衡是由服务端实现的。</p>
+<p>Ribbon本地负载均衡，在调用微服务接口时候，会在注册中心上获取注册信息服务列表之后缓存到JVM本地，从而在本地实现RPC远程服务调用技术。</p>
+<h2 id="72ribbon负载均衡演示">7.2、Ribbon负载均衡演示</h2>
+<h3 id="721架构说明">7.2.1、架构说明</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104119.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104119.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104119.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104119.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104119.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104119.png" /></p>
+<p>Ribbon在工作时分成两步</p>
+<ul>
+<li>第一步先选择 EurekaServer ,它优先选择在同一个区域内负载较少的server.</li>
+<li>第二步再根据用户指定的策略，在从server取到的服务注册列表中选择一个地址。</li>
+</ul>
+<p>其中Ribbon提供了多种策略：比如轮询、随机和根据响应时间加权。</p>
+<p><code>总结</code>：<strong>Ribbon其实就是一个软负载均衡的客户端组件，他可以和其他所需请求的客户端结合使用，和
+eureka结合只是其中的一个实例。</strong></p>
+<h3 id="722pom">7.2.2、POM</h3>
+<p>之前写<code>cloud-consumer-order80</code>样例时候没有引入spring-cloud-starter-ribbon也可以使用ribbon</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-ribbon<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>猜测spring-cloud-starter-netflix-eureka-client自带了spring-cloud-starter-ribbon引用，</p>
+<p>证明如下： <code>可以看到spring-cloud-starter-netflix-eureka-client 确实引入了Ribbon</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104718.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104718.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104718.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104718.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104718.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104718.png" /></p>
+<h3 id="723二说resttemplate的使用">7.2.3、二说RestTemplate的使用</h3>
+<p><a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html" target="_blank" rel="noopener noreffer">官网</a></p>
+<h4 id="7231getforobject方法getforentity方法">7.2.3.1、getForObject方法/getForEntity方法</h4>
+<p><strong>返回对象为响应体中数据转化成的对象，基本上可以理解为Json</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019105055.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019105055.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019105055.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019105055.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019105055.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019105055.png" /></p>
+<p><strong>返回对象为ResponseEntity对象，包含了响应中的一些重要信息，比如响应头，状态码、响应体等</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110324.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110324.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110324.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110324.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110324.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110324.png" /></p>
+<h4 id="7232postforobjectpostforentity方法">7.2.3.2、postForObject/postForEntity方法</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110504.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110504.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110504.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110504.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110504.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110504.png" /></p>
+<h2 id="73ribbon核心组件irule">7.3、Ribbon核心组件IRule</h2>
+<h3 id="731irule根据特定算法中从服务列表中选取一个要访问的服务">7.3.1、IRule：根据特定算法中从服务列表中选取一个要访问的服务</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110952.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110952.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110952.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110952.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110952.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110952.png" /></p>
+<p><code>com.netflix.loadbalancer.RoundRobinRule</code>：<strong>轮询</strong></p>
+<p><code>com.netflix.loadbalancer.RandomRule</code>：<strong>随机</strong></p>
+<p><code>com.netflix.loadbalancer.RetryRule</code>：<strong>先按照RoundRobinRule的策略获取服务，如果获取服务失败则在指定时间内会进行重试，获取可用的服务</strong></p>
+<p><code>WeightedResponseTimeRule</code>：<strong>对RoundRobinRule的扩展，响应速度越快的实例选择权重越大，越容易被选择</strong></p>
+<p><code>BestAvailableRule</code>：<strong>会先过滤掉由于多次访问故障而处于断路器跳闸状态的服务，然后选择一个并发量最小的服务</strong></p>
+<p><code>AvailabilityFilteringRule</code>：<strong>先过滤掉故障实例，再选择并发较小的实例</strong></p>
+<p><code>ZoneAvoidanceRule</code>：<strong>默认规则,复合判断server所在区域的性能和server的可用性选择服务器</strong></p>
+<h3 id="732如何替换">7.3.2、如何替换</h3>
+<p>1、修改cloud-consumer-order80</p>
+<p>2、注意配置细节</p>
+<p><strong>官方文档明确给出了警告：</strong></p>
+<ul>
+<li>这个自定义配置类不能放在<code>@ComponentScan所扫描的当前包下以及子包下</code>，</li>
+<li>否则我们自定义的这个配置类就会被所有的Ribbon客户端所共享，达不到特殊化定制的目的了。</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019111846.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019111846.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019111846.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019111846.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019111846.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019111846.png" /></p>
+<p>3、新建package ：com.clover.myrule</p>
+<p>4、上面包下新建MySelfRule规则类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.myrule</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.netflix.loadbalancer.IRule</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.netflix.loadbalancer.RandomRule</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MySelfRule</span>
+<span class="o">{</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">IRule</span> <span class="nf">myRule</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">RandomRule</span><span class="o">();</span><span class="c1">//定义为随机
+</span><span class="c1"></span>    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>5、<strong>主启动类添加@RibbonClient</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.myrule.MySelfRule</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.discovery.EnableDiscoveryClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.netflix.eureka.EnableEurekaClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.netflix.ribbon.RibbonClient</span><span class="o">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableEurekaClient</span>
+<span class="nd">@EnableDiscoveryClient</span>
+<span class="nd">@RibbonClient</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#34;CLOUD-PAYMENT-SERVICE&#34;</span><span class="o">,</span><span class="n">configuration</span><span class="o">=</span> <span class="n">MySelfRule</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentMain8001</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">PaymentMain8001</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6、测试：http://localhost/consumer/payment/get/1</p>
+<h2 id="74ribbon负载均衡算法">7.4、Ribbon负载均衡算法</h2>
+<h3 id="741原理">7.4.1、原理</h3>
+<p>负载均衡算法：</p>
+<pre><code>rest接口第几次请求数 % 服务器集群总数量 = 实际调用服务器位置下标  ，每次服务重启动后rest接口计数从1开始。
+</code></pre>
+<p>List&lt;&gt; instances = discoveryClient.getInstances(&ldquo;CLOUD-PAYMENT-SERVICE&rdquo;);</p>
+<p>如：<br>
+List [0] instances = 127.0.0.1:8002
+　List [1] instances = 127.0.0.1:8001</p>
+<p>8001+ 8002 组合成为集群，它们共计2台机器，集群总数为2， 按照轮询算法原理：</p>
+<p>当总请求数为1时： 1 % 2 =1 对应下标位置为1 ，则获得服务地址为127.0.0.1:8001</p>
+<p>当总请求数位2时： 2 % 2 =0 对应下标位置为0 ，则获得服务地址为127.0.0.1:8002</p>
+<p>当总请求数位3时： 3 % 2 =1 对应下标位置为1 ，则获得服务地址为127.0.0.1:8001</p>
+<p>当总请求数位4时： 4 % 2 =0 对应下标位置为0 ，则获得服务地址为127.0.0.1:8002</p>
+<p>如此类推&hellip;&hellip;</p>
+<h3 id="742手写一个本地负载均衡器">7.4.2、手写一个本地负载均衡器</h3>
+<p>1、先启动7001/7002集群</p>
+<p>2、8001/8002微服务改造</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.CommonResult</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.Payment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.service.PaymentService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.ServiceInstance</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.discovery.DiscoveryClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.*</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentController</span> <span class="o">{</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">public</span> <span class="n">PaymentService</span> <span class="n">paymentService</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${server.port}&#34;</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">serverPort</span><span class="o">;</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">DiscoveryClient</span> <span class="n">discoveryClient</span><span class="o">;</span>
+
+    <span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/create&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="n">Payment</span> <span class="n">payment</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">paymentService</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">payment</span><span class="o">);</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;********插入操作结果：&#34;</span><span class="o">+</span> <span class="n">result</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">result</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">){</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">200</span><span class="o">,</span><span class="s">&#34;插入数据成功，serverPort：&#34;</span> <span class="o">+</span> <span class="n">serverPort</span><span class="o">,</span><span class="n">result</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">404</span><span class="o">,</span><span class="s">&#34;插入数据失败&#34;</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/get/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">getPaymentById</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentService</span><span class="o">.</span><span class="na">getPaymentById</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;********查询结果：&#34;</span><span class="o">+</span> <span class="n">payment</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">payment</span> <span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">200</span><span class="o">,</span><span class="s">&#34;查询成功，serverPort：&#34;</span> <span class="o">+</span> <span class="n">serverPort</span><span class="o">,</span><span class="n">payment</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">404</span><span class="o">,</span><span class="s">&#34;查询失败&#34;</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/discovery&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">discovery</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="c1">// 用于查询Eureka上有几个服务
+</span><span class="c1"></span>        <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">services</span> <span class="o">=</span> <span class="n">discoveryClient</span><span class="o">.</span><span class="na">getServices</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">element</span><span class="o">:</span> <span class="n">services</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;***************element:&#34;</span> <span class="o">+</span> <span class="n">element</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 用于查询某一个名称下的实例
+</span><span class="c1"></span>        <span class="n">List</span><span class="o">&lt;</span><span class="n">ServiceInstance</span><span class="o">&gt;</span> <span class="n">instances</span> <span class="o">=</span> <span class="n">discoveryClient</span><span class="o">.</span><span class="na">getInstances</span><span class="o">(</span><span class="s">&#34;CLOUD-PAYMENT-SERVICE&#34;</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">ServiceInstance</span> <span class="n">element</span><span class="o">:</span> <span class="n">instances</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="n">element</span><span class="o">.</span><span class="na">getServiceId</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span> <span class="o">+</span> <span class="n">element</span><span class="o">.</span><span class="na">getHost</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span> <span class="o">+</span> <span class="n">element</span><span class="o">.</span><span class="na">getPort</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span> <span class="o">+</span> <span class="n">element</span><span class="o">.</span><span class="na">getUri</span><span class="o">());</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">discoveryClient</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/lb&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPaymentLB</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="n">serverPort</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.CommonResult</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.Payment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.service.PaymentService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.*</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentController</span> <span class="o">{</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">public</span> <span class="n">PaymentService</span> <span class="n">paymentService</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${server.port}&#34;</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">serverPort</span><span class="o">;</span>
+
+    <span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/create&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="n">Payment</span> <span class="n">payment</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">paymentService</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">payment</span><span class="o">);</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;********插入操作结果：&#34;</span><span class="o">+</span> <span class="n">result</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">result</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">){</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">200</span><span class="o">,</span><span class="s">&#34;插入数据成功，serverPort：&#34;</span> <span class="o">+</span> <span class="n">serverPort</span><span class="o">,</span><span class="n">result</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">404</span><span class="o">,</span><span class="s">&#34;插入数据失败&#34;</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/get/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">getPaymentById</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentService</span><span class="o">.</span><span class="na">getPaymentById</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;********查询结果：&#34;</span><span class="o">+</span> <span class="n">payment</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">payment</span> <span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">200</span><span class="o">,</span><span class="s">&#34;查询成功，serverPort：&#34;</span> <span class="o">+</span> <span class="n">serverPort</span><span class="o">,</span><span class="n">payment</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">404</span><span class="o">,</span><span class="s">&#34;查询失败&#34;</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/lb&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPaymentLB</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="n">serverPort</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、80订单微服务改造</p>
+<ol>
+<li>ApplicationContextBean 去掉<code>注解@LoadBalanced</code></li>
+<li>编写<code> LoadBalancer 接口</code></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">com</span><span class="p">.</span><span class="nx">clover</span><span class="p">.</span><span class="nx">springcloud</span><span class="p">.</span><span class="nx">lb</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nx">org</span><span class="p">.</span><span class="nx">springframework</span><span class="p">.</span><span class="nx">cloud</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nx">ServiceInstance</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nx">java</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">List</span><span class="p">;</span>
+
+<span class="nx">public</span> <span class="kd">interface</span> <span class="nx">LoadBalancer</span> <span class="p">{</span>
+    <span class="nx">ServiceInstance</span> <span class="nf">instences</span><span class="p">(</span><span class="nx">List</span><span class="p">&lt;</span><span class="nx">ServiceInstance</span><span class="p">&gt;</span> <span class="nx">serviceInstances</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>实现 LoadBalancer 接口的实现类</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.lb</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.ServiceInstance</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.atomic.AtomicInteger</span><span class="o">;</span>
+
+<span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyLB</span> <span class="kd">implements</span> <span class="n">LoadBalancer</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">AtomicInteger</span> <span class="n">atomicInteger</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AtomicInteger</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+
+    <span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span> <span class="nf">getAndIncrement</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">current</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">next</span><span class="o">;</span>
+
+        <span class="cm">/*
+</span><span class="cm">         * CAS是Compare And Set的一个简称，如下理解
+</span><span class="cm">         * 1、一致当前内存里面的值current和预期要修改成的值next传入
+</span><span class="cm">         * 2、内存中 AtomicInteger 对象地址对应的真实值(因为有可能被修改)real与current对比，
+</span><span class="cm">         *    相等标识real违被修改过，是&#34;安全&#34;的，将next赋给real结束然后返回
+</span><span class="cm">         *    不相等说明real以及被修改，结束并重新执行1知道修改成功
+</span><span class="cm">         * CAS相比 Synchronized，避免了锁的使用，总体性能比 Synchronized 高很多
+</span><span class="cm">         */</span>
+        <span class="k">do</span><span class="o">{</span>
+            <span class="c1">// 获取当前值
+</span><span class="c1"></span>            <span class="n">current</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">atomicInteger</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+            <span class="c1">// 设置期望值
+</span><span class="c1"></span>            <span class="n">next</span> <span class="o">=</span> <span class="n">current</span> <span class="o">&gt;=</span> <span class="n">2147483647</span> <span class="o">?</span> <span class="n">0</span> <span class="o">:</span> <span class="n">current</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
+        <span class="o">}</span><span class="k">while</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="na">atomicInteger</span><span class="o">.</span><span class="na">compareAndSet</span><span class="o">(</span><span class="n">current</span><span class="o">,</span><span class="n">next</span><span class="o">));</span><span class="c1">//调用Native方法compareAndSet，执行CAS操作
+</span><span class="c1"></span>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;************第几次出现：next&#34;</span> <span class="o">+</span> <span class="n">next</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">next</span><span class="o">;</span>
+    <span class="o">}</span>
+
+
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">ServiceInstance</span> <span class="nf">instences</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">ServiceInstance</span><span class="o">&gt;</span> <span class="n">serviceInstances</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">getAndIncrement</span><span class="o">()</span> <span class="o">%</span> <span class="n">serviceInstances</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">serviceInstances</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">index</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>修改 OrderController</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.CommonResult</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.Payment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.lb.LoadBalancer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.ServiceInstance</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.discovery.DiscoveryClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.http.ResponseEntity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.client.RestTemplate</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URI</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderController</span> <span class="o">{</span>
+    <span class="c1">//public static final String Payment_URL = &#34;http://localhost:8001&#34;;
+</span><span class="c1"></span>
+    <span class="c1">// 通过在eureka上注册过的微服务名称调用
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">Payment_URL</span> <span class="o">=</span> <span class="s">&#34;http://CLOUD-PAYMENT-SERVICE&#34;</span><span class="o">;</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">RestTemplate</span> <span class="n">restTemplate</span><span class="o">;</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">DiscoveryClient</span> <span class="n">discoveryClient</span><span class="o">;</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">LoadBalancer</span> <span class="n">loadBalancer</span><span class="o">;</span>
+
+    <span class="c1">//客户端用浏览器是get请求，但是底层实质发送post调用服务端8001
+</span><span class="c1"></span>    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/consumer/payment/create&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">create</span><span class="o">(</span><span class="n">Payment</span> <span class="n">payment</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">postForObject</span><span class="o">(</span><span class="n">Payment_URL</span> <span class="o">+</span> <span class="s">&#34;/payment/create&#34;</span><span class="o">,</span><span class="n">payment</span><span class="o">,</span><span class="n">CommonResult</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="c1">// return restTemplate.postForEntity(Payment_URL + &#34;/payment/create&#34;,payment,CommonResult.class).getBody();
+</span><span class="c1"></span>    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/consumer/payment/get/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">getPaymentById</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="n">Payment_URL</span> <span class="o">+</span> <span class="s">&#34;/payment/get/&#34;</span> <span class="o">+</span> <span class="n">id</span><span class="o">,</span><span class="n">CommonResult</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/consumer/payment/getForEntity/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">getPayment</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">ResponseEntity</span><span class="o">&lt;</span><span class="n">CommonResult</span><span class="o">&gt;</span> <span class="n">entity</span> <span class="o">=</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForEntity</span><span class="o">(</span><span class="n">Payment_URL</span> <span class="o">+</span> <span class="s">&#34;/payment/get/&#34;</span> <span class="o">+</span> <span class="n">id</span><span class="o">,</span> <span class="n">CommonResult</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;-----------------&#34;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">entity</span><span class="o">.</span><span class="na">getHeaders</span><span class="o">());</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">entity</span><span class="o">.</span><span class="na">getBody</span><span class="o">());</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">entity</span><span class="o">.</span><span class="na">getStatusCode</span><span class="o">().</span><span class="na">is2xxSuccessful</span><span class="o">()){</span>
+            <span class="k">return</span> <span class="n">entity</span><span class="o">.</span><span class="na">getBody</span><span class="o">();</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">444</span><span class="o">,</span><span class="s">&#34;操作失败&#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/consumer/payment/lb&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPaymentLB</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">ServiceInstance</span><span class="o">&gt;</span> <span class="n">instances</span> <span class="o">=</span> <span class="n">discoveryClient</span><span class="o">.</span><span class="na">getInstances</span><span class="o">(</span><span class="s">&#34;CLOUD-PAYMENT-SERVICE&#34;</span><span class="o">);</span>
+
+        <span class="k">if</span><span class="o">(</span><span class="n">instances</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">instances</span><span class="o">.</span><span class="na">size</span><span class="o">()&lt;=</span><span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">ServiceInstance</span> <span class="n">serviceInstance</span> <span class="o">=</span> <span class="n">loadBalancer</span><span class="o">.</span><span class="na">instences</span><span class="o">(</span><span class="n">instances</span><span class="o">);</span>
+        <span class="n">URI</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">serviceInstance</span><span class="o">.</span><span class="na">getUri</span><span class="o">();</span>
+
+        <span class="k">return</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="n">uri</span><span class="o">+</span><span class="s">&#34;/payment/lb&#34;</span><span class="o">,</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="5">
+<li>
+<p>测试：http://localhost/consumer/payment/lb</p>
+<pre><code> 注意：在这个手写负载均衡中使用到了一个方法CompareAndSet，这个是AtomicInteger类compareAndSet
+ AtomicInteger类compareAndSet通过原子操作实现了CAS操作，最底层基于汇编语言实现
+ CAS是Compare And Set的一个简称，如下理解：
+ 1，已知当前内存里面的值current和预期要修改成的值new传入
+ 2，内存中AtomicInteger对象地址对应的真实值(因为有可能别修改)real与current对比，
+ 相等表示real未被修改过，是“安全”的，将new赋给real结束然后返回；
+ 不相等说明real已经被修改，结束并重新执行1直到修改成功
+</code></pre>
+</li>
+</ol>
+<p> </p>
+<h1 id="8openfeign服务接口调用">8、OpenFeign服务接口调用</h1>
+<h2 id="81概述">8.1、概述</h2>
+<h3 id="811openfeign是什么">8.1.1、OpenFeign是什么？</h3>
+<ol>
+<li>Feign是一个声明式的Web服务客户端，让编写Web服务客户端变得非常容易，<strong>只需创建一个接口并在接口上添加注解即可</strong></li>
+<li><a href="https://github.com/spring-cloud/spring-cloud-openfeign" target="_blank" rel="noopener noreffer">源码地址</a></li>
+</ol>
+<p><a href="https://cloud.spring.io/spring-cloud-static/Hoxton.SR1/reference/htmlsingle/#spring-cloud-openfeign" target="_blank" rel="noopener noreffer">官网解释</a></p>
+<p>Feign是一个声明式WebService客户端。使用Feign能让编写WebService客户端更加简单。
+它的使用方法是<strong>定义一个服务接口然后在上面添加注解</strong>。Feign也支持可拔插式的编码器和解码器。SpringCloud对Feign进行了封装，使其支持了Spring MVC标准注解和HttpMessageConverters。<strong>Feign可以与Eureka和Ribbon组合使用以支持负载均衡</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171123.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171123.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171123.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171123.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171123.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171123.png" /></p>
+<h3 id="812能干嘛">8.1.2、能干嘛？</h3>
+<p>Feign旨在使编写Java Http客户端变得更容易。</p>
+<p>前面在使用Ribbon+RestTemplate时，利用 RestTemplate 对http请求的封装处理，形成了一套模版化的调用方法。但是在实际开发中，由于对服务依赖的调用可能不止一处，<strong>往往一个接口会被多处调用，所以通常都会针对每个微服务自行封装一些客户端类来包装这些依赖服务的调用</strong>。所以，Feign在此基础上做了进一步封装，由他来帮助我们定义和实现依赖服务接口的定义。在Feign的实现下，<strong>我们只需创建一个接口并使用注解的方式来配置它(以前是Dao接口上面标注Mapper注解,现在是一个微服务接口上面标注一个Feign注解即可)</strong>，即可完成对服务提供方的接口绑定，简化了Spring cloud 使用Ribbon时，自动封装服务调用客户端的开发量。</p>
+<p><code>Feign集成了Ribbon</code></p>
+<p>利用Ribbon维护了Payment的服务列表信息，并且通过轮询实现了客户端的负载均衡。而与Ribbon不同的是，<strong>通过feign只需要定义服务绑定接口且以声明式的方法</strong>，优雅而简单的实现了服务调用</p>
+<h3 id="813feign和openfeign两者区别">8.1.3、Feign和OpenFeign两者区别</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171433.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171433.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171433.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171433.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171433.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171433.png" /></p>
+<h2 id="82openfeign使用步骤">8.2、OpenFeign使用步骤</h2>
+<p>1、接口 + 注解：<strong>微服务调用接口+@FeignClient</strong></p>
+<p>2、新建 cloud-consumer-feign-order80</p>
+<ul>
+<li>Feign在消费端使用</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019174703.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019174703.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019174703.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019174703.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019174703.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019174703.png" /></p>
+<p>3、修改POM</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>SpringCloud<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+    <span class="nt">&lt;artifactId&gt;</span>cloud-consumer-feign-order80<span class="nt">&lt;/artifactId&gt;</span>
+
+
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="c">&lt;!--openfeign--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-openfeign<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--eureka client--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!-- 引入自己定义的api通用包，可以使用Payment支付Entity --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>cloud-api-commons<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>${project.version}<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--web--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+
+
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>4、编写主启动类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.openfeign.EnableFeignClients</span><span class="o">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableFeignClients</span> <span class="c1">// 开启FeignClients注解的使用
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderFeignMain80</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">OrderFeignMain80</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>5、业务类</p>
+<ul>
+<li>业务逻辑接口+<strong>@FeignClient配置调用provider服务</strong></li>
+<li>新建PaymentFeignService接口并新增注解@FeignClient</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.service</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.CommonResult</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.Payment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.openfeign.FeignClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
+
+<span class="nd">@FeignClient</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;CLOUD-PAYMENT-SERVICE&#34;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">PaymentFeignService</span> <span class="o">{</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/get/{id}&#34;</span><span class="o">)</span>
+    <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">getPaymentById</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>控制层Controller</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.CommonResult</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.Payment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.service.PaymentFeignService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderFeignController</span>
+<span class="o">{</span>
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">PaymentFeignService</span> <span class="n">paymentFeignService</span><span class="o">;</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/consumer/payment/get/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">getPaymentById</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="n">paymentFeignService</span><span class="o">.</span><span class="na">getPaymentById</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6、测试</p>
+<ul>
+<li>先启动2个eureka集群7001/7002</li>
+<li>再启动2个微服务8001/8002</li>
+<li>启动OpenFeign</li>
+<li>http://localhost/consumer/payment/get/1</li>
+<li><strong>Feign自带负载均衡配置项</strong></li>
+</ul>
+<p>7、总结</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019175149.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019175149.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019175149.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019175149.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019175149.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019175149.png" /></p>
+<h2 id="83openfeign超时控制">8.3、OpenFeign超时控制</h2>
+<h3 id="831超时设置故意设置超时演示出错情况">8.3.1、超时设置，故意设置超时演示出错情况</h3>
+<ul>
+<li>服务提供方8001故意写暂停程序</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.CommonResult</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.Payment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.service.PaymentService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.ServiceInstance</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.discovery.DiscoveryClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.*</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.TimeUnit</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentController</span> <span class="o">{</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">public</span> <span class="n">PaymentService</span> <span class="n">paymentService</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${server.port}&#34;</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">serverPort</span><span class="o">;</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">DiscoveryClient</span> <span class="n">discoveryClient</span><span class="o">;</span>
+
+    <span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/create&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="n">Payment</span> <span class="n">payment</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">paymentService</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">payment</span><span class="o">);</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;********插入操作结果：&#34;</span><span class="o">+</span> <span class="n">result</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">result</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">){</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">200</span><span class="o">,</span><span class="s">&#34;插入数据成功，serverPort：&#34;</span> <span class="o">+</span> <span class="n">serverPort</span><span class="o">,</span><span class="n">result</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">404</span><span class="o">,</span><span class="s">&#34;插入数据失败&#34;</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/get/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">getPaymentById</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentService</span><span class="o">.</span><span class="na">getPaymentById</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;********查询结果：&#34;</span><span class="o">+</span> <span class="n">payment</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">payment</span> <span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">200</span><span class="o">,</span><span class="s">&#34;查询成功，serverPort：&#34;</span> <span class="o">+</span> <span class="n">serverPort</span><span class="o">,</span><span class="n">payment</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">404</span><span class="o">,</span><span class="s">&#34;查询失败&#34;</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/discovery&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">discovery</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="c1">// 用于查询Eureka上有几个服务
+</span><span class="c1"></span>        <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">services</span> <span class="o">=</span> <span class="n">discoveryClient</span><span class="o">.</span><span class="na">getServices</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">element</span><span class="o">:</span> <span class="n">services</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;***************element:&#34;</span> <span class="o">+</span> <span class="n">element</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 用于查询某一个名称下的实例
+</span><span class="c1"></span>        <span class="n">List</span><span class="o">&lt;</span><span class="n">ServiceInstance</span><span class="o">&gt;</span> <span class="n">instances</span> <span class="o">=</span> <span class="n">discoveryClient</span><span class="o">.</span><span class="na">getInstances</span><span class="o">(</span><span class="s">&#34;CLOUD-PAYMENT-SERVICE&#34;</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">ServiceInstance</span> <span class="n">element</span><span class="o">:</span> <span class="n">instances</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="n">element</span><span class="o">.</span><span class="na">getServiceId</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span> <span class="o">+</span> <span class="n">element</span><span class="o">.</span><span class="na">getHost</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span> <span class="o">+</span> <span class="n">element</span><span class="o">.</span><span class="na">getPort</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span> <span class="o">+</span> <span class="n">element</span><span class="o">.</span><span class="na">getUri</span><span class="o">());</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">discoveryClient</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/lb&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPaymentLB</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="n">serverPort</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/feign/timeout&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentFeignTimeOut</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;*****paymentFeignTimeOut from port: &#34;</span><span class="o">+</span><span class="n">serverPort</span><span class="o">);</span>
+        <span class="c1">//暂停几秒钟线程
+</span><span class="c1"></span>        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">3</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">serverPort</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>服务消费方80添加超时方法 PaymentFeignService</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.service</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.CommonResult</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.Payment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.openfeign.FeignClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
+
+<span class="nd">@FeignClient</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;CLOUD-PAYMENT-SERVICE&#34;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">PaymentFeignService</span> <span class="o">{</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/get/{id}&#34;</span><span class="o">)</span>
+    <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">getPaymentById</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">);</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/feign/timeout&#34;</span><span class="o">)</span>
+    <span class="n">String</span> <span class="nf">paymentFeignTimeOut</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>服务消费方80添加超时方法OrderFeignController</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.CommonResult</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.Payment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.service.PaymentFeignService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderFeignController</span>
+<span class="o">{</span>
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">PaymentFeignService</span> <span class="n">paymentFeignService</span><span class="o">;</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/consumer/payment/get/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">getPaymentById</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="n">paymentFeignService</span><span class="o">.</span><span class="na">getPaymentById</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/feign/timeout&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentFeignTimeOut</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="n">paymentFeignService</span><span class="o">.</span><span class="na">paymentFeignTimeOut</span><span class="o">();</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>测试
+<ul>
+<li>http://localhost/consumer/payment/feign/timeout</li>
+<li>错误页面</li>
+</ul>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019182910.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019182910.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019182910.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019182910.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019182910.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019182910.png" /></p>
+<h3 id="832openfeign默认等待1秒钟超过后报错">8.3.2、OpenFeign默认等待1秒钟，超过后报错</h3>
+<h3 id="833是什么">8.3.3、是什么？</h3>
+<p><strong>Feign客户端默认只等待一秒钟</strong>，但是服务端处理需要超过1秒钟，导致Feign客户端不想等待了，直接返回报错。
+为了避免这样的情况，有时候我们需要设置Feign客户端的超时控制。</p>
+<p>yml文件中开启配置，<code>OpenFeign默认支持Ribbon</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019183128.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019183128.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019183128.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019183128.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019183128.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019183128.png" /></p>
+<h3 id="834yml文件里需要开启openfeign客户端超时控制">8.3.4、YML文件里需要开启OpenFeign客户端超时控制</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">eureka</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">client</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">register-with-eureka</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="w">    </span><span class="nt">service-url</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">defaultZone</span><span class="p">:</span><span class="w"> </span><span class="l">http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#设置feign客户端超时时间(OpenFeign默认支持ribbon)</span><span class="w">
+</span><span class="w"></span><span class="nt">ribbon</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="c">#指的是建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间</span><span class="w">
+</span><span class="w">  </span><span class="nt">ReadTimeout</span><span class="p">:</span><span class="w"> </span><span class="m">5000</span><span class="w">
+</span><span class="w">  </span><span class="c">#指的是建立连接后从服务器读取到可用资源所用的时间</span><span class="w">
+</span><span class="w">  </span><span class="nt">ConnectTimeout</span><span class="p">:</span><span class="w"> </span><span class="m">5000</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="84openfeign日志打印功能">8.4、OpenFeign日志打印功能</h2>
+<h3 id="841是什么">8.4.1、是什么？</h3>
+<p>Feign 提供了日志打印功能，我们可以通过配置来调整日志级别，从而了解 Feign 中 Http 请求的细节。</p>
+<p>说白了就是<strong>对Feign接口的调用情况进行监控和输出</strong></p>
+<h3 id="842日志级别">8.4.2、日志级别</h3>
+<ul>
+<li>NONE：默认的，不显示任何日志；</li>
+<li>BASIC：仅记录请求方法、URL、响应状态码及执行时间；</li>
+<li>HEADERS：除了 BASIC 中定义的信息之外，还有请求和响应的头信息；</li>
+<li>FULL：除了 HEADERS 中定义的信息之外，还有请求和响应的正文及元数据。</li>
+</ul>
+<h3 id="843配置日志bean">8.4.3、配置日志bean</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.config</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">feign.Logger</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FeignConfig</span> <span class="o">{</span>
+
+    <span class="nd">@Bean</span>
+    <span class="n">Logger</span><span class="o">.</span><span class="na">Level</span> <span class="nf">feignLoggerLevel</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="n">Logger</span><span class="o">.</span><span class="na">Level</span><span class="o">.</span><span class="na">FULL</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="834yml文件里需要开启日志的feign客户端">8.3.4、YML文件里需要开启日志的Feign客户端</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">eureka</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">client</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">register-with-eureka</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="w">    </span><span class="nt">service-url</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">defaultZone</span><span class="p">:</span><span class="w"> </span><span class="l">http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#设置feign客户端超时时间(OpenFeign默认支持ribbon)</span><span class="w">
+</span><span class="w"></span><span class="nt">ribbon</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="c">#指的是建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间</span><span class="w">
+</span><span class="w">  </span><span class="nt">ReadTimeout</span><span class="p">:</span><span class="w"> </span><span class="m">5000</span><span class="w">
+</span><span class="w">  </span><span class="c">#指的是建立连接后从服务器读取到可用资源所用的时间</span><span class="w">
+</span><span class="w">  </span><span class="nt">ConnectTimeout</span><span class="p">:</span><span class="w"> </span><span class="m">5000</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">logging</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="c"># feign日志以什么级别监控哪个接口</span><span class="w">
+</span><span class="w">    </span><span class="nt">com.clover.springcloud.service.PaymentFeignService</span><span class="p">:</span><span class="w"> </span><span class="l">debug</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="835后台日志查看">8.3.5、后台日志查看</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019184913.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019184913.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019184913.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019184913.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019184913.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019184913.png" /></p>
+<h1 id="9hystrix断路器">9、Hystrix断路器</h1>
+<h2 id="91概述">9.1、概述</h2>
+<h3 id="911分布式系统面临的问题">9.1.1、分布式系统面临的问题</h3>
+<p><strong>复杂分布式体系结构中的应用程序有数十个依赖关系，每个依赖关系在某些时候将不可避免地失败</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019200403.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019200403.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019200403.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019200403.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019200403.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019200403.png" /></p>
+<p>服务雪崩</p>
+<p>多个微服务之间调用的时候，假设微服务A调用微服务B和微服务C，微服务B和微服务C又调用其它的微服务，这就是所谓的<strong>扇出</strong>。如果扇出的链路上某个微服务的调用响应时间过长或者不可用，对微服务A的调用就会占用越来越多的系统资源，进而引起系统崩溃，所谓的“雪崩效应”.</p>
+<p>对于高流量的应用来说，单一的后端依赖可能会导致所有服务器上的所有资源都在几秒钟内饱和。比失败更糟糕的是，这些应用程序还可能导致服务之间的延迟增加，备份队列，线程和其他系统资源紧张，导致整个系统发生更多的级联故障。这些都表示需要对故障和延迟进行隔离和管理，以便单个依赖关系的失败，不能取消整个应用程序或系统。
+所以，通常当你发现一个模块下的某个实例失败后，这时候这个模块依然还会接收流量，然后这个有问题的模块还调用了其他的模块，这样就会<strong>发生级联故障，或者叫雪崩</strong>。</p>
+<h3 id="912hystrix是什么">9.1.2、Hystrix是什么？</h3>
+<p>Hystrix是一个用于处理分布式系统的<strong>延迟</strong>和<strong>容错</strong>的开源库，在分布式系统里，许多依赖不可避免的会调用失败，比如超时、异常等，Hystrix能够保证在一个依赖出问题的情况下，<strong>不会导致整体服务失败，避免级联故障，以提高分布式系统的弹性</strong>。</p>
+<p>“断路器”本身是一种开关装置，当某个服务单元发生故障之后，通过断路器的故障监控（类似熔断保险丝），<strong>向调用方返回一个符合预期的、可处理的备选响应（FallBack），而不是长时间的等待或者抛出调用方无法处理的异常</strong>，这样就保证了服务调用方的线程不会被长时间、不必要地占用，从而避免了故障在分布式系统中的蔓延，乃至雪崩。</p>
+<h3 id="913hystrix能干嘛">9.1.3、Hystrix能干嘛？</h3>
+<ul>
+<li>服务降级</li>
+<li>服务熔断</li>
+<li>接近实时的监控</li>
+</ul>
+<h3 id="914官网资料">9.1.4、官网资料</h3>
+<p><a href="https://github.com/Netflix/Hystrix/wiki/How-To-Use" target="_blank" rel="noopener noreffer">官方资料</a></p>
+<h2 id="92hystrix重要概念">9.2、Hystrix重要概念</h2>
+<h3 id="921服务降级">9.2.1、服务降级</h3>
+<ul>
+<li>服务器忙，请稍后再试，不让客户端等待并立刻返回一个友好提示，fallback</li>
+<li>哪些情况会触发降级
+<ul>
+<li>程序运行异常</li>
+<li>超时</li>
+<li>服务熔断触发降级</li>
+<li>线程池/信号量打满也会导致服务降级</li>
+</ul>
+</li>
+</ul>
+<h3 id="922服务熔断">9.2.2、服务熔断</h3>
+<ul>
+<li>类比保险丝达到最大服务访问后，直接拒绝访问，拉闸限电，然后调用服务降级的方法并返回友好提示</li>
+<li>就是保险丝
+<ul>
+<li>服务的降级-&gt;进而熔断-&gt;恢复调用链路</li>
+</ul>
+</li>
+</ul>
+<h3 id="923服务限流">9.2.3、服务限流</h3>
+<ul>
+<li>服务限流
+<ul>
+<li>秒杀高并发等操作，严禁一窝蜂的过来拥挤，大家排队，一秒钟N个，有序进行</li>
+</ul>
+</li>
+</ul>
+<h2 id="93hystrix案例">9.3、hystrix案例</h2>
+<h3 id="931构建">9.3.1、构建</h3>
+<p>1、新建 cloud-provider-hystrix-payment8001</p>
+<p>2、修改POM</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>SpringCloud<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+    <span class="nt">&lt;artifactId&gt;</span>cloud-provider-hystrix-payment8001<span class="nt">&lt;/artifactId&gt;</span>
+
+
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="c">&lt;!--hystrix--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-hystrix<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--eureka client--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--web--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span><span class="c">&lt;!-- 引入自己定义的api通用包，可以使用Payment支付Entity --&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>cloud-api-commons<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>${project.version}<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、编写YML</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8001</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-provider-hystrix-payment</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">eureka</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">client</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">register-with-eureka</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="nt">fetch-registry</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="nt">service-url</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="c">#defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka</span><span class="w">
+</span><span class="w">      </span><span class="nt">defaultZone</span><span class="p">:</span><span class="w"> </span><span class="l">http://eureka7001.com:7001/eureka</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>4、编写主启动类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.netflix.eureka.EnableEurekaClient</span><span class="o">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableEurekaClient</span><span class="c1">//本服务启动后会自动注册进eureka服务中
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentHystrixMain8001</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">PaymentHystrixMain8001</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>5、编写业务类</p>
+<ul>
+<li>service</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.service</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Service</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.concurrent.TimeUnit</span><span class="o">;</span>
+
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentService</span> <span class="o">{</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 正常访问，一切OK
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentInfo_OK</span><span class="o">(</span><span class="n">Integer</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&#34;线程池：&#34;</span> <span class="o">+</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;paymentInfo_OK,id:&#34;</span> <span class="o">+</span> <span class="n">id</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/*
+</span><span class="cm">     * 超时访问，演示降级
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentInfo_Timeout</span><span class="o">(</span><span class="n">Integer</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">timeoutNumber</span> <span class="o">=</span> <span class="n">3</span><span class="o">;</span>
+        <span class="c1">//暂停几秒钟线程
+</span><span class="c1"></span>        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">timeoutNumber</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="s">&#34;线程池：&#34;</span> <span class="o">+</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;paymentInfo_Timeout,id:&#34;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span> <span class="s">&#34;耗费时间：&#34;</span> <span class="o">+</span> <span class="n">timeoutNumber</span> <span class="o">+</span> <span class="s">&#34;秒&#34;</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>controller</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.service.PaymentService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentController</span> <span class="o">{</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">PaymentService</span> <span class="n">paymentService</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${server.port}&#34;</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">serverPort</span><span class="o">;</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/hystrix/ok/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentInfo_OK</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">paymentService</span><span class="o">.</span><span class="na">paymentInfo_OK</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;*********result:&#34;</span> <span class="o">+</span> <span class="n">result</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/hystrix/timeout/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentInfo_Timeout</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">paymentService</span><span class="o">.</span><span class="na">paymentInfo_Timeout</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;*********result:&#34;</span> <span class="o">+</span> <span class="n">result</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6、正常测试</p>
+<ul>
+<li>启动eureka7001</li>
+<li>启动cloud-provider-hystrix-payment8001</li>
+<li>访问
+<ul>
+<li>success的方法：http://localhost:8001/payment/hystrix/ok/1</li>
+<li>每次调用耗费3秒钟：http://localhost:8001/payment/hystrix/timeout/1</li>
+</ul>
+</li>
+<li>上述module均OK
+<ul>
+<li>以上述为根基平台，从正确-&gt;错误-&gt;降级熔断-&gt;恢复</li>
+</ul>
+</li>
+</ul>
+<h3 id="932高并发测试">9.3.2、高并发测试</h3>
+<p>1、Jmeter压测测试</p>
+<ul>
+<li>开启Jmeter，来20000个并发压死8001，20000个请求都去访问paymentInfo_TimeOut服务</li>
+<li>再来一个访问：http://localhost:8001/payment/hystrix/ok/1</li>
+<li>看演示结果
+<ul>
+<li>两个都在自己转圈圈</li>
+<li>为什么会被卡死
+<ul>
+<li>tomcat的默认的工作线程数被打满 了，没有多余的线程来分解压力和处理</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>2、Jmeter压测结论</p>
+<p>上面还是服务<strong>提供者8001自己测试</strong>，假如此时外部的消费者80也来访问，那<strong>消费者</strong>只能干等，最终导致消费端80不满意，服务端8001直接被拖死</p>
+<p>3、看热闹不嫌弃事大，80新建加入</p>
+<ol>
+<li>新建 cloud-consumer-feign-hystrix-order80</li>
+<li>修改POM</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>SpringCloud<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+    <span class="nt">&lt;artifactId&gt;</span>cloud-consumer-feign-hystrix-order80<span class="nt">&lt;/artifactId&gt;</span>
+
+
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="c">&lt;!--openfeign--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-openfeign<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--hystrix--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-hystrix<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--eureka client--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!-- 引入自己定义的api通用包，可以使用Payment支付Entity --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>cloud-api-commons<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>${project.version}<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--web--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--一般基础通用配置--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+
+
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>编写YML</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">eureka</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">client</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">register-with-eureka</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="w">    </span><span class="nt">service-url</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">defaultZone</span><span class="p">:</span><span class="w"> </span><span class="l">http://eureka7001.com:7001/eureka/</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>编写主启动类</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.openfeign.EnableFeignClients</span><span class="o">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableFeignClients</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderHystrixMain80</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">OrderHystrixMain80</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="5">
+<li>编写业务类</li>
+</ol>
+<ul>
+<li>PaymentHystrixService</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.service</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.openfeign.FeignClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
+
+<span class="nd">@Component</span>
+<span class="nd">@FeignClient</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;CLOUD-PROVIDER-HYSTRIX-PAYMENT&#34;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">PaymentHystrixService</span> <span class="o">{</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/payment/hystrix/ok/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentInfo_OK</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">);</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/payment/hystrix/timeout/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentInfo_Timeout</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">);</span>
+<span class="o">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>OrderHystirxController</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.clover.springcloud.service.PaymentHystrixService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderHystirxController</span> <span class="o">{</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">PaymentHystrixService</span> <span class="n">paymentHystrixService</span><span class="o">;</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/consumer/payment/hystrix/ok/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentInfo_OK</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="n">paymentHystrixService</span><span class="o">.</span><span class="na">paymentInfo_OK</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/consumer/payment/hystrix/timeout/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentInfo_Timeout</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="n">paymentHystrixService</span><span class="o">.</span><span class="na">paymentInfo_Timeout</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="6">
+<li>正常测试：http://localhost/consumer/payment/hystrix/ok/1</li>
+<li>高并发测试
+<ol>
+<li>2W个线程压8001</li>
+<li>消费端80微服务再去访问正常的Ok微服务8001地址</li>
+<li>http://localhost/consumer/payment/hystrix/ok/1</li>
+<li>消费者80
+<ol>
+<li>要么转圈圈等待</li>
+<li>要么消费端报超时错误</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019212820.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019212820.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019212820.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019212820.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019212820.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019212820.png" /></p>
+<h3 id="933故障现象和导致原因">9.3.3、故障现象和导致原因</h3>
+<ol>
+<li>8001同一层次的其它接口服务被困死，<strong>因为tomcat线程池里面的工作线程已经被挤占完毕</strong></li>
+<li>80此时调用8001，客户端访问响应缓慢，转圈圈</li>
+</ol>
+<h3 id="934上诉结论">9.3.4、上诉结论</h3>
+<p>正因为有上述故障或不佳表现才有我们的<code>降级/容错/限流等</code>技术诞生</p>
+<h3 id="935如何解决解决的要求">9.3.5、如何解决？解决的要求</h3>
+<ol>
+<li>超时导致服务器变慢(转圈)	超时不再等待</li>
+<li>出错(宕机或程序运行出错)	出错要有兜底</li>
+<li>解决
+<ol>
+<li>对方服务(8001)超时了，调用者(80)不能一直卡死等待，必须有服务降级</li>
+<li>对方服务(8001)down机了，调用者(80)不能一直卡死等待，必须有服务降级</li>
+<li>对方服务(8001)OK，调用者(80)自己出故障或有自我要求（自己的等待时间小于服务提供者），自己处理降级</li>
+</ol>
+</li>
+</ol>
+<h3 id="936服务降级">9.3.6、服务降级</h3>
+<p>1、降级配置  <strong>@HystrixCommand</strong></p>
+<p>2、8001先从自身找问题</p>
+<ul>
+<li>设置自身调用超时时间的峰值，峰值内可以正常运行，超过了需要有兜底的方法处理，作服务降级fallback</li>
+</ul>
+<p>3、8001fallback</p>
+<ul>
+<li>
+<p>业务类启用</p>
+<ul>
+<li><strong>@HystrixCommand</strong>报异常后如何处理
+<ul>
+<li>一旦调用服务方法失败并抛出了错误信息后，会自动调用<code>@HystrixCommand</code>标注好的<code>fallbackMethod</code>调用类中的指定方法</li>
+</ul>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019215259.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019215259.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019215259.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019215259.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019215259.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019215259.png" /></p>
+<p>上图故意制造两个异常：</p>
+<p>1  int age = 10/0; 计算异常</p>
+<p>2  我们能接受3秒钟，它运行5秒钟，超时异常</p>
+<p><strong>当前服务不可用了，做服务降级，兜底的方案都是</strong><code>paymentInfo_TimeOutHandler</code></p>
+</li>
+</ul>
+<p>4、主启动类激活</p>
+<ul>
+<li><strong>添加新注解@EnableCircuitBreaker</strong></li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
