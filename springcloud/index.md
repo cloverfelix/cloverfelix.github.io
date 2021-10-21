@@ -3937,5 +3937,1853 @@ feign:
 - 修改业务类
 
 ~~~java 
+package com.clover.springcloud.controller;
 
+import com.clover.springcloud.service.PaymentHystrixService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+
+@RestController
+@Slf4j
+public class OrderHystirxController {
+
+    @Resource
+    private PaymentHystrixService paymentHystrixService;
+
+    @GetMapping("/consumer/payment/hystrix/ok/{id}")
+    public String paymentInfo_OK(@PathVariable("id") Integer id)
+    {
+        return paymentHystrixService.paymentInfo_OK(id);
+    }
+
+    @GetMapping("/consumer/payment/hystrix/timeout/{id}")
+    @HystrixCommand(fallbackMethod = "paymentTimeOutFallbackMethod",commandProperties = {
+            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds",value="1500")
+    })
+    public String paymentInfo_Timeout(@PathVariable("id") Integer id)
+    {
+        return paymentHystrixService.paymentInfo_Timeout(id);
+    }
+
+    public String paymentTimeOutFallbackMethod(@PathVariable("id") Integer id)
+    {
+        return "我是消费者80,对方支付系统繁忙请10秒钟后再试或者自己运行出错请检查自己,o(╥﹏╥)o";
+    }
+}
 ~~~
+
+5、目前问题
+- 每个业务方法对应一个兜底的方法，代码膨胀
+- 统一和自定义的分开
+
+6、解决问题
+1. 每个方法配置一个？？？膨胀
+
+	- feign接口系列
+	- **@DefaultProperties(defaultFallback = "")**
+
+			@DefaultProperties(defaultFallback = "")
+			  1：1 每个方法配置一个服务降级方法，技术上可以，实际上傻X
+			  1：N 除了个别重要核心业务有专属，其它普通的可以通过@DefaultProperties(defaultFallback = "")  
+			  统一跳转到统一处理结果页面
+			  通用的和独享的各自分开，避免了代码膨胀，合理减少了代码量，
+
+	- controller配置
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import com.clover.springcloud.service.PaymentHystrixService;
+import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+
+@RestController
+@Slf4j
+@DefaultProperties(defaultFallback = "payment_Global_FallbackMethod")
+public class OrderHystirxController {
+
+    @Resource
+    private PaymentHystrixService paymentHystrixService;
+
+    @GetMapping("/consumer/payment/hystrix/ok/{id}")
+    public String paymentInfo_OK(@PathVariable("id") Integer id)
+    {
+        return paymentHystrixService.paymentInfo_OK(id);
+    }
+
+    @GetMapping("/consumer/payment/hystrix/timeout/{id}")
+//    @HystrixCommand(fallbackMethod = "paymentTimeOutFallbackMethod",commandProperties = {
+//            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds",value="1500")
+//    })
+    @HystrixCommand //加了@DefaultProperties属性注解，并且没有写具体方法名字，就用统一全局的
+    public String paymentInfo_Timeout(@PathVariable("id") Integer id)
+    {
+        int age = 10/0;
+        return paymentHystrixService.paymentInfo_Timeout(id);
+    }
+
+    public String paymentTimeOutFallbackMethod(@PathVariable("id") Integer id)
+    {
+        return "我是消费者80,对方支付系统繁忙请10秒钟后再试或者自己运行出错请检查自己,o(╥﹏╥)o";
+    }
+
+    public String payment_Global_FallbackMethod()
+    {
+        return "Global异常处理信息，请稍后再试，/(ㄒoㄒ)/~~";
+    }
+}
+~~~
+
+2. 和业务逻辑混一起？？？混乱
+
+	- **服务降级，客户端去调用服务端，碰上服务端宕机或关闭**
+	- 本次案例服务降级处理是`在客户端80实现完成的`，与服务端8001没有关系只需要为Feign客户端定义的接口添加一个服务降级处理的实现类即可实现解耦
+	- 未来我们要面对的异常
+		- 运行
+		- 超时
+		- 宕机
+	- 再看我们的业务类PaymentController
+
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020112949.png)
+
+	混合在一起，每个业务方法都要提供一个
+
+	- 修改cloud-consumer-feign-hystrix-order80
+	- 根据cloud-consumer-feign-hystrix-order80已经有的PaymentHystrixService接口，重新新建一个类(**PaymentFallbackService**)实现该接口，**统一为接口里面的方法进行异常处理**
+	- PaymentFallbackService类实现PaymentFeignClientService接口
+
+	~~~Java
+	package com.clover.springcloud.service;
+
+	import org.springframework.stereotype.Component;
+
+	@Component
+	public class PaymentFallbackService implements PaymentHystrixService {
+		@Override
+		public String paymentInfo_OK(Integer id) {
+			return "服务调用失败，提示来自：cloud-consumer-feign-order80的paymentInfo_OK";
+		}
+
+		@Override
+		public String paymentInfo_Timeout(Integer id) {
+			return "服务调用失败，提示来自：cloud-consumer-feign-order80的paymentInfo_Timeout";
+		}
+	}
+	~~~
+	- PaymentFeignClientService接口
+
+	~~~Java
+	package com.clover.springcloud.service;  
+
+	import org.springframework.cloud.openfeign.FeignClient;  
+	import org.springframework.stereotype.Component;  
+	import org.springframework.web.bind.annotation.GetMapping;  
+	import org.springframework.web.bind.annotation.PathVariable;  
+
+	@Component  
+	@FeignClient(value = "CLOUD-PROVIDER-HYSTRIX-PAYMENT",fallback = PaymentFallbackService.class)  
+	public interface PaymentHystrixService {  
+
+	 @GetMapping("/payment/hystrix/ok/{id}")  
+	 public String paymentInfo_OK(@PathVariable("id") Integer id);  
+
+		@GetMapping("/payment/hystrix/timeout/{id}")  
+	 public String paymentInfo_Timeout(@PathVariable("id") Integer id);  
+	}
+	~~~
+	- 测试
+		- 单个eureka先启动7001
+		- PaymentHystrixMain8001启动
+		- 正常访问测试：http://localhost/consumer/payment/hystrix/ok/1
+		- **故意关闭微服务8001**
+		- **客户端自己调用提示**
+			- 此时服务端provider已经down了，但是我们做了服务降级处理，让客户端在服务端不可用时也会获得提示信息而不会挂起耗死服务器
+
+
+### 9.3.7、服务熔断
+
+#### 9.3.7.1、熔断是什么？
+
+**熔断机制概述**
+
+熔断机制是应对雪崩效应的一种微服务链路保护机制。当扇出链路的某个微服务出错不可用或者响应时间太长时，
+会进行服务的降级，进而熔断该节点微服务的调用，快速返回错误的响应信息。
+
+**当检测到该节点微服务调用响应正常后，恢复调用链路。**
+ 
+在SpringCloud框架里，熔断机制通过Hystrix实现。Hystrix会监控微服务间调用的状况，当失败的调用到一定阈值，缺省是5秒内20次调用失败，就会启动熔断机制。熔断机制的注解是`@HystrixCommand。`
+ 
+ #### 9.3.7.2、实操
+ 
+ 1. 修改cloud-provider-hystrix-payment8001
+ 2. 修改PaymentService
+	~~~Java
+	//=========服务熔断
+	@HystrixCommand(fallbackMethod = "paymentCircuitBreaker_fallback",commandProperties = {
+			@HystrixProperty(name = "circuitBreaker.enabled",value = "true"),
+			@HystrixProperty(name = "circuitBreaker.requestVolumeThreshold",value = "10"), 
+			@HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "10000"),
+			@HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "60"),
+	})
+	public String paymentCircuitBreaker(@PathVariable("id") Integer id)
+	{
+		if(id < 0)
+		{
+			throw new RuntimeException("******id 不能负数");
+		}
+		String serialNumber = IdUtil.simpleUUID();
+
+		return Thread.currentThread().getName()+"\t"+"调用成功，流水号: " + serialNumber;
+	}
+	public String paymentCircuitBreaker_fallback(@PathVariable("id") Integer id)
+	{
+		return "id 不能负数，请稍后再试，/(ㄒoㄒ)/~~   id: " +id;
+	}
+	~~~
+	 1. why配置这些参数
+
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020153119.png)
+ 3. 修改PaymentController
+ ~~~Java
+@GetMapping("/payment/circuit/{id}")
+public String paymentCircuitBreaker(@PathVariable("id") Integer id)
+{
+    String result = paymentService.paymentCircuitBreaker(id);
+    log.info("****result: "+result);
+    return result;
+}
+ ~~~
+ 
+ 
+测试：
+- 自测cloud-provider-hystrix-payment8001
+- 正确访问：http://localhost:8001/payment/circuit/1
+- 错误访问：http://localhost:8001/payment/circuit/-1
+- 重点测试：**多次错误，然后慢慢正确，发现刚开始不满足条件，就算是正确的访问地址也不能进行**
+
+
+ #### 9.3.7.3、原理(小总结)
+ 
+ 大神结论
+ 
+ ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020155000.png)
+ 
+ 熔断类型
+ - 熔断打开
+	 - 请求不再进行调用当前服务，内部设置时钟一般为`MTTR（平均故障处理时间)`，当打开时长达到所设时钟则进入半熔断状态
+ - 熔断关闭
+	 - 熔断关闭不会对服务进行熔断
+ - 熔断半开
+	 - 部分请求根据规则调用当前服务，如果请求成功且符合规则则认为当前服务恢复正常，关闭熔断
+
+官网断路器流程图
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020155127.png)
+
+1、官网步骤
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020155211.png)
+
+2、断路器在什么情况下开始起作用
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020155432.png)
+
+涉及到断路器的三个重要参数：**快照时间窗、请求总数阀值、错误百分比阀值**。
+
+1：`快照时间窗`：断路器确定是否打开需要统计一些请求和错误数据，而统计的时间范围就是快照时间窗，**默认为最近的10秒**。
+ 
+2：`请求总数阀值`：在快照时间窗内，**必须满足请求总数阀值才有资格熔断。默认为20**，意味着在10秒内，如果该hystrix命令的调用次数不足20次，即使所有的请求都超时或其他原因失败，断路器都不会打开。
+ 
+3：`错误百分比阀值`：当请求总数在快照时间窗内超过了阀值，比如发生了30次调用，如果在这30次调用中，有15次发生了超时异常，**也就是超过50%的错误百分比**，在默认设定50%阀值情况下，这时候就会将断路器打开。
+
+3、断路器开启或者关闭的条件
+
+- 当满足一定的阀值的时候（默认10秒内超过20个请求次数）
+- 当失败率达到一定的时候（默认10秒内超过50%的请求失败）
+- 到达以上阀值，断路器将会开启
+- 当开启的时候，所有请求都不会进行转发
+- 一段时间之后（默认是5秒），这个时候断路器是半开状态，会让其中一个请求进行转发。如果成功，断路器会关闭，若失败，继续开启。重复4和5
+
+
+4、断路器打开之后
+
+1. 再有请求调用的时候，将不会调用主逻辑，而是直接调用降级fallback。通过断路器，实现了自动地发现错误并将降级逻辑切换为主逻辑，减少响应延迟的效果。
+ 
+2. 原来的主逻辑要如何恢复呢？
+	
+	对于这一问题，hystrix也为我们实现了自动恢复功能。
+	当断路器打开，对主逻辑进行熔断之后，hystrix会启动一个休眠时间窗，在这个时间窗内，降级逻辑是临时的成为主逻辑，
+	当休眠时间窗到期，断路器将进入半开状态，释放一次请求到原来的主逻辑上，如果此次请求正常返回，那么断路器将继续闭合，
+	主逻辑恢复，如果这次请求依然有问题，断路器继续进入打开状态，休眠时间窗重新计时。
+
+
+**5、ALL配置**
+
+~~~Java
+//========================All
+@HystrixCommand(fallbackMethod = "str_fallbackMethod",
+        groupKey = "strGroupCommand",
+        commandKey = "strCommand",
+        threadPoolKey = "strThreadPool",
+
+        commandProperties = {
+                // 设置隔离策略，THREAD 表示线程池 SEMAPHORE：信号池隔离
+                @HystrixProperty(name = "execution.isolation.strategy", value = "THREAD"),
+                // 当隔离策略选择信号池隔离的时候，用来设置信号池的大小（最大并发数）
+                @HystrixProperty(name = "execution.isolation.semaphore.maxConcurrentRequests", value = "10"),
+                // 配置命令执行的超时时间
+                @HystrixProperty(name = "execution.isolation.thread.timeoutinMilliseconds", value = "10"),
+                // 是否启用超时时间
+                @HystrixProperty(name = "execution.timeout.enabled", value = "true"),
+                // 执行超时的时候是否中断
+                @HystrixProperty(name = "execution.isolation.thread.interruptOnTimeout", value = "true"),
+                // 执行被取消的时候是否中断
+                @HystrixProperty(name = "execution.isolation.thread.interruptOnCancel", value = "true"),
+                // 允许回调方法执行的最大并发数
+                @HystrixProperty(name = "fallback.isolation.semaphore.maxConcurrentRequests", value = "10"),
+                // 服务降级是否启用，是否执行回调函数
+                @HystrixProperty(name = "fallback.enabled", value = "true"),
+                // 是否启用断路器
+                @HystrixProperty(name = "circuitBreaker.enabled", value = "true"),
+                // 该属性用来设置在滚动时间窗中，断路器熔断的最小请求数。例如，默认该值为 20 的时候，
+                // 如果滚动时间窗（默认10秒）内仅收到了19个请求， 即使这19个请求都失败了，断路器也不会打开。
+                @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "20"),
+                // 该属性用来设置在滚动时间窗中，表示在滚动时间窗中，在请求数量超过
+                // circuitBreaker.requestVolumeThreshold 的情况下，如果错误请求数的百分比超过50,
+                // 就把断路器设置为 "打开" 状态，否则就设置为 "关闭" 状态。
+                @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "50"),
+                // 该属性用来设置当断路器打开之后的休眠时间窗。 休眠时间窗结束之后，
+                // 会将断路器置为 "半开" 状态，尝试熔断的请求命令，如果依然失败就将断路器继续设置为 "打开" 状态，
+                // 如果成功就设置为 "关闭" 状态。
+                @HystrixProperty(name = "circuitBreaker.sleepWindowinMilliseconds", value = "5000"),
+                // 断路器强制打开
+                @HystrixProperty(name = "circuitBreaker.forceOpen", value = "false"),
+                // 断路器强制关闭
+                @HystrixProperty(name = "circuitBreaker.forceClosed", value = "false"),
+                // 滚动时间窗设置，该时间用于断路器判断健康度时需要收集信息的持续时间
+                @HystrixProperty(name = "metrics.rollingStats.timeinMilliseconds", value = "10000"),
+                // 该属性用来设置滚动时间窗统计指标信息时划分"桶"的数量，断路器在收集指标信息的时候会根据
+                // 设置的时间窗长度拆分成多个 "桶" 来累计各度量值，每个"桶"记录了一段时间内的采集指标。
+                // 比如 10 秒内拆分成 10 个"桶"收集这样，所以 timeinMilliseconds 必须能被 numBuckets 整除。否则会抛异常
+                @HystrixProperty(name = "metrics.rollingStats.numBuckets", value = "10"),
+                // 该属性用来设置对命令执行的延迟是否使用百分位数来跟踪和计算。如果设置为 false, 那么所有的概要统计都将返回 -1。
+                @HystrixProperty(name = "metrics.rollingPercentile.enabled", value = "false"),
+                // 该属性用来设置百分位统计的滚动窗口的持续时间，单位为毫秒。
+                @HystrixProperty(name = "metrics.rollingPercentile.timeInMilliseconds", value = "60000"),
+                // 该属性用来设置百分位统计滚动窗口中使用 “ 桶 ”的数量。
+                @HystrixProperty(name = "metrics.rollingPercentile.numBuckets", value = "60000"),
+                // 该属性用来设置在执行过程中每个 “桶” 中保留的最大执行次数。如果在滚动时间窗内发生超过该设定值的执行次数，
+                // 就从最初的位置开始重写。例如，将该值设置为100, 滚动窗口为10秒，若在10秒内一个 “桶 ”中发生了500次执行，
+                // 那么该 “桶” 中只保留 最后的100次执行的统计。另外，增加该值的大小将会增加内存量的消耗，并增加排序百分位数所需的计算时间。
+                @HystrixProperty(name = "metrics.rollingPercentile.bucketSize", value = "100"),
+                // 该属性用来设置采集影响断路器状态的健康快照（请求的成功、 错误百分比）的间隔等待时间。
+                @HystrixProperty(name = "metrics.healthSnapshot.intervalinMilliseconds", value = "500"),
+                // 是否开启请求缓存
+                @HystrixProperty(name = "requestCache.enabled", value = "true"),
+                // HystrixCommand的执行和事件是否打印日志到 HystrixRequestLog 中
+                @HystrixProperty(name = "requestLog.enabled", value = "true"),
+        },
+        threadPoolProperties = {
+                // 该参数用来设置执行命令线程池的核心线程数，该值也就是命令执行的最大并发量
+                @HystrixProperty(name = "coreSize", value = "10"),
+                // 该参数用来设置线程池的最大队列大小。当设置为 -1 时，线程池将使用 SynchronousQueue 实现的队列，
+                // 否则将使用 LinkedBlockingQueue 实现的队列。
+                @HystrixProperty(name = "maxQueueSize", value = "-1"),
+                // 该参数用来为队列设置拒绝阈值。 通过该参数， 即使队列没有达到最大值也能拒绝请求。
+                // 该参数主要是对 LinkedBlockingQueue 队列的补充,因为 LinkedBlockingQueue
+                // 队列不能动态修改它的对象大小，而通过该属性就可以调整拒绝请求的队列大小了。
+                @HystrixProperty(name = "queueSizeRejectionThreshold", value = "5"),
+        }
+)
+public String strConsumer() {
+    return "hello 2020";
+}
+public String str_fallbackMethod()
+{
+    return "*****fall back str_fallbackMethod";
+}
+~~~
+
+## 9.4、hystrix工作流程
+
+[工作流程](https://github.com/Netflix/Hystrix/wiki/How-it-Works)
+
+Hystrix工作流程
+
+- 官网图例
+
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020161345.png)
+	
+- 步骤说明
+
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020161529.png)
+	
+	
+	
+## 9.5、服务监控hystrixDashboard
+
+### 9.5.1、概述
+
+除了隔离依赖服务的调用以外，Hystrix还提供了**准实时的调用监控（Hystrix Dashboard）**，Hystrix会持续地记录所有通过Hystrix发起的请求的执行信息，并以统计报表和图形的形式展示给用户，包括每秒执行多少请求多少成功，多少失败等。Netflix通过hystrix-metrics-event-stream项目实现了对以上指标的监控。Spring Cloud也提供了Hystrix Dashboard的整合，对监控内容转化成可视化界面。
+
+### 9.5.2、仪表盘9001
+
+1、新建cloud-consumer-hystrix-dashboard9001
+
+2、修改POM
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SpringCloud</artifactId>
+        <groupId>com.clover.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-consumer-hystrix-dashboard9001</artifactId>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+~~~
+
+3、编写YML
+
+~~~yml
+server:
+  port: 9001
+~~~
+
+4、新建启动类 HystrixDashboardMain9001+**新注解@EnableHystrixDashboard**
+
+~~~Java
+package com.clover.springcloud;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
+
+@SpringBootApplication
+@EnableHystrixDashboard
+public class HystrixDashboardMain9001 {
+    public static void main(String[] args)
+    {
+        SpringApplication.run(HystrixDashboardMain9001.class,args);
+    }
+}
+~~~
+
+5、**所有Provider微服务提供类(8001/8002/8003)都需要监控依赖配置**
+
+~~~xml
+<!-- actuator监控信息完善 -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+~~~
+
+6、启动cloud-consumer-hystrix-dashboard9001该微服务后续将监控微服务8001：http://localhost:9001/hystrix
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020162258.png)
+
+### 9.5.3、断路器演示(服务监控hystrixDashboard)
+
+1、修改cloud-provider-hystrix-payment8001
+
+- **注意:新版本Hystrix需要在主启动类MainAppHystrix8001中指定监控路径**，否则会报错
+
+~~~Java
+/**
+ *此配置是为了服务监控而配置，与服务容错本身无关，springcloud升级后的坑
+ *ServletRegistrationBean因为springboot的默认路径不是"/hystrix.stream"，
+ *只要在自己的项目里配置上下面的servlet就可以了
+ */
+@Bean
+public ServletRegistrationBean getServlet() {
+    HystrixMetricsStreamServlet streamServlet = new HystrixMetricsStreamServlet();
+    ServletRegistrationBean registrationBean = new ServletRegistrationBean(streamServlet);
+    registrationBean.setLoadOnStartup(1);
+    registrationBean.addUrlMappings("/hystrix.stream");
+    registrationBean.setName("HystrixMetricsStreamServlet");
+    return registrationBean;
+}
+~~~
+
+2、监控测试
+
+- 启动1个eureka或者3个eureka集群均可
+- 观察监控窗口
+	- 9001监控8001：填写监控地址：http://localhost:8001/hystrix.stream
+	- 测试地址
+		- http://localhost:8001/payment/circuit/1
+		- http://localhost:8001/payment/circuit/-1
+		- 先访问正确地址，再访问错误地址，再正确地址，会发现图示断路器都是慢慢放开的
+			- 监控结果，成功
+			
+			![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020164339.png)
+			
+			- 监控结果，失败
+			
+			![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020164502.png)
+
+3、如何看懂该图
+
+1. 一圈
+	1.  实心圆：共有两种含义。它通过颜色的变化代表了实例的健康程度，它的健康度从**绿色<黄色<橙色<红色递减**
+	2.  该实心圆除了颜色的变化之外，它的大小也会根据实例的请求流量发生变化，流量越大该实心圆就越大。所以通过该实心圆的展示，就可以在大量的实例中快速的发现**故障实例和高压力实例**
+2. 一线
+	1. 曲线：用来记录2分钟内流量的相对变化，可以通过它来观察到流量的上升和下降趋势
+3. 整图说明1
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020164742.png)
+	
+4. 整图说明2
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020164818.png)
+	
+	
+# 10、Gateway新一代网关
+
+## 10.1、概述
+
+[上一代zuul 1.X官网](https://github.com/Netflix/zuul/wiki)
+
+[当前Gateway官网](https://cloud.spring.io/spring-cloud-static/spring-cloud-gateway/2.2.1.RELEASE/reference/html/)
+
+### 10.1.1、Gateway是什么？
+
+1. 概述
+	- Gateway是在Spring生态系统之上构建的API网关服务，基于Spring 5，Spring Boot 2和 Project Reactor等技术。
+	- Gateway旨在提供一种简单而有效的方式来对API进行路由，以及提供一些强大的过滤器功能， 例如：熔断、限流、重试等
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020171317.png)
+
+	- SpringCloud Gateway 是 SpringCloud 的一个全新项目，基于**Spring 5.0+Spring Boot 2.0 和 Project Reactor**等技术开发的网关，它旨在为微服务架构提供一种简单有效的统一的 API 路由管理方式。
+ 
+	- SpringCloud Gateway 作为 Spring Cloud 生态系统中的网关，目标是替代 Zuul，在Spring Cloud 2.0以上版本中，没有对新版本的Zuul 2.0以上最新高性能版本进行集成，仍然还是使用的Zuul 1.x非Reactor模式的老版本。而为了提升网关的性能，SpringCloud Gateway是**基于WebFlux框架实现的，而WebFlux框架底层则使用了高性能的Reactor模式通信框架Netty。**
+ 
+	- SpringCloud Gateway的目标提供统一的路由方式且基于 Filter 链的方式提供了网关基本的功能，例如：安全，监控/指标，和限流。
+
+2. 一句话
+	- **SpringCloud Gateway 使用的Webflux中的reactor-netty响应式编程组件，底层使用了Netty通讯框架**
+	- 源码架构
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020171516.png)
+	
+	
+### 10.1.2、能干嘛？
+
+- 反向代理
+- 鉴权
+- 流量控制
+- 熔断
+- 日志监控
+
+### 10.1.3、微服务架构中网关在哪里
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020171620.png)
+
+### 10.1.4、有Zuul了怎么又出来了gateway
+
+#### 10.1.4.1、我们为什么选择Gateway？
+1. neflix不太靠谱，zuul2.0一直跳票，迟迟不发布
+	1.  一方面因为Zuul1.0已经进入了维护阶段，而且Gateway是SpringCloud团队研发的，是亲儿子产品，值得信赖。而且很多功能Zuul都没有用起来也非常的简单便捷。
+	2. Gateway是基于**异步非阻塞模型**上进行开发的，性能方面不需要担心。虽然Netflix早就发布了最新的 Zuul 2.x，但 Spring Cloud 貌似没有整合计划。而且Netflix相关组件都宣布进入维护期；不知前景如何？
+	3. 多方面综合考虑Gateway是很理想的网关选择。
+2. SpringCloud Gateway具有如下特性
+	1. **基于Spring Framework 5, Project Reactor 和 Spring Boot 2.0 进行构建**
+	2. 动态路由：能够匹配任何请求属性
+	3. 可以对路由指定 Predicate（断言）和 Filter（过滤器）
+	4. 集成Hystrix的断路器功能
+	5. 集成 Spring Cloud 服务发现功能
+	6. 易于编写的 Predicate（断言）和 Filter（过滤器）
+	7. 请求限流功能
+	8. 支持路径重写
+3. SpringCloud Gateway 与 Zuul的区别
+	1. 在SpringCloud Finchley 正式版之前，SpringCloud 推荐的网关是 Netflix 提供的Zuul
+		1. Zuul 1.x，是一个**基于阻塞 I/ O**的 API Gateway
+		2. Zuul 1.x **基于Servlet 2. 5使用阻塞架构**它不支持任何长连接(如 WebSocket) Zuul 的设计模式和Nginx较像，每次 I/ O 操作都是从工作线程中选择一个执行，请求线程被阻塞到工作线程完成，但是差别是Nginx 用C++ 实现，Zuul 用 Java 实现，而 JVM 本身会有第一次加载较慢的情况，使得Zuul 的性能相对较差
+		3. Zuul 2.x理念更先进，想基于Netty非阻塞和支持长连接，但SpringCloud目前还没有整合。 Zuul 2.x的性能较 Zuul 1.x 有较大提升。在性能方面，根据官方提供的基准测试， Spring Cloud Gateway 的 RPS（每秒请求数）是Zuul 的 1. 6 倍。
+		4. SpringCloud Gateway 建立 在 `Spring Framework 5、 Project Reactor 和 Spring Boot 2` 之上， 使用非阻塞 API
+		5. SpringCloud Gateway 还 支持 WebSocket， 并且与Spring紧密集成拥有更好的开发体验
+
+
+#### 10.1.4.2、Zuul1.x模型
+
+1. Springcloud中所集成的Zuul版本，采用的是Tomcat容器，使用的是传统的Servlet IO处理模型
+2. 学过尚硅谷web中期课程都知道一个题目，**Servlet的生命周期?** servlet由servlet container进行生命周期管理。
+	1. container启动时构造servlet对象并调用servlet init()进行初始化；
+	2. container运行时接受请求，并为每个请求分配一个线程（一般从线程池中获取空闲线程）然后调用service()。
+	3. container关闭时调用servlet destory()销毁servlet；
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020173823.png)
+	
+3. `上述模式的缺点`
+	- servlet是一个简单的网络IO模型，当请求进入servlet container时，servlet container就会为其绑定一个线程，在**并发不高的场景下**这种模型是适用的。但是一旦高并发(比如抽风用jemeter压)，线程数量就会上涨，而线程资源代价是昂贵的（上线文切换，内存消耗大）严重影响请求的处理时间。在一些简单业务场景下，不希望为每个request分配一个线程，只需要1个或几个线程就能应对极大并发的请求，这种业务场景下servlet模型没有优势
+	- 所以Zuul 1.X是**基于servlet之上的一个阻塞式处理模型**，即spring实现了处理所有request请求的一个servlet（DispatcherServlet）并由该servlet阻塞式处理处理。所以Springcloud Zuul无法摆脱servlet模型的弊端
+
+#### 10.1.4.3、GateWay模型
+1. WebFlux是什么?[官网说明](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#webflux-new-framework)
+2. 说明
+	1. 传统的Web框架，比如说：struts2，springmvc等都是基于Servlet API与Servlet容器基础之上运行的
+	2. 但是**在Servlet3.1之后有了异步非阻塞的支持**。而WebFlux是一个典型`非阻塞异步的框架`，它的核心是**基于Reactor的相关API实现的**。相对于传统的web框架来说，它可以运行在诸如Netty，Undertow及支持Servlet3.1的容器上。非阻塞式+函数式编程（Spring5必须让你使用java8）
+	3. Spring WebFlux 是 Spring 5.0 引入的新的响应式框架，区别于 Spring MVC，它不需要依赖Servlet API，**它是完全异步非阻塞的**，并且基于 Reactor 来实现响应式流规范
+
+## 10.2、三大核心概念
+
+- Route(路由)
+	- 路由是构建网关的基本模块，它由`ID，目标URI，一系列的断言和过滤器组成`，**如果断言为true则匹配该路由**
+- Predicate(断言)
+	- 参考的是Java8的java.util.function.Predicate,开发人员可以匹配HTTP请求中的所有内容(例如请求头或请求参数)，**如果请求与断言相匹配则进行路由**
+- Filter(过滤)
+	- 指的是Spring框架中GatewayFilter的实例，使用过滤器，可以在**请求被路由前或者之后**对请求进行修改。
+- 总体
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020195903.png)
+	- web请求，通过一些匹配条件，定位到真正的服务节点。并在这个转发过程的前后，进行一些精细化控制
+	- predicate就是我们的匹配条件
+	- 而filter，就可以理解为一个无所不能的拦截器。有了这两个元素，再加上目标uri，就可以实现一个具体的路由了
+
+## 10.3、Gateway工作流程
+
+1. 官网总结
+
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020200034.png)
+	
+	1. 客户端向 SpringCloud Gateway 发出请求。然后在 Gateway Handler Mapping 中找到与请求相匹配的路由，将其发送到 Gateway Web Handler
+	2. Handler 再通过指定的过滤器链来将请求发送到我们实际的服务执行业务逻辑，然后返回
+	3. 过滤器之间用虚线分开是因为过滤器可能会在**发送代理请求之前(“pre”)** 或**之后(“post”)** 执行业务逻辑
+	4. Filter在`pre`类型的过滤器可以做参数校验、权限校验、流量监控、日志输出、协议转换等
+	5. 在`post`类型的过滤器中可以做响应内容、响应头的修改，日志的输出，流量监控等有着非常重要的作用
+2. 核心逻辑
+	- **路由转发+执行过滤器链** 
+
+## 10.4、入门配置
+
+1、新建 cloud-gateway-gateway9527
+
+2、修改POM
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SpringCloud</artifactId>
+        <groupId>com.clover.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-gateway-gateway9527</artifactId>
+
+
+    <dependencies>
+        <!--gateway-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        <!--eureka-client-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->
+        <dependency>
+            <groupId>com.clover.springcloud</groupId>
+            <artifactId>cloud-api-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--一般基础配置类-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+~~~
+
+3、编写YML
+
+~~~yml
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client: #服务提供者provider注册进eureka服务列表内
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka7001.com:7001/eureka
+~~~
+
+4、编写主启动类
+
+~~~Java
+package com.clover.springcloud;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+
+@SpringBootApplication
+@EnableEurekaClient
+public class GateWayMain9527 {
+    public static void main(String[] args)
+    {
+        SpringApplication.run(GateWayMain9527.class,args);
+    }
+}
+~~~
+
+5、9527网关如何做路由映射那？？？
+- cloud-provider-payment8001看看controller的访问地址
+	- get
+	- lb
+- 我们目前不想暴露8001端口，希望在8001外面套一层9527
+
+6、YML新增网关配置
+
+~~~yml
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          uri: http://localhost:8001          #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/get/**         # 断言，路径相匹配的进行路由
+
+        - id: payment_routh2 #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          uri: http://localhost:8001          #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/lb/**         # 断言，路径相匹配的进行路由
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client: #服务提供者provider注册进eureka服务列表内
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka7001.com:7001/eureka
+~~~
+
+7、测试
+
+1. 启动7001
+2. 启动cloud-provider-payment8001
+3. 启动9527网关
+4. 访问说明
+	1. 添加网关前：http://localhost:8001/payment/get/1
+	2. 添加网关后：http://localhost:9527/payment/get/1
+
+8、**YML配置说明**
+- Gateway网关路由有两种配置方式
+	1. 在配置文件yml中配置
+	2. 代码中注入RouteLocator的Bean
+		1. 自己写一个
+			1. 业务需求：通过9527网关访问到外网的百度新闻网址
+			2. 编码
+				1. 业务实现：config
+
+				~~~Java
+				package com.clover.springcloud.config;
+
+				import org.springframework.cloud.gateway.route.RouteLocator;
+				import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+				import org.springframework.context.annotation.Bean;
+				import org.springframework.context.annotation.Configuration;
+
+				@Configuration
+				public class GateWayConfig {
+
+					/**
+					 * 配置了一个id为route-name的路由规则，
+					 * 当访问地址 http://localhost:9527/guonei时会自动转发到地址：http://news.baidu.com/guonei
+					 * @param routeLocatorBuilder
+					 * @return
+					 */
+					@Bean
+					public RouteLocator custom(RouteLocatorBuilder routeLocatorBuilder)
+					{
+						RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
+						routes.route("path_route_clover",r -> r.path("/guonei").uri("http://news.baidu.com/guonei")).build();
+						return routes.build();
+					}
+				}
+				~~~
+				
+## 10.5、通过微服务名实现动态路由
+1. 默认情况下Gateway会根据注册中心注册的服务列表，以注册中心上微服务名为路径创建**动态路由进行转发，从而实现动态路由的功能**
+2. 启动：一个eureka7001 + 两个服务提供者8001/8002
+3. 修改POM
+
+~~~xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+</dependency>
+~~~
+4. 修改YML
+	1. **需要注意的是uri的协议为lb，表示启用Gateway的负载均衡功能**
+	2. `lb://serviceName`是spring cloud gateway在微服务中自动为我们创建的负载均衡uri
+
+~~~yml
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能，利用微服务名进行路由
+      routes:
+        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/get/**         # 断言，路径相匹配的进行路由
+
+        - id: payment_routh2 #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/lb/**         # 断言，路径相匹配的进行路由
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client: #服务提供者provider注册进eureka服务列表内
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka7001.com:7001/eureka
+~~~
+5. 测试: http://localhost:9527/payment/lb   8001/8002两个端口切换
+
+## 10.6、Predicate的使用
+
+### 10.6.1、Predicate是什么？
+
+启动我们的gateway9527
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020213340.png)
+
+
+### 10.6.2、Route Predicate Factories这个是什么东东?
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020213415.png)
+
+- Spring Cloud Gateway将路由匹配作为Spring WebFlux HandlerMapping基础架构的一部分。
+- Spring Cloud Gateway包括许多内置的Route Predicate工厂。所有这些Predicate都与HTTP请求的不同属性匹配。多个Route Predicate工厂可以进行组合
+ 
+- Spring Cloud Gateway 创建 Route 对象时， 使用 RoutePredicateFactory 创建 Predicate 对象，Predicate 对象可以赋值给 Route。
+-  Spring Cloud Gateway 包含许多内置的Route Predicate Factories。
+ 
+- 所有这些谓词都匹配HTTP请求的不同属性。多种谓词工厂可以组合，并通过逻辑and。
+
+### 10.6.3、常用的Route Predicate
+
+1、After Route Predicate
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020213842.png)
+
+~~~yml
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+      routes:
+        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/get/**         # 断言，路径相匹配的进行路由
+
+        - id: payment_routh2 #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+		   - Path=/payment/lb/**         # 断言，路径相匹配的进行路由
+		   - After=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client: #服务提供者provider注册进eureka服务列表内
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka7001.com:7001/eureka
+~~~
+
+2、Before Route Predicate
+
+~~~yml
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+      routes:
+        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/get/**         # 断言，路径相匹配的进行路由
+
+        - id: payment_routh2 #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/lb/**         # 断言，路径相匹配的进行路由
+            - After=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            - Before=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client: #服务提供者provider注册进eureka服务列表内
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka7001.com:7001/eureka
+~~~
+
+3、Between Route Predicate
+
+~~~yml
+ 
+- Between=2019-12-02T17:45:06.206+08:00[Asia/Shanghai],2019-12-02T18:59:06.206+08:00[Asia/Shanghai]
+ 
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+      routes:
+        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/get/**         # 断言，路径相匹配的进行路由
+
+        - id: payment_routh2 #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/lb/**         # 断言，路径相匹配的进行路由
+            #- After=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Before=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            - Between=2021-10-21T13:37:41.094+08:00[Asia/Shanghai],2021-10-21T14:37:41.094+08:00[Asia/Shanghai]
+
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client: #服务提供者provider注册进eureka服务列表内
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka7001.com:7001/eureka
+
+#id：我们自定义的路由 ID，保持唯一
+ ##uri：目标服务地址
+ ##predicates：路由条件，Predicate接受一个输入参数返回一个布尔值。
+ ##            该属性包含多种默认方法来将Predicate组合成其他复杂的逻辑(比如：与，或，非)
+~~~
+
+4、Cookie Route Predicate
+
+~~~yml
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+      routes:
+        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/get/**         # 断言，路径相匹配的进行路由
+
+        - id: payment_routh2 #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/lb/**         # 断言，路径相匹配的进行路由
+            - After=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Before=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Between=2021-10-21T13:37:41.094+08:00[Asia/Shanghai],2021-10-21T14:37:41.094+08:00[Asia/Shanghai]
+        - Cookie=username,clover
+
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client: #服务提供者provider注册进eureka服务列表内
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka7001.com:7001/eureka
+
+#id：我们自定义的路由 ID，保持唯一
+ ##uri：目标服务地址
+ ##predicates：路由条件，Predicate接受一个输入参数返回一个布尔值。
+ ##            该属性包含多种默认方法来将Predicate组合成其他复杂的逻辑(比如：与，或，非)
+~~~
+
+5、Header Route Predicate
+
+~~~yml
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+      routes:
+        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/get/**         # 断言，路径相匹配的进行路由
+
+        - id: payment_routh2 #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/lb/**         # 断言，路径相匹配的进行路由
+            - After=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Before=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Between=2021-10-21T13:37:41.094+08:00[Asia/Shanghai],2021-10-21T14:37:41.094+08:00[Asia/Shanghai]
+            #- Cookie=username,clover
+            - Header=X-Request-Id, \d+  # 请求头要有X-Request-Id属性并且值为整数的正则表达式
+~~~
+
+`curl http://localhost:9588/paymentInfo -H "X-Request-Id:123"`：错误
+
+`curl http://localhost:9527/payment/lb -H "X-Request-Id:123"`：正确
+
+6、Host Route Predicate
+
+~~~yml
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+      routes:
+        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/get/**         # 断言，路径相匹配的进行路由
+
+        - id: payment_routh2 #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/lb/**         # 断言，路径相匹配的进行路由
+            - After=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Before=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Between=2021-10-21T13:37:41.094+08:00[Asia/Shanghai],2021-10-21T14:37:41.094+08:00[Asia/Shanghai]
+            #- Cookie=username,clover
+            #- Header=X-Request-Id, \d+  # 请求头要有X-Request-Id属性并且值为整数的正则表达式
+            - Host=**.clover.com
+
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client: #服务提供者provider注册进eureka服务列表内
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka7001.com:7001/eureka
+
+#id：我们自定义的路由 ID，保持唯一
+ ##uri：目标服务地址
+ ##predicates：路由条件，Predicate接受一个输入参数返回一个布尔值。
+ ##            该属性包含多种默认方法来将Predicate组合成其他复杂的逻辑(比如：与，或，非)
+~~~
+
+**正确**：`curl http://localhost:9527/payment/lb -H "Host: www.clover.com"`
+**正确**：`curl http://localhost:9527/payment/lb -H "Host: java.clover.com"`
+**错误**：`curl http://localhost:9527/payment/lb -H "Host: java.clover.net"`
+
+7、Method Route Predicate
+
+~~~yml
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+      routes:
+        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/get/**         # 断言，路径相匹配的进行路由
+
+        - id: payment_routh2 #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/lb/**         # 断言，路径相匹配的进行路由
+            - After=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Before=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Between=2021-10-21T13:37:41.094+08:00[Asia/Shanghai],2021-10-21T14:37:41.094+08:00[Asia/Shanghai]
+            #- Cookie=username,clover
+            #- Header=X-Request-Id, \d+  # 请求头要有X-Request-Id属性并且值为整数的正则表达式
+            #- Host=**.clover.com
+            - Method=GET
+
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client: #服务提供者provider注册进eureka服务列表内
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka7001.com:7001/eureka
+
+#id：我们自定义的路由 ID，保持唯一
+ ##uri：目标服务地址
+ ##predicates：路由条件，Predicate接受一个输入参数返回一个布尔值。
+ ##            该属性包含多种默认方法来将Predicate组合成其他复杂的逻辑(比如：与，或，非)
+~~~
+
+8、Path Route Predicate
+
+~~~yml
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+      routes:
+        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/get/**         # 断言，路径相匹配的进行路由
+
+        - id: payment_routh2 #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/lb/**         # 断言，路径相匹配的进行路由
+            - After=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Before=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Between=2021-10-21T13:37:41.094+08:00[Asia/Shanghai],2021-10-21T14:37:41.094+08:00[Asia/Shanghai]
+            #- Cookie=username,clover
+            #- Header=X-Request-Id, \d+  # 请求头要有X-Request-Id属性并且值为整数的正则表达式
+            #- Host=**.clover.com
+            - Method=GET
+
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client: #服务提供者provider注册进eureka服务列表内
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka7001.com:7001/eureka
+
+#id：我们自定义的路由 ID，保持唯一
+ ##uri：目标服务地址
+ ##predicates：路由条件，Predicate接受一个输入参数返回一个布尔值。
+ ##            该属性包含多种默认方法来将Predicate组合成其他复杂的逻辑(比如：与，或，非)
+~~~
+
+9、Query Route Predicate
+
+~~~yml
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+      routes:
+        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/get/**         # 断言，路径相匹配的进行路由
+
+        - id: payment_routh2 #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/lb/**         # 断言，路径相匹配的进行路由
+           - After=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Before=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Between=2021-10-21T13:37:41.094+08:00[Asia/Shanghai],2021-10-21T14:37:41.094+08:00[Asia/Shanghai]
+            #- Cookie=username,clover
+            #- Header=X-Request-Id, \d+  # 请求头要有X-Request-Id属性并且值为整数的正则表达式
+            #- Host=**.clover.com
+            - Method=GET
+            - Query=username, \d+  # 要有参数名username并且值还要是整数才能路由
+
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client: #服务提供者provider注册进eureka服务列表内
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka7001.com:7001/eureka
+
+#id：我们自定义的路由 ID，保持唯一
+ ##uri：目标服务地址
+ ##predicates：路由条件，Predicate接受一个输入参数返回一个布尔值。
+ ##            该属性包含多种默认方法来将Predicate组合成其他复杂的逻辑(比如：与，或，非)
+~~~
+
+**正确**：`curl http://localhost:9527/payment/lb?username=1`
+ 
+**错误**：`curl http://localhost:9527/payment/lb?username=-1`
+
+
+10、小总结
+- ALL
+
+~~~xml
+ server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+      routes:
+        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/get/**         # 断言，路径相匹配的进行路由
+
+        - id: payment_routh2 #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          # uri: http://localhost:8001          #匹配后提供服务的路由地址
+          uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/payment/lb/**         # 断言，路径相匹配的进行路由
+            - After=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Before=2021-10-21T13:37:41.094+08:00[Asia/Shanghai]         # 断言，路径相匹配的进行路由
+            #- Between=2021-10-21T13:37:41.094+08:00[Asia/Shanghai],2021-10-21T14:37:41.094+08:00[Asia/Shanghai]
+            #- Cookie=username,clover
+            #- Header=X-Request-Id, \d+  # 请求头要有X-Request-Id属性并且值为整数的正则表达式
+            #- Host=**.clover.com
+            - Method=GET
+            - Query=username, \d+  # 要有参数名username并且值还要是整数才能路由
+
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client: #服务提供者provider注册进eureka服务列表内
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka7001.com:7001/eureka
+
+#id：我们自定义的路由 ID，保持唯一
+ ##uri：目标服务地址
+ ##predicates：路由条件，Predicate接受一个输入参数返回一个布尔值。
+ ##            该属性包含多种默认方法来将Predicate组合成其他复杂的逻辑(比如：与，或，非)
+~~~
+- 说白了，Predicate就是为了实现一组匹配规则，让请求过来找到对应的Route进行处理。
+
+## 10.7、Filter的使用 
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020215804.png)
+1. 是什么？
+2. Spring Cloud Gateway的Filter
+	- **生命周期，Only Two**
+		- pre
+		- post
+	- **种类，Only Two**
+		- GatewayFilter 
+			
+			[官网地址](https://cloud.spring.io/spring-cloud-static/spring-cloud-gateway/2.2.1.RELEASE/reference/html/#the-addrequestparameter-gatewayfilter-factory)
+			
+			![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020220240.png)
+			
+		- GlobalFilter
+		
+		![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020220258.png)
+		
+3. 常用的GatewayFilter
+	- AddRequestParameter
+	
+	~~~yml
+
+	server:
+	  port: 9588
+
+	spring:
+	  application:
+		name: cloud-gateway
+	  cloud:
+		gateway:
+		  discovery:
+			locator:
+			  enabled: true #开启从注册中心动态创建路由的功能
+			  lower-case-service-id: true #使用小写服务名，默认是大写
+		  routes:
+			- id: payment_routh #payment_route #路由的ID，没有固定规则但要求唯一，建议配合服务名
+			  uri: lb://cloud-provider-payment #匹配后的目标服务地址，供服务的路由地址
+			  #uri: http://localhost:8001 #匹配后提供服务的路由地址
+			  filters:
+				- AddRequestParameter=X-Request-Id,1024 #过滤器工厂会在匹配的请求头加上一对请求头，名称为X-Request-Id值为1024
+			  predicates:
+				- Path=/paymentInfo/**        # 断言，路径相匹配的进行路由
+				- Method=GET,POST
+
+	eureka:
+	  instance:
+		hostname: cloud-gateway-service
+	  client: #服务提供者provider注册进eureka服务列表内
+		service-url:
+		  register-with-eureka: true
+		  fetch-registry: true
+		  defaultZone: http://eureka7001.com:7001/eureka
+	~~~
+	
+4. 自定义过滤器
+	- 自定义全局GlobalFilter
+		- 两个主要接口介绍：**GlobalFilter,Ordered**
+		- 能干嘛
+			- 全局日志记录
+			- 统一网关鉴权
+		- 案例代码
+			~~~Java
+			package com.clover.springcloud.filter;
+
+			import lombok.extern.slf4j.Slf4j;
+			import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+			import org.springframework.cloud.gateway.filter.GlobalFilter;
+			import org.springframework.core.Ordered;
+			import org.springframework.http.HttpStatus;
+			import org.springframework.stereotype.Component;
+			import org.springframework.web.server.ServerWebExchange;
+			import reactor.core.publisher.Mono;
+
+			import java.util.Date;
+
+			@Component
+			@Slf4j
+			public class MyLogGateWayFilter implements GlobalFilter, Ordered {
+				@Override
+				public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+					log.info("time:"+new Date()+"\t 执行了自定义的全局过滤器: "+"MyLogGateWayFilter"+"hello");
+					String uname = exchange.getRequest().getQueryParams().getFirst("uname");
+					if(uname == null)
+					{
+						log.info("****用户名为null，无法登录");
+						exchange.getResponse().setStatusCode(HttpStatus.NOT_ACCEPTABLE);
+						return exchange.getResponse().setComplete();
+					}
+					return chain.filter(exchange);
+				}
+
+				// 加载过滤器的顺序，一般数字越小，优先级越高
+				@Override
+				public int getOrder() {
+					return 0;
+				}
+			}
+			~~~
+		- 测试
+			- 正确：http://localhost:9527/payment/lb?uname=clover
+			- 错误
+				- 没有参数uname
+				- http://localhost:9527/payment/lb：无法正常使用转发
+
+
+
+# 11、SpringCloud Config分布式配置中心
+
+## 11.1、概述
+
+1. 分布式系统面临的---配置问题
+	- 微服务意味着要将单体应用中的业务拆分成一个个子服务，每个服务的粒度相对较小，因此系统中会出现大量的服务。由于每个服务都需要必要的配置信息才能运行，所以一套**集中式的、动态的配置管理**设施是必不可少的。
+ 
+	- SpringCloud提供了ConfigServer来解决这个问题，我们每一个微服务自己带着一个application.yml，上百个配置文件的管理..
+2. 是什么
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211021162538.png) 
+	
+	- SpringCloud Config为微服务架构中的微服务提供集中化的外部配置支持，配置服务器为**各个不同微服务应用**的所有环境提供了一个**中心化的外部配置**
+	- SpringCloud Config分为**服务端和客户端两部分**
+		- 服务端也称为**分布式配置中心**，**它是一个独立的微服务应用**，用来连接配置服务器并为客户端提供获取配置信息，加密/解密信息等访问接口
+		- 客户端则是通过指定的配置中心来管理应用资源，以及与业务相关的配置内容，并在启动的时候从配置中心获取和加载配置信息配置服务器默认采用git来存储配置信息，这样就有助于对环境配置进行版本管理，并且可以通过git客户端工具来方便的管理和访问配置内容
+3. 能干嘛
+	- 集中管理配置文件
+	- 不同环境不同配置，动态化的配置更新，分环境部署比如dev/test/prod/beta/release
+	- 运行期间动态调整配置，不再需要在每个服务部署的机器上编写配置文件，服务会向配置中心统一拉取配置自己的信息
+	- 当配置发生变动时，服务不需要重启即可感知到配置的变化并应用新的配置
+	- 将配置信息以REST接口的形式暴露
+4. 与GitHub整合配置
+	- 由于SpringCloud Config默认使用Git来存储配置文件(也有其它方式,比如支持SVN和本地文件)，但最推荐的还是Git，而且使用的是http/https访问的形式
+
+## 11.2、Config服务端配置与测试
+
+1、用你自己的账号在GitHub上新建一个名为springcloud-config的新Repository
+
+2、由上一步获得刚新建的git地址：`https://github.com/cloverfelix/springcloud-config.git`
+
+3、新建Module模块 cloud-config-center-3344 它即为Cloud的配置中心模块cloudConfig Center
+
+4、修改POM
+
+~~~yml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SpringCloud</artifactId>
+        <groupId>com.clover.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-config-center-3344</artifactId>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+~~~
+
+5、编写YML
+
+~~~yml
+server:
+  port: 3344
+
+spring:
+  application:
+    name:  cloud-config-center #注册进Eureka服务器的微服务名
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/cloverfelix/springcloud-config.git #GitHub上面的git仓库名字
+        ####搜索目录
+          search-paths:
+            - springcloud-config
+      ####读取分支
+      label: master
+
+#服务注册到eureka地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+~~~
+
+6、编写主启动类
+
+~~~Java
+package com.clover.springcloud;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.config.server.EnableConfigServer;
+
+@SpringBootApplication
+@EnableConfigServer
+public class ConfigCenterMain3344 {
+    public static void main(String[] args)
+    {
+        SpringApplication.run(ConfigCenterMain3344.class,args);
+    }
+}
+~~~
+
+7、测试通过Config微服务是否可以从GitHub上获取配置内容
+
+http://localhost:3344/master/config-dev.yml
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211021174221.png)
+
+**大坑！！！！！！**
+
+**现在在GitHub中创建一个新的仓库的时候，默认分支为main分支，需要你自己手动创建一个master分支，并且，访问uri使用HTTP，不使用SSL，使用SSL会报身份验证问题**
+
+[参考博客](https://www.cxybb.com/article/weixin_51578439/109579295)
+
+配置读取规则
+- 官网
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211021174455.png)
+- /{label}/{application}-{profile}.yml
+	- master分支
+		- http://localhost:3344/master/config-dev.yml
+		- http://localhost:3344/master/config-test.yml
+		- http://localhost:3344/master/config-prod.yml
+	- dev分支
+		- http://localhost:3344/dev/config-dev.yml
+- /{application}-{profile}.yml
+	- http://localhost:3344/config-dev.yml
+- /{application}/{profile}[/{label}]
+	- http://localhost:3344/config/dev/master
+
+`重要配置细节总结`
+- /{name}-{profiles}.yml
+- /{label}-{name}-{profiles}.yml
+
+		label：分支(branch)
+		name ：服务名
+		profiles：环境(dev/test/prod)
+
+## 11.3、Config客户端配置与测试
+
+1、新建cloud-config-client-3355
+
+2、修改POM
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SpringCloud</artifactId>
+        <groupId>com.clover.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-config-client-3355</artifactId>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+~~~
+
+3、新建`bootstrap.yml`
+
+- bootstrap.yml是什么？
+	- applicaiton.yml是**用户级**的资源配置项
+	- bootstrap.yml是**系统级的**，**优先级更加高**
+
+- SpringCloud会创建一个“Bootstrap Context”，作为Spring应用的`Application Context`的父上下文。初始化的时候，`Bootstrap Context`负责**从外部源加载配置属性并解析配置**。这两个上下文共享一个从外部获取的`Environment`
+- `Bootstrap`属性有高优先级，默认情况下，它们不会被本地配置覆盖。 `Bootstrap context`和`Application Context`有着不同的约定，所以新增了一个`bootstrap.yml`文件，保证`Bootstrap Context`和`Application Context`配置的分离
+- **要将Client模块下的application.yml文件改为bootstrap.yml,这是很关键的**，因为bootstrap.yml是比application.yml先加载的。bootstrap.yml优先级高于application.yml
+
+~~~yml
+server:
+  port: 3355
+
+spring:
+  application:
+    name: config-client
+  cloud:
+    #Config客户端配置
+    config:
+      label: master #分支名称
+      name: config #配置文件名称
+      profile: dev #读取后缀名称   上述3个综合：master分支上config-dev.yml的配置文件被读取http://config-3344.com:3344/master/config-dev.yml
+      uri: http://localhost:3344 #配置中心地址k
+
+#服务注册到eureka地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+~~~
+
+4、编写主启动类
+
+~~~Java
+package com.clover.springcloud;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+
+@SpringBootApplication
+@EnableEurekaClient
+public class ConfigClientMain3355 {
+    public static void main(String[] args)
+    {
+        SpringApplication.run(ConfigClientMain3355.class,args);
+    }
+}
+~~~
+
+5、编写业务类
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ConfigClientController {
+    @Value("${config.info}")
+    private String configInfo;
+
+    @GetMapping("/configInfo")
+    public String getConfigInfo()
+    {
+        return configInfo;
+    }
+}
+~~~
+
+6、测试
+1. 启动Config配置中心3344微服务并自测：http://localhost:3344/master/config-dev.yml
+2. 启动3355作为Client准备访问：http://localhost:3355/configInfo
+
+**成功实现了客户端3355访问SpringCloud Config3344通过GitHub获取配置信息**
+
+`问题随时而来，分布式配置的动态刷新问题`
+- Linux运维修改GitHub上的配置文件内容做调整
+- 刷新3344，发现ConfigServer配置中心立刻响应
+- 刷新3355，发现ConfigClient客户端没有任何响应
+- 3355没有变化除非自己重启或者重新加载
+- 难到每次运维修改配置文件，客户端都需要重启？？噩梦
+
+## 11.4、Config客户端之动态刷新
+
+1、动态刷新
+1. 修改3355模块
+2. POM引入actuator监控
+
+	~~~xml
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-actuator</artifactId>
+	</dependency>
+	~~~
+3. 修改YML，暴露监控端口
+
+	~~~yml
+	# 暴露监控端点
+	management:
+	  endpoints:
+		web:
+		  exposure:
+			include: "*"
+	~~~
+4. 业务类Controller上加 **@RefreshScope注解**
+5. 此时修改GitHub-->访问3344-->访问3355
+	- 但是，此时3355并没有改变
+6. 这就需要运维人员在每次修改完毕后发送POST请求刷新3355
+	1. 必须是POST请求
+	2. curl -X POST "http://localhost:3355/actuator/refresh"
+7. 再次访问，成功实现了客户端3355刷新到最新配置内容，避免了服务重启
+
+２、想想还有什么问题？
+- 假如有多个微服务客户端3355/3366/3377。。。。。。
+- 每个微服务都要执行一次post请求，手动刷新？
+- **可否广播，一次通知，处处生效？**
+- 我们想大范围的自动刷新，求方法
+
+
+# 12、SpringCloud Bus消息总线
+
+## 12.1、概述
+1. 对Config的加深和扩充
+	- SpringCloud Bus 配合 SpringCloud Config 使用可以实现配置的动态刷新
+2. Bus是什么？
+	- Bus支持两种消息代理：RabbitMQ 和 Kafka
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211021213539.png)
+
+Spring Cloud Bus是用来将分布式系统的节点与轻量级消息系统链接起来的框架，**它整合了Java的事件处理机制和消息中间件的功能。**
+
+3. Bus能干嘛？
+	- SpringCloud Bus能管理和传播分布式系统间的消息，就像一个分布式执行器，可用于广播状态更改、事件推送等，也可以当作微服务间的通信通道。
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211021213721.png)
+
+4. 为何被称为总线
+	1. 什么是总线
+		- 在微服务架构的系统中，通常会使用**轻量级的消息代理**来构建一个**共用的消息主题**，并让系统中所有微服务实例都连接上来。由于**该主题中产生的消息会被所有实例监听和消费，所以称它为消息总线**。在总线上的各个实例，都可以方便地广播一些需要让其他连接在该主题上的实例都知道的消息。
+	2. 基本原理
+		- ConfigClient实例都监听**MQ中同一个topic(默认是springCloudBus)**。当一个服务刷新数据的时候，它会把这个信息放入到Topic中，这样其它监听同一Topic的服务就能得到通知，然后去更新自身的配置。
