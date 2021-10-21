@@ -5790,3 +5790,7 @@ Spring Cloud Bus是用来将分布式系统的节点与轻量级消息系统链�
 
 
 ## 12.2、SpringCloud Bus动态刷新全局广播
+
+
+
+
