@@ -5522,8 +5522,8 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/cloverfelix/springcloud-config.git #GitHub上面的git仓库名字
-        ####搜索目录
+          uri: https://gitee.com/ren_zuo_wei/springcloud-config.git #Gitee上面的git仓库名字
+          ####搜索目录
           search-paths:
             - springcloud-config
       ####读取分支
@@ -5614,7 +5614,7 @@ http://localhost:3344/master/config-dev.yml
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-config-client</artifactId>
+            <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -5791,6 +5791,331 @@ Spring Cloud Bus是用来将分布式系统的节点与轻量级消息系统链�
 
 ## 12.2、SpringCloud Bus动态刷新全局广播
 
+1、必须先具备良好的Rabbit MQ环境先
+
+2、新建 cloud-config-client-3366
+
+3、修改POM
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SpringCloud</artifactId>
+        <groupId>com.clover.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-config-client-3366</artifactId>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+~~~
+
+4、编写YML
+
+~~~yml
+server:
+  port: 3366
+
+spring:
+  application:
+    name: config-client
+  cloud:
+    #Config客户端配置
+    config:
+      label: master #分支名称
+      name: config #配置文件名称
+      profile: dev #读取后缀名称   上述3个综合：master分支上config-dev.yml的配置文件被读取http://config-3344.com:3344/master/config-dev.yml
+      uri: http://localhost:3344 #配置中心地址
+
+#服务注册到eureka地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+~~~
+
+5、编写主启动类
+
+~~~Java
+package com.clover.springcloud;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+
+@SpringBootApplication
+@EnableEurekaClient
+public class ConfigClientMain3366 {
+    public static void main(String[] args)
+    {
+        SpringApplication.run(ConfigClientMain3366.class,args);
+    }
+}
+~~~
+
+6、编写 controller
+
+~~~Java
+package com.clover.springcloud.controller;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RefreshScope
+public class ConfigClientController {
+
+    @Value("${server.port}")
+    private String serverPort;
+
+    @Value("${config.info}")
+    private String configInfo;
+
+    @GetMapping("/configInfo")
+    public String getConfigInfo()
+    {
+        return "serverPort: " + serverPort + "\t\n\n configInfo：" + configInfo;
+    }
+}
+~~~
+
+7、设计思想
+1. 利用消息总线触发一个`客户端/bus/refresh`,而刷新所有客户端的配置
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211022111007.png) 
+	
+2. 利用消息总线触发一个`服务端ConfigServer的/bus/refresh端点`，而刷新所有客户端的配置
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211022111038.png)
+	
+3. 图二的架构显然更加适合，图一不适合的原因如下
+	1. 打破了微服务的职责单一性，因为微服务本身是业务模块，它本不应该承担配置刷新的职责。
+	2. 破坏了微服务各节点的对等性。
+	3. 有一定的局限性。例如，微服务在迁移时，它的网络地址常常会发生变化，此时如果想要做到自动刷新，那就会增加更多的修改
+
+
+8、给cloud-config-center-3344配置中心**服务端**添加消息总线支持
+
+~~~xml
+<!--添加消息总线RabbitMQ支持-->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+~~~
+
+~~~yml
+server:
+  port: 3344
+
+spring:
+  application:
+    name:  cloud-config-center #注册进Eureka服务器的微服务名
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/ren_zuo_wei/springcloud-config.git #Gitee上面的git仓库名字
+          ####搜索目录
+          search-paths:
+            - springcloud-config
+      ####读取分支
+      label: master
+
+  #rabbitmq相关配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+#服务注册到eureka地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
 
 
 
+##rabbitmq相关配置,暴露bus刷新配置的端点
+management:
+  endpoints: #暴露bus刷新配置的端点
+    web:
+      exposure:
+        include: 'bus-refresh'
+~~~
+
+9、给cloud-config-client-3355**客户端**添加消息总线支持
+
+~~~xml
+<!--添加消息总线RabbitMQ支持-->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+~~~
+
+~~~yml
+server:
+  port: 3355
+
+spring:
+  application:
+    name: config-client
+  cloud:
+    #Config客户端配置
+    config:
+      label: master #分支名称
+      name: config #配置文件名称
+      profile: dev #读取后缀名称   上述3个综合：master分支上config-dev.yml的配置文件被读取http://config-3344.com:3344/master/config-dev.yml
+      uri: http://localhost:3344 #配置中心地址
+
+  #rabbitmq相关配置 15672是Web管理界面的端口；5672是MQ访问的端口
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+#服务注册到eureka地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+~~~
+
+10、给cloud-config-client-3366**客户端**添加消息总线支持
+
+~~~xml
+<!--添加消息总线RabbitMQ支持-->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+~~~
+
+~~~yml
+server:
+  port: 3366
+
+spring:
+  application:
+    name: config-client
+  cloud:
+    #Config客户端配置
+    config:
+      label: master #分支名称
+      name: config #配置文件名称
+      profile: dev #读取后缀名称   上述3个综合：master分支上config-dev.yml的配置文件被读取http://config-3344.com:3344/master/config-dev.yml
+      uri: http://localhost:3344 #配置中心地址
+
+  #rabbitmq相关配置 15672是Web管理界面的端口；5672是MQ访问的端口
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+#服务注册到eureka地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+~~~
+
+11、测试
+- 运维工程师
+	- 修改Gitee上配置文件增加版本号
+	- 发送POST请求：curl -X POST "http://localhost:3344/actuator/bus-refresh"
+	- 一次发送，处处生效
+- 配置中心自测：http://localhost:3344/master/config-dev.yml
+- 客户端
+	- http://localhost:3355/configInfo
+	- http://localhost:3366/configInfo
+	- 获取配置信息，发现都以及刷新了
+
+## 12.3、SpringCloud Bus动态刷新定点通知
+
+1. 不想全部通知，只想定点通知
+	1. 只通知3355	
+	2. 不通知3366
+2. 简单一句话
+	1. 指定具体某一个实例生效而不是全部 
+	2. 公式：http://localhost:配置中心的端口号/actuator/bus-refresh/{destination}
+	3. /bus/refresh请求不再发送到具体的服务实例上，而是发给config server并通过destination参数类指定需要更新配置的服务或实例
+3. 案例
+	1. 我们这里以刷新运行在3355端口上的config-client为例
+		1. 只通知3355
+		2. 不通知3366
+	2. curl -X POST "http://localhost:3344/actuator/bus-refresh/config-client:3355"
+	3. **destination--->在eureka上的微服务名:端口号**
+4. 通知总结All
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211022112431.png)
