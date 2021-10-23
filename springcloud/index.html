@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/springcloud\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  65437 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  69843 ,
         "url": "https:\/\/cloverfelix.github.io\/springcloud\/","datePublished": "2021-10-14T10:38:04+08:00","dateModified": "2021-10-14T10:38:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Springcloud</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/springcloud/"><i class="far fa-folder fa-fw"></i>SpringCloud</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 65437 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 131 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 69843 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 140 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -416,6 +416,46 @@
       </ul>
     </li>
     <li><a href="#152springcloud-alibaba学习资料获取">15.2、SpringCloud alibaba学习资料获取</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#161nacos简介">16.1、Nacos简介</a>
+      <ul>
+        <li><a href="#1611为什么叫nacos">16.1.1、为什么叫Nacos</a></li>
+        <li><a href="#1612nacos是什么">16.1.2、Nacos是什么？</a></li>
+        <li><a href="#1613nacos能干嘛">16.1.3、Nacos能干嘛？</a></li>
+        <li><a href="#1614去哪下">16.1.4、去哪下？</a></li>
+        <li><a href="#1615各种注册中心比较">16.1.5、各种注册中心比较</a></li>
+      </ul>
+    </li>
+    <li><a href="#162安装并运行nacos">16.2、安装并运行Nacos</a></li>
+    <li><a href="#163nacos作为服务注册中心演示">16.3、Nacos作为服务注册中心演示</a>
+      <ul>
+        <li><a href="#1631官网文档">16.3.1、官网文档</a></li>
+        <li><a href="#1632基于nacos的服务提供者">16.3.2、基于Nacos的服务提供者</a></li>
+        <li><a href="#1633基于nacos的服务消费者">16.3.3、基于Nacos的服务消费者</a></li>
+        <li><a href="#1634服务注册中心对比">16.3.4、服务注册中心对比</a></li>
+      </ul>
+    </li>
+    <li><a href="#164nacos作为服务配置中心演示">16.4、Nacos作为服务配置中心演示</a>
+      <ul>
+        <li><a href="#1641nacos作为配置中心-基础配置">16.4.1、Nacos作为配置中心-基础配置</a></li>
+        <li><a href="#1642nacos作为配置中心-分类配置">16.4.2、Nacos作为配置中心-分类配置</a>
+          <ul>
+            <li><a href="#16421问题">16.4.2.1、问题</a></li>
+            <li><a href="#16422nacos的图形化管理界面">16.4.2.2、Nacos的图形化管理界面</a></li>
+            <li><a href="#16423namespacegroupdata-id三者关系为什么这么设计">16.4.2.3、Namespace+Group+Data ID三者关系？为什么这么设计？</a></li>
+            <li><a href="#16424三种方案加载配置">16.4.2.4、三种方案加载配置</a>
+              <ul>
+                <li><a href="#164241dataid方案">16.4.2.4.1、DataID方案</a></li>
+                <li><a href="#164242group方案">16.4.2.4.2、Group方案</a></li>
+                <li><a href="#164243namespace方案">16.4.2.4.3、Namespace方案</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="1从22x和h版本开始说起">1、从2.2.x和H版本开始说起</h1>
@@ -13193,6 +13233,1036 @@ eureka:
 <p>Spring Cloud Alibaba 致力于提供微服务开发的一站式解决方案。此项目包含开发分布式应用微服务的必需组件，方便开发者通过 SpringCloud 编程模型轻松使用这些组件来开发分布式应用服务。</p>
 <p>依托 Spring Cloud Alibaba，您只需要添加一些注解和少量配置，就可以将 Spring Cloud 应用接入阿里微服务解决方案，通过阿里中间件来迅速搭建分布式应用系统</p>
 <p><a href="https://spring-cloud-alibaba-group.github.io/github-pages/greenwich/spring-cloud-alibaba.html" target="_blank" rel="noopener noreffer">SpringCloud Alibaba参考文档</a></p>
+<h1 id="16springcloud-alibaba-nacos服务注册和配置中心">16、SpringCloud Alibaba Nacos服务注册和配置中心</h1>
+<h2 id="161nacos简介">16.1、Nacos简介</h2>
+<h3 id="1611为什么叫nacos">16.1.1、为什么叫Nacos</h3>
+<p>前四个字母分别为Naming和Configuration的前两个字母，最后的s为Service。</p>
+<h3 id="1612nacos是什么">16.1.2、Nacos是什么？</h3>
+<ul>
+<li>一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台</li>
+<li>Nacos: Dynamic Naming and Configuration Service</li>
+<li>Nacos就是注册中心 + 配置中心的组合 &lt;===&gt; <strong>Nacos = Eureka+Config +Bus</strong></li>
+</ul>
+<h3 id="1613nacos能干嘛">16.1.3、Nacos能干嘛？</h3>
+<ul>
+<li>替代Eureka做服务注册中心</li>
+<li>替代Config做服务配置中心</li>
+</ul>
+<h3 id="1614去哪下">16.1.4、去哪下？</h3>
+<p><a href="https://github.com/alibaba/Nacos" target="_blank" rel="noopener noreffer">Nacos Github地址</a></p>
+<p><a href="https://nacos.io/zh-cn/index.html" target="_blank" rel="noopener noreffer">官网文档</a></p>
+<h3 id="1615各种注册中心比较">16.1.5、各种注册中心比较</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023161548.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023161548.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023161548.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023161548.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023161548.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023161548.png" /></p>
+<h2 id="162安装并运行nacos">16.2、安装并运行Nacos</h2>
+<ol>
+<li><strong>本地Java8+Maven环境已经OK</strong></li>
+<li>先从官网下载Nacos</li>
+<li>解压安装包，直接运行bin目录下的startup.cmd</li>
+<li>命令运行成功后直接访问：http://localhost:8848/nacos，默认账号密码都是nacos</li>
+<li>结果页面</li>
+</ol>
+<p><strong>大坑！！！！</strong></p>
+<p><strong>注意：运行Nacos必备Java环境，如果运行报错：Please set the JAVA_HOME variable in your environment, We need java(x64)! jdk8，那么你需要在你本机的环境变量中去新建一个JAVA_HOME变量环境</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023165232.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023165232.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023165232.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023165232.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023165232.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023165232.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023165255.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023165255.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023165255.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023165255.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023165255.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023165255.png" /></p>
+<h2 id="163nacos作为服务注册中心演示">16.3、Nacos作为服务注册中心演示</h2>
+<h3 id="1631官网文档">16.3.1、官网文档</h3>
+<p><a href="https://spring-cloud-alibaba-group.github.io/github-pages/greenwich/spring-cloud-alibaba.html#_spring_cloud_alibaba_nacos_config" target="_blank" rel="noopener noreffer">官网文档</a></p>
+<h3 id="1632基于nacos的服务提供者">16.3.2、基于Nacos的服务提供者</h3>
+<p>1、新建 cloud-alibaba-provider-payment9001</p>
+<p>2、修改POM</p>
+<p>父POM</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--spring cloud alibaba 2.1.0.RELEASE--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>com.alibaba.cloud<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>spring-cloud-alibaba-dependencies<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;version&gt;</span>2.1.0.RELEASE<span class="nt">&lt;/version&gt;</span>
+	<span class="nt">&lt;type&gt;</span>pom<span class="nt">&lt;/type&gt;</span>
+	<span class="nt">&lt;scope&gt;</span>import<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>本模块POM</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>SpringCloud<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+    <span class="nt">&lt;artifactId&gt;</span>cloud-alibaba-provider-payment9001<span class="nt">&lt;/artifactId&gt;</span>
+
+
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="c">&lt;!--SpringCloud ailibaba nacos --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.alibaba.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!-- SpringBoot整合Web组件 --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--日常通用jar包配置--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、编写YML</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">9001</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nacos-payment-provider</span><span class="w">
+</span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">nacos</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">discovery</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">server-addr</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:8848</span><span class="w"> </span><span class="c">#配置Nacos地址</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">management</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">endpoints</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">web</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">exposure</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">include</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;*&#39;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>4、编写主启动类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.alibaba</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.discovery.EnableDiscoveryClient</span><span class="o">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableDiscoveryClient</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentMain9001</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">PaymentMain9001</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>5、编写业务类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.alibaba.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentController</span> <span class="o">{</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${server.port}&#34;</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">serverPort</span><span class="o">;</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/payment/nacos/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPayment</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&#34;nacos registry, serverPort: &#34;</span><span class="o">+</span> <span class="n">serverPort</span><span class="o">+</span><span class="s">&#34;\t id&#34;</span><span class="o">+</span><span class="n">id</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6、测试</p>
+<ul>
+<li>http://localhost:9001/payment/nacos/1</li>
+<li>nacos控制台</li>
+</ul>
+<p>7、为下面演示nacos的负载均衡，参照9001建立9002</p>
+<h3 id="1633基于nacos的服务消费者">16.3.3、基于Nacos的服务消费者</h3>
+<p>1、新建 cloud-alibaba-consumer-nacos-order83</p>
+<p>2、修改POM</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>SpringCloud<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+    <span class="nt">&lt;artifactId&gt;</span>cloud-alibaba-consumer-nacos-order83<span class="nt">&lt;/artifactId&gt;</span>
+
+
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="c">&lt;!--SpringCloud ailibaba nacos --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.alibaba.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!-- 引入自己定义的api通用包，可以使用Payment支付Entity --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>cloud-api-commons<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>${project.version}<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!-- SpringBoot整合Web组件 --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--日常通用jar包配置--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>为什么nacos支持负载均衡？</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023203831.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023203831.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023203831.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023203831.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023203831.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023203831.png" /></p>
+<p>3、编写YML</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">83</span><span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nacos-order-consumer</span><span class="w">
+</span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">nacos</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">discovery</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">server-addr</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:8848</span><span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#消费者将要去访问的微服务名称(注册成功进nacos的微服务提供者)</span><span class="w">
+</span><span class="w"></span><span class="nt">service-url</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">nacos-user-service</span><span class="p">:</span><span class="w"> </span><span class="l">http://nacos-payment-provider </span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>4、编写主启动类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.alibaba</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.discovery.EnableDiscoveryClient</span><span class="o">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableDiscoveryClient</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderNacosMain83</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">OrderNacosMain83</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>5、编写业务类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.alibaba.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.client.RestTemplate</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderNacosController</span> <span class="o">{</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${service-url.nacos-user-service}&#34;</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">serverURL</span><span class="o">;</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">RestTemplate</span> <span class="n">restTemplate</span><span class="o">;</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/consumer/payment/nacos/{id}&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">paymentInfo</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="n">serverURL</span> <span class="o">+</span> <span class="s">&#34;/payment/nacos/&#34;</span> <span class="o">+</span> <span class="n">id</span><span class="o">,</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.alibaba.config</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.loadbalancer.LoadBalanced</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.client.RestTemplate</span><span class="o">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ApplicationContextBean</span> <span class="o">{</span>
+
+    <span class="nd">@Bean</span>
+    <span class="nd">@LoadBalanced</span>
+    <span class="kd">public</span> <span class="n">RestTemplate</span> <span class="nf">getRestTemplate</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">RestTemplate</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6、测试</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023204554.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023204554.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023204554.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023204554.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023204554.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023204554.png" /></p>
+<p>访问：http://localhost:83/consumer/payment/nacos/1</p>
+<ul>
+<li>83访问9001/9002，轮询负载OK</li>
+</ul>
+<h3 id="1634服务注册中心对比">16.3.4、服务注册中心对比</h3>
+<p>Nacos全景图所示</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205701.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205701.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205701.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205701.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205701.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205701.png" /></p>
+<p>Nacos和CAP</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205740.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205740.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205740.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205740.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205740.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205740.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205750.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205750.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205750.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205750.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205750.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023205750.png" /></p>
+<p><strong>Nacos 支持AP和CP模式的切换</strong></p>
+<ul>
+<li><strong>C是所有节点在同一时间看到的数据是一致的；而A的定义是所有的请求都会收到响应</strong></li>
+<li><code>何时选择使用何种模式？</code>
+<ul>
+<li>一般来说，如果不需要存储服务级别的信息且服务实例是通过nacos-client注册，并能够保持心跳上报，那么就可以选择AP模式。当前主流的服务如 Spring cloud 和 Dubbo 服务，都适用于AP模式，AP模式为了服务的可能性而减弱了一致性，因此AP模式下只支持注册临时实例。</li>
+<li>如果需要在服务级别编辑或者存储配置信息，那么 CP 是必须，K8S服务和DNS服务则适用于CP模式</li>
+<li>CP模式下则支持注册持久化实例，此时则是以 Raft 协议为集群运行模式，该模式下注册实例之前必须先注册服务，如果服务不存在，则会返回错误。</li>
+<li>切换命令：<code>curl -X PUT '$NACOS_SERVER:8848/nacos/v1/ns/operator/switches?entry=serverMode&amp;value=CP'</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="164nacos作为服务配置中心演示">16.4、Nacos作为服务配置中心演示</h2>
+<h3 id="1641nacos作为配置中心-基础配置">16.4.1、Nacos作为配置中心-基础配置</h3>
+<p>1、新建 cloud-alibaba-config-nacos-client3377</p>
+<p>2、修改POM</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>SpringCloud<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+    <span class="nt">&lt;artifactId&gt;</span>cloud-alibaba-config-nacos-client3377<span class="nt">&lt;/artifactId&gt;</span>
+
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="c">&lt;!--nacos-config--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.alibaba.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--nacos-discovery--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.alibaba.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--web + actuator--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--一般基础配置--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、编写YML</p>
+<ul>
+<li><strong>为什么要配置两个yml？</strong>
+<ul>
+<li>Nacos同springcloud-config一样，在项目初始化时，要保证<code>先从配置中心进行配置拉取</code>，拉取配置之后，才能保证项目的正常启动</li>
+<li>springboot中配置文件的加载是存在优先级顺序的，<strong>bootstrap优先级高于application</strong></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="c"># nacos配置</span><span class="w">
+</span><span class="w"></span><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">3377</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nacos-config-client</span><span class="w">
+</span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">nacos</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">discovery</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">server-addr</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:8848</span><span class="w"> </span><span class="c">#Nacos服务注册中心地址</span><span class="w">
+</span><span class="w">      </span><span class="nt">config</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">server-addr</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:8848</span><span class="w"> </span><span class="c">#Nacos作为配置中心地址</span><span class="w">
+</span><span class="w">        </span><span class="nt">file-extension</span><span class="p">:</span><span class="w"> </span><span class="l">yaml</span><span class="w"> </span><span class="c">#指定yaml格式的配置</span><span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w">  </span><span class="c"># ${spring.application.name}-${spring.profile.active}.${spring.cloud.nacos.config.file-extension}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">profiles</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">active</span><span class="p">:</span><span class="w"> </span><span class="l">dev</span><span class="w"> </span><span class="c"># 表示开发环境</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>4、编写主启动类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.spingcloud.alibaba</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.client.discovery.EnableDiscoveryClient</span><span class="o">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableDiscoveryClient</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NacosConfigClientMain3377</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">NacosConfigClientMain3377</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>5、编写业务类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.spingcloud.alibaba.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cloud.context.config.annotation.RefreshScope</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="nd">@RefreshScope</span> <span class="c1">//在控制器类加入@RefreshScope注解使当前类下的配置支持Nacos的动态刷新功能
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConfigClientController</span> <span class="o">{</span>
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${config.info}&#34;</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">configInfo</span><span class="o">;</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/config/info&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getConfigInfo</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">configInfo</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>6、在Nacos中添加配置信息</strong></p>
+<ul>
+<li>Nacos中的匹配规则
+<ul>
+<li>理论
+<ul>
+<li>Nacos中的dataId的组成格式及与SpringBoot配置文件中的匹配规则 <a href="https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html" target="_blank" rel="noopener noreffer">官网说明</a>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213409.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213409.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213409.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213409.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213409.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213409.png" /></li>
+<li>最后公式：<code>${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}</code></li>
+</ul>
+</li>
+<li>实操
+<ul>
+<li>新增配置</li>
+<li>Nacos界面配置对应
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213604.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213604.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213604.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213604.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213604.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213604.png" /></li>
+<li>设置DataId
+<ul>
+<li>公式：<code>${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}</code></li>
+<li><code>prefix</code>:<strong>默认为 spring.application.name 的值</strong></li>
+<li><code>spring.profile.active</code>： <strong>即为当前环境对应的 profile</strong>，可以通过配置项 spring.profile.active 来配置。</li>
+<li><code>file-exetension</code> ：<strong>为配置内容的数据格式</strong>，可以通过配置项spring.cloud.nacos.config.file-extension 来配置</li>
+<li>小总结说明
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213759.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213759.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213759.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213759.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213759.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023213759.png" /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>7、测试</p>
+<ol>
+<li>启动前需要在nacos客户端-配置管理-配置管理栏目下有对应的yaml配置文件</li>
+<li>运行cloud-config-nacos-client3377的主启动类</li>
+<li>调用接口查看配置信息：http://localhost:3377/config/info</li>
+</ol>
+<p>8、自带动态刷新</p>
+<ul>
+<li>修改下Nacos中的yaml配置文件，再次调用查看配置的接口，就会发现配置已经刷新</li>
+</ul>
+<h3 id="1642nacos作为配置中心-分类配置">16.4.2、Nacos作为配置中心-分类配置</h3>
+<h4 id="16421问题">16.4.2.1、问题</h4>
+<p>多环境多项目管理</p>
+<ul>
+<li>
+<p>问题1：</p>
+<p>实际开发中，通常一个系统会准备，dev开发环境、test测试环境、prod生产环境。</p>
+<p>如何保证指定环境启动时服务能正确读取到Nacos上相应环境的配置文件呢？</p>
+</li>
+<li>
+<p>问题2：</p>
+<p>一个大型分布式微服务系统会有很多微服务子项目，每个微服务项目又都会有相应的开发环境、测试环境、预发环境、正式环境&hellip;&hellip;</p>
+<p>那怎么对这些微服务配置进行管理呢？</p>
+</li>
+</ul>
+<h4 id="16422nacos的图形化管理界面">16.4.2.2、Nacos的图形化管理界面</h4>
+<ol>
+<li>配置管理
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215042.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215042.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215042.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215042.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215042.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215042.png" /></li>
+<li>命名空间
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215100.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215100.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215100.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215100.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215100.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215100.png" /></li>
+</ol>
+<h4 id="16423namespacegroupdata-id三者关系为什么这么设计">16.4.2.3、Namespace+Group+Data ID三者关系？为什么这么设计？</h4>
+<ol>
+<li>
+<p>是什么</p>
+<ul>
+<li>类似Java里面的package名和类名</li>
+<li><strong>最外层的namespace是可以用于区分部署环境的</strong>，<code>Group和DataID逻辑上区分两个目标对象</code></li>
+</ul>
+</li>
+<li>
+<p>三者之间的情况
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215222.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215222.png, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215222.png 1.5x, https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215222.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215222.png"
+        title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215222.png" /></p>
+</li>
+<li>
+<p>默认情况</p>
+<ul>
+<li><strong>Namespace=public，Group=DEFAULT_GROUP, 默认Cluster是DEFAULT</strong></li>
+<li><code>Nacos默认的命名空间是public，Namespace主要用来实现隔离</code>，比方说我们现在有三个环境：开发、测试、生产环境，我们就可以创建三个Namespace，不同的Namespace之间是隔离的</li>
+<li><code>Group默认是DEFAULT_GROUP</code>，Group可以把不同的微服务划分到同一个分组里面去</li>
+<li><code>Service就是微服务</code>；一个Service可以包含多个Cluster（集群），Nacos默认Cluster是DEFAULT，<strong>Cluster是对指定微服务的一个虚拟划分</strong></li>
+<li>比方说为了容灾，将Service微服务分别部署在了杭州机房和广州机房，这时就可以给杭州机房的Service微服务起一个集群名称（HZ），给广州机房的Service微服务起一个集群名称（GZ），还可以尽量让同一个机房的微服务互相调用，以提升性能</li>
+<li>最后是Instance，就是微服务的实例</li>
+</ul>
+</li>
+</ol>
+<h4 id="16424三种方案加载配置">16.4.2.4、三种方案加载配置</h4>
+<h5 id="164241dataid方案">16.4.2.4.1、DataID方案</h5>
+<ul>
+<li>指定spring.profile.active和配置文件的DataID来使不同环境下读取不同的配置</li>
+<li><strong>默认空间+默认分组+新建dev和test两个DataID</strong>
+<ul>
+<li>新建dev配置DataID</li>
+<li>新建test配置DataID</li>
+</ul>
+</li>
+<li>通过spring.profile.active属性就能进行多环境下配置文件的读取</li>
+<li>测试
+<ul>
+<li>http://localhost:3377/config/info</li>
+<li>配置是什么就加载什么</li>
+</ul>
+</li>
+</ul>
+<h5 id="164242group方案">16.4.2.4.2、Group方案</h5>
+<h5 id="164243namespace方案">16.4.2.4.3、Namespace方案</h5>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
