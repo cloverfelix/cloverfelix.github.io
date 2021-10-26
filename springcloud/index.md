@@ -8266,3 +8266,1002 @@ public class FlowLimitController {
 	- 当资源被降级后，在接下来的降级时间窗口之内，对该资源的调用都自动熔断（默认行为是抛出 DegradeException）
 	- Sentinel的断路器是**没有半开**状态的
 		- 半开的状态系统自动去检测是否请求有异常，没有异常就关闭断路器恢复使用，有异常则继续打开断路器不可用。具体可以参考Hystrix
+
+
+### 17.5.2、降级策略实战
+
+#### 17.5.2.1、RT是什么？
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026104635.png)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026104702.png)
+
+#### 17.5.2.2、测试
+
+1. 代码
+
+~~~Java
+@GetMapping("/testD")
+public String testD()
+{
+    //暂停几秒钟线程
+    try { TimeUnit.SECONDS.sleep(1); } catch (InterruptedException e) { e.printStackTrace(); }
+    log.info("testD 测试RT");
+    return "------testD";
+}
+~~~
+
+2.  配置
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026104834.png)
+	
+3.  jmeter压测
+4.  结论
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026105243.png)
+
+- 按照上述配置
+ - 永远一秒钟打进来10个线程（大于5个了）调用testD，我们希望200毫秒处理完本次任务，如果超过200毫秒还没处理完，在未来1秒钟的时间窗口内，断路器打开(保险丝跳闸)微服务不可用，保险丝跳闸断电了
+- 后续我停止jmeter，没有这么大的访问量了，断路器关闭(保险丝恢复)，微服务恢复OK
+
+#### 17.5.2.3、异常比例是什么？
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026110436.png)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026110528.png)
+
+#### 17.5.2.4、测试
+
+1. 代码
+	~~~Java
+		@GetMapping("/testD")
+	public String testD()
+	{
+		log.info("testD 测试RT");
+		int age = 10/0;
+		return "------testD";
+	}
+	~~~
+2. 配置
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026110746.png)
+	
+3. jmeter压测
+4. 结论
+	- 按照上述配置，**单独访问一次**，必然来一次报错一次(int age  = 10/0)，调一次错一次
+	- 开启jmeter后，直接高并发发送请求，多次调用达到我们的配置条件了
+	- 断路器开启(保险丝跳闸)，微服务不可用了，不再报错error而是服务降级了
+
+#### 17.5.2.5、异常数是什么？
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026111734.png)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026111803.png)
+
+**异常数是按照分钟统计的**
+
+#### 17.5.2.6、测试
+
+1. 代码
+	~~~Java
+	@GetMapping("/testE")
+	public String testE()
+	{
+		log.info("testE 测试异常数");
+		int age = 10/0;
+		return "------testE 测试异常数";
+	~~~
+2. 配置
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026111942.png)
+	
+	- http://localhost:8401/testE，第一次访问绝对报错，因为除数不能为零，我们看到error窗口，但是达到5次报错后，进入熔断后降级
+
+## 17.6、热点key限流
+
+### 17.6.1、基本介绍
+
+**何为热点**
+- 热点即经常访问的数据，很多时候我们希望统计或者限制某个热点数据中访问频次最高的TopN数据，并对其访问进行限流或者其它操作
+
+[# 热点参数限流指导文档](https://github.com/alibaba/Sentinel/wiki/%E7%83%AD%E7%82%B9%E5%8F%82%E6%95%B0%E9%99%90%E6%B5%81)
+
+### 17.6.2、承上启下复习
+- **兜底方法，分为系统默认和客户自定义，两种**
+- 之前的case，限流出问题后，都是用sentinel系统默认的提示：Blocked by Sentinel (flow limiting)
+- 我们能不能自定?类似hystrix，某个方法出问题了，就找对应的兜底降级方法？
+- 结论：**从HystrixCommand 到@SentinelResource**
+
+代码：com.alibaba.csp.sentinel.slots.block.BlockException
+
+~~~Java
+@GetMapping("/testHotKey")
+@SentinelResource(value = "testHotKey",blockHandler = "dealHandler_testHotKey")
+public String testHotKey(@RequestParam(value = "p1",required = false) String p1, 
+                         @RequestParam(value = "p2",required = false) String p2){
+    return "------testHotKey";
+}
+public String dealHandler_testHotKey(String p1,String p2,BlockException exception)
+{
+    return "-----dealHandler_testHotKey";
+}
+~~~
+- sentinel系统默认的提示：Blocked by Sentinel (flow limiting)
+
+### 17.6.3、配置
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026115340.png)
+
+
+两种情况
+- 第一种情况
+	- `@SentinelResource(value = "testHotKey")`
+	- 异常打到了前台用户界面看到，不友好
+- 第二种情况
+	- `@SentinelResource(value = "testHotKey",blockHandler ="dealHandler_testHotKey")`
+	- 方法testHotKey里面第一个参数只要QPS超过每秒1次，马上降级处理，用了我们自己定义的
+
+### 17.6.4、测试
+- `error`：http://localhost:8401/testHotKey?p1=abc
+- `error`：http://localhost:8401/testHotKey?p1=abc&p2=33
+- `right`：http://localhost:8401/testHotKey?p2=abc
+
+### 17.6.5、参数例外项(重点！！！！！)
+- 上述案例演示了第一个参数p1，当QPS超过1秒1次点击后马上被限流
+- 特例情况
+	- 普通：超过1秒钟一个后，达到阈值1后马上被限流
+	- 我们期望p1参数当它是**某个特殊值**时，它的限流值和平时不一样
+	- 特例：假如当p1的值等于5时，它的阈值可以达到200
+- 配置
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026160042.png)
+	
+- 测试
+	- `right`：http://localhost:8401/testHotKey?p1=5
+	- `error`：http://localhost:8401/testHotKey?p1=3
+	- 当p1等于5的时候，阈值变为200
+	- 当p1不等于5的时候，阈值就是平常的1
+- **前提条件**：热点参数的注意点，参数必须是基本类型或者String
+	
+### 17.6.6、其它
+
+当你手动在代码中添加一个异常再次访问时，会直接出现报错界面，而不是你设置的兜底方法
+
+- **@SentinelResource**
+	- 处理的是Sentinel控制台配置的违规情况，有blockHandler方法配置的兜底处理
+- **RuntimeException**
+	- int age = 10/0,这个是java运行时报出的运行时异常RunTimeException，@SentinelResource不管
+- 总结：**@SentinelResource主管配置出错，运行出错该走异常走异常**
+
+
+## 17.7、系统规则
+
+[系统自适应限流](https://github.com/alibaba/Sentinel/wiki/%E7%B3%BB%E7%BB%9F%E8%87%AA%E9%80%82%E5%BA%94%E9%99%90%E6%B5%81)
+
+各项配置参数说明
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026162053.png)
+
+可以配置一个全局QPS
+
+## 17.8、@SentinelResource
+
+### 17.8.1、按资源名称限流+后续处理
+
+1. 启动Nacos成功
+2. 启动Sentinel成功：java -jar sentinel-dashboard-1.7.0.jar
+3. 修改cloud-alibaba-sentinel-service8401
+	1. 修改POM，引入我们自定义的实体类
+		~~~xml
+		<dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->
+			<groupId>com.clover.springcloud</groupId>
+			<artifactId>cloud-api-commons</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		~~~
+	2. 增加一个业务类：RateLimitController
+		~~~Java
+		package com.clover.springcloud.alibaba.controller;
+
+		import com.alibaba.csp.sentinel.annotation.SentinelResource;
+		import com.alibaba.csp.sentinel.slots.block.BlockException;
+		import com.clover.springcloud.entities.CommonResult;
+		import com.clover.springcloud.entities.Payment;
+		import org.springframework.web.bind.annotation.GetMapping;
+		import org.springframework.web.bind.annotation.RestController;
+
+		@RestController
+		public class RateLimitController {
+			@GetMapping("/byResource")
+			@SentinelResource(value = "byResource",blockHandler = "handleException")
+			public CommonResult byResource()
+			{
+				return new CommonResult(200,"按资源名称限流测试OK",new Payment(2020L,"serial001"));
+			}
+			public CommonResult handleException(BlockException exception)
+			{
+				return new CommonResult(444,exception.getClass().getCanonicalName()+"\t 服务不可用");
+			}
+		}
+		~~~
+4. 配置流控规则
+	- 图形配置和代码关系
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026163646.png)
+	
+	- 表示1秒钟内查询次数大于1，就跑到我们自定义的处流，限流
+5. 测试
+	- 1秒钟点击1下，OK
+	- 超过上述，疯狂点击，返回了自己定义的限流处理信息，限流发生
+6. **额外问题**
+	- 此时关闭问服务8401看看
+	- **Sentinel控制台，流控规则消失了？？？？？**
+		- **临时/持久？**
+
+### 17.8.2、按照URL地址限流+后续处理
+1. 通过访问的URL来限流，会返回Sentinel自带默认的限流处理信息
+2. 修改业务类RateLimitController
+	~~~Java
+	@GetMapping("/rateLimit/byUrl")
+		@SentinelResource(value = "byUrl")
+		public CommonResult byUrl()
+		{
+			return new CommonResult(200,"按url限流测试OK",new Payment(2020L,"serial002"));
+		}	
+	~~~
+3. 访问一次 ：http://localhost:8401/rateLimit/byUrl
+4. Sentinel控制台配置
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026163923.png)
+	
+5. 测试
+	- 疯狂点击http://localhost:8401/rateLimit/byUrl
+	- 结果：会返回Sentinel自带的限流处理结果
+
+
+
+### 17.8.3、上面兜底方案面临的问题
+1. 系统默认的，没有体现我们自己的业务要求
+2. 依照现有条件，我们自定义的处理方法又和业务代码耦合在一块，不直观
+3. 每个业务方法都添加一个兜底的，那代码膨胀加剧
+4. 全局统一的处理方法没有体现
+
+
+### 17.8.4、客户自定义限流处理逻辑
+
+1. 创建CustomerBlockHandler类用于自定义限流处理逻辑
+2. 自定义限流处理类：CustomerBlockHandler
+	~~~Java
+	package com.clover.springcloud.alibaba.myhandler;
+
+	import com.alibaba.csp.sentinel.slots.block.BlockException;
+	import com.clover.springcloud.entities.CommonResult;
+
+	public class CustomerBlockHandler {
+		public static CommonResult handleException(BlockException exception){
+			return new CommonResult(2020,"自定义的限流处理信息......CustomerBlockHandler---handleException");
+		}
+
+		public static CommonResult handleException2(BlockException exception){
+			return new CommonResult(2020,"自定义的限流处理信息......CustomerBlockHandler---handleException2");
+		}
+	}
+	~~~
+3. 启动微服务后先调用一次
+	- http://localhost:8401/rateLimit/customerBlockHandler
+4. Sentinel控制台配置
+5. 测试后我们自定义的出来了
+6. 进一步说明
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026164936.png)
+	
+	
+### 17.8.5、更多注解属性说明
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026170051.png)
+1. 多说一句
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026170115.png)
+	
+	- 所有的代码都要用try-catch-finally方式进行处理
+2. Sentinel主要有三个核心Api
+	- SphU定义资源
+	- Tracer定义统计
+	- ContextUtil定义了上下文
+
+
+## 17.9、服务熔断功能
+
+sentinel整合ribbon+openFeign+fallback
+
+### 17.9.1、Ribbon系列
+1. 启动nacos和sentinel
+2. 提供者9003/9004
+	1. 新建cloud-alibaba-provider-payment9003/9004两个一样的做法
+	2. 修改POM
+		~~~xml
+		<?xml version="1.0" encoding="UTF-8"?>
+		<project xmlns="http://maven.apache.org/POM/4.0.0"
+				 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+			<parent>
+				<artifactId>SpringCloud</artifactId>
+				<groupId>com.clover.springcloud</groupId>
+				<version>1.0-SNAPSHOT</version>
+			</parent>
+			<modelVersion>4.0.0</modelVersion>
+
+			<artifactId>cloud-alibaba-provider-payment9003</artifactId>
+
+
+			<dependencies>
+				<!--SpringCloud ailibaba nacos -->
+				<dependency>
+					<groupId>com.alibaba.cloud</groupId>
+					<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+				</dependency>
+				<dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->
+					<groupId>com.clover.springcloud</groupId>
+					<artifactId>cloud-api-commons</artifactId>
+					<version>${project.version}</version>
+				</dependency>
+				<!-- SpringBoot整合Web组件 -->
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-web</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-actuator</artifactId>
+				</dependency>
+				<!--日常通用jar包配置-->
+				<dependency>
+					<groupId>org.projectlombok</groupId>
+					<artifactId>lombok</artifactId>
+					<optional>true</optional>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-test</artifactId>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</project>
+		~~~
+	3. 编写YML：记得修改不同的端口号
+		~~~yml
+		server:
+		  port: 9003
+
+		spring:
+		  application:
+			name: nacos-payment-provider
+		  cloud:
+			nacos:
+			  discovery:
+				server-addr: localhost:8848 #配置Nacos地址
+
+		management:
+		  endpoints:
+			web:
+			  exposure:
+				include: '*'		
+		~~~
+	4. 编写主启动类
+		~~~Java
+		package com.clover.springcloud.alibaba;
+
+		import org.springframework.boot.SpringApplication;
+		import org.springframework.boot.autoconfigure.SpringBootApplication;
+		import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+		@SpringBootApplication
+		@EnableDiscoveryClient
+		public class PaymentMain9003 {
+			public static void main(String[] args)
+			{
+				SpringApplication.run(PaymentMain9003.class,args);
+			} 
+		}		
+		~~~
+	5. 编写业务类
+		~~~Java
+		package com.clover.springcloud.alibaba.controller;
+
+		import com.clover.springcloud.entities.CommonResult;
+		import com.clover.springcloud.entities.Payment;
+		import org.springframework.beans.factory.annotation.Value;
+		import org.springframework.web.bind.annotation.GetMapping;
+		import org.springframework.web.bind.annotation.PathVariable;
+		import org.springframework.web.bind.annotation.RestController;
+
+		import java.util.HashMap;
+
+		@RestController
+		public class PaymentController {
+			@Value("${server.port}")
+			private String serverPort;
+
+			// 模拟一个数据库的操作
+			public static HashMap<Long, Payment> hashMap = new HashMap<>();
+			static
+			{
+				hashMap.put(1L,new Payment(1L,"28a8c1e3bc2742d8848569891fb42181"));
+				hashMap.put(2L,new Payment(2L,"bba8c1e3bc2742d8848569891ac32182"));
+				hashMap.put(3L,new Payment(3L,"6ua8c1e3bc2742d8848569891xt92183"));
+			}
+
+			@GetMapping(value = "/paymentSQL/{id}")
+			public CommonResult<Payment> paymentSQL(@PathVariable("id") Long id)
+			{
+				Payment payment = hashMap.get(id);
+				CommonResult<Payment> result = new CommonResult(200,"from mysql,serverPort:  "+serverPort,payment);
+				return result;
+			}
+		}		
+		~~~
+	6. 测试地址：http://localhost:9003/paymentSQL/1
+3. 消费者84
+	1. 新建cloud-alibaba-consumer-nacos-order84
+	2. 修改POM	
+		~~~xml
+		<?xml version="1.0" encoding="UTF-8"?>
+		<project xmlns="http://maven.apache.org/POM/4.0.0"
+				 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+			<parent>
+				<artifactId>SpringCloud</artifactId>
+				<groupId>com.clover.springcloud</groupId>
+				<version>1.0-SNAPSHOT</version>
+			</parent>
+			<modelVersion>4.0.0</modelVersion>
+
+			<artifactId>cloud-alibaba-consumer-nacos-order84</artifactId>
+
+			<dependencies>
+				<!--SpringCloud ailibaba nacos -->
+				<dependency>
+					<groupId>com.alibaba.cloud</groupId>
+					<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+				</dependency>
+				<!--SpringCloud ailibaba sentinel -->
+				<dependency>
+					<groupId>com.alibaba.cloud</groupId>
+					<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+				</dependency>
+				<!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->
+				<dependency>
+					<groupId>com.clover.springcloud</groupId>
+					<artifactId>cloud-api-commons</artifactId>
+					<version>${project.version}</version>
+				</dependency>
+				<!-- SpringBoot整合Web组件 -->
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-web</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-actuator</artifactId>
+				</dependency>
+				<!--日常通用jar包配置-->
+				<dependency>
+					<groupId>org.projectlombok</groupId>
+					<artifactId>lombok</artifactId>
+					<optional>true</optional>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-test</artifactId>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</project>
+		~~~
+	3. 编写YML
+		~~~yml
+		server:
+		  port: 84
+
+
+		spring:
+		  application:
+			name: nacos-order-consumer
+		  cloud:
+			nacos:
+			  discovery:
+				server-addr: localhost:8848
+			sentinel:
+			  transport:
+				#配置Sentinel dashboard地址
+				dashboard: localhost:8080
+				#默认8719端口，假如被占用会自动从8719开始依次+1扫描,直至找到未被占用的端口
+				port: 8719
+
+
+		#消费者将要去访问的微服务名称(注册成功进nacos的微服务提供者)
+		service-url:
+		  nacos-user-service: http://nacos-payment-provider
+		~~~
+	4. 编写主启动类
+		~~~Java
+		package com.clover.springcloud.alibaba;
+
+		import org.springframework.boot.SpringApplication;
+		import org.springframework.boot.autoconfigure.SpringBootApplication;
+		import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+		@SpringBootApplication
+		@EnableDiscoveryClient
+		public class OrderNacosMain84 {
+			public static void main(String[] args)
+			{
+				SpringApplication.run(OrderNacosMain84.class,args);
+			}
+		}
+		~~~
+	5. 编写业务类
+		1. ApplicationContextConfig
+			~~~Java
+			package com.clover.springcloud.alibaba.config;
+
+			import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+			import org.springframework.context.annotation.Bean;
+			import org.springframework.context.annotation.Configuration;
+			import org.springframework.web.client.RestTemplate;
+
+			@Configuration
+			public class ApplicationContextConfig {
+				@Bean
+				@LoadBalanced
+				public RestTemplate getRestTemplate()
+				{
+					return new RestTemplate();
+				}
+			}
+			~~~
+		2. **CircleBreakerController **
+			1. 修改后轻重启微服务
+				- 热部署对java代码级生效及时
+				- 对@SentinelResource注解内属性，有时效果不好
+			2. 目的
+				- fallback管运行异常
+				- blockHandler管配置违规
+			3. 测试地址：http://localhost:84/consumer/fallback/1
+			4. 没有任何配置
+				- 给客户error页面，不友好
+				~~~Java
+				package com.clover.springcloud.alibaba.controller;
+
+				import com.alibaba.csp.sentinel.annotation.SentinelResource;
+				import com.clover.springcloud.entities.CommonResult;
+				import com.clover.springcloud.entities.Payment;
+				import lombok.extern.slf4j.Slf4j;
+				import org.springframework.web.bind.annotation.PathVariable;
+				import org.springframework.web.bind.annotation.RequestMapping;
+				import org.springframework.web.bind.annotation.RestController;
+				import org.springframework.web.client.RestTemplate;
+
+				import javax.annotation.Resource;
+
+				@RestController
+				@Slf4j
+				public class CircleBreakerController {
+					public static final String SERVICE_URL = "http://nacos-payment-provider";
+
+					@Resource
+					private RestTemplate restTemplate;
+
+					@RequestMapping("/consumer/fallback/{id}")
+					@SentinelResource(value = "fallback")
+					public CommonResult<Payment> fallback(@PathVariable Long id)
+					{
+						CommonResult<Payment> result = restTemplate.getForObject(SERVICE_URL + "/paymentSQL/"+id,CommonResult.class,id);
+
+						if (id == 4) {
+							throw new IllegalArgumentException ("IllegalArgumentException,非法参数异常....");
+						}else if (result.getData() == null) {
+							throw new NullPointerException ("NullPointerException,该ID没有对应记录,空指针异常");
+						}
+
+						return result;
+					}
+				}
+				~~~
+			5. 只配置fallback
+				- 本例sentinel无配置
+				
+				![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026202550.png)
+				
+				- 结果
+				- ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026202751.png)
+				- ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026202839.png)
+				- ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026202854.png)
+				
+				~~~Java
+				package com.clover.springcloud.alibaba.controller;
+
+				import com.alibaba.csp.sentinel.annotation.SentinelResource;
+				import com.clover.springcloud.entities.CommonResult;
+				import com.clover.springcloud.entities.Payment;
+				import lombok.extern.slf4j.Slf4j;
+				import org.springframework.web.bind.annotation.PathVariable;
+				import org.springframework.web.bind.annotation.RequestMapping;
+				import org.springframework.web.bind.annotation.RestController;
+				import org.springframework.web.client.RestTemplate;
+
+				import javax.annotation.Resource;
+
+				@RestController
+				@Slf4j
+				public class CircleBreakerController {
+					public static final String SERVICE_URL = "http://nacos-payment-provider";
+
+					@Resource
+					private RestTemplate restTemplate;
+
+					@RequestMapping("/consumer/fallback/{id}")
+				//    @SentinelResource(value = "fallback")// 没有配置
+					@SentinelResource(value = "fallback",fallback = "handlerFallback") //fallback负责业务异常
+					public CommonResult<Payment> fallback(@PathVariable Long id)
+					{
+						CommonResult<Payment> result = restTemplate.getForObject(SERVICE_URL + "/paymentSQL/"+id,CommonResult.class,id);
+
+						if (id == 4) {
+							throw new IllegalArgumentException ("IllegalArgumentException,非法参数异常....");
+						}else if (result.getData() == null) {
+							throw new NullPointerException ("NullPointerException,该ID没有对应记录,空指针异常");
+						}
+
+						return result;
+					}
+
+					// fallback方法
+					public CommonResult handlerFallback(@PathVariable  Long id,Throwable e) {
+						Payment payment = new Payment(id,"null");
+						return new CommonResult<>(444,"兜底异常handlerFallback,exception内容  "+e.getMessage(),payment);
+					}
+				}
+				~~~
+			6. 只配置blockHandler
+				- 本例sentinel需要配置，随意配置哪一个都可以
+				
+				![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026203447.png)
+				
+				- 结果
+				- ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026203737.png)
+				
+				~~~Java
+				package com.clover.springcloud.alibaba.controller;
+
+				import com.alibaba.csp.sentinel.annotation.SentinelResource;
+				import com.alibaba.csp.sentinel.slots.block.BlockException;
+				import com.clover.springcloud.entities.CommonResult;
+				import com.clover.springcloud.entities.Payment;
+				import lombok.extern.slf4j.Slf4j;
+				import org.springframework.web.bind.annotation.PathVariable;
+				import org.springframework.web.bind.annotation.RequestMapping;
+				import org.springframework.web.bind.annotation.RestController;
+				import org.springframework.web.client.RestTemplate;
+
+				import javax.annotation.Resource;
+
+				@RestController
+				@Slf4j
+				public class CircleBreakerController {
+					public static final String SERVICE_URL = "http://nacos-payment-provider";
+
+					@Resource
+					private RestTemplate restTemplate;
+
+					@RequestMapping("/consumer/fallback/{id}")
+				//    @SentinelResource(value = "fallback")// 没有配置
+				//    @SentinelResource(value = "fallback",fallback = "handlerFallback") //fallback负责业务异常
+					@SentinelResource(value = "fallback",blockHandler = "blockHandler") //blockHandler负责在sentinel里面配置的降级限流
+					public CommonResult<Payment> fallback(@PathVariable Long id)
+					{
+						CommonResult<Payment> result = restTemplate.getForObject(SERVICE_URL + "/paymentSQL/"+id,CommonResult.class,id);
+
+						if (id == 4) {
+							throw new IllegalArgumentException ("IllegalArgumentException,非法参数异常....");
+						}else if (result.getData() == null) {
+							throw new NullPointerException ("NullPointerException,该ID没有对应记录,空指针异常");
+						}
+
+						return result;
+					}
+
+					// 本例是fallback
+				//    public CommonResult handlerFallback(@PathVariable  Long id,Throwable e) {
+				//        Payment payment = new Payment(id,"null");
+				//        return new CommonResult<>(444,"兜底异常handlerFallback,exception内容  "+e.getMessage(),payment);
+				//    }
+
+					// 本例是blockHandler
+					public CommonResult blockHandler(@PathVariable  Long id, BlockException blockException) {
+						Payment payment = new Payment(id,"null");
+						return new CommonResult<>(445,"blockHandler-sentinel限流,无此流水: blockException  "+blockException.getMessage(),payment);
+					}
+				}
+				~~~
+				
+			7. fallback和blockHandler都配置
+				- 本例sentinel需要配置，随意配置哪一个都可以
+				
+				![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026204231.png)
+				
+				- 结果
+				- 若 blockHandler 和 fallback 都进行了配置，则被限流降级而抛出 BlockException 时只会进入 blockHandler 处理逻辑
+				- ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026204512.png)
+
+				~~~Java
+				package com.clover.springcloud.alibaba.controller;
+
+				import com.alibaba.csp.sentinel.annotation.SentinelResource;
+				import com.alibaba.csp.sentinel.slots.block.BlockException;
+				import com.clover.springcloud.entities.CommonResult;
+				import com.clover.springcloud.entities.Payment;
+				import lombok.extern.slf4j.Slf4j;
+				import org.springframework.web.bind.annotation.PathVariable;
+				import org.springframework.web.bind.annotation.RequestMapping;
+				import org.springframework.web.bind.annotation.RestController;
+				import org.springframework.web.client.RestTemplate;
+
+				import javax.annotation.Resource;
+
+				@RestController
+				@Slf4j
+				public class CircleBreakerController {
+					public static final String SERVICE_URL = "http://nacos-payment-provider";
+
+					@Resource
+					private RestTemplate restTemplate;
+
+					@RequestMapping("/consumer/fallback/{id}")
+				//    @SentinelResource(value = "fallback")// 没有配置
+				//    @SentinelResource(value = "fallback",fallback = "handlerFallback") //fallback负责业务异常
+				//    @SentinelResource(value = "fallback",blockHandler = "blockHandler") //blockHandler负责在sentinel里面配置的降级限流
+					@SentinelResource(value = "fallback",fallback = "handlerFallback",blockHandler = "blockHandler")
+					public CommonResult<Payment> fallback(@PathVariable Long id)
+					{
+						CommonResult<Payment> result = restTemplate.getForObject(SERVICE_URL + "/paymentSQL/"+id,CommonResult.class,id);
+
+						if (id == 4) {
+							throw new IllegalArgumentException ("IllegalArgumentException,非法参数异常....");
+						}else if (result.getData() == null) {
+							throw new NullPointerException ("NullPointerException,该ID没有对应记录,空指针异常");
+						}
+
+						return result;
+					}
+
+					// 本例是fallback
+					public CommonResult handlerFallback(@PathVariable  Long id,Throwable e) {
+						Payment payment = new Payment(id,"null");
+						return new CommonResult<>(444,"兜底异常handlerFallback,exception内容  "+e.getMessage(),payment);
+					}
+
+					// 本例是blockHandler
+					public CommonResult blockHandler(@PathVariable  Long id, BlockException blockException) {
+						Payment payment = new Payment(id,"null");
+						return new CommonResult<>(445,"blockHandler-sentinel限流,无此流水: blockException  "+blockException.getMessage(),payment);
+					}
+				}
+				~~~
+			8. 忽略属性.......
+				1. 本例sentinel无需配置
+				
+				![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026204930.png)
+				
+				2. 结果
+					- 程序异常打到前台了，对用户不友好
+					- ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026205055.png)
+
+### 17.9.2、Feign系列
+
+1. 修改84模块
+2. 修改POM
+~~~xml
+<!--SpringCloud openfeign -->
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-starter-openfeign</artifactId>
+</dependency>
+~~~
+3. 修改YML：激活Sentinel对Feign的支持
+~~~yml
+# 激活Sentinel对Feign的支持
+feign:
+  sentinel:
+    enabled: true  
+~~~
+4. 修改业务类
+	1. 带`@FeignClient注解的业务接口`
+	~~~Java
+	package com.clover.springcloud.alibaba.service;
+
+	import com.clover.springcloud.entities.CommonResult;
+	import com.clover.springcloud.entities.Payment;
+	import org.springframework.cloud.openfeign.FeignClient;
+	import org.springframework.web.bind.annotation.GetMapping;
+	import org.springframework.web.bind.annotation.PathVariable;
+
+	@FeignClient(value = "nacos-payment-provider",fallback = PaymentFallbackService.class)//调用中关闭9003服务提供者
+	public interface PaymentService {
+		@GetMapping(value = "/paymentSQL/{id}")
+		public CommonResult<Payment> paymentSQL(@PathVariable("id") Long id);
+	}
+	~~~
+	2. **fallback = PaymentFallbackService.class**
+	~~~Java
+	package com.clover.springcloud.alibaba.service;
+
+	import com.clover.springcloud.entities.CommonResult;
+	import com.clover.springcloud.entities.Payment;
+	import org.springframework.stereotype.Component;
+
+	@Component
+	public class PaymentFallbackService implements PaymentService {
+		@Override
+		public CommonResult<Payment> paymentSQL(Long id) {
+			return new CommonResult<>(444, "服务降级返回,没有该流水信息", new Payment(id, "errorSerial......"));
+		}
+	}
+	~~~
+	3. 修改controller
+	~~~Java
+	//==================OpenFeign
+	@Resource
+	private PaymentService paymentService;
+
+	@GetMapping(value = "/consumer/openfeign/{id}")
+	public CommonResult<Payment> paymentSQL(@PathVariable("id") Long id)
+	{
+		if(id == 4)
+		{
+			throw new RuntimeException("没有该id");
+		}
+		return paymentService.paymentSQL(id);
+	}
+	~~~
+	
+5. 修改主启动类：添加 **@EnableFeignClients** 启动Feign的功能
+~~~Java
+package com.clover.springcloud.alibaba;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+@EnableFeignClients
+public class OrderNacosMain84 {
+    public static void main(String[] args)
+    {
+        SpringApplication.run(OrderNacosMain84.class,args);
+    }
+}
+~~~
+
+
+## 17.10、规则持久化
+- 是什么？
+	- 一旦我们重启应用，sentinel规则将消失，生产环境需要将配置规则进行持久化
+- 怎么玩？
+	- 将限流配置规则持久化进Nacos保存，只要刷新8401某个rest地址，sentinel控制台的流控规则就能看到，只要Nacos里面的配置不删除，针对8401上sentinel上的流控规则持续有效
+
+
+### 17.10.1、持久化步骤
+
+1. 修改cloud-alibaba-sentinel-service8401
+2. 修改POM
+	~~~xml
+	<!--SpringCloud ailibaba sentinel-datasource-nacos -->
+	<dependency>
+		<groupId>com.alibaba.csp</groupId>
+		<artifactId>sentinel-datasource-nacos</artifactId>
+	</dependency>
+	~~~
+3. 修改YML
+	- 添加Nacos数据源配置
+	~~~yml
+	spring:
+	  cloud:
+		sentinel:
+		  datasource:
+			ds1:
+			  nacos:
+				server-addr: localhost:8848
+				dataId: ${spring.application.name}
+				groupId: DEFAULT_GROUP
+				data-type: json
+				rule-type: flow
+	~~~
+	~~~yml
+	server:
+	  port: 8401
+
+	spring:
+	  application:
+		name: cloud-alibaba-sentinel-service
+	  cloud:
+		nacos:
+		  discovery:
+			#Nacos服务注册中心地址
+			server-addr: localhost:8848
+		sentinel:
+		  transport:
+			#配置Sentinel dashboard地址
+			dashboard: localhost:8080
+			#默认8719端口，假如被占用会自动从8719开始依次+1扫描,直至找到未被占用的端口
+			port: 8719
+		  datasource:
+			ds1:
+			  nacos:
+				server-addr: localhost:8848
+				dataId: cloud-alibaba-sentinel-service
+				groupId: DEFAULT_GROUP
+				data-type: json
+				rule-type: flow
+
+	management:
+	  endpoints:
+		web:
+		  exposure:
+			include: '*'
+	~~~
+4. 添加Nacos业务规则配置
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026213636.png)
+	
+	- 内容解析
+	~~~json
+	[
+		{
+			"resource": "/rateLimit/byUrl",
+			"limitApp": "default",
+			"grade": 1,
+			"count": 1,
+			"strategy": 0,
+			"controlBehavior": 0,
+			"clusterMode": false
+		}
+	]
+	~~~
+	
+	- resource：资源名称；
+	- limitApp：来源应用；
+	- grade：阈值类型，0表示线程数，1表示QPS；
+	- count：单机阈值；
+	- strategy：流控模式，0表示直接，1表示关联，2表示链路；
+	- controlBehavior：流控效果，0表示快速失败，1表示Warm Up，2表示排队等待；
+	- clusterMode：是否集群
+	
+5. 启动8401后**刷新sentinel**发现业务规则有了
+6. 快速访问测试接口：http://localhost:8401/rateLimit/byUrl
+7. 停止8401再看sentinel
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026214036.png)
+	
+8. 重新启动8401再看sentinel
+	- 乍一看还是没有，稍等一会儿
+	- 多次调用：http://localhost:8401/rateLimit/byUrl
+	- 重新配置出现了，持久化验证通过
+
+# 18、SpringCloud Alibaba Seata处理分布式事务
+
+## 18.1、分布式事务问题
+
+### 18.1.1、分布式之前
+
+- 单机单库没这个问题
+- 从1：1  ->  1：N  ->  N：N
+
+
+### 18.1.2、分布式之后
+
+- 单体应用被拆分成微服务应用，原来的三个模块被拆分成**三个独立的应用**，分别使用**三个独立的数据源**
+- 业务操作需要调用三个服务来完成。此时**每个服务内部的数据一致性由`本地`事务来保证**，**但是`全局`的数据一致性问题没法保证**
+
+**一句话**：`一次业务操作需要跨多个数据源或需要跨多个系统进行远程调用，就会产生分布式事务问题`
