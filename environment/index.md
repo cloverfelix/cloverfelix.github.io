@@ -371,6 +371,7 @@ mkdir mysql
 cd mysql
 
 tar -zxvf /root/mysql-5.7.34-linux-glibc2.12-x86_64.tar.gz -C ./
+mv mysql-5.7.34-linux-glibc2.12-x86_64/* .
 ~~~
 
 >创建MYSQL⽤户和⽤户组
@@ -429,7 +430,7 @@ chmod 777 /var/lib/mysql
 
 ~~~bash
 cd /usr/local/mysql 
-./bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql -- datadir=/usr/local/mysql/data
+./bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
 ~~~
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210705231038.png)
@@ -527,7 +528,12 @@ update user set user.Host='%' where user.User='root';
 flush privileges;
 ~~~
 
-## 6、安装Tomcat
+### 6.1、在Linux中创建数据库并导入
+1. 在连接终端上执行命令 **create database XXXXX;**
+2. 执行命令 **show database;** 查看是否有XXXXX数据库
+3. 执行命令**source /xxx/xxx.sql**，找到对应路径下的sql文件
+
+## 7、安装Tomcat
 
 ~~~bash
 ~~~
@@ -545,7 +551,7 @@ flush privileges;
 ~~~
 
 
-## 7、安装Zookeeper
+## 8、安装Zookeeper
 
 去官网下载Zookeeper：[http://zookeeper.apache.org/releases.html](https://link.segmentfault.com/?enc=8Tkzuju4DJX4iYvscGDqFQ%3D%3D.pM8NEyK2DagtZQj1lr%2FGo2X62Pe3gk11N%2FtErad3Np0T%2BxoF7V%2Fwc96hA3IKP4WL)
 
@@ -588,5 +594,17 @@ dataLogDir=/usr/local/zookeeper-3.4.9/logs
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018155227.png)
 
+
+## 9、安装Nacos
+
+[官网下载](https://github.com/alibaba/nacos/releases/tag/1.1.4)
+
+先去`/opt`目录下创建一个nacos文件，然后将roo目录下的nacos其解压到该文件中
+
+~~~bash
+cd /opt
+mkdir nacos
+tar -zxvf /root/nacos-server-1.1.4.tar.gz _C ./
+~~~
 
 

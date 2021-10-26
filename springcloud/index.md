@@ -7526,6 +7526,7 @@ public class ConfigClientController {
 1. 配置管理
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215042.png)
 2. 命名空间
+	
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215100.png)
 	
 	
@@ -7536,6 +7537,7 @@ public class ConfigClientController {
 
 2. 三者之间的情况
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215222.png)
+	
 3. 默认情况
 	- **Namespace=public，Group=DEFAULT_GROUP, 默认Cluster是DEFAULT**
 	- `Nacos默认的命名空间是public，Namespace主要用来实现隔离`，比方说我们现在有三个环境：开发、测试、生产环境，我们就可以创建三个Namespace，不同的Namespace之间是隔离的
@@ -7560,6 +7562,707 @@ public class ConfigClientController {
 
 
 ##### 16.4.2.4.2、Group方案
-
+- 通过Group实现环境区分
+- DataId相同，但是属于不同的组
+- 修改bootstrap+application
+	- `在config下增加一条group的配置即可。可配置为DEV_GROUP或TEST_GROUP`
 
 ##### 16.4.2.4.3、Namespace方案
+- 新建dev/test的Namespace
+- 在对应的命名空间下建立不同的配置
+- 修改bootstrap.yml文件
+	- 在group同级的地方加上namespace
+
+## 16.5、Nacos集群和持久化配置（重要）
+
+### 16.5.1、官网说明
+
+[Nacos集群化部署说明](https://nacos.io/zh-cn/docs/cluster-mode-quick-start.html)
+
+官网架构图
+- 老版架构图
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024111315.png)
+
+- 现在版(2021.10)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024111352.png)
+
+
+对上图官网翻译，真实情况
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024111437.png)
+
+说明：
+- 默认Nacos使用嵌入式数据库实现数据的存储。所以，如果启动多个默认配置下的Nacos节点，数据存储是存在一致性问题的
+- 为了解决这个问题，Nacos采用了**集中式存储的方式来支持集群化部署，目前只支持MySQL的存储**
+
+- **重点说明：**
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024111550.png)
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024111610.png)
+
+
+ ### 16.5.2、Nacos持久化配置解释
+ 1. Nacos默认自带的是嵌入式数据库derby
+	 - [去Github源码的pom文件中查看](https://github.com/alibaba/nacos/blob/develop/config/pom.xml)
+ 2. derby到mysql切换配置步骤
+	 - nacos-server-1.1.4\nacos\conf目录下找到sql脚本
+		 - nacos-mysql.sql
+			~~~sql
+
+			CREATE DATABASE nacos_config;
+			USE nacos_config;
+
+			/******************************************/
+			/*   数据库全名 = nacos_config   */
+			/*   表名称 = config_info   */
+			/******************************************/
+			CREATE TABLE `config_info` (
+			  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+			  `data_id` VARCHAR(255) NOT NULL COMMENT 'data_id',
+			  `group_id` VARCHAR(255) DEFAULT NULL,
+			  `content` LONGTEXT NOT NULL COMMENT 'content',
+			  `md5` VARCHAR(32) DEFAULT NULL COMMENT 'md5',
+			  `gmt_create` DATETIME NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT '创建时间',
+			  `gmt_modified` DATETIME NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT '修改时间',
+			  `src_user` TEXT COMMENT 'source user',
+			  `src_ip` VARCHAR(20) DEFAULT NULL COMMENT 'source ip',
+			  `app_name` VARCHAR(128) DEFAULT NULL,
+			  `tenant_id` VARCHAR(128) DEFAULT '' COMMENT '租户字段',
+			  `c_desc` VARCHAR(256) DEFAULT NULL,
+			  `c_use` VARCHAR(64) DEFAULT NULL,
+			  `effect` VARCHAR(64) DEFAULT NULL,
+			  `type` VARCHAR(64) DEFAULT NULL,
+			  `c_schema` TEXT,
+			  PRIMARY KEY (`id`),
+			  UNIQUE KEY `uk_configinfo_datagrouptenant` (`data_id`,`group_id`,`tenant_id`)
+			) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='config_info';
+
+			/******************************************/
+			/*   数据库全名 = nacos_config   */
+			/*   表名称 = config_info_aggr   */
+			/******************************************/
+			CREATE TABLE `config_info_aggr` (
+			  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+			  `data_id` VARCHAR(255) NOT NULL COMMENT 'data_id',
+			  `group_id` VARCHAR(255) NOT NULL COMMENT 'group_id',
+			  `datum_id` VARCHAR(255) NOT NULL COMMENT 'datum_id',
+			  `content` LONGTEXT NOT NULL COMMENT '内容',
+			  `gmt_modified` DATETIME NOT NULL COMMENT '修改时间',
+			  `app_name` VARCHAR(128) DEFAULT NULL,
+			  `tenant_id` VARCHAR(128) DEFAULT '' COMMENT '租户字段',
+			  PRIMARY KEY (`id`),
+			  UNIQUE KEY `uk_configinfoaggr_datagrouptenantdatum` (`data_id`,`group_id`,`tenant_id`,`datum_id`)
+			) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='增加租户字段';
+
+
+			/******************************************/
+			/*   数据库全名 = nacos_config   */
+			/*   表名称 = config_info_beta   */
+			/******************************************/
+			CREATE TABLE `config_info_beta` (
+			  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+			  `data_id` VARCHAR(255) NOT NULL COMMENT 'data_id',
+			  `group_id` VARCHAR(128) NOT NULL COMMENT 'group_id',
+			  `app_name` VARCHAR(128) DEFAULT NULL COMMENT 'app_name',
+			  `content` LONGTEXT NOT NULL COMMENT 'content',
+			  `beta_ips` VARCHAR(1024) DEFAULT NULL COMMENT 'betaIps',
+			  `md5` VARCHAR(32) DEFAULT NULL COMMENT 'md5',
+			  `gmt_create` DATETIME NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT '创建时间',
+			  `gmt_modified` DATETIME NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT '修改时间',
+			  `src_user` TEXT COMMENT 'source user',
+			  `src_ip` VARCHAR(20) DEFAULT NULL COMMENT 'source ip',
+			  `tenant_id` VARCHAR(128) DEFAULT '' COMMENT '租户字段',
+			  PRIMARY KEY (`id`),
+			  UNIQUE KEY `uk_configinfobeta_datagrouptenant` (`data_id`,`group_id`,`tenant_id`)
+			) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='config_info_beta';
+
+			/******************************************/
+			/*   数据库全名 = nacos_config   */
+			/*   表名称 = config_info_tag   */
+			/******************************************/
+			CREATE TABLE `config_info_tag` (
+			  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+			  `data_id` VARCHAR(255) NOT NULL COMMENT 'data_id',
+			  `group_id` VARCHAR(128) NOT NULL COMMENT 'group_id',
+			  `tenant_id` VARCHAR(128) DEFAULT '' COMMENT 'tenant_id',
+			  `tag_id` VARCHAR(128) NOT NULL COMMENT 'tag_id',
+			  `app_name` VARCHAR(128) DEFAULT NULL COMMENT 'app_name',
+			  `content` LONGTEXT NOT NULL COMMENT 'content',
+			  `md5` VARCHAR(32) DEFAULT NULL COMMENT 'md5',
+			  `gmt_create` DATETIME NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT '创建时间',
+			  `gmt_modified` DATETIME NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT '修改时间',
+			  `src_user` TEXT COMMENT 'source user',
+			  `src_ip` VARCHAR(20) DEFAULT NULL COMMENT 'source ip',
+			  PRIMARY KEY (`id`),
+			  UNIQUE KEY `uk_configinfotag_datagrouptenanttag` (`data_id`,`group_id`,`tenant_id`,`tag_id`)
+			) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='config_info_tag';
+
+			/******************************************/
+			/*   数据库全名 = nacos_config   */
+			/*   表名称 = config_tags_relation   */
+			/******************************************/
+			CREATE TABLE `config_tags_relation` (
+			  `id` BIGINT(20) NOT NULL COMMENT 'id',
+			  `tag_name` VARCHAR(128) NOT NULL COMMENT 'tag_name',
+			  `tag_type` VARCHAR(64) DEFAULT NULL COMMENT 'tag_type',
+			  `data_id` VARCHAR(255) NOT NULL COMMENT 'data_id',
+			  `group_id` VARCHAR(128) NOT NULL COMMENT 'group_id',
+			  `tenant_id` VARCHAR(128) DEFAULT '' COMMENT 'tenant_id',
+			  `nid` BIGINT(20) NOT NULL AUTO_INCREMENT,
+			  PRIMARY KEY (`nid`),
+			  UNIQUE KEY `uk_configtagrelation_configidtag` (`id`,`tag_name`,`tag_type`),
+			  KEY `idx_tenant_id` (`tenant_id`)
+			) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='config_tag_relation';
+
+			/******************************************/
+			/*   数据库全名 = nacos_config   */
+			/*   表名称 = group_capacity   */
+			/******************************************/
+			CREATE TABLE `group_capacity` (
+			  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+			  `group_id` VARCHAR(128) NOT NULL DEFAULT '' COMMENT 'Group ID，空字符表示整个集群',
+			  `quota` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '配额，0表示使用默认值',
+			  `usage` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '使用量',
+			  `max_size` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
+			  `max_aggr_count` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '聚合子配置最大个数，，0表示使用默认值',
+			  `max_aggr_size` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
+			  `max_history_count` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '最大变更历史数量',
+			  `gmt_create` DATETIME NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT '创建时间',
+			  `gmt_modified` DATETIME NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT '修改时间',
+			  PRIMARY KEY (`id`),
+			  UNIQUE KEY `uk_group_id` (`group_id`)
+			) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='集群、各Group容量信息表';
+
+			/******************************************/
+			/*   数据库全名 = nacos_config   */
+			/*   表名称 = his_config_info   */
+			/******************************************/
+			CREATE TABLE `his_config_info` (
+			  `id` BIGINT(64) UNSIGNED NOT NULL,
+			  `nid` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+			  `data_id` VARCHAR(255) NOT NULL,
+			  `group_id` VARCHAR(128) NOT NULL,
+			  `app_name` VARCHAR(128) DEFAULT NULL COMMENT 'app_name',
+			  `content` LONGTEXT NOT NULL,
+			  `md5` VARCHAR(32) DEFAULT NULL,
+			  `gmt_create` DATETIME NOT NULL DEFAULT '2010-05-05 00:00:00',
+			  `gmt_modified` DATETIME NOT NULL DEFAULT '2010-05-05 00:00:00',
+			  `src_user` TEXT,
+			  `src_ip` VARCHAR(20) DEFAULT NULL,
+			  `op_type` CHAR(10) DEFAULT NULL,
+			  `tenant_id` VARCHAR(128) DEFAULT '' COMMENT '租户字段',
+			  PRIMARY KEY (`nid`),
+			  KEY `idx_gmt_create` (`gmt_create`),
+			  KEY `idx_gmt_modified` (`gmt_modified`),
+			  KEY `idx_did` (`data_id`)
+			) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='多租户改造';
+
+
+			/******************************************/
+			/*   数据库全名 = nacos_config   */
+			/*   表名称 = tenant_capacity   */
+			/******************************************/
+			CREATE TABLE `tenant_capacity` (
+			  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+			  `tenant_id` VARCHAR(128) NOT NULL DEFAULT '' COMMENT 'Tenant ID',
+			  `quota` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '配额，0表示使用默认值',
+			  `usage` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '使用量',
+			  `max_size` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
+			  `max_aggr_count` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '聚合子配置最大个数',
+			  `max_aggr_size` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
+			  `max_history_count` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '最大变更历史数量',
+			  `gmt_create` DATETIME NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT '创建时间',
+			  `gmt_modified` DATETIME NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT '修改时间',
+			  PRIMARY KEY (`id`),
+			  UNIQUE KEY `uk_tenant_id` (`tenant_id`)
+			) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='租户容量信息表';
+
+
+			CREATE TABLE `tenant_info` (
+			  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+			  `kp` VARCHAR(128) NOT NULL COMMENT 'kp',
+			  `tenant_id` VARCHAR(128) DEFAULT '' COMMENT 'tenant_id',
+			  `tenant_name` VARCHAR(128) DEFAULT '' COMMENT 'tenant_name',
+			  `tenant_desc` VARCHAR(256) DEFAULT NULL COMMENT 'tenant_desc',
+			  `create_source` VARCHAR(32) DEFAULT NULL COMMENT 'create_source',
+			  `gmt_create` BIGINT(20) NOT NULL COMMENT '创建时间',
+			  `gmt_modified` BIGINT(20) NOT NULL COMMENT '修改时间',
+			  PRIMARY KEY (`id`),
+			  UNIQUE KEY `uk_tenant_info_kptenantid` (`kp`,`tenant_id`),
+			  KEY `idx_tenant_id` (`tenant_id`)
+			) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='tenant_info';
+
+			CREATE TABLE users (
+				username VARCHAR(50) NOT NULL PRIMARY KEY,
+				PASSWORD VARCHAR(500) NOT NULL,
+				enabled BOOLEAN NOT NULL
+			);
+
+			CREATE TABLE roles (
+				username VARCHAR(50) NOT NULL,
+				role VARCHAR(50) NOT NULL
+			);
+
+			INSERT INTO users (username, PASSWORD, enabled) VALUES ('nacos', '$2a$10$EuWPZHzz32dJN7jexM34MOeYirDdFAZm2kuWj7VEOJhhZkDrxfvUu', TRUE);
+
+			INSERT INTO roles (username, role) VALUES ('nacos', 'ROLE_ADMIN');
+			~~~
+		- nacos-server-1.1.4\nacos\conf目录下找到application.properties
+			~~~sql
+			spring.datasource.platform=mysql
+
+			db.num=1
+			db.url.0=jdbc:mysql://127.0.0.1:3306/nacos_config?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
+			db.user=root
+			db.password=xn123456
+			~~~
+ 3. 启动Nacos，可以看到是个全新的空记录界面，以前是记录进derby
+
+### 16.5.3、Linux版Nacos+MySQL生产环境配置
+
+1、预计需要，1个Nginx+3个nacos注册中心+1个mysql
+
+2、Nacos下载Linux版
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024114515.png)
+
+[Nacos下载地址](https://github.com/alibaba/nacos/releases/tag/1.1.4)
+
+3、**集群配置步骤(重点)**
+
+1. Linux服务器上mysql数据库配置
+	1. sql语句源文件：![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024161408.png)
+	2. 自己Linux机器上的Mysql数据库粘贴，执行后结果
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024161453.png)
+2. application.properties 配置
+	1. 位置，**在对它进行操作前，记得备份一份原始数据，避免自己玩坏了没备份！！！！**
+		
+		![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024161542.png)
+		
+	2. 内容
+		~~~sql
+		spring.datasource.platform=mysql
+
+		db.num=1
+		db.url.0=jdbc:mysql://127.0.0.1:3306/nacos_config?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
+		db.user=root
+		db.password=xn123456
+		~~~
+3. Linux服务器上nacos的集群配置cluster.conf
+	1. **复制出cluster.conf作为备份，避免自己把数据玩坏了**
+	2. 内容：**这个IP不能写127.0.0.1，必须是Linux命令hostname -i能够识别的IP**
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024161859.png)
+	
+4. 编辑Nacos的启动脚本startup.sh，使它能够接受不同的启动端口
+	1. /opt/nacos/bin 目录下有startup.sh
+	2. 在什么地方，修改什么，怎么修改
+	3. 思考
+		1. 平时单机版的启动，都是./startup.sh即可
+		2. 但是，集群启动，我们希望可以类似其它软件的shell命令，**传递不同的端口号启动不同的nacos实例**
+		3. **命令**：./startup.sh `-p 3333` 表示启动端口号为3333的nacos服务器实例，和上一步的cluster.conf配置的一致。
+		
+		![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024162100.png)
+		
+		`注意：此处要注意空格，格式对其，不要写错了！！！！`
+		
+	4. 执行方式
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024164843.png)
+	
+5. Nginx的配置，由它作为负载均衡器
+	1. 修改nginx的配置文件：`/usr/local/nginx/conf`
+	2. 修改nginx.conf
+		
+		![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024172904.png)
+		
+		~~~xml
+		upstream cluster{
+				server 127.0.0.1:3333;
+				server 127.0.0.1:4444;
+				server 127.0.0.1:5555;
+			}
+
+		server {
+				listen       1111;
+				server_name  localhost;
+				#charset koi8-r;
+				#access_log  logs/host.access.log  main;
+				location / {
+					#root   html;
+					#index  index.html index.htm;
+					proxy_pass http://cluster;
+				}
+		~~~
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024173020.png)
+	
+	**注意：坑！！！！！**
+	
+	**如果你安装nginx时执行启动命令时报错，那么你需要在nginx下建立一个logs文件，然后修改其权限，再次启动就好了，但是如果时出现页面无法访问，说明你防火墙没有开启该端口**
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024173158.png)
+	
+	[参考博客](https://blog.csdn.net/runingman0000/article/details/107584744)
+	
+6. 截止到此处，1个Nginx+3个nacos注册中心+1个mysql
+	- 测试通过nginx访问nacos：http://192.168.167.48:1111/nacos/#/login
+	- 新建一个配置测试
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024173707.png)
+	
+	- linux服务器的mysql插入一条记录
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024173738.png)
+	
+	
+	
+4、测试
+- 微服务cloudalibaba-provider-payment9002启动注册进nacos集群
+- 修改YML
+	~~~yml
+		server:
+	  port: 9002
+
+	spring:
+	  application:
+		name: nacos-payment-provider
+	  cloud:
+		nacos:
+		  discovery:
+			#server-addr: localhost:8848 #配置Nacos地址
+			server-addr: 192.168.167.48:1111 # 换成nginx的1111端口，做集群
+
+	management:
+	  endpoints:
+		web:
+		  exposure:
+			include: '*'
+	~~~
+- 结果
+
+5、高可用小总结
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024175339.png)
+
+# 17、SpringCloud Alibaba Sentinel实现熔断与限流
+
+## 17.1、Sentinel
+
+[官网](https://github.com/alibaba/Sentinel)
+
+1. Sentinel是什么？
+	- 一句话解释，之前我们讲解过的Hystrix
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025194204.png)
+
+2. 去哪下？[下载地址](https://github.com/alibaba/Sentinel/releases)
+3. 能干嘛？
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025194449.png)
+	
+4. 怎么玩？[官方指导文档](https://spring-cloud-alibaba-group.github.io/github-pages/greenwich/spring-cloud-alibaba.html#_spring_cloud_alibaba_sentinel)
+	- 服务使用中的各种问题
+		- 服务雪崩
+		- 服务降级
+		- 服务熔断
+		- 服务限流
+
+
+## 17.2、安装Sentinel控制台
+sentinel组件由2部分构成：
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025200335.png)
+
+安装步骤:
+- 运行命令：`java -jar sentinel-dashboard-1.7.0.jar`
+- 前提
+	- Java8环境可以用
+	- 8080端口不能被占用
+- 访问sentinel管理界面
+	- http://localhost:8080
+	- 登录账号密码均为sentinel
+
+## 17.3、初始化演示工程
+
+1、启动Nacos8848成功
+
+2、新建 cloud-alibaba-sentinel-service8401
+
+3、修改POM
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SpringCloud</artifactId>
+        <groupId>com.clover.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-alibaba-sentinel-service8401</artifactId>
+
+
+    <dependencies>
+        <!--SpringCloud ailibaba nacos -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <!--SpringCloud ailibaba sentinel-datasource-nacos 后续做持久化用到-->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+        </dependency>
+        <!--SpringCloud ailibaba sentinel -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+        <!--openfeign-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!-- SpringBoot整合Web组件+actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--日常通用jar包配置-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>4.6.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>
+~~~
+
+4、编写YML
+
+~~~yml
+server:
+  port: 8401
+
+spring:
+  application:
+    name: cloud-alibaba-sentinel-service
+  cloud:
+    nacos:
+      discovery:
+        #Nacos服务注册中心地址
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        #配置Sentinel dashboard地址
+        dashboard: localhost:8080
+        #默认8719端口，假如被占用会自动从8719开始依次+1扫描,直至找到未被占用的端口
+        port: 8719
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+~~~
+
+5、编写主启动类
+
+~~~Java
+package com.clover.springcloud.alibaba;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+public class MainApp8401 {
+    public static void main(String[] args)
+    {
+        SpringApplication.run(MainApp8401.class,args);
+    }
+}
+~~~
+
+6、编写业务类
+
+~~~Java
+package com.clover.springcloud.alibaba.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class FlowLimitController {
+
+    @GetMapping("/testA")
+    public String testA()
+    {
+        return "------testA";
+    }
+
+    @GetMapping("/testB")
+    public String testB()
+    {
+        return "------testB";
+    }
+}
+~~~
+
+7、启动Sentinel8080：`java -jar sentinel-dashboard-1.7.0.jar`
+
+8、启动微服务8401
+
+9、启动8401微服务后查看sentinel控制台
+- 空空如也
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025203327.png)
+
+- Sentinel采用懒加载说明
+	- 执行一次访问即可
+		- http://localhost:8401/testA
+		- http://localhost:8401/testB
+	- 效果
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025203630.png)
+	
+- 结论：**sentinel8080正在监控微服务8401**
+
+## 17.4、流控规则
+
+### 17.4.1、基本介绍
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025204441.png)
+
+进一步解释：
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025204457.png)
+
+
+### 17.4.2、流控模式
+
+#### 17.4.2.1、直接(默认)
+
+- 直接->快速失败(`系统默认`)
+- 配置及说明
+	- 表示1秒钟内查询1次就是OK，若超过次数1，就直接-快速失败，报默认错误
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025205705.png)
+	
+- 测试
+	- 快速点击访问http://localhost:8401/testA
+	- 结果：**Blocked by Sentinel (flow limiting)**
+	- 思考
+		- 直接调用默认报错信息，技术方面OK，但是是否应该有我们自己的后续处理?
+		- 类似有个fallback的兜底方法？
+
+
+#### 17.4.2.2、关联
+
+1. 关联是什么？
+- 当关联的资源达到阈值时，就限流自己
+- 当与A关联的资源B达到阀值后，就限流A自己
+- B惹事，A挂了
+
+2. 配置A
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025212346.png)
+
+- 设置效果：当关联资源/testB的QPS阀值超过1时，就限流/testA的Rest访问地址，**当关联资源到阈值后限制配置好的资源名**
+
+3. postman模拟并发密集访问testB
+4. 运行后发现testA挂了
+	- 点击访问：http://localhost:8401/testA
+	- 结果：**Blocked by Sentinel (flow limiting)**
+
+
+#### 17.4.2.3、链路
+
+
+### 17.4.3、流控效果
+
+#### 17.4.3.1、直接->快速失败(默认的流控处理)
+
+- 直接失败，抛出异常
+	- `Blocked by Sentinel (flow limiting)`
+- 源码
+	- com.alibaba.csp.sentinel.slots.block.flow.controller.DefaultController
+
+#### 17.4.3.2、预热
+
+1. 说明：**公式：阈值除以coldFactor(默认值为3),经过预热时长后才会达到阈值**
+2. 官网
+	- 默认coldFactor为3，即请求 QPS 从 threshold / 3 开始，经预热时长逐渐升至设定的 QPS 阈值。
+	- [限流 冷启动官网说明](https://github.com/alibaba/Sentinel/wiki/%E9%99%90%E6%B5%81---%E5%86%B7%E5%90%AF%E5%8A%A8)
+3. 源码
+	- com.alibaba.csp.sentinel.slots.block.flow.controller.WarmUpController
+4. WarmUp配置
+	- 默认 coldFactor 为 3，即请求QPS从(threshold / 3) 开始，经多少预热时长才逐渐升至设定的 QPS 阈值
+	- 案例，阀值为10+预热时长设置5秒
+	- 系统初始化的阀值为10 / 3 约等于3,即阀值刚开始为3；然后过了5秒后阀值才慢慢升高恢复到10
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025213919.png)
+	
+5. 多次点击：http://localhost:8401/testB；刚开始不行，后续慢慢OK
+6. 应用场景
+	- 如：秒杀系统在开启的瞬间，会有很多流量上来，很有可能把系统打死，预热方式就是把为了保护系统，可慢慢的把流量放进来，慢慢的把阀值增长到设置的阀值
+
+
+#### 17.4.3.3、排队等待
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025221047.png)
+
+- 匀速排队，让请求以均匀的速度通过，**阀值类型必须设成QPS，否则无效**
+- 设置含义：/testA每秒1次请求，超过的话就排队等待，等待的超时时间为20000毫秒
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025221148.png)
+
+1. 官网：[流量控制指导文档](https://github.com/alibaba/Sentinel/wiki/%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6)
+2. 源码：com.alibaba.csp.sentinel.slots.block.flow.controller.RateLimiterController 
+
+
+## 17.5、降级规则
+
+[官网](https://github.com/alibaba/Sentinel/wiki/%E7%86%94%E6%96%AD%E9%99%8D%E7%BA%A7)
+
+### 17.5.1、基本介绍
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025222700.png)
+
+1. **RT（平均响应时间，秒级）**
+	- 平均响应时间   **超出阈值**  且   **在时间窗口内通过的请求>=5**，两个条件同时满足后触发降级
+	- 窗口期过后关闭断路器
+	- RT最大4900（更大的需要通过-Dcsp.sentinel.statistic.max.rt=XXXX才能生效）
+2. **异常比列（秒级）**
+	- QPS >= 5 且异常比例（秒级统计）超过阈值时，触发降级；时间窗口结束后，关闭降级
+3. **异常数（分钟级）**
+	- 异常数（分钟统计）超过阈值时，触发降级；时间窗口结束后，关闭降级
+4. 进一步说明
+	- Sentinel 熔断降级会在调用链路中某个资源出现不稳定状态时（例如调用超时或异常比例升高），对这个资源的调用进行限制，让请求快速失败，避免影响到其它的资源而导致级联错误
+	- 当资源被降级后，在接下来的降级时间窗口之内，对该资源的调用都自动熔断（默认行为是抛出 DegradeException）
+	- Sentinel的断路器是**没有半开**状态的
+		- 半开的状态系统自动去检测是否请求有异常，没有异常就关闭断路器恢复使用，有异常则继续打开断路器不可用。具体可以参考Hystrix
