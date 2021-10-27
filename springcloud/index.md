@@ -1,9 +1,9 @@
 # Springcloud
 
 
-# 1、从2.2.x和H版本开始说起
+## 1、从2.2.x和H版本开始说起
 
-## 1.1、SpringBoot版本选择
+### 1.1、SpringBoot版本选择
 
 [GitHub源码地址](https://github.com/spring-projects/spring-boot/releases/)
 
@@ -13,13 +13,13 @@ SpringBoot2.0新特性
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211016153757.png)
 
-## 1.2、SpringCloud版本选择
+### 1.2、SpringCloud版本选择
 
 [GitHub源码地址](https://github.com/spring-projects/spring-cloud)
 
 [官网](https://spring.io/projects/spring-cloud)
 
-### 1.2.1、Cloud命名规则
+#### 1.2.1、Cloud命名规则
 
 Spring Cloud 采用了英国伦敦地铁站的名称来命名，并由地铁站名称字母A-Z依次类推的形式来发布迭代
 版本SpringCloud是一个由许多子项目组成的综合项目，各子项目有不同的发布节奏。为了管理SpringCloud与各子项目的版本依赖关系，发布了一个清单，其中包括了某个SpringCloud版本对应的子项目版本。为了避免SpringCloud版本号与子项目版本号混淆，**SpringCloud版本采用了名称而非版本号的命名，这些版本的名字采用了伦敦地铁站的名字，根据字母表的顺序来对应版本时间顺序**。例如Angel是第一个版本, Brixton是第二个版本。
@@ -28,13 +28,13 @@ Spring Cloud 采用了英国伦敦地铁站的名称来命名，并由地铁站�
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211016154404.png)
 
-## 1.3、SpringCloud和SpringBoot之间的依赖关系如何看
+### 1.3、SpringCloud和SpringBoot之间的依赖关系如何看
 
 [官网说明](https://spring.io/projects/spring-cloud#overview)
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211016154648.png)
 
-### 1.3.1、依赖
+#### 1.3.1、依赖
 
 Finchley 是基于 Spring Boot 2.0.x 构建的不再 Boot 1.5.x
 
@@ -48,11 +48,11 @@ Camden 构建于 Spring Boot 1.4.x，但依然能支持 Spring Boot 1.5.x
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211016154945.png)
 
-## 1.4、目前使用版本
+### 1.4、目前使用版本
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211016155101.png)
 
-### 1.4.1、题外话
+#### 1.4.1、题外话
 
 - boot版本以及到2.2.4为最新(截止2020.2.15)，为什么选2.2.2
 	- 只用boot，直接用最新
@@ -95,7 +95,7 @@ Camden 构建于 Spring Boot 1.4.x，但依然能支持 Spring Boot 1.5.x
 </dependencies>
 ~~~
 	
-# 2、关于Cloud各种组件的停更/升级/替换
+## 2、关于Cloud各种组件的停更/升级/替换
 
 - 以前学习
 
@@ -112,11 +112,11 @@ Camden 构建于 Spring Boot 1.4.x，但依然能支持 Spring Boot 1.5.x
 
 [SpringBoot官方文档](https://docs.spring.io/spring-boot/docs/2.2.2.RELEASE/reference/htmlsingle/)	
 
-# 3、微服务架构编码构建
+## 3、微服务架构编码构建
 
 **约定 > 配置 > 编码**
 
-## 3.1、IDEA新建project工作空间
+### 3.1、IDEA新建project工作空间
 
 1. 创建maven项目
 2. 设置字符编码为`utf-8`
@@ -132,7 +132,7 @@ Camden 构建于 Spring Boot 1.4.x，但依然能支持 Spring Boot 1.5.x
 
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211016160706.png)
 	
-## 3.2、父工程POM
+### 3.2、父工程POM
 
 ~~~xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -236,9 +236,9 @@ Camden 构建于 Spring Boot 1.4.x，但依然能支持 Spring Boot 1.5.x
 </project>
 ~~~
 
-## 3.3、Maven工程落地细节复习
+### 3.3、Maven工程落地细节复习
 
-### 3.3.1、Maven中的DependencyManagement和Dependencies
+#### 3.3.1、Maven中的DependencyManagement和Dependencies
 
 Maven 使用 `dependencyManagement` 元素来提供了一种管理依赖版本号的方式。
 
@@ -261,7 +261,7 @@ Maven 会沿着父子层次向上走，直到找到一个拥有 dependencyManage
 - **如果不在子项目中声明依赖，是不会从父项目中继承下来的；只有在子项目中写了该依赖项，并且没有指定具体版本，才会从父项目中继承该项，并且version和scope都读取自父pom;**
 - 如果子项目中指定了版本号，那么会使用子项目中指定的jar版本。
 
-### 3.3.2、Maven中跳过单元测试
+#### 3.3.2、Maven中跳过单元测试
 
 1. 配置
 
@@ -282,9 +282,9 @@ Maven 会沿着父子层次向上走，直到找到一个拥有 dependencyManage
 	
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211016161438.png)
 	
-## 3.4、Rest微服务工程构建
+### 3.4、Rest微服务工程构建
 
-### 3.4.1、提供者模块构建
+#### 3.4.1、提供者模块构建
 
 `cloud-provider-payment8001`微服务提供者支付Module模块
 
@@ -396,7 +396,7 @@ public class PaymentMain8001 {
 5. 业务类
 6. 测试
 
-### 3.4.2、小知识点补充
+#### 3.4.2、小知识点补充
 
 1、为什么`DAO层`传入参数时为什么使用`@Param注解`
 
@@ -598,7 +598,7 @@ public class PaymentController {
 }
 ~~~
 
-### 3.4.3、消费者模块构建
+#### 3.4.3、消费者模块构建
 
 `cloud-consumer-order80`微服务消费者订单Module模块
 
@@ -668,7 +668,7 @@ public class OrderMain80 {
 5. 业务类
 6. 测试
 
-### 3.4.4、小知识点补充
+#### 3.4.4、小知识点补充
 
 1、首说RestTemplate是什么？
 
@@ -792,7 +792,7 @@ public class OrderController {
 	注意：
 	在提供者的Controller中创建一个payment的时候，不要忘记了RequestBody注解，否则会造成数据库插入成功，但是数据没有插入进去
 
-## 3.5、工程重构
+### 3.5、工程重构
 
 **发现问题：项目中有重复部分，重构**
 
@@ -842,17 +842,17 @@ public class OrderController {
 ~~~
 
 
-# 4、Eureka服务注册与发现
+## 4、Eureka服务注册与发现
 
-## 4.1、Eureka基础知识
+### 4.1、Eureka基础知识
 
-### 4.1.1、什么是服务治理
+#### 4.1.1、什么是服务治理
 
 SpringCloud 封装了 Netflix 公司开发的 Eureka 模块来**实现服务治理**
 
 在传统的rpc远程调用框架中，管理每个服务与服务之间依赖关系比较复杂，管理比较复杂，所以需要使用服务治理，管理服务与服务之间依赖关系，可以实现服务调用、负载均衡、容错等，实现服务发现与注册。
 
-### 4.1.2、什么是服务注册
+#### 4.1.2、什么是服务注册
 
 Eureka 采用了CS的设计架构，Eureka Server 作为服务注册功能的服务器，它是服务注册中心。而系统中的其他微服务，使用 Eureka 的客户端连接到 Eureka Server 并维持心跳连接。这样系统的维护人员就可以通过 Eureka Server 来监控系统中各个微服务是否正常运行。
 
@@ -860,7 +860,7 @@ Eureka 采用了CS的设计架构，Eureka Server 作为服务注册功能的服
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211017112259.png)
 
-### 4.1.3、Eureka两组件
+#### 4.1.3、Eureka两组件
 
 **Eureka Server**提供服务注册服务
 
@@ -870,9 +870,9 @@ Eureka 采用了CS的设计架构，Eureka Server 作为服务注册功能的服
 
 是一个Java客户端，用于简化Eureka Server的交互，客户端同时也具备一个内置的、使用轮询(round-robin)负载算法的负载均衡器。在应用启动后，将会向Eureka Server发送心跳(默认周期为30秒)。如果Eureka Server在多个心跳周期内没有接收到某个节点的心跳，EurekaServer将会从服务注册表中把这个服务节点移除（默认90秒）
 
-## 4.2、单机Eureka构建步骤
+### 4.2、单机Eureka构建步骤
 
-### 4.2.1、IDEA生成eurekaServer端服务注册中心类似物业公司
+#### 4.2.1、IDEA生成eurekaServer端服务注册中心类似物业公司
 
 1. 新建 springcloud-eureka-server7001 模块
 2. 修改POM
@@ -967,7 +967,7 @@ public class EurekaMain7001 {
 }
 ~~~
 
-### 4.2.2、EurekaClient端cloud-provider-payment8001
+#### 4.2.2、EurekaClient端cloud-provider-payment8001
 
 将其注册进 EurekaServer 成为服务提供者provider，类似尚硅谷学校对外提供授课服务
 
@@ -1028,7 +1028,7 @@ public class PaymentMain8001 {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211017200238.png)
 
-### 4.2.3、EurekaClient端cloud-consumer-order80
+#### 4.2.3、EurekaClient端cloud-consumer-order80
 
 将其注册进 EurekaServer 成为服务消费者consumer，类似来尚硅谷上课消费的各位同学
 
@@ -1082,9 +1082,9 @@ public class OrderMain80 {
 2、再启动80服务
 
 
-## 4.3、集群Eureka构建步骤
+### 4.3、集群Eureka构建步骤
 
-### 4.3.1、Eureka集群原理说明
+#### 4.3.1、Eureka集群原理说明
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211017201223.png)
 
@@ -1095,7 +1095,7 @@ public class OrderMain80 {
 	高可用，试想你的注册中心只有一个only one， 它出故障了那就呵呵(￣▽￣)"了，会导致整个为服务环境不可用，所以
 	解决办法：搭建Eureka注册中心集群 ，实现负载均衡+故障容错
 	
-### 4.3.2、EurekaServer集群环境构建步骤
+#### 4.3.2、EurekaServer集群环境构建步骤
 
 1、参考 springcloud-eureka-server7001 新建 springcloud-eureka-server7002
 
@@ -1187,7 +1187,7 @@ public class EurekaMain7002 {
 }
 ~~~
 
-### 4.3.3、将支付服务8001微服务发布到上面2台Eureka集群配置中
+#### 4.3.3、将支付服务8001微服务发布到上面2台Eureka集群配置中
 
 ~~~yml
 server:
@@ -1218,7 +1218,7 @@ mybatis:
   type-aliases-package: com.clover.springcloud.entities    # 所有Entity别名类所在包
 ~~~
 
-### 4.3.4、将订单服务80微服务发布到上面2台Eureka集群配置中
+#### 4.3.4、将订单服务80微服务发布到上面2台Eureka集群配置中
 
 ~~~yml
 server:
@@ -1250,7 +1250,7 @@ eureka:
 4、最后用查询验证是否正确：http://localhost/consumer/payment/get/1
 
 
-### 4.3.5、支付服务提供者8001集群环境构建
+#### 4.3.5、支付服务提供者8001集群环境构建
 
 1、参考 cloud-provider-payment8001 新建 cloud-provider-payment8002
 
@@ -1474,7 +1474,7 @@ public class PaymentController {
 }
 ~~~
 
-### 4.3.6、负载均衡
+#### 4.3.6、负载均衡
 
 1. 订单服务访问地址不能写死
 
@@ -1500,9 +1500,9 @@ public class PaymentController {
 
 5、Ribbon和Eureka整合后Consumer可以直接调用服务而不用再关心地址和端口号，且该服务还有负载功能了。
 
-## 4.4、actuator微服务信息完善
+### 4.4、actuator微服务信息完善
 
-### 4.4.1、主机名称:服务名称修改
+#### 4.4.1、主机名称:服务名称修改
 
 1. 当前问题
 
@@ -1545,7 +1545,7 @@ mybatis:
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211017215016.png)
 
-### 4.4.2、访问信息有IP信息提示
+#### 4.4.2、访问信息有IP信息提示
 
 1. 当前问题：**没有IP提示**
 2. 修改cloud-provider-payment8001/8002
@@ -1585,7 +1585,7 @@ mybatis:
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211017215122.png)
 
-## 4.5、服务发现Discovery
+### 4.5、服务发现Discovery
 
 **对于注册进eureka里面的微服务，可以通过服务发现来获得该服务的信息**
 
@@ -1671,11 +1671,11 @@ public class PaymentController {
 - **再启动8001主启动类**
 - 最后用查询验证是否正确：http://localhost:8001/payment/discovery
 
- ## 4.6、Eureka自我保护机制
+ ### 4.6、Eureka自我保护机制
  
- ### 4.6.1、故障现象
+ #### 4.6.1、故障现象
  
- #### 4.6.1.1、概述
+ ##### 4.6.1.1、概述
  
 保护模式主要用于一组客户端和Eureka Server之间存在网络分区场景下的保护。一旦进入保护模式，
 **Eureka Server将会尝试保护其服务注册表中的信息，不再删除服务注册表中的数据，也就是不会注销任何微服务**。
@@ -1687,14 +1687,14 @@ RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018110517.png)
 
-### 4.6.2、导致原因
+#### 4.6.2、导致原因
 
-#### 4.6.2.1、为什么会产生Eureka自我保护机制？
+##### 4.6.2.1、为什么会产生Eureka自我保护机制？
 
 为了防止EurekaClient可以正常运行，但是与 EurekaServer 网络不通情况下，EurekaServer**不会立刻**将EurekaClient服务剔除
 
 
-#### 4.6.2.2、什么是自我保护模式
+##### 4.6.2.2、什么是自我保护模式
 
 默认情况下，如果EurekaServer在一定时间内没有接收到某个微服务实例的心跳，EurekaServer将会注销该实例（默认90秒）。但是`当网络分区故障发生(延时、卡顿、拥挤)时`，微服务与EurekaServer之间无法正常通信，以上行为可能变得非常危险了——因为微服务本身其实是健康的，**此时本不应该注销这个微服务**。Eureka通过“自我保护模式”来解决这个问题——当EurekaServer节点在短时间内丢失过多客户端时（可能发生了网络分区故障），那么这个节点就会进入自我保护模式。
 
@@ -1709,10 +1709,10 @@ RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED
 
 `一句话：某时刻某一个微服务不可用了，Eureka不会立刻清理，依旧会对该微服务的信息进行保存`
 
-### 4.6.3、怎么禁止自我保护
+#### 4.6.3、怎么禁止自我保护
 
 
-#### 4.6.3.1、修改注册中心eureakeServer端7001
+##### 4.6.3.1、修改注册中心eureakeServer端7001
 
 1、出厂默认，自我保护机制是开启的`eureka.server.enable-self-preservation=true`
 
@@ -1744,7 +1744,7 @@ eureka:
 
 
 
-#### 4.6.3.2、修改生产者客户端eureakeClient端8001
+##### 4.6.3.2、修改生产者客户端eureakeClient端8001
 
 1、默认设置
 `eureka.instance.lease-renewal-interval-in-seconds=30`单位为秒(默认是30秒)
@@ -1798,17 +1798,17 @@ mybatis:
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018113352.png)
 
 
-# 5、Zookeeper服务注册与发现
+## 5、Zookeeper服务注册与发现
 
-## 5.1、SpringCloud整合Zookeeper代替Eureka
+### 5.1、SpringCloud整合Zookeeper代替Eureka
 
-### 5.1.1、注册中心Zookeeper
+#### 5.1.1、注册中心Zookeeper
 
 - zookeeper是一个分布式协调工具，可以实现注册中心功能
 - 关闭Linux服务器防火墙后启动zookeeper服务器
 - zookeeper服务器取代Eureka服务器，zk作为服务注册中心
 
-### 5.1.2、服务提供者
+#### 5.1.2、服务提供者
 
 1、新建cloud-provider-payment8004
 
@@ -1919,7 +1919,7 @@ public class PaymentController {
 7、why？
 - 解决zookeeper版本jar包冲突问题
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018161954.png)
-- 排出zk冲突后的新POM
+- 排除zk冲突后的新POM
 ~~~xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -2002,7 +2002,7 @@ public class PaymentController {
 	说明这是一个临时结点，当你关闭了提供者后，zookeeper会保留一段时间后，在去除，而当你在启动提供者时，
 	它会生成一个新的序列号
 	
-### 5.1.3、服务消费者
+#### 5.1.3、服务消费者
 
 1、新建cloud-consumerzk-order80
 
@@ -2164,9 +2164,9 @@ public class OrderZKController {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018172512.png)
 
-# 6、Consul服务注册与发现
+## 6、Consul服务注册与发现
 
-## 6.1、Consul简介
+### 6.1、Consul简介
 
 1. Consul是什么？
 [官网](https://www.consul.io/intro/index.html)
@@ -2182,7 +2182,7 @@ public class OrderZKController {
 [Consul中文文档](https://www.springcloud.cc/spring-cloud-consul.html)
 
 
-## 6.2、安装并运行Consul
+### 6.2、安装并运行Consul
 
 [官网安装说明](https://learn.hashicorp.com/consul/getting-started/install.html)
 
@@ -2196,7 +2196,7 @@ public class OrderZKController {
 - 结果页面
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018205022.png)]
 
-## 6.3、服务提供者
+### 6.3、服务提供者
 
 1、新建 cloud-providerconsul-payment8006
 
@@ -2316,7 +2316,7 @@ public class PaymentController {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018212259.png)
 
-## 6.4、服务消费者
+### 6.4、服务消费者
 
 1、新建 cloud-consumerconsul-order80
 
@@ -2468,7 +2468,7 @@ public class OrderConsulController {
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018213847.png)
 
 
-## 6.5、三个注册中心异同点
+### 6.5、三个注册中心异同点
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215113.png)
 
@@ -2511,9 +2511,9 @@ CAP理论的核心是：`一个分布式系统不可能同时很好的满足一�
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211018215844.png)
 
 
-# 7、Ribbon负载均衡服务调用
+## 7、Ribbon负载均衡服务调用
 
-## 7.1、概述
+### 7.1、概述
 
 1. Ribbon是什么？
 
@@ -2556,9 +2556,9 @@ CAP理论的核心是：`一个分布式系统不可能同时很好的满足一�
  Ribbon本地负载均衡，在调用微服务接口时候，会在注册中心上获取注册信息服务列表之后缓存到JVM本地，从而在本地实现RPC远程服务调用技术。
  
  
- ## 7.2、Ribbon负载均衡演示
+ ### 7.2、Ribbon负载均衡演示
  
- ### 7.2.1、架构说明
+ #### 7.2.1、架构说明
  
  ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104119.png)
  
@@ -2572,7 +2572,7 @@ CAP理论的核心是：`一个分布式系统不可能同时很好的满足一�
  eureka结合只是其中的一个实例。**
  
  
-### 7.2.2、POM
+#### 7.2.2、POM
 
 之前写`cloud-consumer-order80`样例时候没有引入spring-cloud-starter-ribbon也可以使用ribbon
 
@@ -2589,11 +2589,11 @@ CAP理论的核心是：`一个分布式系统不可能同时很好的满足一�
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019104718.png)
 
-### 7.2.3、二说RestTemplate的使用
+#### 7.2.3、二说RestTemplate的使用
 
 [官网](https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html)
 
-#### 7.2.3.1、getForObject方法/getForEntity方法
+##### 7.2.3.1、getForObject方法/getForEntity方法
 
 **返回对象为响应体中数据转化成的对象，基本上可以理解为Json**
 
@@ -2603,13 +2603,13 @@ CAP理论的核心是：`一个分布式系统不可能同时很好的满足一�
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110324.png)
 
-#### 7.2.3.2、postForObject/postForEntity方法
+##### 7.2.3.2、postForObject/postForEntity方法
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110504.png)
 
-## 7.3、Ribbon核心组件IRule
+### 7.3、Ribbon核心组件IRule
 
-### 7.3.1、IRule：根据特定算法中从服务列表中选取一个要访问的服务
+#### 7.3.1、IRule：根据特定算法中从服务列表中选取一个要访问的服务
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019110952.png)
 
@@ -2627,7 +2627,7 @@ CAP理论的核心是：`一个分布式系统不可能同时很好的满足一�
 
 `ZoneAvoidanceRule`：**默认规则,复合判断server所在区域的性能和server的可用性选择服务器**
 
-### 7.3.2、如何替换
+#### 7.3.2、如何替换
 
 1、修改cloud-consumer-order80
 
@@ -2688,9 +2688,9 @@ public class PaymentMain8001 {
 
 6、测试：http://localhost/consumer/payment/get/1
 
-## 7.4、Ribbon负载均衡算法
+### 7.4、Ribbon负载均衡算法
 
-### 7.4.1、原理
+#### 7.4.1、原理
 
 负载均衡算法：
 
@@ -2715,7 +2715,7 @@ List<> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
 如此类推......
 
  
-### 7.4.2、手写一个本地负载均衡器
+#### 7.4.2、手写一个本地负载均衡器
 
 1、先启动7001/7002集群
 
@@ -3014,11 +3014,11 @@ public class OrderController {
 		 
  
  
- # 8、OpenFeign服务接口调用
+ ## 8、OpenFeign服务接口调用
 
-## 8.1、概述
+### 8.1、概述
 
-### 8.1.1、OpenFeign是什么？
+#### 8.1.1、OpenFeign是什么？
 
 1. Feign是一个声明式的Web服务客户端，让编写Web服务客户端变得非常容易，**只需创建一个接口并在接口上添加注解即可**
 2. [源码地址](https://github.com/spring-cloud/spring-cloud-openfeign)
@@ -3030,7 +3030,7 @@ Feign是一个声明式WebService客户端。使用Feign能让编写WebService�
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171123.png)
 
-### 8.1.2、能干嘛？
+#### 8.1.2、能干嘛？
 
 Feign旨在使编写Java Http客户端变得更容易。
 
@@ -3040,12 +3040,12 @@ Feign旨在使编写Java Http客户端变得更容易。
 
 利用Ribbon维护了Payment的服务列表信息，并且通过轮询实现了客户端的负载均衡。而与Ribbon不同的是，**通过feign只需要定义服务绑定接口且以声明式的方法**，优雅而简单的实现了服务调用
 
-### 8.1.3、Feign和OpenFeign两者区别
+#### 8.1.3、Feign和OpenFeign两者区别
  
  ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019171433.png)
  
  
- ## 8.2、OpenFeign使用步骤
+ ### 8.2、OpenFeign使用步骤
  
  1、接口 + 注解：**微服务调用接口+@FeignClient**
  
@@ -3191,9 +3191,9 @@ public class OrderFeignController
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019175149.png)
 
-## 8.3、OpenFeign超时控制
+### 8.3、OpenFeign超时控制
 
-### 8.3.1、超时设置，故意设置超时演示出错情况
+#### 8.3.1、超时设置，故意设置超时演示出错情况
 - 服务提供方8001故意写暂停程序
 
 ~~~Java
@@ -3348,9 +3348,9 @@ public class OrderFeignController
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019182910.png)
 
-### 8.3.2、OpenFeign默认等待1秒钟，超过后报错 
+#### 8.3.2、OpenFeign默认等待1秒钟，超过后报错 
 
-### 8.3.3、是什么？
+#### 8.3.3、是什么？
 
 **Feign客户端默认只等待一秒钟**，但是服务端处理需要超过1秒钟，导致Feign客户端不想等待了，直接返回报错。
 为了避免这样的情况，有时候我们需要设置Feign客户端的超时控制。
@@ -3360,7 +3360,7 @@ yml文件中开启配置，`OpenFeign默认支持Ribbon`
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019183128.png)
 
 
-### 8.3.4、YML文件里需要开启OpenFeign客户端超时控制
+#### 8.3.4、YML文件里需要开启OpenFeign客户端超时控制
 
 ~~~yml
 server:
@@ -3380,22 +3380,22 @@ ribbon:
   ConnectTimeout: 5000
 ~~~
 
-## 8.4、OpenFeign日志打印功能
+### 8.4、OpenFeign日志打印功能
 
-### 8.4.1、是什么？
+#### 8.4.1、是什么？
  
 Feign 提供了日志打印功能，我们可以通过配置来调整日志级别，从而了解 Feign 中 Http 请求的细节。
 
 说白了就是**对Feign接口的调用情况进行监控和输出**
  
  
- ### 8.4.2、日志级别
+ #### 8.4.2、日志级别
 - NONE：默认的，不显示任何日志；
 - BASIC：仅记录请求方法、URL、响应状态码及执行时间；
 - HEADERS：除了 BASIC 中定义的信息之外，还有请求和响应的头信息；
 - FULL：除了 HEADERS 中定义的信息之外，还有请求和响应的正文及元数据。
 
-### 8.4.3、配置日志bean
+#### 8.4.3、配置日志bean
 ~~~Java
 package com.clover.springcloud.config;
 
@@ -3415,7 +3415,7 @@ public class FeignConfig {
 }
 ~~~
 
-### 8.3.4、YML文件里需要开启日志的Feign客户端
+#### 8.4.5、YML文件里需要开启日志的Feign客户端
 
 ~~~yml
 server:
@@ -3440,15 +3440,15 @@ logging:
     com.clover.springcloud.service.PaymentFeignService: debug
 ~~~
 
-### 8.3.5、后台日志查看
+#### 8.4.6、后台日志查看
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019184913.png)
  
-# 9、Hystrix断路器
+## 9、Hystrix断路器
 
-## 9.1、概述
+### 9.1、概述
 
-### 9.1.1、分布式系统面临的问题
+#### 9.1.1、分布式系统面临的问题
 
 **复杂分布式体系结构中的应用程序有数十个依赖关系，每个依赖关系在某些时候将不可避免地失败**
 
@@ -3461,25 +3461,25 @@ logging:
 对于高流量的应用来说，单一的后端依赖可能会导致所有服务器上的所有资源都在几秒钟内饱和。比失败更糟糕的是，这些应用程序还可能导致服务之间的延迟增加，备份队列，线程和其他系统资源紧张，导致整个系统发生更多的级联故障。这些都表示需要对故障和延迟进行隔离和管理，以便单个依赖关系的失败，不能取消整个应用程序或系统。
 所以，通常当你发现一个模块下的某个实例失败后，这时候这个模块依然还会接收流量，然后这个有问题的模块还调用了其他的模块，这样就会**发生级联故障，或者叫雪崩**。
 
-### 9.1.2、Hystrix是什么？
+#### 9.1.2、Hystrix是什么？
  
 Hystrix是一个用于处理分布式系统的**延迟**和**容错**的开源库，在分布式系统里，许多依赖不可避免的会调用失败，比如超时、异常等，Hystrix能够保证在一个依赖出问题的情况下，**不会导致整体服务失败，避免级联故障，以提高分布式系统的弹性**。
  
 “断路器”本身是一种开关装置，当某个服务单元发生故障之后，通过断路器的故障监控（类似熔断保险丝），**向调用方返回一个符合预期的、可处理的备选响应（FallBack），而不是长时间的等待或者抛出调用方无法处理的异常**，这样就保证了服务调用方的线程不会被长时间、不必要地占用，从而避免了故障在分布式系统中的蔓延，乃至雪崩。
 
-### 9.1.3、Hystrix能干嘛？
+#### 9.1.3、Hystrix能干嘛？
 - 服务降级
 - 服务熔断
 - 接近实时的监控
  
- ### 9.1.4、官网资料
+ #### 9.1.4、官网资料
  
  [官方资料](https://github.com/Netflix/Hystrix/wiki/How-To-Use)
  
  
-## 9.2、Hystrix重要概念
+### 9.2、Hystrix重要概念
 
-### 9.2.1、服务降级
+#### 9.2.1、服务降级
 
 - 服务器忙，请稍后再试，不让客户端等待并立刻返回一个友好提示，fallback
 - 哪些情况会触发降级
@@ -3488,19 +3488,19 @@ Hystrix是一个用于处理分布式系统的**延迟**和**容错**的开源�
 	- 服务熔断触发降级
 	- 线程池/信号量打满也会导致服务降级
 
-### 9.2.2、服务熔断
+#### 9.2.2、服务熔断
 
 - 类比保险丝达到最大服务访问后，直接拒绝访问，拉闸限电，然后调用服务降级的方法并返回友好提示
 - 就是保险丝
 	- 服务的降级->进而熔断->恢复调用链路
 
-### 9.2.3、服务限流
+#### 9.2.3、服务限流
 - 服务限流
 	- 秒杀高并发等操作，严禁一窝蜂的过来拥挤，大家排队，一秒钟N个，有序进行
 
-## 9.3、hystrix案例
+### 9.3、hystrix案例
 
-### 9.3.1、构建
+#### 9.3.1、构建
 
 1、新建 cloud-provider-hystrix-payment8001
 
@@ -3688,7 +3688,7 @@ public class PaymentController {
 	- 以上述为根基平台，从正确->错误->降级熔断->恢复
 
 
-### 9.3.2、高并发测试
+#### 9.3.2、高并发测试
 
 1、Jmeter压测测试
 - 开启Jmeter，来20000个并发压死8001，20000个请求都去访问paymentInfo_TimeOut服务
@@ -3866,15 +3866,15 @@ public class OrderHystirxController {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211019212820.png)
 
-### 9.3.3、故障现象和导致原因
+#### 9.3.3、故障现象和导致原因
 1. 8001同一层次的其它接口服务被困死，**因为tomcat线程池里面的工作线程已经被挤占完毕**
 2. 80此时调用8001，客户端访问响应缓慢，转圈圈
 
-### 9.3.4、上诉结论
+#### 9.3.4、上诉结论
 
 正因为有上述故障或不佳表现才有我们的`降级/容错/限流等`技术诞生
 
-### 9.3.5、如何解决？解决的要求
+#### 9.3.5、如何解决？解决的要求
 
 1. 超时导致服务器变慢(转圈)	超时不再等待
 2. 出错(宕机或程序运行出错)	出错要有兜底
@@ -3884,7 +3884,7 @@ public class OrderHystirxController {
 	3. 对方服务(8001)OK，调用者(80)自己出故障或有自我要求（自己的等待时间小于服务提供者），自己处理降级
 
 
-### 9.3.6、服务降级
+#### 9.3.6、服务降级
 
 1、降级配置  **@HystrixCommand**
 
@@ -4113,9 +4113,9 @@ public class OrderHystirxController {
 			- 此时服务端provider已经down了，但是我们做了服务降级处理，让客户端在服务端不可用时也会获得提示信息而不会挂起耗死服务器
 
 
-### 9.3.7、服务熔断
+#### 9.3.7、服务熔断
 
-#### 9.3.7.1、熔断是什么？
+##### 9.3.7.1、熔断是什么？
 
 **熔断机制概述**
 
@@ -4126,7 +4126,7 @@ public class OrderHystirxController {
  
 在SpringCloud框架里，熔断机制通过Hystrix实现。Hystrix会监控微服务间调用的状况，当失败的调用到一定阈值，缺省是5秒内20次调用失败，就会启动熔断机制。熔断机制的注解是`@HystrixCommand。`
  
- #### 9.3.7.2、实操
+ ##### 9.3.7.2、实操
  
  1. 修改cloud-provider-hystrix-payment8001
  2. 修改PaymentService
@@ -4175,7 +4175,7 @@ public String paymentCircuitBreaker(@PathVariable("id") Integer id)
 - 重点测试：**多次错误，然后慢慢正确，发现刚开始不满足条件，就算是正确的访问地址也不能进行**
 
 
- #### 9.3.7.3、原理(小总结)
+ ##### 9.3.7.3、原理(小总结)
  
  大神结论
  
@@ -4317,7 +4317,7 @@ public String str_fallbackMethod()
 }
 ~~~
 
-## 9.4、hystrix工作流程
+### 9.4、hystrix工作流程
 
 [工作流程](https://github.com/Netflix/Hystrix/wiki/How-it-Works)
 
@@ -4333,13 +4333,13 @@ Hystrix工作流程
 	
 	
 	
-## 9.5、服务监控hystrixDashboard
+### 9.5、服务监控hystrixDashboard
 
-### 9.5.1、概述
+#### 9.5.1、概述
 
 除了隔离依赖服务的调用以外，Hystrix还提供了**准实时的调用监控（Hystrix Dashboard）**，Hystrix会持续地记录所有通过Hystrix发起的请求的执行信息，并以统计报表和图形的形式展示给用户，包括每秒执行多少请求多少成功，多少失败等。Netflix通过hystrix-metrics-event-stream项目实现了对以上指标的监控。Spring Cloud也提供了Hystrix Dashboard的整合，对监控内容转化成可视化界面。
 
-### 9.5.2、仪表盘9001
+#### 9.5.2、仪表盘9001
 
 1、新建cloud-consumer-hystrix-dashboard9001
 
@@ -4423,7 +4423,7 @@ public class HystrixDashboardMain9001 {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020162258.png)
 
-### 9.5.3、断路器演示(服务监控hystrixDashboard)
+#### 9.5.3、断路器演示(服务监控hystrixDashboard)
 
 1、修改cloud-provider-hystrix-payment8001
 
@@ -4479,15 +4479,15 @@ public ServletRegistrationBean getServlet() {
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020164818.png)
 	
 	
-# 10、Gateway新一代网关
+## 10、Gateway新一代网关
 
-## 10.1、概述
+### 10.1、概述
 
 [上一代zuul 1.X官网](https://github.com/Netflix/zuul/wiki)
 
 [当前Gateway官网](https://cloud.spring.io/spring-cloud-static/spring-cloud-gateway/2.2.1.RELEASE/reference/html/)
 
-### 10.1.1、Gateway是什么？
+#### 10.1.1、Gateway是什么？
 
 1. 概述
 	- Gateway是在Spring生态系统之上构建的API网关服务，基于Spring 5，Spring Boot 2和 Project Reactor等技术。
@@ -4508,7 +4508,7 @@ public ServletRegistrationBean getServlet() {
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020171516.png)
 	
 	
-### 10.1.2、能干嘛？
+#### 10.1.2、能干嘛？
 
 - 反向代理
 - 鉴权
@@ -4516,13 +4516,13 @@ public ServletRegistrationBean getServlet() {
 - 熔断
 - 日志监控
 
-### 10.1.3、微服务架构中网关在哪里
+#### 10.1.3、微服务架构中网关在哪里
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020171620.png)
 
-### 10.1.4、有Zuul了怎么又出来了gateway
+#### 10.1.4、有Zuul了怎么又出来了gateway
 
-#### 10.1.4.1、我们为什么选择Gateway？
+##### 10.1.4.1、我们为什么选择Gateway？
 1. neflix不太靠谱，zuul2.0一直跳票，迟迟不发布
 	1.  一方面因为Zuul1.0已经进入了维护阶段，而且Gateway是SpringCloud团队研发的，是亲儿子产品，值得信赖。而且很多功能Zuul都没有用起来也非常的简单便捷。
 	2. Gateway是基于**异步非阻塞模型**上进行开发的，性能方面不需要担心。虽然Netflix早就发布了最新的 Zuul 2.x，但 Spring Cloud 貌似没有整合计划。而且Netflix相关组件都宣布进入维护期；不知前景如何？
@@ -4545,7 +4545,7 @@ public ServletRegistrationBean getServlet() {
 		5. SpringCloud Gateway 还 支持 WebSocket， 并且与Spring紧密集成拥有更好的开发体验
 
 
-#### 10.1.4.2、Zuul1.x模型
+##### 10.1.4.2、Zuul1.x模型
 
 1. Springcloud中所集成的Zuul版本，采用的是Tomcat容器，使用的是传统的Servlet IO处理模型
 2. 学过尚硅谷web中期课程都知道一个题目，**Servlet的生命周期?** servlet由servlet container进行生命周期管理。
@@ -4559,14 +4559,14 @@ public ServletRegistrationBean getServlet() {
 	- servlet是一个简单的网络IO模型，当请求进入servlet container时，servlet container就会为其绑定一个线程，在**并发不高的场景下**这种模型是适用的。但是一旦高并发(比如抽风用jemeter压)，线程数量就会上涨，而线程资源代价是昂贵的（上线文切换，内存消耗大）严重影响请求的处理时间。在一些简单业务场景下，不希望为每个request分配一个线程，只需要1个或几个线程就能应对极大并发的请求，这种业务场景下servlet模型没有优势
 	- 所以Zuul 1.X是**基于servlet之上的一个阻塞式处理模型**，即spring实现了处理所有request请求的一个servlet（DispatcherServlet）并由该servlet阻塞式处理处理。所以Springcloud Zuul无法摆脱servlet模型的弊端
 
-#### 10.1.4.3、GateWay模型
+##### 10.1.4.3、GateWay模型
 1. WebFlux是什么?[官网说明](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#webflux-new-framework)
 2. 说明
 	1. 传统的Web框架，比如说：struts2，springmvc等都是基于Servlet API与Servlet容器基础之上运行的
 	2. 但是**在Servlet3.1之后有了异步非阻塞的支持**。而WebFlux是一个典型`非阻塞异步的框架`，它的核心是**基于Reactor的相关API实现的**。相对于传统的web框架来说，它可以运行在诸如Netty，Undertow及支持Servlet3.1的容器上。非阻塞式+函数式编程（Spring5必须让你使用java8）
 	3. Spring WebFlux 是 Spring 5.0 引入的新的响应式框架，区别于 Spring MVC，它不需要依赖Servlet API，**它是完全异步非阻塞的**，并且基于 Reactor 来实现响应式流规范
 
-## 10.2、三大核心概念
+### 10.2、三大核心概念
 
 - Route(路由)
 	- 路由是构建网关的基本模块，它由`ID，目标URI，一系列的断言和过滤器组成`，**如果断言为true则匹配该路由**
@@ -4581,7 +4581,7 @@ public ServletRegistrationBean getServlet() {
 	- predicate就是我们的匹配条件
 	- 而filter，就可以理解为一个无所不能的拦截器。有了这两个元素，再加上目标uri，就可以实现一个具体的路由了
 
-## 10.3、Gateway工作流程
+### 10.3、Gateway工作流程
 
 1. 官网总结
 
@@ -4595,7 +4595,7 @@ public ServletRegistrationBean getServlet() {
 2. 核心逻辑
 	- **路由转发+执行过滤器链** 
 
-## 10.4、入门配置
+### 10.4、入门配置
 
 1、新建 cloud-gateway-gateway9527
 
@@ -4770,7 +4770,7 @@ eureka:
 				}
 				~~~
 				
-## 10.5、通过微服务名实现动态路由
+### 10.5、通过微服务名实现动态路由
 1. 默认情况下Gateway会根据注册中心注册的服务列表，以注册中心上微服务名为路径创建**动态路由进行转发，从而实现动态路由的功能**
 2. 启动：一个eureka7001 + 两个服务提供者8001/8002
 3. 修改POM
@@ -4821,16 +4821,16 @@ eureka:
 ~~~
 5. 测试: http://localhost:9527/payment/lb   8001/8002两个端口切换
 
-## 10.6、Predicate的使用
+### 10.6、Predicate的使用
 
-### 10.6.1、Predicate是什么？
+#### 10.6.1、Predicate是什么？
 
 启动我们的gateway9527
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020213340.png)
 
 
-### 10.6.2、Route Predicate Factories这个是什么东东?
+#### 10.6.2、Route Predicate Factories这个是什么东东?
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020213415.png)
 
@@ -4842,7 +4842,7 @@ eureka:
  
 - 所有这些谓词都匹配HTTP请求的不同属性。多种谓词工厂可以组合，并通过逻辑and。
 
-### 10.6.3、常用的Route Predicate
+#### 10.6.3、常用的Route Predicate
 
 1、After Route Predicate
 
@@ -5320,7 +5320,7 @@ eureka:
 ~~~
 - 说白了，Predicate就是为了实现一组匹配规则，让请求过来找到对应的Route进行处理。
 
-## 10.7、Filter的使用 
+### 10.7、Filter的使用 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020215804.png)
 1. 是什么？
 2. Spring Cloud Gateway的Filter
@@ -5427,9 +5427,9 @@ eureka:
 
 
 
-# 11、SpringCloud Config分布式配置中心
+## 11、SpringCloud Config分布式配置中心
 
-## 11.1、概述
+### 11.1、概述
 
 1. 分布式系统面临的---配置问题
 	- 微服务意味着要将单体应用中的业务拆分成一个个子服务，每个服务的粒度相对较小，因此系统中会出现大量的服务。由于每个服务都需要必要的配置信息才能运行，所以一套**集中式的、动态的配置管理**设施是必不可少的。
@@ -5452,7 +5452,7 @@ eureka:
 4. 与GitHub整合配置
 	- 由于SpringCloud Config默认使用Git来存储配置文件(也有其它方式,比如支持SVN和本地文件)，但最推荐的还是Git，而且使用的是http/https访问的形式
 
-## 11.2、Config服务端配置与测试
+### 11.2、Config服务端配置与测试
 
 1、用你自己的账号在GitHub上新建一个名为springcloud-config的新Repository
 
@@ -5590,7 +5590,7 @@ http://localhost:3344/master/config-dev.yml
 		name ：服务名
 		profiles：环境(dev/test/prod)
 
-## 11.3、Config客户端配置与测试
+### 11.3、Config客户端配置与测试
 
 1、新建cloud-config-client-3355
 
@@ -5728,7 +5728,7 @@ public class ConfigClientController {
 - 3355没有变化除非自己重启或者重新加载
 - 难到每次运维修改配置文件，客户端都需要重启？？噩梦
 
-## 11.4、Config客户端之动态刷新
+### 11.4、Config客户端之动态刷新
 
 1、动态刷新
 1. 修改3355模块
@@ -5765,9 +5765,9 @@ public class ConfigClientController {
 - 我们想大范围的自动刷新，求方法
 
 
-# 12、SpringCloud Bus消息总线
+## 12、SpringCloud Bus消息总线
 
-## 12.1、概述
+### 12.1、概述
 1. 对Config的加深和扩充
 	- SpringCloud Bus 配合 SpringCloud Config 使用可以实现配置的动态刷新
 2. Bus是什么？
@@ -5789,7 +5789,7 @@ Spring Cloud Bus是用来将分布式系统的节点与轻量级消息系统链�
 		- ConfigClient实例都监听**MQ中同一个topic(默认是springCloudBus)**。当一个服务刷新数据的时候，它会把这个信息放入到Topic中，这样其它监听同一Topic的服务就能得到通知，然后去更新自身的配置。
 
 
-## 12.2、SpringCloud Bus动态刷新全局广播
+### 12.2、SpringCloud Bus动态刷新全局广播
 
 1、必须先具备良好的Rabbit MQ环境先
 
@@ -6101,7 +6101,7 @@ management:
 	- http://localhost:3366/configInfo
 	- 获取配置信息，发现都以及刷新了
 
-## 12.3、SpringCloud Bus动态刷新定点通知
+### 12.3、SpringCloud Bus动态刷新定点通知
 
 1. 不想全部通知，只想定点通知
 	1. 只通知3355	
@@ -6120,15 +6120,15 @@ management:
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211022112431.png)
 
-# 13、SpringCloud Stream
+## 13、SpringCloud Stream
 
-## 13.1、消息驱动概述
+### 13.1、消息驱动概述
 
-### 13.1.1、Stream是什么？
+#### 13.1.1、Stream是什么？
 
 一句话：**屏蔽底层消息中间件的差异,降低切换成本，统一消息的编程模型**
 
-### 13.1.2、什么是SpringCloudStream
+#### 13.1.2、什么是SpringCloudStream
 
 官方定义 SpringCloud Stream 是一个`构建消息驱动微服务的框架`。
  
@@ -6149,9 +6149,9 @@ Spring Cloud Stream 为一些供应商的消息中间件产品提供了个性化
 
 [SpringCloud Stream中文指导手册](https://m.wang1314.com/doc/webapp/topic/20971999.html)
 
-### 13.1.3、设计思想
+#### 13.1.3、设计思想
 
-#### 13.1.3.1、标准MQ
+##### 13.1.3.1、标准MQ
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211022161453.png)
 
@@ -6162,14 +6162,14 @@ Spring Cloud Stream 为一些供应商的消息中间件产品提供了个性化
 - 消息通道里的消息如何被消费呢，谁负责收发**处理**
 	- 消息通道MessageChannel的子接口SubscribableChannel，由MessageHandler消息处理器所订阅
 
-#### 13.1.3.2、为什么用Cloud Stream
+##### 13.1.3.2、为什么用Cloud Stream
 1. 比方说我们用到了`RabbitMQ和Kafka`，由于这两个消息中间件的架构上的不同，像**RabbitMQ有exchange，kafka有Topic和Partitions分区**
 
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211022161718.png)
 	
 2. 这些中间件的差异性导致我们实际项目开发给我们造成了一定的困扰，我们如果用了两个消息队列的其中一种，后面的业务需求，我想往另外一种消息队列进行迁移，这时候无疑就是一个灾难性的，**一大堆东西都要重新推倒重新做**，因为它跟我们的系统耦合了，这时候springcloud Stream给我们提供了一种解耦合的方式
 
-#### 13.1.3.3、stream凭什么可以统一底层差异
+##### 13.1.3.3、stream凭什么可以统一底层差异
 
 - 在没有绑定器这个概念的情况下，我们的SpringBoot应用要直接与消息中间件进行信息交互的时候
 - 由于各消息中间件构建的初衷不同，它们的实现细节上会有较大的差异性
@@ -6178,7 +6178,7 @@ Spring Cloud Stream 为一些供应商的消息中间件产品提供了个性化
  
 - **通过定义绑定器Binder作为中间层，实现了应用程序与消息中间件细节之间的隔离**
 
-#### 13.1.3.4、Binder
+##### 13.1.3.4、Binder
 
 在没有绑定器这个概念的情况下，我们的SpringBoot应用要直接与消息中间件进行信息交互的时候，由于各消息中间件构建的初衷不同，它们的实现细节上会有较大的差异性，通过定义绑定器作为中间层，完美地实现了**应用程序与消息中间件细节之间的隔离**。Stream对消息中间件的进一步封装，可以做到代码层面对中间件的无感知，甚至于动态的切换中间件(rabbitmq切换为kafka)，使得微服务开发的高度解耦，服务可以关注更多自己的业务流程
 
@@ -6188,13 +6188,13 @@ Spring Cloud Stream 为一些供应商的消息中间件产品提供了个性化
  
 Binder可以生成Binding，Binding用来绑定消息容器的生产者和消费者，它有两种类型，INPUT和OUTPUT，`INPUT对应于消费者，OUTPUT对应于生产者`
 
-#### 13.1.3.5、Stream中的消息通信方式遵循了发布-订阅模式
+##### 13.1.3.5、Stream中的消息通信方式遵循了发布-订阅模式
 
 Topic主题进行广播
 - 在RabbitMQ就是Exchange
 - 在Kakfa中就是Topic
 
-### 13.1.4、Spring Cloud Stream标准流程套路
+#### 13.1.4、Spring Cloud Stream标准流程套路
 
 - Binder
 	- 很方便的连接中间件，屏蔽差异
@@ -6203,11 +6203,11 @@ Topic主题进行广播
 - Source和Sink
 	- 简单的可理解为参照对象是Spring Cloud Stream自身，从Stream发布消息就是输出，接受消息就是输入
 
-### 13.1.5、编码API和常用注解
+#### 13.1.5、编码API和常用注解
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211022164241.png)
 
-## 13.2、案例说明
+### 13.2、案例说明
 
 1. RabbitMQ环境已经OK
 2. 工程中新建三个子模块
@@ -6215,7 +6215,7 @@ Topic主题进行广播
 	- cloud-stream-rabbitmq-consumer8802，作为消息接收模块
 	- cloud-stream-rabbitmq-consumer8803，作为消息接收模块
 
-## 13.3、消息驱动之生产者
+### 13.3、消息驱动之生产者
 
 1、新建 cloud-stream-rabbitmq-provider8801
 
@@ -6395,7 +6395,7 @@ public class StreamMQMain8801 {
 - 启动8801
 - 访问：http://localhost:8801/sendMessage
 
-## 13.4、消息驱动之消费者
+### 13.4、消息驱动之消费者
 
 1、新建 cloud-stream-rabbitmq-provider8802
 
@@ -6530,9 +6530,9 @@ public class ReceiveMessageListener {
 }
 ~~~
 
-## 13.5、分组消费与持久化
+### 13.5、分组消费与持久化
 
-### 13.5.1、消费
+#### 13.5.1、消费
 1、新建 cloud-stream-rabbitmq-provider8803
 
 2、修改POM
@@ -6681,7 +6681,7 @@ public class ReceiveMessageListener {
 	- **不同组是可以全面消费的(重复消费)**
 	- **同一组内会发生竞争关系，只有其中一个可以消费**
 
-### 13.5.2、分组
+#### 13.5.2、分组
 
 1. 原理
 	- 微服务应用放置于同一个group中，就能够保证消息只会被其中一个应用消费一次
@@ -6844,7 +6844,7 @@ public class ReceiveMessageListener {
 	- 结论：`同一个组的多个微服务实例，每次只会有一个拿到`
 
 
-### 13.5.3、持久化
+#### 13.5.3、持久化
 
 1. 通过上述，解决了重复消费问题，再看看持久化
 2. 停止8802/8803并去除掉8802的分组`group: cloverA`，但是8803的分组`group: cloverA`没有去掉
@@ -6859,22 +6859,22 @@ public class ReceiveMessageListener {
 
 6. **在本实例中，如果两个消费端都没有去掉`group: cloverA`，但是将两个消费端暂停，同时提供者发送消息，那么这两个消费端谁先启动就会接收完所有的消息，另外一个消费端则不会接收消息**
 
-# 14、SpringCloud Sleuth分布式请求链路跟踪
+## 14、SpringCloud Sleuth分布式请求链路跟踪
 
-## 14.1、概述
+### 14.1、概述
 
-### 14.1、为什么会出现这个技术？需要解决哪些问题？
+#### 14.1.1、为什么会出现这个技术？需要解决哪些问题？
 
 在微服务框架中，一个由客户端发起的请求在后端系统中会经过多个不同的的服务节点调用来协同产生最后的请求结果，每一个前端请求都会形成一条复杂的分布式服务调用链路，链路中的任何一环出现高延时或错误都会引起整个请求最后的失败
 
-### 14.1.2、是什么？
+#### 14.1.2、是什么？
 
 [官网说明](https://github.com/spring-cloud/spring-cloud-sleuth)
 
 - SpringCloud Sleuth提供了一套完整的服务跟踪的解决方案
 - 在分布式系统中提供追踪解决方案并且兼容支持了zipkin
 
-## 14.2、搭建链路监控步骤
+### 14.2、搭建链路监控步骤
 
 1. zipkin
 	- 下载：[下载地址](https://dl.bintray.com/openzipkin/maven/io/zipkin/java/zipkin-server/)
@@ -6943,11 +6943,11 @@ public class ReceiveMessageListener {
 
 
 
-# 15、SpringCloud Alibaba入门简介
+## 15、SpringCloud Alibaba入门简介
 
-## 15.1、SpringCloud alibaba带来了什么
+### 15.1、SpringCloud alibaba带来了什么
 
-### 15.1.2、是什么？
+#### 15.1.2、是什么？
 
 [官网](https://github.com/alibaba/spring-cloud-alibaba/blob/master/README-zh.md)
 
@@ -6956,7 +6956,7 @@ public class ReceiveMessageListener {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211022215147.png)
 
-### 15.1.3、能干嘛？
+#### 15.1.3、能干嘛？
  
 - 服务限流降级：默认支持 Servlet、Feign、RestTemplate、Dubbo 和 RocketMQ 限流降级功能的接入，可以在运行时通过控制台实时修改限流降级规则，还支持查看限流降级 Metrics 监控
 - 服务注册与发现：适配 SpringCloud 服务注册与发现标准，默认集成了 Ribbon 的支持
@@ -6965,11 +6965,11 @@ public class ReceiveMessageListener {
 - 阿里云对象存储：阿里云提供的海量、安全、低成本、高可靠的云存储服务。支持在任何应用、任何时间、任何地点存储和访问任意类型的数据
 - 分布式任务调度：提供秒级、精准、高可靠、高可用的定时（基于 Cron 表达式）任务调度服务。同时提供分布式的任务执行模型，如网格任务。网格任务支持海量子任务均匀分配到所有 Worker（schedulerx-client）上执行
 
-### 15.1.4、怎么玩？
+#### 15.1.4、怎么玩？
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211022215359.png)
 
-## 15.2、SpringCloud alibaba学习资料获取
+### 15.2、SpringCloud alibaba学习资料获取
 
 [SpringCloud Alibaba官网](https://spring.io/projects/spring-cloud-alibaba#overview)
 
@@ -6979,36 +6979,36 @@ Spring Cloud Alibaba 致力于提供微服务开发的一站式解决方案。�
 
 [SpringCloud Alibaba参考文档](https://spring-cloud-alibaba-group.github.io/github-pages/greenwich/spring-cloud-alibaba.html)
 
-# 16、SpringCloud Alibaba Nacos服务注册和配置中心
+## 16、SpringCloud Alibaba Nacos服务注册和配置中心
 
-## 16.1、Nacos简介
+### 16.1、Nacos简介
 
-### 16.1.1、为什么叫Nacos
+#### 16.1.1、为什么叫Nacos
 
 前四个字母分别为Naming和Configuration的前两个字母，最后的s为Service。
 
-### 16.1.2、Nacos是什么？
+#### 16.1.2、Nacos是什么？
 
 - 一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
 - Nacos: Dynamic Naming and Configuration Service
 - Nacos就是注册中心 + 配置中心的组合 <===> **Nacos = Eureka+Config +Bus**
 
-### 16.1.3、Nacos能干嘛？
+#### 16.1.3、Nacos能干嘛？
 
 - 替代Eureka做服务注册中心
 - 替代Config做服务配置中心
 
-### 16.1.4、去哪下？
+#### 16.1.4、去哪下？
 
 [Nacos Github地址](https://github.com/alibaba/Nacos)
 
 [官网文档](https://nacos.io/zh-cn/index.html)
 
-### 16.1.5、各种注册中心比较
+#### 16.1.5、各种注册中心比较
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023161548.png)
 
-## 16.2、安装并运行Nacos
+### 16.2、安装并运行Nacos
 1. **本地Java8+Maven环境已经OK**
 2. 先从官网下载Nacos
 3. 解压安装包，直接运行bin目录下的startup.cmd
@@ -7023,13 +7023,13 @@ Spring Cloud Alibaba 致力于提供微服务开发的一站式解决方案。�
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023165255.png)
 
-## 16.3、Nacos作为服务注册中心演示
+### 16.3、Nacos作为服务注册中心演示
 
-### 16.3.1、官网文档
+#### 16.3.1、官网文档
 
 [官网文档](https://spring-cloud-alibaba-group.github.io/github-pages/greenwich/spring-cloud-alibaba.html#_spring_cloud_alibaba_nacos_config)
 
-### 16.3.2、基于Nacos的服务提供者
+#### 16.3.2、基于Nacos的服务提供者
 
 1、新建 cloud-alibaba-provider-payment9001
 
@@ -7163,7 +7163,7 @@ public class PaymentController {
 
 7、为下面演示nacos的负载均衡，参照9001建立9002
 
-### 16.3.3、基于Nacos的服务消费者
+#### 16.3.3、基于Nacos的服务消费者
 
 1、新建 cloud-alibaba-consumer-nacos-order83
 
@@ -7324,7 +7324,7 @@ public class ApplicationContextBean {
 
 - 83访问9001/9002，轮询负载OK
 
-### 16.3.4、服务注册中心对比
+#### 16.3.4、服务注册中心对比
 
 Nacos全景图所示
 
@@ -7347,9 +7347,9 @@ Nacos和CAP
 	- 切换命令：`curl -X PUT '$NACOS_SERVER:8848/nacos/v1/ns/operator/switches?entry=serverMode&value=CP'`
 
 
-## 16.4、Nacos作为服务配置中心演示
+### 16.4、Nacos作为服务配置中心演示
 
-### 16.4.1、Nacos作为配置中心-基础配置
+#### 16.4.1、Nacos作为配置中心-基础配置
 1、新建 cloud-alibaba-config-nacos-client3377
 
 2、修改POM
@@ -7503,9 +7503,9 @@ public class ConfigClientController {
 8、自带动态刷新
 - 修改下Nacos中的yaml配置文件，再次调用查看配置的接口，就会发现配置已经刷新
 
-### 16.4.2、Nacos作为配置中心-分类配置
+#### 16.4.2、Nacos作为配置中心-分类配置
 
-#### 16.4.2.1、问题
+##### 16.4.2.1、问题
 
 多环境多项目管理
 - 问题1：
@@ -7521,7 +7521,7 @@ public class ConfigClientController {
 	那怎么对这些微服务配置进行管理呢？
 	
 	
-#### 16.4.2.2、Nacos的图形化管理界面
+##### 16.4.2.2、Nacos的图形化管理界面
 
 1. 配置管理
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215042.png)
@@ -7530,7 +7530,7 @@ public class ConfigClientController {
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211023215100.png)
 	
 	
-#### 16.4.2.3、Namespace+Group+Data ID三者关系？为什么这么设计？
+##### 16.4.2.3、Namespace+Group+Data ID三者关系？为什么这么设计？
 1. 是什么
 	- 类似Java里面的package名和类名
 	- **最外层的namespace是可以用于区分部署环境的**，`Group和DataID逻辑上区分两个目标对象`
@@ -7547,9 +7547,9 @@ public class ConfigClientController {
 	- 最后是Instance，就是微服务的实例
 
 
-#### 16.4.2.4、三种方案加载配置
+##### 16.4.2.4、三种方案加载配置
 
-##### 16.4.2.4.1、DataID方案
+###### 16.4.2.4.1、DataID方案
 
 - 指定spring.profile.active和配置文件的DataID来使不同环境下读取不同的配置
 - **默认空间+默认分组+新建dev和test两个DataID**
@@ -7561,21 +7561,21 @@ public class ConfigClientController {
 	- 配置是什么就加载什么
 
 
-##### 16.4.2.4.2、Group方案
+###### 16.4.2.4.2、Group方案
 - 通过Group实现环境区分
 - DataId相同，但是属于不同的组
 - 修改bootstrap+application
 	- `在config下增加一条group的配置即可。可配置为DEV_GROUP或TEST_GROUP`
 
-##### 16.4.2.4.3、Namespace方案
+###### 16.4.2.4.3、Namespace方案
 - 新建dev/test的Namespace
 - 在对应的命名空间下建立不同的配置
 - 修改bootstrap.yml文件
 	- 在group同级的地方加上namespace
 
-## 16.5、Nacos集群和持久化配置（重要）
+### 16.5、Nacos集群和持久化配置（重要）
 
-### 16.5.1、官网说明
+#### 16.5.1、官网说明
 
 [Nacos集群化部署说明](https://nacos.io/zh-cn/docs/cluster-mode-quick-start.html)
 
@@ -7604,7 +7604,7 @@ public class ConfigClientController {
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024111610.png)
 
 
- ### 16.5.2、Nacos持久化配置解释
+ #### 16.5.2、Nacos持久化配置解释
  1. Nacos默认自带的是嵌入式数据库derby
 	 - [去Github源码的pom文件中查看](https://github.com/alibaba/nacos/blob/develop/config/pom.xml)
  2. derby到mysql切换配置步骤
@@ -7821,7 +7821,7 @@ public class ConfigClientController {
 			~~~
  3. 启动Nacos，可以看到是个全新的空记录界面，以前是记录进derby
 
-### 16.5.3、Linux版Nacos+MySQL生产环境配置
+#### 16.5.3、Linux版Nacos+MySQL生产环境配置
 
 1、预计需要，1个Nginx+3个nacos注册中心+1个mysql
 
@@ -7949,9 +7949,9 @@ public class ConfigClientController {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024175339.png)
 
-# 17、SpringCloud Alibaba Sentinel实现熔断与限流
+## 17、SpringCloud Alibaba Sentinel实现熔断与限流
 
-## 17.1、Sentinel
+### 17.1、Sentinel
 
 [官网](https://github.com/alibaba/Sentinel)
 
@@ -7973,7 +7973,7 @@ public class ConfigClientController {
 		- 服务限流
 
 
-## 17.2、安装Sentinel控制台
+### 17.2、安装Sentinel控制台
 sentinel组件由2部分构成：
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025200335.png)
 
@@ -7986,7 +7986,7 @@ sentinel组件由2部分构成：
 	- http://localhost:8080
 	- 登录账号密码均为sentinel
 
-## 17.3、初始化演示工程
+### 17.3、初始化演示工程
 
 1、启动Nacos8848成功
 
@@ -8152,9 +8152,9 @@ public class FlowLimitController {
 	
 - 结论：**sentinel8080正在监控微服务8401**
 
-## 17.4、流控规则
+### 17.4、流控规则
 
-### 17.4.1、基本介绍
+#### 17.4.1、基本介绍
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025204441.png)
 
@@ -8163,9 +8163,9 @@ public class FlowLimitController {
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025204457.png)
 
 
-### 17.4.2、流控模式
+#### 17.4.2、流控模式
 
-#### 17.4.2.1、直接(默认)
+##### 17.4.2.1、直接(默认)
 
 - 直接->快速失败(`系统默认`)
 - 配置及说明
@@ -8181,7 +8181,7 @@ public class FlowLimitController {
 		- 类似有个fallback的兜底方法？
 
 
-#### 17.4.2.2、关联
+##### 17.4.2.2、关联
 
 1. 关联是什么？
 - 当关联的资源达到阈值时，就限流自己
@@ -8200,19 +8200,19 @@ public class FlowLimitController {
 	- 结果：**Blocked by Sentinel (flow limiting)**
 
 
-#### 17.4.2.3、链路
+##### 17.4.2.3、链路
 
 
-### 17.4.3、流控效果
+#### 17.4.3、流控效果
 
-#### 17.4.3.1、直接->快速失败(默认的流控处理)
+##### 17.4.3.1、直接->快速失败(默认的流控处理)
 
 - 直接失败，抛出异常
 	- `Blocked by Sentinel (flow limiting)`
 - 源码
 	- com.alibaba.csp.sentinel.slots.block.flow.controller.DefaultController
 
-#### 17.4.3.2、预热
+##### 17.4.3.2、预热
 
 1. 说明：**公式：阈值除以coldFactor(默认值为3),经过预热时长后才会达到阈值**
 2. 官网
@@ -8232,7 +8232,7 @@ public class FlowLimitController {
 	- 如：秒杀系统在开启的瞬间，会有很多流量上来，很有可能把系统打死，预热方式就是把为了保护系统，可慢慢的把流量放进来，慢慢的把阀值增长到设置的阀值
 
 
-#### 17.4.3.3、排队等待
+##### 17.4.3.3、排队等待
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025221047.png)
 
@@ -8245,11 +8245,11 @@ public class FlowLimitController {
 2. 源码：com.alibaba.csp.sentinel.slots.block.flow.controller.RateLimiterController 
 
 
-## 17.5、降级规则
+### 17.5、降级规则
 
 [官网](https://github.com/alibaba/Sentinel/wiki/%E7%86%94%E6%96%AD%E9%99%8D%E7%BA%A7)
 
-### 17.5.1、基本介绍
+#### 17.5.1、基本介绍
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025222700.png)
 
@@ -8268,15 +8268,15 @@ public class FlowLimitController {
 		- 半开的状态系统自动去检测是否请求有异常，没有异常就关闭断路器恢复使用，有异常则继续打开断路器不可用。具体可以参考Hystrix
 
 
-### 17.5.2、降级策略实战
+#### 17.5.2、降级策略实战
 
-#### 17.5.2.1、RT是什么？
+##### 17.5.2.1、RT是什么？
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026104635.png)
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026104702.png)
 
-#### 17.5.2.2、测试
+##### 17.5.2.2、测试
 
 1. 代码
 
@@ -8304,13 +8304,13 @@ public String testD()
  - 永远一秒钟打进来10个线程（大于5个了）调用testD，我们希望200毫秒处理完本次任务，如果超过200毫秒还没处理完，在未来1秒钟的时间窗口内，断路器打开(保险丝跳闸)微服务不可用，保险丝跳闸断电了
 - 后续我停止jmeter，没有这么大的访问量了，断路器关闭(保险丝恢复)，微服务恢复OK
 
-#### 17.5.2.3、异常比例是什么？
+##### 17.5.2.3、异常比例是什么？
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026110436.png)
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026110528.png)
 
-#### 17.5.2.4、测试
+##### 17.5.2.4、测试
 
 1. 代码
 	~~~Java
@@ -8332,7 +8332,7 @@ public String testD()
 	- 开启jmeter后，直接高并发发送请求，多次调用达到我们的配置条件了
 	- 断路器开启(保险丝跳闸)，微服务不可用了，不再报错error而是服务降级了
 
-#### 17.5.2.5、异常数是什么？
+##### 17.5.2.5、异常数是什么？
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026111734.png)
 
@@ -8340,7 +8340,7 @@ public String testD()
 
 **异常数是按照分钟统计的**
 
-#### 17.5.2.6、测试
+##### 17.5.2.6、测试
 
 1. 代码
 	~~~Java
@@ -8357,16 +8357,16 @@ public String testD()
 	
 	- http://localhost:8401/testE，第一次访问绝对报错，因为除数不能为零，我们看到error窗口，但是达到5次报错后，进入熔断后降级
 
-## 17.6、热点key限流
+### 17.6、热点key限流
 
-### 17.6.1、基本介绍
+#### 17.6.1、基本介绍
 
 **何为热点**
 - 热点即经常访问的数据，很多时候我们希望统计或者限制某个热点数据中访问频次最高的TopN数据，并对其访问进行限流或者其它操作
 
 [# 热点参数限流指导文档](https://github.com/alibaba/Sentinel/wiki/%E7%83%AD%E7%82%B9%E5%8F%82%E6%95%B0%E9%99%90%E6%B5%81)
 
-### 17.6.2、承上启下复习
+#### 17.6.2、承上启下复习
 - **兜底方法，分为系统默认和客户自定义，两种**
 - 之前的case，限流出问题后，都是用sentinel系统默认的提示：Blocked by Sentinel (flow limiting)
 - 我们能不能自定?类似hystrix，某个方法出问题了，就找对应的兜底降级方法？
@@ -8388,7 +8388,7 @@ public String dealHandler_testHotKey(String p1,String p2,BlockException exceptio
 ~~~
 - sentinel系统默认的提示：Blocked by Sentinel (flow limiting)
 
-### 17.6.3、配置
+#### 17.6.3、配置
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026115340.png)
 
@@ -8401,12 +8401,12 @@ public String dealHandler_testHotKey(String p1,String p2,BlockException exceptio
 	- `@SentinelResource(value = "testHotKey",blockHandler ="dealHandler_testHotKey")`
 	- 方法testHotKey里面第一个参数只要QPS超过每秒1次，马上降级处理，用了我们自己定义的
 
-### 17.6.4、测试
+#### 17.6.4、测试
 - `error`：http://localhost:8401/testHotKey?p1=abc
 - `error`：http://localhost:8401/testHotKey?p1=abc&p2=33
 - `right`：http://localhost:8401/testHotKey?p2=abc
 
-### 17.6.5、参数例外项(重点！！！！！)
+#### 17.6.5、参数例外项(重点！！！！！)
 - 上述案例演示了第一个参数p1，当QPS超过1秒1次点击后马上被限流
 - 特例情况
 	- 普通：超过1秒钟一个后，达到阈值1后马上被限流
@@ -8423,7 +8423,7 @@ public String dealHandler_testHotKey(String p1,String p2,BlockException exceptio
 	- 当p1不等于5的时候，阈值就是平常的1
 - **前提条件**：热点参数的注意点，参数必须是基本类型或者String
 	
-### 17.6.6、其它
+#### 17.6.6、其它
 
 当你手动在代码中添加一个异常再次访问时，会直接出现报错界面，而不是你设置的兜底方法
 
@@ -8434,7 +8434,7 @@ public String dealHandler_testHotKey(String p1,String p2,BlockException exceptio
 - 总结：**@SentinelResource主管配置出错，运行出错该走异常走异常**
 
 
-## 17.7、系统规则
+### 17.7、系统规则
 
 [系统自适应限流](https://github.com/alibaba/Sentinel/wiki/%E7%B3%BB%E7%BB%9F%E8%87%AA%E9%80%82%E5%BA%94%E9%99%90%E6%B5%81)
 
@@ -8444,9 +8444,9 @@ public String dealHandler_testHotKey(String p1,String p2,BlockException exceptio
 
 可以配置一个全局QPS
 
-## 17.8、@SentinelResource
+### 17.8、@SentinelResource
 
-### 17.8.1、按资源名称限流+后续处理
+#### 17.8.1、按资源名称限流+后续处理
 
 1. 启动Nacos成功
 2. 启动Sentinel成功：java -jar sentinel-dashboard-1.7.0.jar
@@ -8498,7 +8498,7 @@ public String dealHandler_testHotKey(String p1,String p2,BlockException exceptio
 	- **Sentinel控制台，流控规则消失了？？？？？**
 		- **临时/持久？**
 
-### 17.8.2、按照URL地址限流+后续处理
+#### 17.8.2、按照URL地址限流+后续处理
 1. 通过访问的URL来限流，会返回Sentinel自带默认的限流处理信息
 2. 修改业务类RateLimitController
 	~~~Java
@@ -8520,14 +8520,14 @@ public String dealHandler_testHotKey(String p1,String p2,BlockException exceptio
 
 
 
-### 17.8.3、上面兜底方案面临的问题
+#### 17.8.3、上面兜底方案面临的问题
 1. 系统默认的，没有体现我们自己的业务要求
 2. 依照现有条件，我们自定义的处理方法又和业务代码耦合在一块，不直观
 3. 每个业务方法都添加一个兜底的，那代码膨胀加剧
 4. 全局统一的处理方法没有体现
 
 
-### 17.8.4、客户自定义限流处理逻辑
+#### 17.8.4、客户自定义限流处理逻辑
 
 1. 创建CustomerBlockHandler类用于自定义限流处理逻辑
 2. 自定义限流处理类：CustomerBlockHandler
@@ -8556,7 +8556,7 @@ public String dealHandler_testHotKey(String p1,String p2,BlockException exceptio
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026164936.png)
 	
 	
-### 17.8.5、更多注解属性说明
+#### 17.8.5、更多注解属性说明
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026170051.png)
 1. 多说一句
 	
@@ -8569,11 +8569,11 @@ public String dealHandler_testHotKey(String p1,String p2,BlockException exceptio
 	- ContextUtil定义了上下文
 
 
-## 17.9、服务熔断功能
+### 17.9、服务熔断功能
 
 sentinel整合ribbon+openFeign+fallback
 
-### 17.9.1、Ribbon系列
+#### 17.9.1、Ribbon系列
 1. 启动nacos和sentinel
 2. 提供者9003/9004
 	1. 新建cloud-alibaba-provider-payment9003/9004两个一样的做法
@@ -9056,7 +9056,7 @@ sentinel整合ribbon+openFeign+fallback
 					- 程序异常打到前台了，对用户不友好
 					- ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026205055.png)
 
-### 17.9.2、Feign系列
+#### 17.9.2、Feign系列
 
 1. 修改84模块
 2. 修改POM
@@ -9145,14 +9145,14 @@ public class OrderNacosMain84 {
 ~~~
 
 
-## 17.10、规则持久化
+### 17.10、规则持久化
 - 是什么？
 	- 一旦我们重启应用，sentinel规则将消失，生产环境需要将配置规则进行持久化
 - 怎么玩？
 	- 将限流配置规则持久化进Nacos保存，只要刷新8401某个rest地址，sentinel控制台的流控规则就能看到，只要Nacos里面的配置不删除，针对8401上sentinel上的流控规则持续有效
 
 
-### 17.10.1、持久化步骤
+#### 17.10.1、持久化步骤
 
 1. 修改cloud-alibaba-sentinel-service8401
 2. 修改POM
@@ -9178,6 +9178,7 @@ public class OrderNacosMain84 {
 				data-type: json
 				rule-type: flow
 	~~~
+	
 	~~~yml
 	server:
 	  port: 8401
@@ -9249,21 +9250,1997 @@ public class OrderNacosMain84 {
 	- 多次调用：http://localhost:8401/rateLimit/byUrl
 	- 重新配置出现了，持久化验证通过
 
-# 18、SpringCloud Alibaba Seata处理分布式事务
+## 18、SpringCloud Alibaba Seata处理分布式事务
 
-## 18.1、分布式事务问题
+### 18.1、分布式事务问题
 
-### 18.1.1、分布式之前
+#### 18.1.1、分布式之前
 
 - 单机单库没这个问题
 - 从1：1  ->  1：N  ->  N：N
 
 
-### 18.1.2、分布式之后
+#### 18.1.2、分布式之后
 
 - 单体应用被拆分成微服务应用，原来的三个模块被拆分成**三个独立的应用**，分别使用**三个独立的数据源**
 - 业务操作需要调用三个服务来完成。此时**每个服务内部的数据一致性由`本地`事务来保证**，**但是`全局`的数据一致性问题没法保证**
 
 **一句话**：`一次业务操作需要跨多个数据源或需要跨多个系统进行远程调用，就会产生分布式事务问题`
 
-## 18.2、
+### 18.2、 Seata简介
+
+#### 18.2.1、Seata是什么？
+
+Seata是一款开源的分布式事务解决方案，致力于在微服务架构下提供高性能和简单易用的分布式事务服务。
+
+[官网地址](http://seata.io/zh-cn/)
+
+#### 18.2.2、能干嘛？
+- 一个典型的分布式事务过程
+	- 分布式事务处理过程的一ID+三组件模型
+		- **Transaction ID XID**：全局唯一的事务ID
+		- **Transaction Coordinator (TC)**：事务协调器，维护全局事务的运行状态，负责协调并驱动全局事务的提交或回滚；
+		- **Transaction Manager (TM)**：控制全局事务的边界，负责开启一个全局事务，并最终发起全局提交或全局回滚的决议；
+		- **Resource Manager (RM)**：控制分支事务，负责分支注册、状态汇报，并接收事务协调器的指令，驱动分支（本地）事务的提交和回滚
+	- 处理过程
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211027113015.png)
+	
+	1. TM 向 TC 申请开启一个全局事务，全局事务创建成功并生成一个全局唯一的 XID；
+	2. XID 在微服务调用链路的上下文中传播；
+	3. RM 向 TC 注册分支事务，将其纳入 XID 对应全局事务的管辖；
+	4. TM 向 TC 发起针对 XID 的全局提交或回滚决议；
+	5. TC 调度 XID 下管辖的全部分支事务完成提交或回滚请求。
+
+	简单解释：
+	- TM：代表一个班级班主任
+	- TC：代表一个任课老师
+	- RM：代表上课学生
+
+	1. 班主任老师向任课老师说，我们这个课程可以开了嘛？老师说好，然后班主任去创建一个班级号，这个就是我们的XID，全局唯一
+	2. 创建班级号后，班主任老师就去微信群里面发送该班级号，让选了该课程的学生进入到该课程的学习
+	3. 同学就通过班主任给的班级号进入到直播中来学习，老师就可以实时的看到有多少人成功进入，老师就会把这些学生纳入到该班级管理中
+	4. 班主任说让学生进行一个签到，然后告诉老师，说学生全部进入，可以开始上课了
+	5. 当老师将该课程上完的时候，老师就会将该班级该门课程进行结课
+
+
+#### 18.2.3、去哪下？
+
+[发布说明](https://github.com/seata/seata/releases)
+
+#### 18.2.4、怎么玩？
+1. **本地@Transactional**
+2. **全局@GlobalTransactional**	
+	- SEATA 的分布式交易解决方案
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211027113819.png)
+	
+	
+### 18.3、Seata-Server安装
+1. 官网地址：[官网地址](http://seata.io/zh-cn/)
+2. 下载版本
+	- https://github.com/seata/seata/releases
+	- 下载的是seata-server-0.9.0.zip
+3. seata-server-0.9.0.zip解压到指定目录并修改conf目录下的file.conf配置文件	
+	- 先备份原始file.conf文件
+	- 主要修改：**自定义事务组名称+事务日志存储模式为db+数据库连接信息**
+	- file.conf
+		- service模块
+		
+		![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211027115504.png)
+		
+		- store模块
+		
+		![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211027115533.png)
+		
+4. mysql5.7数据库新建库seata
+5. 在seata库里建表
+	- 建表db_store.sql在\seata-server-0.9.0\seata\conf目录里面：db_store.sql
+6. 修改seata-server-0.9.0\seata\conf目录下的registry.conf配置文件
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211027115630.png)
+	
+7. 先启动Nacos端口号8848
+8. 再启动seata-server
+
+### 18.4、订单/库存/账户业务数据库准备
+
+1. 以下演示都需要**先启动Nacos后启动Seata**，保证两个都OK
+	- Seata没启动报错no available server to connect
+2. 分布式事务业务说明
+	- 这里我们会创建三个服务，一个订单服务，一个库存服务，一个账户服务
+	- **当用户下单时，会在订单服务中创建一个订单，然后通过远程调用库存服务来扣减下单商品的库存**
+	- **再通过远程调用账户服务来扣减用户账户里面的余额**
+	- **最后在订单服务中修改订单状态为已完成**
+	- 该操作跨越三个数据库，有两次远程调用，很明显会有分布式事务问题
+	- 下订单--->扣库存--->减账户(余额)
+3. 创建业务数据库
+	- `seata_order`：存储订单的数据库
+	- `seata_storage`：存储库存的数据库
+	- `seata_account`：存储账户信息的数据库
+4. 按照上述3库分别建对应业务表
+	- seata_order库下建t_order表
+		~~~sql
+		CREATE TABLE t_order (
+		  `id` BIGINT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		  `user_id` BIGINT(11) DEFAULT NULL COMMENT '用户id',
+		  `product_id` BIGINT(11) DEFAULT NULL COMMENT '产品id',
+		  `count` INT(11) DEFAULT NULL COMMENT '数量',
+		  `money` DECIMAL(11,0) DEFAULT NULL COMMENT '金额',
+		  `status` INT(1) DEFAULT NULL COMMENT '订单状态：0：创建中；1：已完结' 
+		) ENGINE=INNODB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+		SELECT * FROM t_order;	
+		~~~
+	- seata_storage库下建t_storage 表
+		~~~sql
+		CREATE TABLE t_storage (
+		 `id` BIGINT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		 `product_id` BIGINT(11) DEFAULT NULL COMMENT '产品id',
+		 `total` INT(11) DEFAULT NULL COMMENT '总库存',
+		 `used` INT(11) DEFAULT NULL COMMENT '已用库存',
+		 `residue` INT(11) DEFAULT NULL COMMENT '剩余库存'
+		) ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+		INSERT INTO seata_storage.t_storage(`id`, `product_id`, `total`, `used`, `residue`)
+		VALUES ('1', '1', '100', '0', '100');
+
+		SELECT * FROM t_storage;
+		~~~
+	- seata_account库下建t_account 
+		~~~sql
+		CREATE TABLE t_account (
+		  `id` BIGINT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'id',
+		  `user_id` BIGINT(11) DEFAULT NULL COMMENT '用户id',
+		  `total` DECIMAL(10,0) DEFAULT NULL COMMENT '总额度',
+		  `used` DECIMAL(10,0) DEFAULT NULL COMMENT '已用余额',
+		  `residue` DECIMAL(10,0) DEFAULT '0' COMMENT '剩余可用额度'
+		) ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+		INSERT INTO seata_account.t_account(`id`, `user_id`, `total`, `used`, `residue`)  VALUES ('1', '1', '1000', '0', '1000');
+
+		SELECT * FROM t_account;
+		~~~
+5. 按照上述3库分别建对应的回滚日志表
+	- 订单-库存-账户3个库下都需要建各自的回滚日志表
+	- \seata-server-0.9.0\seata\conf目录下的db_undo_log.sql
+		~~~sql
+		-- the table to store seata xid data
+		-- 0.7.0+ add context
+		-- you must to init this sql for you business databese. the seata server not need it.
+		-- 此脚本必须初始化在你当前的业务数据库中，用于AT 模式XID记录。与server端无关（注：业务数据库）
+		-- 注意此处0.3.0+ 增加唯一索引 ux_undo_log
+		drop table `undo_log`;
+		CREATE TABLE `undo_log` (
+		  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+		  `branch_id` bigint(20) NOT NULL,
+		  `xid` varchar(100) NOT NULL,
+		  `context` varchar(128) NOT NULL,
+		  `rollback_info` longblob NOT NULL,
+		  `log_status` int(11) NOT NULL,
+		  `log_created` datetime NOT NULL,
+		  `log_modified` datetime NOT NULL,
+		  `ext` varchar(100) DEFAULT NULL,
+		  PRIMARY KEY (`id`),
+		  UNIQUE KEY `ux_undo_log` (`xid`,`branch_id`)
+		) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+		~~~
+		
+
+### 18.5、订单/库存/账户业务微服务准备
+
+#### 18.5.1、业务需求
+
+下订单->减库存->扣余额->改(订单)状态
+
+#### 18.5.2、新建订单Order-Module
+1. 新建seata-order-service2001
+2. 修改POM
+	~~~pom
+	<?xml version="1.0" encoding="UTF-8"?>
+	<project xmlns="http://maven.apache.org/POM/4.0.0"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		<parent>
+			<artifactId>SpringCloud</artifactId>
+			<groupId>com.clover.springcloud</groupId>
+			<version>1.0-SNAPSHOT</version>
+		</parent>
+		<modelVersion>4.0.0</modelVersion>
+
+		<artifactId>seata-order-service2001</artifactId>
+
+
+		<dependencies>
+			<!--nacos-->
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+			</dependency>
+			<!--seata-->
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+				<exclusions>
+					<exclusion>
+						<artifactId>seata-all</artifactId>
+						<groupId>io.seata</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>io.seata</groupId>
+				<artifactId>seata-all</artifactId>
+				<version>0.9.0</version>
+			</dependency>
+			<!--feign-->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-openfeign</artifactId>
+			</dependency>
+			<!--web-actuator-->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-actuator</artifactId>
+			</dependency>
+			<!--mysql-druid-->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>5.1.37</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid-spring-boot-starter</artifactId>
+				<version>1.1.10</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>2.0.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<optional>true</optional>
+			</dependency>
+		</dependencies>
+
+	</project>
+	~~~
+	
+3. 编写YML
+	~~~yml
+	server:
+	  port: 2001
+
+	spring:
+	  application:
+		name: seata-order-service
+	  cloud:
+		alibaba:
+		  seata:
+			#自定义事务组名称需要与seata-server中的对应
+			tx-service-group: clover_tx_group
+		nacos:
+		  discovery:
+			server-addr: localhost:8848
+	  datasource:
+		driver-class-name: com.mysql.jdbc.Driver
+		url: jdbc:mysql://localhost:3306/seata_order
+		username: root
+		password: xn123456
+
+	feign:
+	  hystrix:
+		enabled: false
+
+	logging:
+	  level:
+		io:
+		  seata: info
+
+	mybatis:
+	  mapperLocations: classpath:mapper/*.xml
+	~~~
+	
+4. 创建file.conf文件
+	~~~conf
+	transport {
+	  # tcp udt unix-domain-socket
+	  type = "TCP"
+	  #NIO NATIVE
+	  server = "NIO"
+	  #enable heartbeat
+	  heartbeat = true
+	  #thread factory for netty
+	  thread-factory {
+		boss-thread-prefix = "NettyBoss"
+		worker-thread-prefix = "NettyServerNIOWorker"
+		server-executor-thread-prefix = "NettyServerBizHandler"
+		share-boss-worker = false
+		client-selector-thread-prefix = "NettyClientSelector"
+		client-selector-thread-size = 1
+		client-worker-thread-prefix = "NettyClientWorkerThread"
+		# netty boss thread size,will not be used for UDT
+		boss-thread-size = 1
+		#auto default pin or 8
+		worker-thread-size = 8
+	  }
+	  shutdown {
+		# when destroy server, wait seconds
+		wait = 3
+	  }
+	  serialization = "seata"
+	  compressor = "none"
+	}
+
+	service {
+
+	  vgroup_mapping.clover_tx_group = "default" #修改自定义事务组名称
+
+	  default.grouplist = "127.0.0.1:8091"
+	  enableDegrade = false
+	  disable = false
+	  max.commit.retry.timeout = "-1"
+	  max.rollback.retry.timeout = "-1"
+	  disableGlobalTransaction = false
+	}
+
+
+	client {
+	  async.commit.buffer.limit = 10000
+	  lock {
+		retry.internal = 10
+		retry.times = 30
+	  }
+	  report.retry.count = 5
+	  tm.commit.retry.count = 1
+	  tm.rollback.retry.count = 1
+	}
+
+	## transaction log store
+	store {
+	  ## store mode: file、db
+	  mode = "db"
+
+	  ## file store
+	  file {
+		dir = "sessionStore"
+
+		# branch session size , if exceeded first try compress lockkey, still exceeded throws exceptions
+		max-branch-session-size = 16384
+		# globe session size , if exceeded throws exceptions
+		max-global-session-size = 512
+		# file buffer size , if exceeded allocate new buffer
+		file-write-buffer-cache-size = 16384
+		# when recover batch read size
+		session.reload.read_size = 100
+		# async, sync
+		flush-disk-mode = async
+	  }
+
+	  ## database store
+	  db {
+		## the implement of javax.sql.DataSource, such as DruidDataSource(druid)/BasicDataSource(dbcp) etc.
+		datasource = "dbcp"
+		## mysql/oracle/h2/oceanbase etc.
+		db-type = "mysql"
+		driver-class-name = "com.mysql.jdbc.Driver"
+		url = "jdbc:mysql://127.0.0.1:3306/seata"
+		user = "root"
+		password = "xn123456"
+		min-conn = 1
+		max-conn = 3
+		global.table = "global_table"
+		branch.table = "branch_table"
+		lock-table = "lock_table"
+		query-limit = 100
+	  }
+	}
+	lock {
+	  ## the lock store mode: local、remote
+	  mode = "remote"
+
+	  local {
+		## store locks in user's database
+	  }
+
+	  remote {
+		## store locks in the seata's server
+	  }
+	}
+	recovery {
+	  #schedule committing retry period in milliseconds
+	  committing-retry-period = 1000
+	  #schedule asyn committing retry period in milliseconds
+	  asyn-committing-retry-period = 1000
+	  #schedule rollbacking retry period in milliseconds
+	  rollbacking-retry-period = 1000
+	  #schedule timeout retry period in milliseconds
+	  timeout-retry-period = 1000
+	}
+
+	transaction {
+	  undo.data.validation = true
+	  undo.log.serialization = "jackson"
+	  undo.log.save.days = 7
+	  #schedule delete expired undo_log in milliseconds
+	  undo.log.delete.period = 86400000
+	  undo.log.table = "undo_log"
+	}
+
+	## metrics settings
+	metrics {
+	  enabled = false
+	  registry-type = "compact"
+	  # multi exporters use comma divided
+	  exporter-list = "prometheus"
+	  exporter-prometheus-port = 9898
+	}
+
+	support {
+	  ## spring
+	  spring {
+		# auto proxy the DataSource bean
+		datasource.autoproxy = false
+	  }
+	}
+	~~~
+	
+5. 创建registry.conf文件
+	~~~conf
+	registry {
+	  # file 、nacos 、eureka、redis、zk、consul、etcd3、sofa
+	  type = "nacos"
+
+	  nacos {
+		serverAddr = "localhost:8848"
+		namespace = ""
+		cluster = "default"
+	  }
+	  eureka {
+		serviceUrl = "http://localhost:8761/eureka"
+		application = "default"
+		weight = "1"
+	  }
+	  redis {
+		serverAddr = "localhost:6379"
+		db = "0"
+	  }
+	  zk {
+		cluster = "default"
+		serverAddr = "127.0.0.1:2181"
+		session.timeout = 6000
+		connect.timeout = 2000
+	  }
+	  consul {
+		cluster = "default"
+		serverAddr = "127.0.0.1:8500"
+	  }
+	  etcd3 {
+		cluster = "default"
+		serverAddr = "http://localhost:2379"
+	  }
+	  sofa {
+		serverAddr = "127.0.0.1:9603"
+		application = "default"
+		region = "DEFAULT_ZONE"
+		datacenter = "DefaultDataCenter"
+		cluster = "default"
+		group = "SEATA_GROUP"
+		addressWaitTime = "3000"
+	  }
+	  file {
+		name = "file.conf"
+	  }
+	}
+
+	config {
+	  # file、nacos 、apollo、zk、consul、etcd3
+	  type = "file"
+
+	  nacos {
+		serverAddr = "localhost"
+		namespace = ""
+	  }
+	  consul {
+		serverAddr = "127.0.0.1:8500"
+	  }
+	  apollo {
+		app.id = "seata-server"
+		apollo.meta = "http://192.168.1.204:8801"
+	  }
+	  zk {
+		serverAddr = "127.0.0.1:2181"
+		session.timeout = 6000
+		connect.timeout = 2000
+	  }
+	  etcd3 {
+		serverAddr = "http://localhost:2379"
+	  }
+	  file {
+		name = "file.conf"
+	  }
+	}
+	~~~
+	
+6. 编写domain
+	~~~Java
+	package com.clover.springcloud.alibaba.domain;
+
+	import lombok.AllArgsConstructor;
+	import lombok.Data;
+	import lombok.NoArgsConstructor;
+
+	import java.math.BigDecimal;
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public class Order {
+		private Long id;
+
+		private Long userId;
+
+		private Long productId;
+
+		private Integer count;
+
+		private BigDecimal money;
+
+		/**
+		 * 订单状态：0：创建中；1：已完结
+		 */
+		private Integer status;
+	}
+	~~~
+	
+	~~~Java
+	package com.clover.springcloud.alibaba.domain;
+
+	import lombok.AllArgsConstructor;
+	import lombok.Data;
+	import lombok.NoArgsConstructor;
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public class CommonResult<T> {
+		private Integer code;
+		private String  message;
+		private T       data;
+
+		public CommonResult(Integer code, String message)
+		{
+			this(code,message,null);
+		}
+	}
+	~~~
+7. Dao接口及实现
+	~~~Java
+	package com.clover.springcloud.alibaba.dao;
+
+	import com.clover.springcloud.alibaba.domain.Order;
+	import org.apache.ibatis.annotations.Mapper;
+	import org.apache.ibatis.annotations.Param;
+
+	@Mapper
+	public interface OrderDao {
+		//1.新建订单
+		void create(Order order);
+
+		//2.修改订单状态
+		void update(@Param("userId")  Long userId, @Param("status")  Integer status);
+	}
+	~~~
+	
+	- resources文件夹下新建mapper文件夹后添加
+	
+	~~~xml
+	<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+	<mapper namespace="com.clover.springcloud.alibaba.dao.OrderDao">
+		<resultMap id="baseResultMapper" type="com.clover.springcloud.alibaba.domain.Order">
+			<id column="id" property="id" jdbcType="BIGINT"/>
+			<result column="user_id" property="userId" jdbcType="BIGINT"/>
+			<result column="product_id" property="productId" jdbcType="BIGINT"/>
+			<result column="count" property="count" jdbcType="INTEGER"/>
+			<result column="money" property="money" jdbcType="DECIMAL"/>
+			<result column="status" property="status" jdbcType="INTEGER"/>
+		</resultMap>
+
+		<insert id="create">
+			INSERT INTO t_order (id,user_id,product_id,count,money,status)
+			VALUES (null,#{userId},#{productId},#{count},#{money},0);
+		</insert>
+
+		<update id="update">
+			update t_order
+			set status = 1
+			where user_id = #{userId} and status = #{status}
+		</update>
+
+	</mapper>
+	~~~
+	
+8. Service接口及实现
+	~~~Java
+	package com.clover.springcloud.alibaba.service;
+
+	import com.clover.springcloud.alibaba.domain.CommonResult;
+	import org.springframework.cloud.openfeign.FeignClient;
+	import org.springframework.web.bind.annotation.PostMapping;
+	import org.springframework.web.bind.annotation.RequestParam;
+
+	import java.math.BigDecimal;
+
+	@FeignClient(value = "seata-account-service")
+	public interface AccountService {
+
+		@PostMapping(value = "/account/decrease")
+		CommonResult decrease(@RequestParam("userId") Long userId,@RequestParam("money") BigDecimal money);
+	}
+	~~~
+	
+	~~~Java
+	package com.clover.springcloud.alibaba.service;
+
+	import com.clover.springcloud.alibaba.domain.Order;
+
+	public interface OrderService {
+		//1.创建订单
+		void create(Order order);
+	}
+	~~~
+	
+	~~~Java
+	package com.clover.springcloud.alibaba.service;
+
+	import com.clover.springcloud.alibaba.domain.CommonResult;
+	import org.springframework.cloud.openfeign.FeignClient;
+	import org.springframework.web.bind.annotation.PostMapping;
+	import org.springframework.web.bind.annotation.RequestParam;
+
+	@FeignClient(value = "seata-storage-service")
+	public interface StorageService {
+
+		@PostMapping(value = "/storage/decrease")
+		CommonResult decrease(@RequestParam("productId") Long productId,@RequestParam("count") Integer count);
+	}
+	~~~
+	
+	~~~Java
+	package com.clover.springcloud.alibaba.service.Impl;
+
+	import com.clover.springcloud.alibaba.dao.OrderDao;
+	import com.clover.springcloud.alibaba.domain.Order;
+	import com.clover.springcloud.alibaba.service.AccountService;
+	import com.clover.springcloud.alibaba.service.OrderService;
+	import com.clover.springcloud.alibaba.service.StorageService;
+	import lombok.extern.slf4j.Slf4j;
+	import org.springframework.stereotype.Service;
+
+	import javax.annotation.Resource;
+
+	@Service
+	@Slf4j
+	public class OrderServiceImpl implements OrderService{
+
+		@Resource
+		private OrderDao orderDao;
+
+		@Resource
+		private AccountService accountService;
+
+		@Resource
+		private StorageService storageService;
+
+
+		@Override
+		public void create(Order order) {
+			log.info("------->订单开始创建");
+			orderDao.create(order);
+
+			log.info("------->order-service中扣减库存开始");
+			storageService.decrease(order.getProductId(),order.getCount());
+			log.info("------->order-service中扣减库存结束");
+
+			log.info("------->order-service中扣减账户余额开始");
+			accountService.decrease(order.getUserId(),order.getMoney());
+			log.info("------->order-service中扣减账户余额结束");
+
+			log.info("------->order-service中状态修改开始");
+			orderDao.update(order.getUserId(),0);
+			log.info("------->order-service中状态修改结束");
+
+			log.info("------->订单创建结束");
+		}
+	}
+	~~~
+
+9. 编写Controller
+	~~~Java
+	package com.clover.springcloud.alibaba.controller;
+
+	import com.clover.springcloud.alibaba.domain.CommonResult;
+	import com.clover.springcloud.alibaba.domain.Order;
+	import com.clover.springcloud.alibaba.service.OrderService;
+	import lombok.extern.slf4j.Slf4j;
+	import org.springframework.web.bind.annotation.GetMapping;
+	import org.springframework.web.bind.annotation.RestController;
+
+	import javax.annotation.Resource;
+
+	@RestController
+	@Slf4j
+	public class OrderController {
+		@Resource
+		private OrderService orderService;
+
+		@GetMapping(value = "order/create")
+		public CommonResult create(Order order)
+		{
+			orderService.create(order);
+			return new CommonResult(200,"创建订单成功");
+		}
+	}
+	~~~
+	
+10. Config配置
+	~~~Java
+	package com.clover.springcloud.alibaba.config;
+
+	import com.alibaba.druid.pool.DruidDataSource;
+	import io.seata.rm.datasource.DataSourceProxy;
+	import org.apache.ibatis.session.SqlSessionFactory;
+	import org.mybatis.spring.SqlSessionFactoryBean;
+	import org.mybatis.spring.transaction.SpringManagedTransactionFactory;
+	import org.springframework.beans.factory.annotation.Value;
+	import org.springframework.boot.context.properties.ConfigurationProperties;
+	import org.springframework.context.annotation.Bean;
+	import org.springframework.context.annotation.Configuration;
+	import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+	import javax.sql.DataSource;
+
+	//使用Seata对数据源进行代理
+	@Configuration
+	public class DataSourceProxyConfig {
+		@Value("${mybatis.mapperLocations}")
+		private String mapperLocations;
+
+		@Bean
+		@ConfigurationProperties(prefix = "spring.datasource")
+		public DataSource druidDataSource(){
+			return new DruidDataSource();
+		}
+
+		@Bean
+		public DataSourceProxy dataSourceProxy(DataSource dataSource) {
+			return new DataSourceProxy(dataSource);
+		}
+
+		@Bean
+		public SqlSessionFactory sqlSessionFactoryBean(DataSourceProxy dataSourceProxy) throws Exception {
+			SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+			sqlSessionFactoryBean.setDataSource(dataSourceProxy);
+			sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocations));
+			sqlSessionFactoryBean.setTransactionFactory(new SpringManagedTransactionFactory());
+			return sqlSessionFactoryBean.getObject();
+		}
+
+	}
+	~~~
+	
+	~~~Java
+	package com.clover.springcloud.alibaba.config;
+
+	import org.mybatis.spring.annotation.MapperScan;
+	import org.springframework.context.annotation.Configuration;
+
+	@Configuration
+	@MapperScan({"com.clover.springcloud.alibaba.dao"})
+	public class MyBatisConfig {
+	}
+	~~~
+	
+11. 主启动类
+	~~~Java
+	package com.clover.springcloud.alibaba;
+
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+	import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+	import org.springframework.cloud.openfeign.EnableFeignClients;
+
+
+	@EnableDiscoveryClient
+	@EnableFeignClients
+	@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)//取消数据源的自动创建
+	public class SeataOrderMainApp2001 {
+		public static void main(String[] args)
+		{
+			SpringApplication.run(SeataOrderMainApp2001.class,args);
+		}
+	}
+	~~~
+
+
+#### 18.5.3、新建库存Storage-Module
+1. 新建seata-storage-service2002
+2. 修改POM
+	~~~pom
+	<?xml version="1.0" encoding="UTF-8"?>
+	<project xmlns="http://maven.apache.org/POM/4.0.0"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		<parent>
+			<artifactId>SpringCloud</artifactId>
+			<groupId>com.clover.springcloud</groupId>
+			<version>1.0-SNAPSHOT</version>
+		</parent>
+		<modelVersion>4.0.0</modelVersion>
+
+		<artifactId>seata-storage-service2002</artifactId>
+
+
+		<dependencies>
+			<!--nacos-->
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+			</dependency>
+			<!--seata-->
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+				<exclusions>
+					<exclusion>
+						<artifactId>seata-all</artifactId>
+						<groupId>io.seata</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>io.seata</groupId>
+				<artifactId>seata-all</artifactId>
+				<version>0.9.0</version>
+			</dependency>
+			<!--feign-->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-openfeign</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>2.0.0</version>
+			</dependency>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>5.1.37</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid-spring-boot-starter</artifactId>
+				<version>1.1.10</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<optional>true</optional>
+			</dependency>
+		</dependencies>
+
+	</project>
+	~~~
+	
+3. 编写YML
+	~~~yml
+	server:
+	  port: 2002
+
+	spring:
+	  application:
+		name: seata-storage-service
+	  cloud:
+		alibaba:
+		  seata:
+			#自定义事务组名称需要与seata-server中的对应
+			tx-service-group: clover_tx_group
+		nacos:
+		  discovery:
+			server-addr: localhost:8848
+	  datasource:
+		driver-class-name: com.mysql.jdbc.Driver
+		url: jdbc:mysql://localhost:3306/seata_storage
+		username: root
+		password: xn123456
+		
+	feign:
+  		hystrix:
+    		enabled: false
+			
+	logging:
+	  level:
+		io:
+		  seata: info
+
+	mybatis:
+	  mapperLocations: classpath:mapper/*.xml
+	~~~
+	
+4. 创建file.conf文件
+	~~~conf
+	transport {
+	  # tcp udt unix-domain-socket
+	  type = "TCP"
+	  #NIO NATIVE
+	  server = "NIO"
+	  #enable heartbeat
+	  heartbeat = true
+	  #thread factory for netty
+	  thread-factory {
+		boss-thread-prefix = "NettyBoss"
+		worker-thread-prefix = "NettyServerNIOWorker"
+		server-executor-thread-prefix = "NettyServerBizHandler"
+		share-boss-worker = false
+		client-selector-thread-prefix = "NettyClientSelector"
+		client-selector-thread-size = 1
+		client-worker-thread-prefix = "NettyClientWorkerThread"
+		# netty boss thread size,will not be used for UDT
+		boss-thread-size = 1
+		#auto default pin or 8
+		worker-thread-size = 8
+	  }
+	  shutdown {
+		# when destroy server, wait seconds
+		wait = 3
+	  }
+	  serialization = "seata"
+	  compressor = "none"
+	}
+
+	service {
+	  #vgroup->rgroup
+	  vgroup_mapping.clover_tx_group = "default"
+	  #only support single node
+	  default.grouplist = "127.0.0.1:8091"
+	  #degrade current not support
+	  enableDegrade = false
+	  #disable
+	  disable = false
+	  #unit ms,s,m,h,d represents milliseconds, seconds, minutes, hours, days, default permanent
+	  max.commit.retry.timeout = "-1"
+	  max.rollback.retry.timeout = "-1"
+	  disableGlobalTransaction = false
+	}
+
+	client {
+	  async.commit.buffer.limit = 10000
+	  lock {
+		retry.internal = 10
+		retry.times = 30
+	  }
+	  report.retry.count = 5
+	  tm.commit.retry.count = 1
+	  tm.rollback.retry.count = 1
+	}
+
+	transaction {
+	  undo.data.validation = true
+	  undo.log.serialization = "jackson"
+	  undo.log.save.days = 7
+	  #schedule delete expired undo_log in milliseconds
+	  undo.log.delete.period = 86400000
+	  undo.log.table = "undo_log"
+	}
+
+	support {
+	  ## spring
+	  spring {
+		# auto proxy the DataSource bean
+		datasource.autoproxy = false
+	  }
+	}
+	~~~
+	
+5. 创建registry.conf文件
+	~~~conf
+	registry {
+	  # file 、nacos 、eureka、redis、zk、consul、etcd3、sofa
+	  type = "nacos"
+
+	  nacos {
+		serverAddr = "localhost:8848"
+		namespace = ""
+		cluster = "default"
+	  }
+	  eureka {
+		serviceUrl = "http://localhost:8761/eureka"
+		application = "default"
+		weight = "1"
+	  }
+	  redis {
+		serverAddr = "localhost:6379"
+		db = "0"
+	  }
+	  zk {
+		cluster = "default"
+		serverAddr = "127.0.0.1:2181"
+		session.timeout = 6000
+		connect.timeout = 2000
+	  }
+	  consul {
+		cluster = "default"
+		serverAddr = "127.0.0.1:8500"
+	  }
+	  etcd3 {
+		cluster = "default"
+		serverAddr = "http://localhost:2379"
+	  }
+	  sofa {
+		serverAddr = "127.0.0.1:9603"
+		application = "default"
+		region = "DEFAULT_ZONE"
+		datacenter = "DefaultDataCenter"
+		cluster = "default"
+		group = "SEATA_GROUP"
+		addressWaitTime = "3000"
+	  }
+	  file {
+		name = "file.conf"
+	  }
+	}
+
+	config {
+	  # file、nacos 、apollo、zk、consul、etcd3
+	  type = "file"
+
+	  nacos {
+		serverAddr = "localhost"
+		namespace = ""
+	  }
+	  consul {
+		serverAddr = "127.0.0.1:8500"
+	  }
+	  apollo {
+		app.id = "seata-server"
+		apollo.meta = "http://192.168.1.204:8801"
+	  }
+	  zk {
+		serverAddr = "127.0.0.1:2181"
+		session.timeout = 6000
+		connect.timeout = 2000
+	  }
+	  etcd3 {
+		serverAddr = "http://localhost:2379"
+	  }
+	  file {
+		name = "file.conf"
+	  }
+	}
+	~~~
+	
+6. 编写domain
+	~~~Java
+	package com.clover.springcloud.alibaba.domain;
+
+	import lombok.AllArgsConstructor;
+	import lombok.Data;
+	import lombok.NoArgsConstructor;
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public class CommonResult<T> {
+		private Integer code;
+		private String  message;
+		private T       data;
+
+		public CommonResult(Integer code, String message)
+		{
+			this(code,message,null);
+		}
+	}
+	~~~
+	
+	~~~Java
+	package com.clover.springcloud.alibaba.domain;
+
+	import lombok.AllArgsConstructor;
+	import lombok.Data;
+	import lombok.NoArgsConstructor;
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public class Storage {
+		private Long id;
+
+		/**
+		 * 产品id
+		 */
+		private Long productId;
+
+		/**
+		 * 总库存
+		 */
+		private Integer total;
+
+		/**
+		 * 已用库存
+		 */
+		private Integer used;
+
+		/**
+		 * 剩余库存
+		 */
+		private Integer residue;
+	}
+	~~~
+	
+7. Dao接口及实现
+	~~~Java
+	package com.clover.springcloud.alibaba.dao;
+
+	import org.apache.ibatis.annotations.Mapper;
+	import org.apache.ibatis.annotations.Param;
+
+	@Mapper
+	public interface StorageDao {
+
+		void decrease(@Param("productId") Long productId,@Param("count") Integer count);
+	}
+	~~~
+	
+	- resources文件夹下新建mapper文件夹后添加
+	
+	~~~Java
+	<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+	<mapper namespace="com.clover.springcloud.alibaba.dao.StorageDao">
+
+		<resultMap id="BaseResultMap" type="com.clover.springcloud.alibaba.domain.Storage">
+			<id column="id" property="id" jdbcType="BIGINT"/>
+			<result column="product_id" property="productId" jdbcType="BIGINT"/>
+			<result column="total" property="total" jdbcType="INTEGER"/>
+			<result column="used" property="used" jdbcType="INTEGER"/>
+			<result column="residue" property="residue" jdbcType="INTEGER"/>
+		</resultMap>
+
+		<update id="decrease">
+			update t_storage
+			set used = used + #{count},residue = residue - #{count}
+			where product_id = #{productId}
+		</update>
+	</mapper>
+	~~~
+	
+8. Service接口及实现
+	~~~Java
+	package com.clover.springcloud.alibaba.service;
+
+	public interface StorageService {
+		//扣减库存
+		public void decrease(Long productId, Integer count);
+	}
+	~~~
+	
+	~~~Java
+	package com.clover.springcloud.alibaba.service.Impl;
+
+	import com.clover.springcloud.alibaba.dao.StorageDao;
+	import com.clover.springcloud.alibaba.service.StorageService;
+	import lombok.extern.slf4j.Slf4j;
+	import org.springframework.stereotype.Service;
+
+	import javax.annotation.Resource;
+
+	@Service
+	@Slf4j
+	public class StorageServiceImpl implements StorageService {
+
+		@Resource
+		private StorageDao storageDao;
+
+		@Override
+		public void decrease(Long productId, Integer count) {
+			log.info("------->storage-service中扣减库存开始");
+			storageDao.decrease(productId,count);
+			log.info("------->storage-service中扣减库存结束");
+		}
+	}
+	~~~
+
+9. 编写Controller
+	~~~Java
+	package com.clover.springcloud.alibaba.controller;
+
+	import com.clover.springcloud.alibaba.domain.CommonResult;
+	import com.clover.springcloud.alibaba.service.StorageService;
+	import org.springframework.web.bind.annotation.GetMapping;
+	import org.springframework.web.bind.annotation.RequestMapping;
+	import org.springframework.web.bind.annotation.RestController;
+
+	import javax.annotation.Resource;
+
+	@RestController
+	public class StorageController {
+		@Resource
+		private StorageService storageService;
+
+		@RequestMapping("/storage/decrease")
+		public CommonResult decrease(Long productId,Integer count)
+		{
+			storageService.decrease(productId, count);
+			return new CommonResult(200,"扣减库存成功");
+		}
+	}
+	~~~
+	
+10. Config配置
+	~~~Java
+	package com.clover.springcloud.alibaba.config;
+
+	import com.alibaba.druid.pool.DruidDataSource;
+	import io.seata.rm.datasource.DataSourceProxy;
+	import org.apache.ibatis.session.SqlSessionFactory;
+	import org.mybatis.spring.SqlSessionFactoryBean;
+	import org.mybatis.spring.transaction.SpringManagedTransactionFactory;
+	import org.springframework.beans.factory.annotation.Value;
+	import org.springframework.boot.context.properties.ConfigurationProperties;
+	import org.springframework.context.annotation.Bean;
+	import org.springframework.context.annotation.Configuration;
+	import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+	import javax.sql.DataSource;
+
+	@Configuration
+	public class DataSourceProxyConfig {
+
+		@Value("${mybatis.mapperLocations}")
+		private String mapperLocations;
+
+		@Bean
+		@ConfigurationProperties(prefix = "spring.datasource")
+		public DataSource druidDataSource(){
+			return new DruidDataSource();
+		}
+
+		@Bean
+		public DataSourceProxy dataSourceProxy(DataSource dataSource) {
+			return new DataSourceProxy(dataSource);
+		}
+
+		@Bean
+		public SqlSessionFactory sqlSessionFactoryBean(DataSourceProxy dataSourceProxy) throws Exception {
+			SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+			sqlSessionFactoryBean.setDataSource(dataSourceProxy);
+			sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocations));
+			sqlSessionFactoryBean.setTransactionFactory(new SpringManagedTransactionFactory());
+			return sqlSessionFactoryBean.getObject();
+		}
+	}
+	~~~
+
+	~~~Java
+	package com.clover.springcloud.alibaba.config;
+
+	import org.mybatis.spring.annotation.MapperScan;
+	import org.springframework.context.annotation.Configuration;
+
+	@Configuration
+	@MapperScan({"com.clover.springcloud.alibaba.dao"})
+	public class MyBatisConfig {
+	}
+	~~~
+
+11. 主启动类
+	~~~Java
+	package com.clover.springcloud.alibaba;
+
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+	import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+	import org.springframework.cloud.openfeign.EnableFeignClients;
+
+	@EnableFeignClients
+	@EnableDiscoveryClient
+	@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+	public class SeataStorageServiceApplication2002 {
+		public static void main(String[] args)
+		{
+			SpringApplication.run(SeataStorageServiceApplication2002.class,args);
+		}
+	}
+	~~~
+
+#### 18.5.4、新建账户Account-Module
+1. 新建seata-account-service2003
+2. 修改POM
+	~~~pom
+	<?xml version="1.0" encoding="UTF-8"?>
+	<project xmlns="http://maven.apache.org/POM/4.0.0"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		<parent>
+			<artifactId>SpringCloud</artifactId>
+			<groupId>com.clover.springcloud</groupId>
+			<version>1.0-SNAPSHOT</version>
+		</parent>
+		<modelVersion>4.0.0</modelVersion>
+
+		<artifactId>seata-account-service2003</artifactId>
+
+
+		<dependencies>
+			<!--nacos-->
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+			</dependency>
+			<!--seata-->
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+				<exclusions>
+					<exclusion>
+						<artifactId>seata-all</artifactId>
+						<groupId>io.seata</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>io.seata</groupId>
+				<artifactId>seata-all</artifactId>
+				<version>0.9.0</version>
+			</dependency>
+			<!--feign-->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-openfeign</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>2.0.0</version>
+			</dependency>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>5.1.37</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid-spring-boot-starter</artifactId>
+				<version>1.1.10</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<optional>true</optional>
+			</dependency>
+		</dependencies>
+
+	</project>
+	~~~
+	
+3. 编写YML
+	~~~yml
+	server:
+	  port: 2003
+
+	spring:
+	  application:
+		name: seata-account-service
+	  cloud:
+		alibaba:
+		  seata:
+			tx-service-group: clover_tx_group
+		nacos:
+		  discovery:
+			server-addr: localhost:8848
+	  datasource:
+		driver-class-name: com.mysql.jdbc.Driver
+		url: jdbc:mysql://localhost:3306/seata_account
+		username: root
+		password: xn123456
+
+	feign:
+	  hystrix:
+		enabled: false
+
+	logging:
+	  level:
+		io:
+		  seata: info
+
+	mybatis:
+	  mapperLocations: classpath:mapper/*.xml
+	~~~
+	
+4. 创建file.conf文件
+	~~~conf
+	transport {
+	  # tcp udt unix-domain-socket
+	  type = "TCP"
+	  #NIO NATIVE
+	  server = "NIO"
+	  #enable heartbeat
+	  heartbeat = true
+	  #thread factory for netty
+	  thread-factory {
+		boss-thread-prefix = "NettyBoss"
+		worker-thread-prefix = "NettyServerNIOWorker"
+		server-executor-thread-prefix = "NettyServerBizHandler"
+		share-boss-worker = false
+		client-selector-thread-prefix = "NettyClientSelector"
+		client-selector-thread-size = 1
+		client-worker-thread-prefix = "NettyClientWorkerThread"
+		# netty boss thread size,will not be used for UDT
+		boss-thread-size = 1
+		#auto default pin or 8
+		worker-thread-size = 8
+	  }
+	  shutdown {
+		# when destroy server, wait seconds
+		wait = 3
+	  }
+	  serialization = "seata"
+	  compressor = "none"
+	}
+
+	service {
+
+	  vgroup_mapping.clover_tx_group = "default" #修改自定义事务组名称
+
+	  default.grouplist = "127.0.0.1:8091"
+	  enableDegrade = false
+	  disable = false
+	  max.commit.retry.timeout = "-1"
+	  max.rollback.retry.timeout = "-1"
+	  disableGlobalTransaction = false
+	}
+
+
+	client {
+	  async.commit.buffer.limit = 10000
+	  lock {
+		retry.internal = 10
+		retry.times = 30
+	  }
+	  report.retry.count = 5
+	  tm.commit.retry.count = 1
+	  tm.rollback.retry.count = 1
+	}
+
+	## transaction log store
+	store {
+	  ## store mode: file、db
+	  mode = "db"
+
+	  ## file store
+	  file {
+		dir = "sessionStore"
+
+		# branch session size , if exceeded first try compress lockkey, still exceeded throws exceptions
+		max-branch-session-size = 16384
+		# globe session size , if exceeded throws exceptions
+		max-global-session-size = 512
+		# file buffer size , if exceeded allocate new buffer
+		file-write-buffer-cache-size = 16384
+		# when recover batch read size
+		session.reload.read_size = 100
+		# async, sync
+		flush-disk-mode = async
+	  }
+
+	  ## database store
+	  db {
+		## the implement of javax.sql.DataSource, such as DruidDataSource(druid)/BasicDataSource(dbcp) etc.
+		datasource = "dbcp"
+		## mysql/oracle/h2/oceanbase etc.
+		db-type = "mysql"
+		driver-class-name = "com.mysql.jdbc.Driver"
+		url = "jdbc:mysql://127.0.0.1:3306/seata"
+		user = "root"
+		password = "xn123456"
+		min-conn = 1
+		max-conn = 3
+		global.table = "global_table"
+		branch.table = "branch_table"
+		lock-table = "lock_table"
+		query-limit = 100
+	  }
+	}
+	lock {
+	  ## the lock store mode: local、remote
+	  mode = "remote"
+
+	  local {
+		## store locks in user's database
+	  }
+
+	  remote {
+		## store locks in the seata's server
+	  }
+	}
+	recovery {
+	  #schedule committing retry period in milliseconds
+	  committing-retry-period = 1000
+	  #schedule asyn committing retry period in milliseconds
+	  asyn-committing-retry-period = 1000
+	  #schedule rollbacking retry period in milliseconds
+	  rollbacking-retry-period = 1000
+	  #schedule timeout retry period in milliseconds
+	  timeout-retry-period = 1000
+	}
+
+	transaction {
+	  undo.data.validation = true
+	  undo.log.serialization = "jackson"
+	  undo.log.save.days = 7
+	  #schedule delete expired undo_log in milliseconds
+	  undo.log.delete.period = 86400000
+	  undo.log.table = "undo_log"
+	}
+
+	## metrics settings
+	metrics {
+	  enabled = false
+	  registry-type = "compact"
+	  # multi exporters use comma divided
+	  exporter-list = "prometheus"
+	  exporter-prometheus-port = 9898
+	}
+
+	support {
+	  ## spring
+	  spring {
+		# auto proxy the DataSource bean
+		datasource.autoproxy = false
+	  }
+	}
+	~~~
+	
+5. 创建registry.conf文件
+	~~~conf
+	registry {
+	  # file 、nacos 、eureka、redis、zk、consul、etcd3、sofa
+	  type = "nacos"
+
+	  nacos {
+		serverAddr = "localhost:8848"
+		namespace = ""
+		cluster = "default"
+	  }
+	  eureka {
+		serviceUrl = "http://localhost:8761/eureka"
+		application = "default"
+		weight = "1"
+	  }
+	  redis {
+		serverAddr = "localhost:6379"
+		db = "0"
+	  }
+	  zk {
+		cluster = "default"
+		serverAddr = "127.0.0.1:2181"
+		session.timeout = 6000
+		connect.timeout = 2000
+	  }
+	  consul {
+		cluster = "default"
+		serverAddr = "127.0.0.1:8500"
+	  }
+	  etcd3 {
+		cluster = "default"
+		serverAddr = "http://localhost:2379"
+	  }
+	  sofa {
+		serverAddr = "127.0.0.1:9603"
+		application = "default"
+		region = "DEFAULT_ZONE"
+		datacenter = "DefaultDataCenter"
+		cluster = "default"
+		group = "SEATA_GROUP"
+		addressWaitTime = "3000"
+	  }
+	  file {
+		name = "file.conf"
+	  }
+	}
+
+	config {
+	  # file、nacos 、apollo、zk、consul、etcd3
+	  type = "file"
+
+	  nacos {
+		serverAddr = "localhost"
+		namespace = ""
+	  }
+	  consul {
+		serverAddr = "127.0.0.1:8500"
+	  }
+	  apollo {
+		app.id = "seata-server"
+		apollo.meta = "http://192.168.1.204:8801"
+	  }
+	  zk {
+		serverAddr = "127.0.0.1:2181"
+		session.timeout = 6000
+		connect.timeout = 2000
+	  }
+	  etcd3 {
+		serverAddr = "http://localhost:2379"
+	  }
+	  file {
+		name = "file.conf"
+	  }
+	}
+	~~~
+	
+6. 编写domain
+	~~~Java
+	package com.clover.springcloud.alibaba.domain;
+
+	import lombok.AllArgsConstructor;
+	import lombok.Data;
+	import lombok.NoArgsConstructor;
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public class CommonResult<T> {
+		private Integer code;
+		private String  message;
+		private T       data;
+
+		public CommonResult(Integer code, String message)
+		{
+			this(code,message,null);
+		}
+	}
+	~~~
+	
+	~~~Java
+	package com.clover.springcloud.alibaba.domain;
+
+	import lombok.AllArgsConstructor;
+	import lombok.Data;
+	import lombok.NoArgsConstructor;
+
+	import java.math.BigDecimal;
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public class Account {
+		private Long id;
+
+		/**
+		 * 用户id
+		 */
+		private Long userId;
+
+		/**
+		 * 总额度
+		 */
+		private BigDecimal total;
+
+		/**
+		 * 已用额度
+		 */
+		private BigDecimal used;
+
+		/**
+		 * 剩余额度
+		 */
+		private BigDecimal residue;
+	}
+	~~~
+
+7. Dao接口及实现
+	~~~Java
+	package com.clover.springcloud.alibaba.dao;
+
+	import org.apache.ibatis.annotations.Mapper;
+	import org.apache.ibatis.annotations.Param;
+
+	import java.math.BigDecimal;
+
+	@Mapper
+	public interface AccountDao {
+		void decrease(@Param("userId") Long userId, @Param("money") BigDecimal money);
+	}
+	~~~
+	
+	~~~Java
+	<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+	<mapper namespace="com.clover.springcloud.alibaba.dao.AccountDao">
+
+		<resultMap id="BaseResultMap" type="com.clover.springcloud.alibaba.domain.Account">
+			<id column="id" property="id" jdbcType="BIGINT"/>
+			<result column="user_id" property="userId" jdbcType="BIGINT"/>
+			<result column="total" property="total" jdbcType="DECIMAL"/>
+			<result column="used" property="used" jdbcType="DECIMAL"/>
+			<result column="residue" property="residue" jdbcType="DECIMAL"/>
+		</resultMap>
+
+		<update id="decrease">
+			UPDATE t_account
+			SET
+			  residue = residue - #{money},used = used + #{money}
+			WHERE
+			  user_id = #{userId};
+		</update>
+
+	</mapper>
+	~~~
+	
+8. Service接口及实现
+	~~~Java
+	package com.clover.springcloud.alibaba.service;
+
+	import org.springframework.web.bind.annotation.RequestParam;
+
+	import java.math.BigDecimal;
+
+	public interface AccountService {
+		/**
+		 * 扣减账户余额
+		 * @param userId 用户id
+		 * @param money 金额
+		 */
+		void decrease(@RequestParam("userId") Long userId, @RequestParam("money") BigDecimal money);
+	}
+	~~~
+	
+	~~~Java
+	package com.clover.springcloud.alibaba.service.Impl;
+
+	import com.clover.springcloud.alibaba.dao.AccountDao;
+	import com.clover.springcloud.alibaba.service.AccountService;
+	import lombok.extern.slf4j.Slf4j;
+	import org.springframework.stereotype.Service;
+
+	import javax.annotation.Resource;
+	import java.math.BigDecimal;
+
+	@Service
+	@Slf4j
+	public class AccountServiceImpl implements AccountService{
+		@Resource
+		private AccountDao accountDao;
+
+		public void decrease(Long userId, BigDecimal money)
+		{
+			log.info("------->account-service中扣减账户余额开始");
+			accountDao.decrease(userId, money);
+			log.info("------->account-service中扣减账户余额结束");
+		}
+	}
+	~~~
+
+9. 编写Controller
+	~~~Java
+	package com.clover.springcloud.alibaba.controller;
+
+	import com.clover.springcloud.alibaba.domain.CommonResult;
+	import com.clover.springcloud.alibaba.service.AccountService;
+	import org.springframework.web.bind.annotation.RequestMapping;
+	import org.springframework.web.bind.annotation.RequestParam;
+	import org.springframework.web.bind.annotation.RestController;
+
+	import javax.annotation.Resource;
+	import java.math.BigDecimal;
+
+	@RestController
+	public class AccountController {
+
+		@Resource
+		private AccountService accountService;
+
+		@RequestMapping("/account/decrease")
+		public CommonResult decrease(@RequestParam("userId") Long userId, @RequestParam("money") BigDecimal money)
+		{
+			accountService.decrease(userId, money);
+			return new CommonResult(200,"扣减账户余额成功");
+		}
+	}
+	~~~
+	
+10. Config配置
+	~~~Java
+	package com.clover.springcloud.alibaba.config;
+
+	import com.alibaba.druid.pool.DruidDataSource;
+	import io.seata.rm.datasource.DataSourceProxy;
+	import org.apache.ibatis.session.SqlSessionFactory;
+	import org.mybatis.spring.SqlSessionFactoryBean;
+	import org.mybatis.spring.transaction.SpringManagedTransactionFactory;
+	import org.springframework.beans.factory.annotation.Value;
+	import org.springframework.boot.context.properties.ConfigurationProperties;
+	import org.springframework.context.annotation.Bean;
+	import org.springframework.context.annotation.Configuration;
+	import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+	import javax.sql.DataSource;
+
+	//使用Seata对数据源进行代理
+	@Configuration
+	public class DataSourceProxyConfig {
+		@Value("${mybatis.mapperLocations}")
+		private String mapperLocations;
+
+		@Bean
+		@ConfigurationProperties(prefix = "spring.datasource")
+		public DataSource druidDataSource(){
+			return new DruidDataSource();
+		}
+
+		@Bean
+		public DataSourceProxy dataSourceProxy(DataSource dataSource) {
+			return new DataSourceProxy(dataSource);
+		}
+
+		@Bean
+		public SqlSessionFactory sqlSessionFactoryBean(DataSourceProxy dataSourceProxy) throws Exception {
+			SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+			sqlSessionFactoryBean.setDataSource(dataSourceProxy);
+			sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocations));
+			sqlSessionFactoryBean.setTransactionFactory(new SpringManagedTransactionFactory());
+			return sqlSessionFactoryBean.getObject();
+		}
+
+	}
+	~~~
+	
+	~~~Java
+	package com.clover.springcloud.alibaba.config;
+
+	import org.mybatis.spring.annotation.MapperScan;
+	import org.springframework.context.annotation.Configuration;
+
+	@Configuration
+	@MapperScan({"com.clover.springcloud.alibaba.dao"})
+	public class MyBatisConfig {
+	}
+	~~~
+	
+11. 主启动类
+	~~~Java
+	package com.clover.springcloud.alibaba;
+
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+	import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+	import org.springframework.cloud.openfeign.EnableFeignClients;
+
+	@EnableDiscoveryClient
+	@EnableFeignClients
+	@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)//取消数据源的自动创建
+	public class SeataAccountMainApp2003 {
+		public static void main(String[] args)
+		{
+			SpringApplication.run(SeataAccountMainApp2003.class,args);
+		}
+	}
+	~~~
+	
+	
+### 18.6、Test
+
+#### 18.6.1、正常下单
+
+http://localhost:2001/order/create?userId=1&productId=1&count=10&money=100
+
+![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211027210906.png)
+
+
+#### 18.6.2、超时异常，没加@GlobalTransactional
+
+1. AccountServiceImpl添加超时
+2. 数据库情况
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211027211108.png)
+	
+3. 故障情况
+	1. 当库存和账户金额扣减后，订单状态并没有设置为已经完成，没有从零改为1
+	2. 而且由于feign的重试机制，账户余额还有可能被多次扣减
+
+
+#### 18.6.3、超时异常，添加@GlobalTransactional
+
+1. AccountServiceImpl添加超时
+2. OrderServiceImpl添加`@GlobalTransactional`
+	- **@GlobalTransactional(name = "clover-create-order",rollbackFor = Exception.class)**
+3. 下单后数据库数据并没有任何改变
+	- 记录都添加不进来
+
+
+### 18.7、一部分补充
+
+1. Seata
+	- 2019年1月份蚂蚁金服和阿里巴巴共同开源的分布式事务解决方案
+	- Simple Extensible Autonomous Transaction Architecture，简单可扩展自治事务框架
+	- 2020起始，参加工作后用1.0以后的版本
+2. 再看TC/TM/RM三大组件
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211027214516.png)
+	
+	- 分布式事务的执行流程
+		- TM 开启分布式事务（TM 向 TC 注册全局事务记录）
+		- 按业务场景，编排数据库、服务等事务内资源（RM 向 TC 汇报资源准备状态 ）
+		- TM 结束分布式事务，事务一阶段结束（TM 通知 TC 提交/回滚分布式事务）
+		- TC 汇总事务信息，决定分布式事务是提交还是回滚
+		- TC 通知所有 RM 提交/回滚 资源，事务二阶段结束
+	
+3. AT模式如何做到对业务的无侵入
+	- 是什么
+		
+		![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211027214824.png)
+		
+	- 一阶段加载
+		- 在`一阶段`，Seata 会拦截“业务 SQL”
+			1. 解析 SQL 语义，找到“业务 SQL”要更新的业务数据，在业务数据被更新前，将其保存成**before image**
+			2. 执行“业务 SQL”更新业务数据，在业务数据更新之后
+			3. 其保存成**after image**，**最后生成行锁**
+		- 以上操作全部在一个数据库事务内完成，这样保证了`一阶段`操作的原子性
+		
+		![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211027215024.png)
+		
+	- 二阶段提交
+		- 二阶段如是顺利提交的话；因为“业务 SQL”在一阶段已经提交至数据库，所以Seata框架只需将**一阶段保存的快照数据和行锁删掉，完成数据清理即可**
+		
+		![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211027215111.png)
+		
+	- 二阶段回滚
+		- 二阶段如果是回滚的话，Seata 就需要回滚一阶段已经执行的“业务 SQL”，还原业务数据
+		- 回滚方式便是用**before image**还原业务数据；但在还原前要首先要**校验脏写**，**对比数据库当前业务数据**和 **after image**
+		- 如果两份数据完全一致就说明没有脏写，可以还原业务数据，如果不一致就说明有脏写，出现脏写就需要转人工处理
+		
+		![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211027215223.png)
+		
+4. debug
+5. 补充
+	
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211027214628.png)
