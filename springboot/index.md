@@ -66,7 +66,9 @@ Properties properties = PropertiesLoaderUtils.loadProperties(resource)
 
 **所以，自动配置真正实现是从classpath中搜寻所有的`/META-INF/spring.factories`配置文件，并将其中对应的org.springframework.boot.autoconfigure.包下的配置项，通过反射实例化为对应标注了@Configuration的JavaConfig形式的IOC容器配置类，然后将这些都汇总成为一个实例并加载到IOC容器中**
 
-	结论：springboot所有的自动配置都是在启动的时候扫描并加载：`spring.factories`所有的的自动配置类都在这里，但是不一定生效，要判断条件是否成立，只要导入了对应的start就有对应的启动器了，有了启动器，我们自动装配就会生效，然后就配置成功！
+	结论：springboot所有的自动配置都是在启动的时候扫描并加载：`spring.factories`所有的的自动配置类都在这里，但是不
+	一定生效，要判断条件是否成立，只要导入了对应的start就有对应的启动器了，有了启动器，我们自动装配就会生效，然后
+	就配置成功！
 - 1、springboot在启动的时候，从类路径下`/META-INF/spring.factories`获取指定的值
 - 2、将这些自动配置的类导入容器，自动配置就会生效，帮我进行自动配置
 - 3、以前我们需要自动配置的东西，现在springboot帮我们做了

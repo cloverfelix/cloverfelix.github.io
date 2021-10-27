@@ -2,11 +2,11 @@
 
 
 
-# Docker
+## Docker
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601110908.png)
 
-## 参考资料
+### 参考资料
 
 官方文档：https://docs.docker.com/docker-for-windows/ 
 
@@ -20,15 +20,15 @@ b站教程：https://www.bilibili.com/video/BV1og4y1q7M4?
 
 【这个教程非常简洁！且深入！基于企业应用场景！推荐！以下笔记都基于该课程】
 
-## 前期基础
+### 前期基础
 
 linux基本命令，类似cd，mkdir等
 
 
 
-## Docker概述
+### Docker概述
 
-### Docker为什么会出现
+#### Docker为什么会出现
 
 一款产品，开发和上线两套环境，应用环境配置费时费力，而且容易出问题，尤其
 
@@ -50,7 +50,7 @@ linux基本命令，类似cd，mkdir等
 
 **Docker通过隔离机制，可以将服务器利用到极致。**
 
-### Docker的历史
+#### Docker的历史
 
 2010年，几个搞IT的人，在美国成立一家公司`dotCloud`，做一些pass的云计服
 
@@ -62,7 +62,7 @@ linux基本命令，类似cd，mkdir等
 
 会更新一个版本，2014年4月9日，Docker 1.0发布
 
-### 容器vs虚拟机
+#### 容器vs虚拟机
 
 	在容器技术出来之前，用的是虚拟机技术
 
@@ -75,13 +75,13 @@ linux基本命令，类似cd，mkdir等
 2. 冗余步骤多
 3. 启动很慢
 
-#### 容器化技术示意图
+##### 容器化技术示意图
 
 不是模拟的完整的操作系统
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601111016.png)
 
-#### 二者对比
+##### 二者对比
 
 比较虚拟机和Docker的不同
 
@@ -91,9 +91,9 @@ linux基本命令，类似cd，mkdir等
 | 大小     | 笨重，通常几个G          | 轻便几个M或KB |
 | 启动速度 | 慢，分钟级               | 快，秒级      |
 
-## Docker安装
+### Docker安装
 
-### Docker的基本组成
+#### Docker的基本组成
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601111108.png)
 
@@ -111,7 +111,7 @@ linux基本命令，类似cd，mkdir等
 
    - 阿里云：配置镜像加速
 
-### 环境准备
+#### 环境准备
 
 我们要有一台服务器，并且可以操作它
 
@@ -119,7 +119,7 @@ linux基本命令，类似cd，mkdir等
 2. CentOS 7
 3. 使用Xshell链接远程服务器
 
-### 安装xshell
+#### 安装xshell
 
 下载CentOS7 https://www.jianshu.com/p/a63f47e096e8
 
@@ -149,11 +149,11 @@ bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  s
 
 https://www.bilibili.com/video/BV1og4y1q7M4?p=6
 
-### Centos安装
+#### Centos安装
 
 https://docs.docker.com/engine/install/centos/
 
-### 卸载旧的版本
+#### 卸载旧的版本
 
 ```
 # 卸载旧的版本
@@ -170,7 +170,7 @@ $ sudo yum remove docker \
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601111157.png)
 
-### 安装基本环境
+#### 安装基本环境
 
 
 
@@ -182,7 +182,7 @@ $ sudo yum install -y yum-utils
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601111309.png)
 
-### 设置镜像的仓库
+#### 设置镜像的仓库
 
 	注意！！下载默认用国外的，太慢不要用！
 
@@ -215,7 +215,7 @@ yum makecache fast
 
 没有问题的话就是可以用的
 
-### 安装docker引擎
+#### 安装docker引擎
 
 ```python
 yum install docker-ce docker-ce-cli containerd.io # docker-ce 社区版 ee 企业版
@@ -231,7 +231,7 @@ yum install docker-ce docker-ce-cli containerd.io # docker-ce 社区版 ee 企�
 
 
 
-### 启动Docker
+#### 启动Docker
 
 ```
 systemctl start docker # 代表启动成功
@@ -292,7 +292,7 @@ docker images
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601111528.png)
 
-### 卸载Docker
+#### 卸载Docker
 
 ```
 # 卸载依赖
@@ -303,7 +303,7 @@ rm -rf /var/lib/docker # docker 的默认工作路径
 
 ```
 
-### 阿里云镜像加速
+#### 阿里云镜像加速
 
 支付宝扫码登录，短信验证，确认授权
 
@@ -367,7 +367,7 @@ sudo systemctl restart docker # 重启docker
 
 [服务器及购买相关介绍](https://www.bilibili.com/video/BV177411K7bH)
 
-## 底层原理
+### 底层原理
 
 Docker是怎么工作的？
 
@@ -388,9 +388,9 @@ Docker为什么比VM快？
 
 
 
-## Docker命令
+### Docker命令
 
-### 帮助命令
+#### 帮助命令
 
 ```
 docker version # 显示docker的基本信息
@@ -404,9 +404,9 @@ docker 命令 --help # 全部信息
 
 
 
-### 镜像命令
+#### 镜像命令
 
-#### docker images
+##### docker images
 
 查看所有本地主机上的镜像
 
@@ -437,7 +437,7 @@ SIZE # 镜像的大小
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601111929.png)
 
-#### docker search
+##### docker search
 
 搜索仓库中的镜像，相当于网页搜索
 
@@ -478,7 +478,7 @@ docker search mysql --filter=STARS=3000 # 搜索出Stars大于3000的
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601112053.png)
 
 
-#### docker pull
+##### docker pull
 
 下载镜像
 
@@ -536,7 +536,7 @@ docker images
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601112208.png)
 
-#### docker rmi
+##### docker rmi
 
 remove images
 
@@ -555,7 +555,7 @@ docker rmi -f $(docker images -aq) # images -aq就是查所有镜像id，从而�
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601112253.png)
 
-### 容器命令
+#### 容器命令
 
 说明：有了镜像才能创建容器，linux，下载一个centos镜像来测试学习
 
@@ -565,7 +565,7 @@ docker pull centos
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601112310.png)
 
-#### 新建容器并启动
+##### 新建容器并启动
 
 ```shell
 docker run [可选参数] image
@@ -582,7 +582,7 @@ docker run [可选参数] image
 -p 随机指定端口
 ```
 
-#### 进入退出容器
+##### 进入退出容器
 
 ```bash
 # 进入
@@ -599,7 +599,7 @@ exit
 
 这里面就是一个容器，套娃啊
 
-#### 查看运行的容器
+##### 查看运行的容器
 
 ```
 # 查看正在运行的容器
@@ -631,7 +631,7 @@ a89ddb393d3d
 
 ```
 
-#### 退出容器
+##### 退出容器
 
 ```shell
 # 容器停止退出
@@ -652,7 +652,7 @@ exit
 
 ```
 
-#### 删除容器
+##### 删除容器
 
 ```shell
 # 删除指定容器 不能删除正在运行的容器，如果强制删除 rm -f
@@ -692,7 +692,7 @@ a89ddb393d3d
 
 ```
 
-#### 启动和停止容器的操作
+##### 启动和停止容器的操作
 
 ```shell
 docker start
@@ -723,9 +723,9 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
 ```
 
-### 常用其他命令
+#### 常用其他命令
 
-#### 后台启动docker
+##### 后台启动docker
 
 ```shell
 docker run -d 镜像名
@@ -748,7 +748,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
 
 
-#### 查看日志
+##### 查看日志
 
 ```shell
 docker logs
@@ -834,7 +834,7 @@ c2887d35c71d        centos              "/bin/bash"              3 minutes ago  
 
 
 
-#### 查看容器中进程信息
+##### 查看容器中进程信息
 
 ~~~shell
 # 命令 docker top 容器id
@@ -849,7 +849,7 @@ root                31183               31163               0                   
 
 
 
-#### 查看正在镜像的元数据
+##### 查看正在镜像的元数据
 
 ```shell
 # 命令
@@ -1096,7 +1096,7 @@ docker inspect 容器id
 cb6d7fbc3f27
 ```
 
-#### 进入当前正在运行的容器
+##### 进入当前正在运行的容器
 
 ```shell
 # 我们通常容器都是使用后台方式运行的e
@@ -1132,7 +1132,7 @@ exit
 
 
 
-#### 从容器内拷贝文件到主机上
+##### 从容器内拷贝文件到主机上
 
 ```shell
 docker cp 容器id:容器内路径  目的的主机路径
@@ -1184,7 +1184,7 @@ test.java
 # 拷贝是一个手动过程，未来我们使用 -v 卷的技术，可以实现自动同步 /home /home
 ```
 
-#### 查看内容占用
+##### 查看内容占用
 
 ```shell
 docker stats
@@ -1194,7 +1194,7 @@ docker stats
 
 
 
-#### 小结
+##### 小结
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601112511.png)
 
@@ -1300,9 +1300,9 @@ Commands:
 
 
 
-#### 作业练习
+##### 作业练习
 
-##### 部署Nginx
+###### 部署Nginx
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601113145.png)
 
@@ -1415,7 +1415,7 @@ exit
 
 思考问题：每次改动nginx配置文件，都需要进入容器内部，十分麻烦，要是可以在容器外部提供一个映射路径，达到在容器外修改文件名，容器内部就可以自动修改？-v 数据卷技术！
 
-##### 部署tomcat
+###### 部署tomcat
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601113252.png)
 
@@ -1510,7 +1510,7 @@ docker exec -it tomcat01 /bin/bash
 	webapps，我们在外部放置项目，就自动同步到内部就好了！
 
 
-##### 部署es+kibana
+###### 部署es+kibana
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601113548.png)
 
@@ -1572,18 +1572,18 @@ ctrl + C退出，记得stop
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601113724.png)
 
-##### 思考：用kibana链接elasticsearch
+###### 思考：用kibana链接elasticsearch
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601113737.png)
 
 
 
-### 可视化
+#### 可视化
 
 - portainer(先用这个)
 - Rancher(CI/CD时用)
 
-#### portainer
+##### portainer
 
 Docker图像化界面管理工具，提供一个后台面板供我们操作！
 
@@ -1612,9 +1612,9 @@ docker run -d -p 8088:9000 --restart=always -v /var/run/docker.sock:/var/run/doc
 【平时不会用这个，好吧，先往下】
 
 
-## Docker镜像
+### Docker镜像
 
-### 原理
+#### 原理
 
 UnionFS 联合文件系统
 
@@ -1644,7 +1644,7 @@ Docker镜像都是只读的，当容器启动时，一个新的可写层被加�
 
 
 
-### commit提交镜像
+#### commit提交镜像
 
 ```shell
 docker commit # 提交容器成为一个新的副本
@@ -1688,9 +1688,9 @@ docker commit -a="paidaxing" -m="add webapps app" 当前容器的id tomcat02:1.0
 
 
 
-## 容器数据卷
+### 容器数据卷
 
-### 什么是容器卷
+#### 什么是容器卷
 
 docker是要将应用和环境打包成一个镜像，这样，数据就不应该在容器中，否则容
 
@@ -1708,7 +1708,7 @@ docker是要将应用和环境打包成一个镜像，这样，数据就不应�
 
 - 容器间可以数据共享
 
-### 使用数据卷
+#### 使用数据卷
 
 方式一：直接使用命令来挂载
 
@@ -1743,7 +1743,7 @@ docker inspect 容器id
 
 双向同步
 
-### 实战安装mysql
+#### 实战安装mysql
 
 MySQL的数据持久化命令
 
@@ -1778,7 +1778,7 @@ docker run -d -p 3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601114509.png)
 
-### 具名和匿名挂载
+#### 具名和匿名挂载
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601114529.png)
 
@@ -1786,7 +1786,7 @@ docker run -d -p 3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/
 
 
 
-###  使用DockerFile来构建docker镜像的文件
+####  使用DockerFile来构建docker镜像的文件
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601114743.png)
 
@@ -1883,7 +1883,7 @@ docker images
 
 在主机挂载路径下，也同样生成
 
-### 多个容器数据共享
+#### 多个容器数据共享
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601115200.png)
 
@@ -1947,7 +1947,7 @@ docker rm -f
 
 ------
 
-## DockerFile
+### DockerFile
 
 是用来构建docker镜像的文件，可以理解为命令参数脚本
 
@@ -1960,7 +1960,7 @@ docker rm -f
 
 这个写一个项目时一样的
 
-### 官方DockerFile示例
+#### 官方DockerFile示例
 
 看一下官方的DockerFile
 
@@ -1972,7 +1972,7 @@ docker rm -f
 
 -----
 
-### DockerFile基础知识
+#### DockerFile基础知识
 
 1. 每个指令都必须是大写字母
 2. 按照从上到下顺序执行
@@ -1987,11 +1987,11 @@ Docker镜像逐渐成为企业的交付标准，必须掌握！
 
 ---
 
-### DockerFile命令
+#### DockerFile命令
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601115428.png)
 
-### DockerFile
+#### DockerFile
 
 ```shell
 FROM          # 基础镜像 比如centos
@@ -2009,7 +2009,7 @@ COPY          # 将文件拷贝到镜像中
 ENV           # 构建的时候设置环境变量
 ```
 
-### 实战构建自己的centos
+#### 实战构建自己的centos
 
 Docker Hub中99%的镜像都是从FROM scratch开始的
 
@@ -2113,7 +2113,7 @@ ifconfig
 
 我们平时拿到一个镜像也可以通过这个方法研究一下他是怎么做的
 
-### CMD与ENTRYPOINT
+#### CMD与ENTRYPOINT
 
 ```shell
 FROM centos
@@ -2138,7 +2138,7 @@ Docker中许多命令都十分相似，我们需要了解他们的区别，最�
 
 ---
 
-### 实战Tomcat镜像
+#### 实战Tomcat镜像
 
 1. 准备镜像文件 tomcat压缩包，jdk压缩包
 
@@ -2238,7 +2238,7 @@ System.out.println("-------my test web logs-----------");
 
 
 
-### 发布自己的镜像
+#### 发布自己的镜像
 
 1、地址https://hub.docker.com/ 注册自己的账号
 
@@ -2292,15 +2292,15 @@ denied: requested access to the resource is denied # push请求被拒绝了
 
 
 
-### 小结：
+#### 小结：
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601115820.png)
 
 
 
-## Docker网络
+### Docker网络
 
-### 理解docker0
+#### 理解docker0
 
 1、清空所有环境
 
@@ -2473,7 +2473,7 @@ docker0问题：它不支持容器名连接访问！
 
 
 
-### 自定义网络
+#### 自定义网络
 
 查看所有的docker网络
 
@@ -2607,7 +2607,7 @@ rtt min/avg/max/mdev = 0.069/0.092/0.103/0.017 ms
 
 
 
-### 网络连通
+#### 网络连通
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601120052.png)
 
@@ -2651,23 +2651,23 @@ ping: tomcat-net-01: Name or service not known
 
 
 
-### 实战：部署Redis集群
+#### 实战：部署Redis集群
 
 
 
 
 
-## IDEA整合Docker
+### IDEA整合Docker
 
-## Docker 整合Docker
+### Docker 整合Docker
 
-## Docker Compose
+### Docker Compose
 
-## Docker Swarm
+### Docker Swarm
 
-## 各种bug
+### 各种bug
 
-### Xshell链接失败
+#### Xshell链接失败
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601120127.png)
 

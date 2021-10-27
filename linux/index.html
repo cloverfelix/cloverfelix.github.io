@@ -115,23 +115,28 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#目录管理">目录管理</a></li>
-    <li><a href="#基本属性">基本属性</a></li>
-    <li><a href="#文件内容查看">文件内容查看</a></li>
-    <li><a href="#vim编辑器">Vim编辑器</a></li>
-    <li><a href="#账号管理">账号管理</a></li>
-    <li><a href="#用户组管理">用户组管理</a></li>
-    <li><a href="#磁盘管理">磁盘管理</a></li>
-    <li><a href="#进程管理">进程管理</a></li>
-    <li><a href="#环境安装">环境安装</a>
+    <li><a href="#linux-基本使用">Linux 基本使用</a></li>
+    <li><a href="#linux常用的基本命令">Linux常用的基本命令</a>
       <ul>
-        <li><a href="#jdk安装">JDK安装</a></li>
-        <li><a href="#tomcat安装">Tomcat安装</a></li>
+        <li><a href="#目录管理">目录管理</a></li>
+        <li><a href="#基本属性">基本属性</a></li>
+        <li><a href="#文件内容查看">文件内容查看</a></li>
+        <li><a href="#vim编辑器">Vim编辑器</a></li>
+        <li><a href="#账号管理">账号管理</a></li>
+        <li><a href="#用户组管理">用户组管理</a></li>
+        <li><a href="#磁盘管理">磁盘管理</a></li>
+        <li><a href="#进程管理">进程管理</a></li>
+        <li><a href="#环境安装">环境安装</a>
+          <ul>
+            <li><a href="#jdk安装">JDK安装</a></li>
+            <li><a href="#tomcat安装">Tomcat安装</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h1 id="linux-基本使用">Linux 基本使用</h1>
+            </div><div class="content" id="content"><h2 id="linux-基本使用">Linux 基本使用</h2>
 <ul>
 <li><strong>/bin</strong>: bin是Binary的缩写，这个目录存放着最经常使用的命令。</li>
 <li><strong>/boot</strong>: 这里存放的是启动Linux是使用的一些核心文件，包括一些连接文件以及镜像文件。 <strong>(不要动)</strong></li>
@@ -156,8 +161,8 @@
 <li><strong>/var</strong>：这个目录中存放着在不断扩充的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件。</li>
 <li><strong>/run</strong>：是一个临时文件系统，存储系统同启动以来的信息。当系统重启时，这个目录下的文件一个被删掉或者清除。</li>
 </ul>
-<h1 id="linux常用的基本命令">Linux常用的基本命令</h1>
-<h2 id="目录管理">目录管理</h2>
+<h2 id="linux常用的基本命令">Linux常用的基本命令</h2>
+<h3 id="目录管理">目录管理</h3>
 <blockquote>
 <p>绝对路径、相对路径</p>
 </blockquote>
@@ -282,7 +287,7 @@ cd  ..：退回到上一级目录</p>
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210523215641.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210523215641.png" /></p>
-<h2 id="基本属性">基本属性</h2>
+<h3 id="基本属性">基本属性</h3>
 <blockquote>
 <p>看懂文件属性</p>
 </blockquote>
@@ -433,7 +438,7 @@ chown  <span class="se">\[</span>-R<span class="se">\]</span> 属主名：属组
 </code></pre></td></tr></table>
 </div>
 </div><p>可以自己下去多进行测试！</p>
-<h2 id="文件内容查看">文件内容查看</h2>
+<h3 id="文件内容查看">文件内容查看</h3>
 <p>Linux系统中使用以下命令来查看文件内容</p>
 <ul>
 <li><strong>cat</strong> 由第一行开始显示文件内容</li>
@@ -598,7 +603,7 @@ yeziqi hanhan
 cat: f3: No such file or directory
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="vim编辑器">Vim编辑器</h2>
+</div><h3 id="vim编辑器">Vim编辑器</h3>
 <p>vim通过一些插件可以实现和IDE一样的功能！</p>
 <blockquote>
 <p>什么是Vim编辑器</p>
@@ -1002,7 +1007,7 @@ cat: f3: No such file or directory
 </tbody>
 </table>
 <p>以上标绿的是要熟练掌握的，其余的做了解即可！</p>
-<h2 id="账号管理">账号管理</h2>
+<h3 id="账号管理">账号管理</h3>
 <p>实现用户账号的管理，要完成的工作主要有如下几个方面：</p>
 <ul>
 <li>
@@ -1148,7 +1153,7 @@ wei  www
 passwd -d wei			<span class="c1">#没有密码也不能登录</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="用户组管理">用户组管理</h2>
+</div><h3 id="用户组管理">用户组管理</h3>
 <p>属主（属于那一个主人）、属组</p>
 <p>每个用户都有一个用户组，系统可以对一个用户组中的所有用户进行集中管理（开发、测试、运维、root）。不同Linux 系统对用户
 组的规定有所不同，如Linux下的用户属于与它同名的用户组，这个用户组在创建用户时同时创建。</p>
@@ -1211,7 +1216,7 @@ $ newgrp root
 </div><p>这个文件中的灭有一行都代表这一个用户，我们可以用从这里看出这个用户的主目录在哪里，可以看到属于哪一个组！</p>
 <p>登录口令：把真正的加密后的用户口令字存放到/etc/shadow文件中</p>
 <p>用户组的所有信息都存放在/etc/group文件中</p>
-<h2 id="磁盘管理">磁盘管理</h2>
+<h3 id="磁盘管理">磁盘管理</h3>
 <blockquote>
 <p>df （列出文件系统整体的磁盘使用量） du（检查磁盘空间的使用量）</p>
 </blockquote>
@@ -1246,7 +1251,7 @@ $ newgrp root
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210526212807.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210526212807.png" /></p>
 <p>卸载：<code>unmount -f </code> [挂载位置] 强制卸载</p>
-<h2 id="进程管理">进程管理</h2>
+<h3 id="进程管理">进程管理</h3>
 <p>Linux中一切皆文件</p>
 <p>==(文件: 读、写、执行（查看，创建，删除，移动，复制，编辑），权限（用户，用户组），系统（磁盘，进程））==</p>
 <blockquote>
@@ -1321,14 +1326,14 @@ pstree -pu
 </code></pre></td></tr></table>
 </div>
 </div><p>表示强制结束进程</p>
-<h2 id="环境安装">环境安装</h2>
+<h3 id="环境安装">环境安装</h3>
 <p>安装软件有一般有三种方式：</p>
 <ul>
 <li>rpm（Jdk：在线发布一个SpringBoot项目）</li>
 <li>解压缩（tomcat，启动并通过外网访问，也就是发布网站）</li>
 <li>yum在线安装（docker：直接运行跑起来docker就可以！）</li>
 </ul>
-<h3 id="jdk安装">JDK安装</h3>
+<h4 id="jdk安装">JDK安装</h4>
 <ol>
 <li>下载JDK rpm。去Oracle官网下载即可！</li>
 <li>安装Java环境</li>
@@ -1427,7 +1432,7 @@ firewall-cmd --list-ports  <span class="c1"># 只看端口信息  </span>
 --permanent   <span class="c1">#永久生效，没有此参数重启后失效</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="tomcat安装">Tomcat安装</h3>
+</div><h4 id="tomcat安装">Tomcat安装</h4>
 <ol>
 <li>安装好了Java环境后我们可以测试下Tomcat！准备好Tomcat的安装包！</li>
 <li>将文件移动到/usr/tomcat/下，并解压！</li>

@@ -1,9 +1,9 @@
 # Mysql
 
 
-# 1、初始Mysql
+## 1、初始Mysql
 
-## 1.1、为什么学习数据库
+### 1.1、为什么学习数据库
 
 1、岗位技能需求 
 
@@ -16,7 +16,7 @@
 **5、数据库是几乎软件体系中最核心的一个存在。**
 
 
-## 1.2、什么是数据库
+### 1.2、什么是数据库
 
 数据库 ( **DataBase** , 简称**DB** ) 
 
@@ -33,7 +33,7 @@
 	- Redis , MongoDB , ... 
 	- 非关系型数据库通常指数据以对象的形式存储在数据库中，而对象之间的关系通过每个对象自 身的属性来决定
 
-## 1.3、什么是DBMS
+### 1.3、什么是DBMS
 
 数据库管理系统(**D**ata**B**ase **M**anagement **S**ystem)
 
@@ -45,7 +45,7 @@
 
 因为我们要学习的Mysql应该算是一个数据库管理系统
 
-## 1.4、MySQL简介
+### 1.4、MySQL简介
 
 **概念**：是现在**流行的**，**开源的**，**免费的**，**关系型**数据库
 
@@ -60,7 +60,7 @@
 
 [官网](https://www.mysql.com/)
 
-## 1.5、安装MySQL
+### 1.5、安装MySQL
 
 **这里建议大家使用压缩版,安装快,方便.不复杂.**
 
@@ -131,7 +131,7 @@ net start mysql
 
 即便有了可视化工具,可是基本的DOS命名大家还是要记住!
 
-## 1.6、SQLyog
+### 1.6、SQLyog
 
 可手动操作,管理MySQL数据库的软件工具 
 **特点 : 简洁 , 易用 , 图形化**
@@ -152,7 +152,7 @@ net start mysql
 	
 在历史记录中可以看到相对应的数据库操作的语句 .
 	
-## 1.7、连接数据库
+### 1.7、连接数据库
 	
 打开MySQL命令窗口
 
@@ -179,13 +179,13 @@ exit; 退出Mysql
 -- 表示注释
 ~~~
 
-# 2、操作数据库
+## 2、操作数据库
 
-## 2.1、结构化查询语句分类
+### 2.1、结构化查询语句分类
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822202503.png)
 
-## 2.2、数据库操作
+### 2.2、数据库操作
 
 > 命令行操作数据库
 
@@ -206,7 +206,7 @@ exit; 退出Mysql
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210822202734.png)
 
-## 2.3、创建数据表
+### 2.3、创建数据表
 
 属于DDL的一种语法：
 
@@ -221,7 +221,7 @@ create table [if not exists] `表名`(
 
 **说明** : 反引号用于区别MySQL保留字与普通字符而引入的 (键盘esc下面的键)
 
-## 2.4、数据值和列类型
+### 2.4、数据值和列类型
 
 列类型：规定数据库中该列存放的数据类型
 
@@ -242,7 +242,7 @@ create table [if not exists] `表名`(
 - 理解为"没有值"或"未知值"
 - 不要用NULL进行算术运算，结果仍为NULL
 
-## 2.5、数据字段属性
+### 2.5、数据字段属性
 
 **UnSigned**
 
@@ -297,7 +297,7 @@ DESC student; -- 设置严格检查模式(不能容错了)
 SET sql_mode='STRICT_TRANS_TABLES';
 ~~~
 
-## 2.6、数据表的类型
+### 2.6、数据表的类型
 
 > 设置数据表的类型
 
@@ -342,7 +342,7 @@ MySQL的数据表的类型 : **MyISAM** , **InnoDB** , HEAP , BOB , CSV等...
 - 创建时通过命令来设置，如：`CREATE TABLE 表名()CHARSET = utf8;`
 - 如果没有设置，则根据MySQL数据库配置文件`my.ini`中的参数设定
 
-## 2.7、修改数据库
+### 2.7、修改数据库
 
 > 修改表（ALTER ＴABLE）
 
@@ -386,9 +386,9 @@ MySQL的数据表的类型 : **MyISAM** , **InnoDB** , HEAP , BOB , CSV等...
 7. 清除已有语句：\c
 ~~~
 
-# 3、MySQL数据管理
+## 3、MySQL数据管理
 
-## 3.1、外键
+### 3.1、外键
 
 > 外键概念
 
@@ -450,7 +450,7 @@ ALTER TABLE student DROP FOREIGN KEY FK_gradeid;
 ALTER TABLE student DROP INDEX FK_gradeid;
 ~~~
 
-## 3.2、DML语言
+### 3.2、DML语言
 
 **数据库意义**：数据存储、数据管理
 
@@ -465,7 +465,7 @@ ALTER TABLE student DROP INDEX FK_gradeid;
 	- UPDATE(更新数据语句)
 	- DELETE(删除数据语句)
 
-## 3.3、添加数据
+### 3.3、添加数据
 
 > INSERT 命令
 
@@ -496,7 +496,7 @@ Column count doesn`t match value count at row 1
 INSERT INTO grade(gradename) VALUES ('大三'),('大四');
 ~~~
 
-## 3.4、修改数据
+### 3.4、修改数据
 
 > update命令
 
@@ -524,7 +524,7 @@ UPDATE 表名 SET column_name=value [,column_name2=value2,...] [WHERE condition]
 UPDATE grade SET gradename = '高中' WHERE gradeid = 1;
 ~~~
 
-## 3.5、删除数据
+### 3.5、删除数据
 
 > DELETE命令
 
@@ -587,9 +587,9 @@ TRUNCATE TABLE test;
 
 
 
-# 4、使用DQL查询数据
+## 4、使用DQL查询数据
 
-## 4.1、DQL语言
+### 4.1、DQL语言
 
 **DQL( Data Query Language 数据查询语言 ) **
 - 查询数据库数据 , 如**SELECT**语句 
@@ -614,7 +614,7 @@ FROM table_name [as table_alias]
 
 **注意 : [ ] 括号代表可选的 , { }括号代表必选得**
 
-## 4.2、指定查询字段
+### 4.2、指定查询字段
 
 ~~~sql
 -- 查询表中所有的数据列结果 , 采用 **" \* "** 符号; 但是效率低，不推荐 .
@@ -677,7 +677,7 @@ SELECT studentno,StudentResult+1 AS '提分后' FROM result;
 
 - 避免SQL返回结果中包含 ' . ' , ' * ' 和括号等干扰开发语言程序.
 
-## 4.3、where条件语句
+### 4.3、where条件语句
 
 作用：用于检索数据表中符合条件的记录
 
@@ -783,7 +783,7 @@ SELECT studentname FROM student
 WHERE Address='' OR Address IS NULL;
 ~~~
 
-## 4.4、连接查询
+### 4.4、连接查询
 
 > JOIN对比
 
@@ -914,7 +914,7 @@ ON r.subjectno = sub.subjectno
 WHERE subjectname='数据库结构-1'
 ~~~
 
-## 4.5、排序和分页
+### 4.5、排序和分页
 
 测试：
 
@@ -972,7 +972,7 @@ ORDER BY StudentResult DESC
 LIMIT 0,10
 ~~~
 
-## 4.6、子查询
+### 4.6、子查询
 
 ~~~SQL
 /*============== 子查询 ================
@@ -1035,9 +1035,9 @@ SELECT studentno,studentname FROM student WHERE studentno IN(
 */
 ~~~
 
-# 5、MySQL函数
+## 5、MySQL函数
 
-## 5.1、常用函数
+### 5.1、常用函数
 
 **数据函数**
 
@@ -1093,7 +1093,7 @@ SELECT VERSION(); /*版本*/
 SELECT USER(); /*用户*/
 ~~~
 
-## 5.2、聚合函数
+### 5.2、聚合函数
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823162435.png)
 
@@ -1198,7 +1198,7 @@ INSERT INTO testmd5 VALUES(4,'kuangshen3',md5('123456'));
 SELECT * FROM testmd5 WHERE `name`='kuangshen' AND pwd=MD5('123456');
 ~~~
 
-## 5.3、小结
+### 5.3、小结
 
 ~~~sql
 -- ================ 内置函数 ================
@@ -1258,9 +1258,9 @@ md5();
 default();
 ~~~
 
-# 6、事务
+## 6、事务
 
-## 6.1、概述
+### 6.1、概述
 
 > 什么是事务
 
@@ -1290,7 +1290,7 @@ default();
 **持久性(Durable)**
 - 在事务完成以后，该事务对数据库所作的更改便持久的保存在数据库之中，并不会被回滚。
 
-## 6.2、事务实现
+### 6.2、事务实现
 
 **基本语法**：
 
@@ -1325,7 +1325,7 @@ RELEASE SAVEPOINT 保存点名称 -- 删除保存点
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823165551.png)
 
-## 6.3、测试题目
+### 6.3、测试题目
 
 ~~~sql
 /*
@@ -1359,9 +1359,9 @@ COMMIT; -- 提交事务
 SET autocommit = 1; -- 恢复自动提交
 ~~~
 
-# 7、索引
+## 7、索引
 
-## 7.1、索引分类
+### 7.1、索引分类
 
 > 索引的作用
 
@@ -1405,7 +1405,7 @@ EXPLAIN SELECT * FROM student WHERE MATCH(studentName)  AGAINST('刘');
 
 [关于EXPLAIN](https://blog.csdn.net/jiadajing267/article/details/81269067)
 
-## 7.2、扩展：测试索引
+### 7.2、扩展：测试索引
 **建表app_user：**
 
 ~~~sql
@@ -1520,14 +1520,14 @@ mysql> SELECT * FROM app_user WHERE name = '用户9999';
 	索引在小数据量的时候，用户不大，但是在大数据的时候，区别十分明显
 
 
-## 7.3、索引原则
+### 7.3、索引原则
 
 - 索引不是越多越好
 - 不要对经常变动的数据加索引(因为又得重新查询)
 - 小数据量的表不需要加索引
 - 索引一般加载常用来查询的字段上！
 
-## 7.4、索引的数据结构
+### 7.4、索引的数据结构
 
 ~~~sql
 -- 我们可以在创建上述索引的时候，为其指定索引类型，分两类
@@ -1544,9 +1544,9 @@ Archive 不支持事务，支持表级别锁定，不支持 B-tree、Hash、Full
 
 [关于索引的本质](http://blog.codinglabs.org/articles/theory-of-mysql-index.html)
 
-# 8、权限管理和备份
+## 8、权限管理和备份
 
-## 8.1、用户管理
+### 8.1、用户管理
 
 > SQLyog可视化界面
 
@@ -1678,7 +1678,7 @@ option = {QUICK | FAST | MEDIUM | EXTENDED | CHANGED}
 OPTIMIZE [LOCAL | NO_WRITE_TO_BINLOG] TABLE tbl_name [, tbl_name] ...
 ~~~
 
-## 8.2、数据库备份
+### 8.2、数据库备份
 
 使用命令行导出 `mysqldump` 命令行使用
 
@@ -1709,9 +1709,9 @@ mysql -u用户名 -p密码 库名< 备份文件
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210823211210.png)
 
-# 9、规范化数据库
+## 9、规范化数据库
 
-## 9.1、为什么需要数据库设计
+### 9.1、为什么需要数据库设计
 
 **糟糕的数据库设计**
 - 数据冗余，存储空间浪费
@@ -1735,7 +1735,7 @@ mysql -u用户名 -p密码 库名< 备份文件
 - 标识每个实体需要存储的详细信息[Attribute]
 - 标识实体之间的关系[Relationship]
 
-## 9.2、三大范式
+### 9.2、三大范式
 
 **问题：为什么需要数据规范化**
 
@@ -1778,15 +1778,15 @@ mysql -u用户名 -p密码 库名< 备份文件
 - 通过在给定的表中添加额外的字段，一减少需要从中搜索信息所需要的时间
 - 通过在给的的表中插入计算列，以方便查询
 
-# 10、JDBC
+## 10、JDBC
 
-## 10.1、数据库驱动
+### 10.1、数据库驱动
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210410.png)
 
 我们的程序会通过数据库驱动和数据库打交道！！
 
-## 10.2、JDBC介绍
+### 10.2、JDBC介绍
 
 SUN公司为了简化开发人员的(对数据库的统一)操作，提供了一个(Java操作数据库的)规范，俗称JDBC
 
@@ -1796,7 +1796,7 @@ SUN公司为了简化开发人员的(对数据库的统一)操作，提供了一
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210824210632.png)
 
-## 10.3、编写JDBC程序
+### 10.3、编写JDBC程序
 
 > 搭建实验环境
 
@@ -1887,7 +1887,7 @@ public class JdbcFirstDemo {
 5、释放连接
 
 
-## 10.4、对象说明
+### 10.4、对象说明
 
 > DriverManager类讲解
 
@@ -1963,7 +1963,7 @@ Jdbc程序运行完后，切记要释放程序在运行过程中，创建的那�
 
 	为确保资源释放代码能运行，资源释放代码也一定要放在finally语句中。
 
-## 10.5、statement对象
+### 10.5、statement对象
 
 Jdbc中的statement对象用于向数据库发送SQL语句，想完成对数据库的增删改查，只需要通过这个对象向数据库发送增删改查语句即可。
 
@@ -2267,7 +2267,7 @@ public class SQL注入 {
 }
 ~~~
 
-## 10.6、PreparedStatement对象
+### 10.6、PreparedStatement对象
 
 `PreperedStatement`是`Statement`的子类，它的实例对象可以通过调用Connection.preparedStatement()方法获得，相对于Statement对象而言：PreperedStatement可以避
 免SQL注入的问题。
@@ -2462,7 +2462,7 @@ public class SQL注入 {
 
 	原理：执行的时候参数会用引号包起来，并把参数中的引号作为转义字符，从而避免了参数也作为条件的一部分
 	
-## 10.7、事务
+### 10.7、事务
 
 > 概念
 
@@ -2631,7 +2631,7 @@ public class TestTransaction3 {
 }
 ~~~
 
-## 10.8、数据库连接池
+### 10.8、数据库连接池
 
 用户每次请求都需要向数据库获得链接，而数据库创建连接通常需要消耗相对较大的资源，创建时间也 较长。假设网站一天10万访问量，数据库服务器就需要创建10万次连接，极大的浪费数据库的资源，并 且极易造成数据库服务器内存溢出、拓机。
 

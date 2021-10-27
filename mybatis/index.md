@@ -2,15 +2,15 @@
 
 
 
-# 1、简介
+## 1、简介
 
-## 1.1、什么是Mybatis
-
-
+### 1.1、什么是Mybatis
 
 
 
-## 1.2、持久化（持久化是一个动作）
+
+
+### 1.2、持久化（持久化是一个动作）
 
 
 
@@ -30,7 +30,7 @@
 
 
 
-## 1.3、持久层（是一个概念）
+### 1.3、持久层（是一个概念）
 
 Dao层，Service层，Controller层...等每一个层都有它们自己要做的事情
 
@@ -39,7 +39,7 @@ Dao层，Service层，Controller层...等每一个层都有它们自己要做的
 
 
 
-## 1.4、为什么需要Mybatis
+### 1.4、为什么需要Mybatis
 
 - 帮助程序员将数据存入到数据库中
 - 方便
@@ -48,11 +48,11 @@ Dao层，Service层，Controller层...等每一个层都有它们自己要做的
 
 
 
-# 2、第一个Mybatis程序
+## 2、第一个Mybatis程序
 
 思路：搭建环境-->导入Mybatis-->编写代码-->测试！
 
-## 2.1、搭建环境
+### 2.1、搭建环境
 
 ~~~xshell
 CREATE DATABASE `mybatis`;
@@ -106,7 +106,7 @@ INSERT INTO `user`(`id`,`name`,`pwd`) VALUES
 
 
 
-## 2.2、创建一个模块 
+### 2.2、创建一个模块 
 
 - 编写mybatis的核心配置文件
 
@@ -176,7 +176,7 @@ public class MybatisUtils {
 
 
 
-## 2.3、编写代码
+### 2.3、编写代码
 
 - 实体类
 
@@ -270,7 +270,7 @@ public interface UserDao {
 
 
 
-## 2.4、测试
+### 2.4、测试
 
 注意点：org.apache.ibatis.binding.BindingException: Type interface com.kuang.dao.UserDao is not known to the MapperRegistry.
 
@@ -370,14 +370,14 @@ public class UserDaoTest {
 
 
 
-# 3、CRUD
+## 3、CRUD
 
 
-## 3.1、namespace
+### 3.1、namespace
 
 namespace中的包名要和Dao/mapper接口的包名一致！
 
-## 3.2、select
+### 3.2、select
 
 选择，查询语句
 
@@ -421,7 +421,7 @@ public void getUserById(){
 
 
 
-## 3.3、Insert
+### 3.3、Insert
 
 ~~~xml
 <!--对象中的属性可以直接提取出来-->
@@ -432,7 +432,7 @@ public void getUserById(){
 
 
 
-## 3.4、Update
+### 3.4、Update
 
 ~~~xml
 <update id="updateUser" parameterType="com.kuang.pojo.User">
@@ -442,7 +442,7 @@ public void getUserById(){
 
 
 
-## 3.5、delete
+### 3.5、delete
 
 ~~~xml
 <delete id="deleteUser" parameterType="int">
@@ -459,7 +459,7 @@ public void getUserById(){
 
 
 
-## 3.6、万能Map
+### 3.6、万能Map
 
 假设，我们的实体类，或者数据库中的表，字段或者参数过多，我们应当考虑使用Map！
 
@@ -477,7 +477,7 @@ Map传递参数，直接在sql中取出即可！【parameterType="Map"】
 
 
 
-## 3.7、思考题
+### 3.7、思考题
 
 模糊查询 
 
@@ -495,10 +495,10 @@ select * from mybatis.user where name like "%"#{value}"%"
 
 
 
-#  4、配置解析
+##  4、配置解析
 
 
-## 4.1、核心配置文件
+### 4.1、核心配置文件
 
 - mybatis-config.xml
 - MyBatis 的配置文件包含了会深深影响 MyBatis 行为的设置和属性信息。
@@ -521,7 +521,7 @@ mappers（映射器）
 
 
 
-## 4.2、环境配置（environment）
+### 4.2、环境配置（environment）
 
 Mybatis可以配置成适应多种环境
 
@@ -535,7 +535,7 @@ Mybatis默认的事务管理器就是JDBC，连接池：POOLED
 
 
 
-## 4.3、属性（properties）
+### 4.3、属性（properties）
 
 我们可以通过properties属性来实现引用配置文件
 
@@ -572,7 +572,7 @@ password=xn123456
 
 
 
-## 4.4、类型别名（typeAliases）
+### 4.4、类型别名（typeAliases）
 
 - 类型别名可为 Java 类型设置一个缩写名字。
 - 意在降低冗余的全限定类名书写。
@@ -612,7 +612,7 @@ public class User {
 
 
 
-## 4.5、设置
+### 4.5、设置
 
 - 这是 MyBatis 中极为重要的调整设置，它们会改变 MyBatis 的运行时行为。
 
@@ -622,7 +622,7 @@ public class User {
 
 
 
-## 4.6、其它配置
+### 4.6、其它配置
 
 - [typeHandlers（类型处理器）](https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers)
 - [objectFactory（对象工厂）](https://mybatis.org/mybatis-3/zh/configuration.html#objectFactory)
@@ -633,7 +633,7 @@ public class User {
 
 
 
-## 4.7、映射器（mappers）
+### 4.7、映射器（mappers）
 
 MapperRegistry：绑定注册我们的Mapper文件
 
@@ -681,7 +681,7 @@ MapperRegistry：绑定注册我们的Mapper文件
 
 
 
-## 4.8、生命周期和作用域
+### 4.8、生命周期和作用域
 
 生命周期和作用域是至关重要的，因为错误的使用会导致非常严重的**并发问题**。
 
@@ -713,11 +713,11 @@ MapperRegistry：绑定注册我们的Mapper文件
 
 
 
-# 5、解决属性名和字段名不一致的问题
+## 5、解决属性名和字段名不一致的问题
 
 
 
-## 5.1、问题
+### 5.1、问题
 
 数据库中的字段
 
@@ -753,7 +753,7 @@ public class User {
 </select>
 ~~~
 
-## 5.2、resultMap
+### 5.2、resultMap
 
 结果集映射
 
@@ -779,9 +779,9 @@ public class User {
 
 
 
-# 6、日志
+## 6、日志
 
-## 6.1、日志工厂
+### 6.1、日志工厂
 
 如果一个数据库操作，出现了异常。日志就是最好的助手
 
@@ -814,7 +814,7 @@ public class User {
 
 
 
-## 6.2、Log4j
+### 6.2、Log4j
 
 什么是log4j？
 
@@ -933,13 +933,13 @@ public class User {
 
 
 
-# 7、分页
+## 7、分页
 
 **思考：为什么要分页？**
 
 - 减少数据的处理量
 
-## 7.1、使用Limit 分页
+### 7.1、使用Limit 分页
 
 ~~~xml
 语法： SELECT * from user limit startIndex,pageSize;   
@@ -996,7 +996,7 @@ SELECT * from user limit 3; #类似于[0,n]
 
 
 
-## 7.2、RowBounds分页
+### 7.2、RowBounds分页
 
 不再使用sql实现分页
 
@@ -1038,15 +1038,15 @@ SELECT * from user limit 3; #类似于[0,n]
 
 
 
-## 7.3、分页插件
+### 7.3、分页插件
 
 了解即可，==Mybatis PageHelper==
 
 
 
-# 8、使用注解开发
+## 8、使用注解开发
 
-## 8.1、面向接口编程
+### 8.1、面向接口编程
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601165522.png)
 
@@ -1054,7 +1054,7 @@ SELECT * from user limit 3; #类似于[0,n]
 
 
 
-## 8.2、使用注解开发
+### 8.2、使用注解开发
 
 1. 注解直接在接口上实现
 
@@ -1104,7 +1104,7 @@ SELECT * from user limit 3; #类似于[0,n]
 
 
 
-## 8.3、注解的CRUD
+### 8.3、注解的CRUD
 
 我们可以在工具类创建的时候自动提交事务 
 
@@ -1158,7 +1158,7 @@ public interface UserMapper {
 
 
 
-# 9、Lombok
+## 9、Lombok
 
 使用步骤：
 
@@ -1187,7 +1187,7 @@ public interface UserMapper {
 
 
 
-# 10、多对一处理
+## 10、多对一处理
 
 多对一:
 
@@ -1247,7 +1247,7 @@ public class Teacher {
 }
 ```
 
-## 10.1、按照查询嵌套处理
+### 10.1、按照查询嵌套处理
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -1292,7 +1292,7 @@ select id,name,name from student where tid=(select .......);
 
 
 
-## 10.2、按照结果嵌套处理
+### 10.2、按照结果嵌套处理
 
 ```sql
 <--s.id sid相当于给其起一个别名，也就相当于数据库里面的id变成了sid-->
@@ -1324,7 +1324,7 @@ select id,name,name from student where tid=(select .......);
 
 
 
-# 11、一对多
+## 11、一对多
 
 比如：一个老师拥有多个学生
 
@@ -1353,7 +1353,7 @@ public class Student {
 
 
 
-## 11.1、按照结果嵌套查询（推荐）
+### 11.1、按照结果嵌套查询（推荐）
 
 ```xml
 <select id="getTeacher" resultMap="TeacherStudent">
@@ -1384,7 +1384,7 @@ public class Student {
 
 
 
-## 11.2、按照查询嵌套处理
+### 11.2、按照查询嵌套处理
 
 ```xml
 <select id="getTeacher2" resultMap="TeacherStudent2">
@@ -1409,7 +1409,7 @@ public class Student {
 
 
 
-## 11.3、小结
+### 11.3、小结
 
 	1. 关联--assocation   【多对一】
 	2. 集合--collection       【一对多】
@@ -1427,13 +1427,13 @@ public class Student {
 
 
 
-# 12、动态SQL
+## 12、动态SQL
 
 **什么是动态SQL：动态SQL就是根据不同的条件生成不同的语句**
 
  
 
-## 12.1、搭建环境
+### 12.1、搭建环境
 
 ~~~sql
 CREATE TABLE `blog`(
@@ -1573,7 +1573,7 @@ CREATE TABLE `blog`(
 
  
 
-## 12.2、IF
+### 12.2、IF
 
 ```xml
 <select id="queryBlogIf" parameterType="map" resultType="blog">
@@ -1612,7 +1612,7 @@ public void queryBlogif(){
 
 
 
-## 12.3、choose（when,otherwise）
+### 12.3、choose（when,otherwise）
 
 ```xml
 <select id="queryBlogChoose" parameterType="map" resultType="blog">
@@ -1639,7 +1639,7 @@ public void queryBlogif(){
 
 
 
-## 12.4、trim(where，set)
+### 12.4、trim(where，set)
 
 ```xml
 <select id="queryBlogIf" parameterType="map" resultType="blog">
@@ -1678,7 +1678,7 @@ public void queryBlogif(){
 
 
 
-## 12.5、SQL片段
+### 12.5、SQL片段
 
 有时候，我们可能会将一些功能的部分抽取出来，方便复用
 
@@ -1715,7 +1715,7 @@ public void queryBlogif(){
 
 
 
-## 12.6、Foreach
+### 12.6、Foreach
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601165710.png)
 
@@ -1747,9 +1747,9 @@ public void queryBlogif(){
 
  
 
-# 13、缓存（了解）
+## 13、缓存（了解）
 
-## 13.1、简介
+### 13.1、简介
 
 ~~~shell
 查询--->连接数据库，耗资源
@@ -1773,7 +1773,7 @@ public void queryBlogif(){
 
 
 
-## 13.2、Mybatis缓存
+### 13.2、Mybatis缓存
 
 - Mybatis包含一个非常强大的查询缓存特性，它可以非常方便的定制和配置缓存。缓存可以极大的提升查询效率
 - Mybatis系统中默认定义了两级缓存：**一级缓存**和**二级缓存**
@@ -1783,7 +1783,7 @@ public void queryBlogif(){
 
 
 
-## 13.3、一级缓存
+### 13.3、一级缓存
 
 一级缓存也叫本地缓存：SqlSession就是一个一级缓存
 
@@ -1846,7 +1846,7 @@ public void queryBlogif(){
 
 
 
-## 13.4、二级缓存
+### 13.4、二级缓存
 
 - 二级缓存也叫全局缓存，一级缓存作用域太低了，所以诞生了二级缓存
 - 基于namespace级别的缓存，一个名称空间，对应一个二级缓存
@@ -1904,7 +1904,7 @@ public void queryBlogif(){
 
 
 
-## 13.5、缓存原理
+### 13.5、缓存原理
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601165812.png)
 
 
@@ -1917,7 +1917,7 @@ public void queryBlogif(){
 
 
 
-## 13.6、自定义缓存-ehcache
+### 13.6、自定义缓存-ehcache
 
 Ehcache是一种广泛使用的开源Java分布式缓存。主要面向通用缓存
 

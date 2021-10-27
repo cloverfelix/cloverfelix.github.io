@@ -1,9 +1,9 @@
 # Spring
 
 
-# 1.Spring
+## 1.Spring
 
-## 1.1 简介
+### 1.1 简介
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170509.png)
 
@@ -35,7 +35,7 @@
   </dependency>
 	~~~
 
-## 1.2 优点
+### 1.2 优点
 
 - 开源的免费容器
 - 轻量级，非入侵式的框架（引入不会对原来的代码产生任何影响）
@@ -44,11 +44,11 @@
 
 spring就是一个轻量级的控制反转和面向切面编程的框架
 
-## 1.3 组成
+### 1.3 组成
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170742.png)
 
-## 1.4 学习路线
+### 1.4 学习路线
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601170757.png)
 
@@ -63,7 +63,7 @@ SpringCloud
 
 - 基于SpringBoot实现的
 
-# 2.坑
+## 2.坑
 
 - 多态父类实现子类独有的方法需要向下强转
 
@@ -77,10 +77,10 @@ SpringCloud
 
 - 只要有new一定要写在main方法里
 
-# 3.IOC DI
+## 3.IOC DI
 
 
-## 3.1 理论推导（依赖注入：set注入）
+### 3.1 理论推导（依赖注入：set注入）
 
 ```java
 //利用set进行动态实现值的注入
@@ -94,11 +94,11 @@ public void setUserDao(UserDao userDao) {
 - 使用set注入后，程序不再具有主动性，而是变成了被动的接受对象
 - 这种思想从本质上解决了问题，我们程序员不用再去管理对象的创建了
 
-## 3.2 IOC本质
+### 3.2 IOC本质
 
 是一种通过描述（XML或注解）并通过第三方生产或获取特定对象的方式，在spring中实现控制反转的是Ioc容器，其实现方法是依赖注入（DI）
 
-## 3.3 IOC容器(控制反转)
+### 3.3 IOC容器(控制反转)
 
 - 配置文件
 
@@ -131,7 +131,7 @@ public void setUserDao(UserDao userDao) {
   Hello myHello=(Hello)context.getBean("hello");
   ```
 
-## 3.4 IOC综合
+### 3.4 IOC综合
 
 - 控制：谁来控制对象的创建，传统的应用程序是由程序本身来控制创建的，使用Spring后，对象是由Spring创建的
 - 反转：程序本身不创建对象，而变成被动的接收对象
@@ -139,7 +139,7 @@ public void setUserDao(UserDao userDao) {
 - 依赖注入：利用set方法进行注入
 - IOC编程思想：由主动编程，变成被动接收，对象由Spring来创建，管理，装配
 
-## 3.5 IOC创建对象的方式（依赖注入：构造器注入）
+### 3.5 IOC创建对象的方式（依赖注入：构造器注入）
 
 使用构造器方式注入可以不写set
 
@@ -175,13 +175,13 @@ public void setUserDao(UserDao userDao) {
   </bean>
   ```
 
-## 3.6 IOC初始化对象的时间
+### 3.6 IOC初始化对象的时间
 
 在new ClassPathXmlApplicationContext，即加载完配置文件后就已经初始化好了**所有bean**对象，然后你需要getBean谁就取谁
 
-# 4.Spring配置
+## 4.Spring配置
 
-## 4.1 Spring配置
+### 4.1 Spring配置
 
 - alias，给bean对象取别名（一对一）
 
@@ -205,9 +205,9 @@ public void setUserDao(UserDao userDao) {
 
     <import resource="bean4.xml"/>
 
-# 5.DI依赖注入之set注入
+## 5.DI依赖注入之set注入
 
-## 5.1、依赖注入之set注入
+### 5.1、依赖注入之set注入
 
 依赖：bean对象的创建依赖于容器
 
@@ -307,9 +307,9 @@ Student student=(Student) context.getBean("student");
 System.out.println(student.toString());
 ```
 
-# 6.导入test测试包（junit）
+## 6.导入test测试包（junit）
 
-## 6.1、导入test测试包
+### 6.1、导入test测试包
 
 ```xml
 <dependency>
@@ -322,9 +322,9 @@ System.out.println(student.toString());
 
 然后在测试类中@Test，这样在测试类中写出的方法，会自动被执行
 
-# 7.c命名和p命名空间注入
+## 7.c命名和p命名空间注入
 
-## 7.1、命名空间
+### 7.1、命名空间
 
 p命名空间的注入，可以直接注入属性的值：property（本质还是set注入）
 
@@ -372,9 +372,9 @@ xmlns:c="http://www.springframework.org/schema/c"
    };
    ```
 
-# 8.Bean Scopes（bean作用域）
+## 8.Bean Scopes（bean作用域）
 
-## 8.1、bean作用域
+### 8.1、bean作用域
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171233.png)
 
@@ -414,9 +414,9 @@ xmlns:c="http://www.springframework.org/schema/c"
 
 - 其他四个只能在web开发中使用
 
-# 9.bean的自动装配（Autowired）
+## 9.bean的自动装配（Autowired）
 
-## 9.1、bean自动装配
+### 9.1、bean自动装配
 
 Spring会在上下文中自动寻找，并自动给bean装配属性，**只针对bean对象**
 
@@ -468,9 +468,9 @@ bean5.xml
 <bean id="people" class="com.kuang.pojo.People" autowire="byType">
 ```
 
-# 10.使用注解实现自动装配
+## 10.使用注解实现自动装配
 
-## 10.1 @Autowired
+### 10.1 @Autowired
 
 ***可以删掉set方法，但是需要get方法！！！***
 
@@ -514,7 +514,7 @@ private Dog dog;
 
 也可以放在set方法上面
 
-## 10.2 @Nullable(拓展)
+### 10.2 @Nullable(拓展)
 
 如果显示定义@Autowired的require属性为false，那么那个对象的属性值为null也不会报错（但是完全没有定义，只有声明，就会报错）
 
@@ -526,7 +526,7 @@ public People(@Nullable String name) {
 }
 ```
 
-## 10.3 @Qualifier
+### 10.3 @Qualifier
 
 当容器中和.java中的对象名字和类型都不匹配时，这时@Autowired就没办法用，但如果又想要自动匹配，就可以使用@Qualifier(value="")实现名字匹配
 
@@ -543,7 +543,7 @@ private Dog dog;
 
 但是可能在运行前要去maven里clean一下，再运行
 
-## 10.4 @Resource
+### 10.4 @Resource
 
 以上三种都是Spring注解，这一个是java注解
 
@@ -553,15 +553,15 @@ private Dog dog;
 
 @Resource(name="")
 
-## 10.5 @Component
+### 10.5 @Component
 
 见11的第2条的方法二
 
-## 10.6 @Scope
+### 10.6 @Scope
 
 见11的第5条
 
-# 11.使用注解开发
+## 11.使用注解开发
 
 - 在Spring4之后，要使用注解开发，必须保证aop的包导入，所以出错时检查这个包有没有问题
 - 导入约束
@@ -646,9 +646,9 @@ private Dog dog;
 	- 注解只负责完成属性的注入
 	- 注意：一定要开启注解的支持
 
-# 12.使用java方式配置Spring
+## 12.使用java方式配置Spring
 
-## 12.1 用@Configuration配置过程
+### 12.1 用@Configuration配置过程
 
 - 写一个类作为配置类，将@Configuration放在类上面，@Bean放在一个返回类的方法里面
 
@@ -688,7 +688,7 @@ private Dog dog;
   System.out.println(getUser.getName());
   ```
 
-## 12.2 @Configuration扫描
+### 12.2 @Configuration扫描
 
 - 也可以显示的扫描包
 
@@ -706,9 +706,9 @@ public class myConfig {
 
 - 因为肯定有多个bean，所以就根据几个bean创建几个java配置类，然后每个类上面都加上@Configuration，代表这是一个配置类但是要把这么多bean整合到一起，就要使用@Import(其他配置类名.class)
 
-# 13.代理模式
+## 13.代理模式
 
-## 13.1 代理模式
+### 13.1 代理模式
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171534.png)
 
@@ -716,7 +716,7 @@ public class myConfig {
 
 ​	因为这是SpringAOP的底层
 
-## 13.2 静态代理
+### 13.2 静态代理
 
 角色分析：
 
@@ -791,7 +791,7 @@ public class myConfig {
 
 - 一个真实角色就会产生一个代理角色，代码量会翻倍，开发效率低
 
-## 13.3 静态代理再理解
+### 13.3 静态代理再理解
 
 - 抽象角色
 
@@ -868,13 +868,13 @@ public class myConfig {
   }
   ```
 
-## 13.4 聊聊AOP
+### 13.4 聊聊AOP
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171607.png)
 
 AOP实现机制，就是不改变原有代码，增加代理角色，面向切面编程
 
-## 13.5 动态代理详解
+### 13.5 动态代理详解
 
 - 动态代理和静态代理角色一样
 - 动态代理的代理类是动态生成的，不是我们直接写好的
@@ -990,15 +990,15 @@ public class Client {
 - 一个动态代理类代理的是一个接口，一般就是对应的一些业务
 - 一个动态代理类可以代理多个类，只要实现了同一个接口就可以
 
-# 14.AOP
+## 14.AOP
 
-## 14.1 了解
+### 14.1 了解
 
 面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的技术，在不改变原来代码的基础上实现动态的增强
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171655.png)
 
-## 14.2 使用Spring实现Aop
+### 14.2 使用Spring实现Aop
 
 前提：使用AOP织入，需要导入一个依赖包
 
@@ -1012,7 +1012,7 @@ public class Client {
 </dependencies>
 ```
 
-### 14.2.1 方法一：使用原生Spring API接口（JDK）默认
+#### 14.2.1 方法一：使用原生Spring API接口（JDK）默认
 
 - 此方法特点是，切入一个方法就要对应一个类
 
@@ -1115,7 +1115,7 @@ public class Test9 {
 }
 ```
 
-### 14.2.2 方法二：使用自定义类（CGLIB）
+#### 14.2.2 方法二：使用自定义类（CGLIB）
 
 - 此方法的特点是：切入的所有方法都存在于一个类中，切入 多少个方法就对应多少个函数
 
@@ -1153,7 +1153,7 @@ bean9.xml
     </aop:config>
 ```
 
-### 14.2.3 方法三：注解实现
+#### 14.2.3 方法三：注解实现
 
 与方法二原理一模一样，只是将xml换成注解
 
@@ -1212,7 +1212,7 @@ public class AnnotationPointCut {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601171748.png)
 
-### 14.2.4 小结
+#### 14.2.4 小结
 
 后面设置为false，使用JDK支持，这也是默认的
 
@@ -1223,9 +1223,9 @@ public class AnnotationPointCut {
 <apo:aspectj-autoproxy proxy-target-class="false"/>
 ```
 
-# 15.整合mybatis
+## 15.整合mybatis
 
-## 15.1 回顾Mybatis
+### 15.1 回顾Mybatis
 
 Mybatis过程：
 
@@ -1330,9 +1330,9 @@ Mybatis过程：
 
 看到视频23的15:00
 
-# 16.声明式事务
+## 16.声明式事务
 
-## 16.1 回顾事务
+### 16.1 回顾事务
 
 - 把一组业务当成一个业务来做，要么都成功要么都失败
 - 涉及到数据的一致性问题

@@ -1,7 +1,7 @@
 # Netty
 
 
-# 1、Netty的介绍
+## 1、Netty的介绍
 
 1、Netty是由JBOSS提供的一个Java开源框架，现为Github上的独立项目
 
@@ -16,9 +16,9 @@
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210906172744.png)
 
-# 2、BIO
+## 2、BIO
 
-## 2.1、I/O模型基本说明
+### 2.1、I/O模型基本说明
 
 1. I/O模型简单理解：就是用什么样的通道进行数据的发送和接收，很大程度上决定了程序通信的性能
 2. Java共支持3种网络编程模型I/O模型：BIO、NIO、AIO
@@ -30,25 +30,25 @@
 
 5.Java AIO(NIO.2)：异步非阻塞，AIO引入异步通道的概念，采用了Proactor模式，简化了程序编写，有效的请求才启动线程，它的特点是先由操作系统完成后才通知服务端程序启动线程去处理，一般适用于连接数较多且连接时间较长的应用 
 
-## 2.2、I/O模型适用场景
+### 2.2、I/O模型适用场景
 
 1. BIO方式适用于**连接数目比较小且固定**的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4以前唯一选择，但是程序简单易理解。
 2. NIO方式适用于**连接数目多且连接比较短**(轻操作)的架构，比如聊天服务器，弹幕系统，服务器间通讯等。编程比较复杂，JDK1.4开始支持。
 3. AIO方式适用于**连接数目多且连接比较长**(重操作)的架构，比如相册服务器，充分调用操作系统参与并发操作，编程比较复杂，JDK7开始支持。
 
-## 2.3、BIO基本介绍
+### 2.3、BIO基本介绍
 
 1. Java BIO就是**传统的java io编程**，其相关的类和接口在java.io
 2. BIO(blocking I/O)：**同步阻塞**，服务器实现模式为一个连接对应一个线程，即客户端有连接请求时服务端就需要启动一个线程进行处理，如果这个连接不做任何事情会造成不必要的线程开销，可以通过**线程池机制**改善(实现多个客户连接服务器)
 
-## 2.4、BIO工作机制
+### 2.4、BIO工作机制
 
 1. 服务器端启动一个ServerSocket
 2. 客户端启动Socket对服务器进行通信，默认情况下服务器端需要对每个客户建立一个线程与之通信
 3. 客户端发出请求后，先咨询服务器是否有线程响应，如果没有则等待，或者被拒绝
 4. 如果有响应，客户端线程会等待请求结束后，再继续执行
 
-## 2.5、BIO应用实例
+### 2.5、BIO应用实例
 
 **实例说明**
 
@@ -157,15 +157,15 @@ public class BIOServer {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210907184527.png)
 
-## 2.6、Java BIO问题分析
+### 2.6、Java BIO问题分析
 
 1. 每个请求都需要创建独立的线程，与对应的客户端进行数据Read，业务处理，数据Write
 2. 当并发数较大时，**需要创建大量线程来处理连接**，系统资源占用比较大
 3. 连接建立后，如果当前线程暂时没有数据可读，则线程就会阻塞再Read操作上，造成线程资源浪费
 
-# 3、NIO
+## 3、NIO
 
-## 3.1、Java NIO基本介绍
+### 3.1、Java NIO基本介绍
 
 1. Java NIO全称Java non-blocking IO，是指JDK提供的新API。从JDK1.4开始，Java提供了一系列改进的输入/输出的新特性，被称为NIO(即New IO)，是**同步非阻塞**的。
 2. NIO相关类都被放在Java.nio包及子包下，并且对原java.io包中的很多类进行改写。
@@ -175,13 +175,13 @@ public class BIOServer {
 6. 通俗理解：NIO是可以做到用一个线程来处理多个操作的。假设有10000个请求过来，根据实际情况，可以分配50或者100个线程来处理。不像之前的阻塞IO那样，非得分配10000个。
 7. HTTP2.0使用了**多路复用技术**，做到同一个连接并发处理多个请求，而且并发请求的数量比HTTP1.1大了好几个数量级。
 
-## 3.2、NIO和BIO的比较
+### 3.2、NIO和BIO的比较
 
 1. BIO是以流的方式处理数据，而NIO以块的方式处理数据，块I/O的效率比流I/O高很多
 2. BIO是阻塞的，NIO则是非阻塞的
 3. BIO基于字节流和字符流进行操作，而NIO基于**Channel(通道)** 和 **Buffer(缓冲区)** 进行操作，`数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中`。Selector(选择器)用于监听多个通道的事件(比如；连接请求，数据到达等)，因此使用**单个线程就可以监听多个客户端**通道
 
-## 3.3、NIO三大核心原理示意图
+### 3.3、NIO三大核心原理示意图
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210908151106.png)
 
@@ -196,15 +196,15 @@ public class BIOServer {
 7. 数据的读取写入是通过Buffer，这个和BIO有本质的区别，BIO中要么是输入流，或者是输出流，不能双向，但是NIO的Buffer是可以读也可以写，需要flip方法切换
 8. Channel是双向的，可以返回底层操作系统的情况，比如Linux，底层的操作系统通道就是双向的
 
-## 3.4、缓冲区(Buffer)
+### 3.4、缓冲区(Buffer)
 
-### 3.4.1、基本介绍
+#### 3.4.1、基本介绍
 
 缓冲区(Buffer)：缓冲区本质上是一个**可以读写数据的内存块**，可以理解成是一个**容器对象(含数组)**，该对象提供了**一组方法**，可以更轻松地使用内存块，缓冲区对象内置了一些机制，能够跟踪和记录缓冲区的状态变化情况。Channel提供从文件、网络读取数据的渠道，但是读取或写入的数据都必须经由Buffer。如图：(后面举例说明)
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210908162426.png)
 
-### 3.4.2、Buffer类及其子类
+#### 3.4.2、Buffer类及其子类
 
 1. 在NIO中，Buffer是一个顶层父类，它是一个抽象类，类的层级关系图
 
@@ -223,15 +223,15 @@ public class BIOServer {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210908170155.png) 
 
-### 3.4.3、ByteBuffer
+#### 3.4.3、ByteBuffer
 
 从前面可以看出对于Java中的基本数据类型(boolean除外)，都有一个Buffer类型与之相对应，**最常用**的自然是ByteBuffer类(二进制数据)，该类的主要方法如下
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210908170707.png)
 
-## 3.5、通道(Channel)
+### 3.5、通道(Channel)
 
-### 3.5.1、基本介绍
+#### 3.5.1、基本介绍
 
 1. NIO的通道类似于流，但是有些区别如下
 	- 通道可以同时进行读写，而流只能读或者写
@@ -248,7 +248,7 @@ public class BIOServer {
 	- 当有一个连接产生的时候，我们Server中的`ServerSocketChannel`会产生一个与该客户端对应的通道，通道类型为`SocketChannel`，而其真实的实现类型为`SockerChannelImpl`，然后再通过该通道与服务器进行通讯
   5. FileChannel用于文件的数据读写，DatagramChannel用于UDP的数据读写，ServerSocketChannel和SocketChannel用于TCP的数据读写
 
-### 3.5.2、FileChannel类
+#### 3.5.2、FileChannel类
 
 FileChannel主要用来对本地文件进行IO操作，常见的方法有 
 
@@ -257,7 +257,7 @@ FileChannel主要用来对本地文件进行IO操作，常见的方法有
 3. `public long transferFrom(ReadableByteChannel src,long position,long count)` , 从目标通道中复制数据到当前通道
 4. `public long transferTo(long position,long count,WriteableByteChannel target)` , 把数据从当前通道复制给目标通道 
 
-### 3.5.3、应用实例1-本地文件写数据
+#### 3.5.3、应用实例1-本地文件写数据
 
 实例要求：
 1. 使用前面学习后的ByteBuffer(缓冲)和FileChannel(通道)，将"hello,韋"写入到file01.txt中
@@ -299,7 +299,7 @@ public class NIOFileChannel01 {
 }
 ~~~
 
-### 3.5.4、应用实例2-本地文件读写数据
+#### 3.5.4、应用实例2-本地文件读写数据
 
 实例要求：
 1. 使用前面学习后的ByteBuffer(缓冲)和FileChannel(通道)，将file01.txt中的数据读入到程序，并显示再控制台屏幕
@@ -336,7 +336,7 @@ public class NIOFileChannel02 {
 }
 ~~~
 
-### 3.5.5、应用实例3-使用一个Buffer完成文件读取、写入
+#### 3.5.5、应用实例3-使用一个Buffer完成文件读取、写入
 
 实例要求：
 1. 使用FIleChannel(通道)和方法read,write，完成文件的拷贝
@@ -388,7 +388,7 @@ public class NIOFileChannel03 {
 }
 ~~~
 
-### 3.5.6、应用实例4-拷贝文件transferFrom方法
+#### 3.5.6、应用实例4-拷贝文件transferFrom方法
 
 实例要求：
 1. 使用FileChannel(通道)和方法 transferFrom，完成文件的拷贝
@@ -422,7 +422,7 @@ public class NIOFileChannel04 {
 }
 ~~~
 
-### 3.5.7、关于Buffer和Channel的注意事项和细节
+#### 3.5.7、关于Buffer和Channel的注意事项和细节
 
 1. ByteBuffer支持类型化的put和get，put放入的是什么数据类型，get就应该使用响应的数据类型来取出，否则可能有BufferUnderflowException异常
 ~~~Java
@@ -596,15 +596,15 @@ public class ScatteringAndGatheringTest {
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210909171320.png)
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210909171205.png)
 
-## 3.6、Selector(选择器)
+### 3.6、Selector(选择器)
 
-### 3.6.1、基本介绍
+#### 3.6.1、基本介绍
 1. Java的NIO，用非阻塞的IO方式。可以用一个线程，处理多个的客户端连接，就会使用到**Selector(选择器)**
 2. **Selector能够检测到多个注册的通道上是否有事件发生(注意：多个Channel以事件的方式可以注册到同一个Selector)**，如果有事件发生，便获取事件然后针对每个事件进行相应的处理。这样就可以只用一个单线程去管理多个通道，也就是管理多个连接和请求。
 3. 只有在通道真正有读写事件发生时，才会进行读写，就大大的减少了系统开销，并且不必为每个连接都创建一个线程，不用去维护多个线程
 4. 避免了多线程之间的上下文切换导致的开销
 
-### 3.6.2、Selector示意图和特点说明
+#### 3.6.2、Selector示意图和特点说明
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210909174806.png)
 
 **特点再说明：**
@@ -614,7 +614,7 @@ public class ScatteringAndGatheringTest {
 4. 由于读写操作都是非阻塞的，这就可以充分提升IO线程的运行效率，避免由于频繁IO阻塞导致的线程挂起
 5. 一个IO线程可以并发处理N个客户端连接和读写操作，这从根本上解决了传统同步阻塞IO，一个连接一个线程模型，架构的性能、弹性伸缩能力和可靠性都得到了极大的提升。
 
-### 3.6.3、Selector类相关的方法
+#### 3.6.3、Selector类相关的方法
 
 Selector类是一个抽象类，常用方法和说明如下：
 
@@ -634,7 +634,7 @@ public abstract class Selector implements Closeable{
 		   selector.wakeup(); // 唤醒selector
 		   selector.selectNow(); // 不阻塞，立马返还
 
- ## 3.7、NIO非阻塞网络编程原理分析图
+ ### 3.7、NIO非阻塞网络编程原理分析图
  NIO非阻塞网络编程相关的(Selector、SelectionKey、ServerSocketChannel和SocketChannel)关系梳理图
  ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210909210151.png)
 
@@ -647,7 +647,7 @@ public abstract class Selector implements Closeable{
 6. 再通过SelectionKey反向获取`SocketChannel`，通过channel()方法
 7. 可以通过得到的`channel`，完成业务处理
 
-## 3.8、NIO非阻塞网络编程快速入门
+### 3.8、NIO非阻塞网络编程快速入门
 
 案例要求：
 1. 编写一个NIO入门案例，实现服务器端和客户端之间的数据简单通讯(非阻塞)
@@ -798,7 +798,7 @@ public class NIOClient {
 	行重复操作，因为当前的移除操作执行完毕后，当前该次循环也就结束了，当再次执行连接事件时，又会调用
 	selector.selectedKeys()函数获取key的集合，所以serverSocketChannel对应的key是一致的
 
-## 3.9、SelectionKey
+### 3.9、SelectionKey
 1. SelectionKey，表示**Selector和网络通道的注册关系**，共四种：
 	-	int OP_ACCEPT：有新的网络连接可以accept，值为16
 	-	int OP_CONNECT：代表连接已经建立，值为8
@@ -823,7 +823,7 @@ public abstract class SelectionKey {
 }
 ~~~
 
-## 3.10、ServerSocketChannel
+### 3.10、ServerSocketChannel
 
 1. ServerSocketChannel在**服务器端监听新的客户端Socket连接，产生一个SocketChannel**
 2. 相关方法
@@ -838,7 +838,7 @@ public abstract class ServerSocketChannel extends AbstractSelectableChannel impl
 }
 ~~~
 
-## 3.11、SocketChannel
+### 3.11、SocketChannel
 1. SocketChannel，网络IO通道，**具体负责进行读写操作**。NIO把缓冲区的数据写入通道，或者把通道里的数据读到缓冲区
 2. 相关方法
 
@@ -854,7 +854,7 @@ public abstract class SocketChannel extends AbstractSelectableChannel implements
 		public final void close();//关闭通道
 }
 ~~~
-## 3.12、NIO网络编程应用实例-群聊系统
+### 3.12、NIO网络编程应用实例-群聊系统
 
 实例要求：
 1. 编写一个搞NIO群聊系统，实现服务器端和客户端之间的数据简单通讯(非阻塞)
@@ -1114,23 +1114,23 @@ public class GroupChatClient {
 	注意：这里面得到一个通道时，记得设置为非阻塞模式；其次，这个里面的离线部分没理解清楚，参考B站一位评论
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210910212227.png)
 
-## 3.13、NIO与零拷贝
+### 3.13、NIO与零拷贝
 
-### 3.13.1、零拷贝基本介绍
+#### 3.13.1、零拷贝基本介绍
 1. 零拷贝是网络编程的关键，很多性能优化都离不开。
 2. 在Java程序中，常用的零拷贝有mmap(内存映射)和sendFile。那么，他们在OS里面，到底是怎么样的一个设计？我们分析mmap和sendFile这两个零拷贝
 3. 另外我们看下NIO中如何使用零拷贝
 
-### 3.13.2、传统IO
+#### 3.13.2、传统IO
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210910215929.png)
 
-### 3.13.3、mmap优化
+#### 3.13.3、mmap优化
 1. mmap**通过内存映射**，将文件映射到内核缓冲区，同时，用户空间可以共享内核空间的数据。这样，在进行网络传输时，就可以减少内核空间到用户控件的拷贝次数
 2. mmap示意图
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210910220324.png)
 
-### 3.13.4、sendFile优化
+#### 3.13.4、sendFile优化
 1. Linux2.1版本提供了sendFile函数，其基本原理如下：数据根本不经过用户态，直接从内核缓冲区进入到Socket Buffer，同时，由于和用户态完全无关，就减少了一次上下文切换
 2. 示意图和小结
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210910215124.png)
@@ -1141,24 +1141,24 @@ public class GroupChatClient {
 
 	注意：这里其实有一次CPU拷贝kernel buffer -> socket buffer，但是，拷贝的信息很少，比如length，offset，消耗低，可以忽略不计
 
-### 3.13.5、零拷贝的再次理解
+#### 3.13.5、零拷贝的再次理解
 1. 我们说零拷贝是从操作系统的角度来说的。因为内核缓冲器之间，没有数据是重复的(只有kernel buffer 有一份数据)
 2. 零拷贝不仅仅带来更少的数据复制，还能带来其它的性能又是，例如更少的上下文切换，更少的CPU缓存伪共享以及无CPU校验和计算
 
-### 3.13.6、mmap和sendFile的区别
+#### 3.13.6、mmap和sendFile的区别
 1. mmap适合小数据量读写，sendFile适合大文件传输
 2. mmap需要**4**次上下文切换，**3**次数据拷贝；sendFile需要**3**次上下文切换，**最少2**次数据拷贝
 3. sendFile可以利用DMA方式，减少CPU拷贝，mmap则不能(必须从内核拷贝到Socket缓冲区)
 
 
-## 3.14、零拷贝实例
+### 3.14、零拷贝实例
 
 案例要求：
 1. 使用传统的IO方法传递一个大文件
 2. 使用NIO零拷贝方式传递(transferTo)一个大文件
 3. 看看两种传递方式耗时时间分别是多少
 
-### 3.14.1、传统IO方式
+#### 3.14.1、传统IO方式
 
 **服务器端：**
 ~~~Java
@@ -1237,7 +1237,7 @@ public class OldIOClient {
 结果图：
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210911161411.png)
 
-### 3.14.2、transferTo
+#### 3.14.2、transferTo
 
 **服务器端：**
 ~~~Java
@@ -1315,12 +1315,12 @@ public class NewIOClient {
 结果图：
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210911161735.png)
 
-## 3.15、Java AIO基本介绍
+### 3.15、Java AIO基本介绍
 1. JDK7引入了Asynchronous I/O，即AIO。在进行I/O编程中，常用到两种模式：Reactor和Proactor。Java 的NIO就是Reactor，当有时间触发时，服务器端得到通知，进行相应的处理
 2. AIO即NIO2.0，叫做异步不阻塞的IO。即AIO引入异步通道的概念，采用了Proactor模式，简化了程序编写，有效的请求才启动线程，它的特点时先由操作系统完成后才通知服务端程序启动线程区处理，一般适用于连接数较多且连接时间较长的应用
 3. 目前AIO还没有广泛应用，Netty也是基于NIO，而不是AIO，因此我们就不详解AIO了，有兴趣的同学可以参考[Java新一代网络编程模型AIO原理及Linux系统AIO介绍](http://www.52im.net/thread-306-1-1.html)
 
-## 3.16、BIO、NIO、AIO对比表
+### 3.16、BIO、NIO、AIO对比表
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210911164234.png)
 
 **举例说明**
@@ -1328,15 +1328,15 @@ public class NewIOClient {
 2. **同步非阻塞**：到理发店理发，发现前面有其它人理发，给理发师说下，先干其它事情，一会过来看是否轮到自己
 3. **异步非阻塞**：给理发师打电话，让理发师上门服务，自己干其它事情，理发师自己来家给你理发
 
-# 4、Netty概述
+## 4、Netty概述
 
-## 4.1、原生NIO存在的问题
+### 4.1、原生NIO存在的问题
 1. NIO的类库和API复杂，使用麻烦：需要熟练掌握Selector、ServerSocketChannel、SocketChannel、ByteBuffer等
 2. 需要具备其它的额外技能：要熟悉Java多线程编程，因为NIO编程涉及到Reactor模式，你必须对多线程和网络编程非常熟悉，才能编写出高质量的NIO程序
 3. 开发工作量和难度都非常大：例如客户端面临断连重连、网络闪断、半包读写、失败缓存、网络拥塞和异常流的处理等等
 4. JDK NIO的BUG：例如臭名昭著的 Epoll Bug，它会导致Selector空轮询，最终导致CPU100%。直到JDK 1.7 版本该问题仍旧存在，没有被根本解决
 
-## 4.2、Netty官网说明
+### 4.2、Netty官网说明
 
 [Netty官网](https://netty.io/)
 
@@ -1344,7 +1344,7 @@ Netty is _an asynchronous event-driven network application framework_
 for rapid development of maintainable high performance protocol servers & clients.
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210911172202.png)
 
-## 4.3、Netty的优点
+### 4.3、Netty的优点
 
 Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 
@@ -1354,15 +1354,15 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 4. 安全：完整的SSL/TLS和StartTLS支持
 5. 社区活跃、不断更新、版本迭代周期端，发现的Bug可以被及时修复，同时，更多的性功能会被加入
 
-## 4.4、版本说明
+### 4.4、版本说明
 1. netty版本分别为netty3.x、netty4.x和netty5.x
 2. 因为netty5出现重大Bug，已经被官网废弃了，目前推荐使用的是Netty4.x的稳定版本
 3. 目前在官网可下载的版本netty3.x、netty4.0.x和netty4.1.x
 4. [Netty下载地址](https://github.com/netty/netty/releases)
 
-# 5、Netty高性能框架设计
+## 5、Netty高性能框架设计
 
-## 5.1、线程模型基本介绍
+### 5.1、线程模型基本介绍
 1. 不同的线程模式，对程序的性能有很大影响，为了搞清楚Netty线程模式，我们来系统的讲解下各个线程模式，最后看看Netty线程模型有什么优越性
 2. 目前存在的线程模型有：**传统阻塞I/O服务模型**、**Reactor模式**
 3. **根据Reactor的数量和处理资源池线程数量的不同，有三种典型的实现**
@@ -1371,24 +1371,24 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 	- 主从Reactor 多线程
 4. Netty线程模式(Netty主要基于**主从Reactor多线程模型**做了一定的改进，其中主从Reactor多线程模型有多个Reactor)
 
-## 5.2、传统阻塞I/O服务模型
+### 5.2、传统阻塞I/O服务模型
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210912095422.png)
-### 5.2.1、工作原理图
+#### 5.2.1、工作原理图
 
 黄色的框表示对象，蓝色的框表示线程，白色的框表示方法(API)
 
-### 5.2.2、模型特点
+#### 5.2.2、模型特点
 1. 采用阻塞IO模式获取输入的数据
 2. 每个连接都需要独立的线程完成数据的输入，业务处理，数据返回
 
-### 5.2.3、问题分析
+#### 5.2.3、问题分析
 1. 当并发数很大，就会创建大量的线程，占用很大系统资源
 2. 连接创建后，如果当前线程暂时没有数可读，该线程会阻塞在read操作，造成线程资源浪费
 
 
-## 5.3、Reactor模式
+### 5.3、Reactor模式
 
-### 5.3.1、针对传统阻塞I/O服务模型的2个缺点，解决方案
+#### 5.3.1、针对传统阻塞I/O服务模型的2个缺点，解决方案
 1. 基于I/O复用模型：多个连接公用一个阻塞对象，应用程序只需在一个阻塞对象等待，无需阻塞等待所有连接。当某个连接有新的数据可以处理时，操作系统通知应用程序，线程从阻塞状态返回，开始进行业务处理
 
 	Reactor 对应的叫法：1、反应器模式 2、分发者模式(Dispatcher) 3、通知者模式(notifier)
@@ -1402,23 +1402,23 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 	2. 服务器端程序处理传入的多个请求，并将他们同步分派到相应的处理线程，因此Reactor模式也叫Dispatcher模式
 	3. Reactor模式使用IO复用监听，收到事件后，分发给某个线程(进程)，这点就是网络服务器高并发处理关键
 
-### 5.3.2、Reactor模式中核心组成：
+#### 5.3.2、Reactor模式中核心组成：
 1. Reactor：Reactor在一个单独的线程中运行，负责监听和分发事件，分发给适当的处理程序来对IO事件做出反应。它就像公司的电话接线员，它接听来自客户的电话并将线路转移到适当的联系人
 2. Handlers：处理程序执行I/O事件要完成的实际事件，类似于客户想要与之交谈的公司中的实际官员。Reactor通过调度适当的处理程序来响应I/O事件，处理程序执行非阻塞操作
 
-### 5.3.3、Reactor模式分类：
+#### 5.3.3、Reactor模式分类：
 
 根据Reactor的数量和处理资源池线程数量的不同，有三种典型的实现
 - 单Reactor 单线程
 - 单Reactor 多线程
 - 主从Reactor 多线程
 
-## 5.4、单Reactor 单线程
+### 5.4、单Reactor 单线程
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210912110418.png)
 
 前面所写的NIO群聊系统就是一个单Reactor 单线程模式
 
-### 5.4.1、方案说明
+#### 5.4.1、方案说明
 1. Select是前面I/O复用模型介绍的标准网络编程API，可以实现应用程序通过一个阻塞对象监听多路连接请求
 2. Reactor对象通过Select监听客户端请求事件，收到事件后通过Dispatch进行分发
 3. 如果是建立连接请求事件，则由Acceptor通过Accept处理连接请求，然后创建一个Handler对象处理连接完成后的后续业务处理
@@ -1427,18 +1427,18 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 
 结合实例；服务器端用一个线程通过多路复用搞定所有的IO操作(包括连接、读、写等)，编码简单，清晰明了，但是如果客户端连接数量较多，将无法支撑，前面的NIO群聊系统就属于这种类型
 	
-### 5.4.2、方案优缺点分析
+#### 5.4.2、方案优缺点分析
 1. **优点**：模型简单，没有多线程、进行通信、竞争的问题，全部都在一个线程中完成
 2. **缺点**：性能问题，只有一个线程，无法完全发挥多核CPU的性能。Handler在处理某个连接上的业务时，整个进程无法处理其它连接事件，很容易导致性能瓶颈
 3. **缺点**：可靠性问题，线程意外终止，过着进入死循环，会导致整个系统通信模块不可以，不能接收和处理外部消息，造成节点故障
 4. **使用场景**：客户端的数量有限，业务处理非常快速，比如Redis在业务处理的时间复杂度O(1)的情况
 
-## 5.5、单Reactor 多线程
+### 5.5、单Reactor 多线程
 
 工作原理示意图：
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210912115652.png)
-### 5.5.1、方案说明：
+#### 5.5.1、方案说明：
 1. Reactor对象通过select监控客户端请求事件，收到事件后，通过Dispatch进行分发
 2. 如果是建立连接请求，则由Acceptor通过Accept处理连接请求，然后创建一个Handler对象处理完成连接后的各种事件
 3. 如果不是连接请求，则由Reactor分发调用连接对应的Handler来处理
@@ -1446,16 +1446,16 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 5. worker线程池会分配独立的线程完成真正的业务，并将结果返回给handler
 6. handler收到响应后，通过send将结果返回给client
 
-### 5.5.2、方案优缺点分析：
+#### 5.5.2、方案优缺点分析：
 1. **优点**：可以充分的利用多核CPU的处理能力
 2. **缺点**：多线程数据共享和访问比较复杂，Reactor处理所有事件的监听和响应，在单线程运行，在高并发场景容易出现性能瓶颈
 
-## 5.6、主从Reactor 多线程
+### 5.6、主从Reactor 多线程
 
 工作原理示意图：
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210912123810.png)
 
-### 5.6.1、方案说明：
+#### 5.6.1、方案说明：
 1. Reactor主线程MainReactor对象通过select监听事件，收到事件后，通过Acceptor处理连接事件
 2. 当Acceptor处理连接事件后，MainReactor将连接分配给SubReactor
 3. SubReactor将连接加入到连接队列进行监听，并创建handler进行各种事件处理
@@ -1466,14 +1466,14 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 8. **Reactor主线程可以对应多个Reactor子线程，即MainReactor可以关联多个SubReactor**
 
 
-### 5.6.2、方案优缺点说明
+#### 5.6.2、方案优缺点说明
 1.优点：父线程与子线程的数据交互简单职责明确，父线程只需要接收新连接，子线程完成后续的业务处理
 
 2.优点：父线程与子线程的数据交互简单，Reactor主线程只需要把新连接传给子线程，子线程无需返回数据
 
 3.缺点：编程复杂度较高
 		
-## 5.7、Reactor模式小结
+### 5.7、Reactor模式小结
 
 	1. 单Reactor 单线程，前台接待员和服务员是同一个人，全程为顾客服务
 	2. 单Reactor 多线程，1个前台接待员，多个服务员，接待员只负责接待
@@ -1485,9 +1485,9 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 3. 扩展性好，可以方便的通过增加Reactor实例个数来充分利用CPU资源
 4. 复用性好，Reactor模型本身与具体事件处理逻辑无关，具有很高的复用性？？？？？？
 
-## 5.8、Netty模型
+### 5.8、Netty模型
 
-### 5.8.1、工作原理示意图1-简单版
+#### 5.8.1、工作原理示意图1-简单版
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210912153424.png)
 
@@ -1495,13 +1495,13 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 2. 当接收到Accept事件后，获取对应的`SockerChannel`，进一步封装成`NIOSocketChannel`并注册到`WorkerGroup线程(事件循环)`，并进行维护
 3. 当WorkerGroup线程监听到注册到selector中的通道发生自己感兴趣的事件后，就进行处理(由handler处理)，**注意：handler已经加入到通道中了**
 
-### 5.8.2、工作原理示意图2-进阶版
+#### 5.8.2、工作原理示意图2-进阶版
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210912153853.png)
 
 	这里就很像我们之前的主从Reactor，BossGroup中有多个MainReactor
 	
-### 5.8.3、工作原理示意图3-详细版
+#### 5.8.3、工作原理示意图3-详细版
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210912161512.png)
 
 1. Netty抽象出两组线程池BossGroup：专门负责接收客户端的连接，WorkGroup：专门负责网络的读写
@@ -1519,7 +1519,7 @@ Netty对JDK自带的NIO的API进行了封装，解决了上述问题
 	3. 处理任务队列的任务，即runAllTasks
 8. 每个WorkerNioEventLoop处理业务时，会使用`pipeline(管道)`，`pipeline中包含了channel`，即通过pipeline可以获取到对应`通道`,管道中维护了很多的`处理器`
 
-### 5.8.4、Netty快速入门实例-TCP服务
+#### 5.8.4、Netty快速入门实例-TCP服务
 1. 实例要求：使用IDEA创建Netty项目
 2. Netty服务器在6668端口监听，客户端能发送消息给服务器"hello,服务器"
 3. 服务器可以回复消息给客户端"hello,客户器"
@@ -1731,7 +1731,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 }
 ~~~
 
-### 5.8.5、任务队列中的Task有3种典型使用场景
+#### 5.8.5、任务队列中的Task有3种典型使用场景
 1. 用户程序自定义的普通任务(使用线程睡眠来解释)
 ~~~Java
 @Override
@@ -1791,20 +1791,20 @@ ctx.channel()
 - 每个NioSocketChannel只会绑定在唯一的NioEventLoop上
 - 每个NioSocketChannel都会绑定有一个自己的ChannelPipeline
 
-## 5.9、异步模型
+### 5.9、异步模型
 
-### 5.9.1、基本介绍
+#### 5.9.1、基本介绍
 1. 异步的概念和同步相对。当一个异步过程调用发出后，调用者不能立刻得到结果。实际处理这个调用的组件在完成后，通过状态、通知和回调来通知调用者
 2. **Netty中的IO操作是异步的**，包括Bind、Write、Connect等操作会简单的返回一个ChannelFuture
 3. 调用者并不能立刻获得结果，而是通过Future-Listener机制，用户可以方便的主动获取或者通过通知机制获得IO操作结果
 4. Netty的异步模型是建立在future和callback之上的，callback就是回调。重点说Future，它的核心思想是：假设一个方法fun，计算过程可能非常耗时，等待fun返回显然不合适。那么可以在调用fun 的时候，立马返回一个Future，后续可以通过Future去监控方法fun的处理过程(即：Future-Listener机制)
 
-### 5.9.2、Future说明
+#### 5.9.2、Future说明
 1. 表示**异步的执行结果**，可以通过它提供的方法来检测执行是否完成
 2. ChannelFuture是一个接口：public interface ChannelFuture ,我们可以添加监听器，当监听的事件发生时，就会通知到监听器
 3. **案例说明**
 
-### 5.9.3、工作原理示意图
+#### 5.9.3、工作原理示意图
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210915183944.png)
 **说明:**
 1. 在使用Netty进行编程时，拦截操作和转换出入站数据只需要提供 callback 或利用 future 即可。这使得**链式操作**简单、高效，并有利于编写可重用的、通用的代码。
@@ -1812,7 +1812,7 @@ ctx.channel()
 
 
 
-### 5.9.4、Future-Listener机制
+#### 5.9.4、Future-Listener机制
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210915161318.png)
 
@@ -1836,7 +1836,7 @@ cf.addListener(new ChannelFutureListener() {
 	小结：相比传统阻塞I/O，执行I/O操作后线程会被阻塞住，直到操作完成；异步处理的好处是不会造成
 	线程阻塞，线程在I/O操作期间可以执行别的程序，在高并发情况下会更稳定和更高的吞吐量
 	
-## 5.10、快速入门实例-HTTP服务
+### 5.10、快速入门实例-HTTP服务
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210915183154.png)
 
 **服务器端**	
@@ -1967,8 +1967,8 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
 	当你有多个浏览器连接服务器时，每个连接对应的pipeline和handler都是唯一的、不一样的，不是公用一个pipeline和handler
 	浏览器刷新时也会产生一个新的pipeline和handler，这是因为http协议原因所导致的，与TCP协议还是有区别的
 	
-# 6、核心模块组件
-## 6.1、Bootstrap、ServerBootstrap
+## 6、核心模块组件
+### 6.1、Bootstrap、ServerBootstrap
 1. Bootstrap 意思是引导，一个 Netty 应用通常由一个 Bootstrap 开始，主要作用是配置整个 Netty 程序，串联各个组件，Netty中`Bootstrap` 类是`客户端程序`的启动引导类，`ServerBootstrap`是`服务端`启动引导类
 2. 常见的方法有
 	- public ServerBootstrap group(EventLoopGroup parentGroup, EventLoopGroup childGroup)，该方法用于服务器端，用来设置两个 EventLoop
@@ -1979,13 +1979,13 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
 	- public ServerBootstrap childHandler(ChannelHandler childHandler)，该方法用来设置业务处理类(自定义的 handler)
 	- public ChannelFuture bind(int inetPort) ，该方法用于服务器端，用来设置占用的端口号
 	- public ChannelFuture connect(String inetHost, int inetPort) ，该方法用于客户端，用来连接服务器端	
-## 6.2、Future、ChannelFuture
+### 6.2、Future、ChannelFuture
 1. **Netty 中所有的 IO 操作都是异步的**，不能立刻得知消息是否被正确处理。但是**可以过一会等它执行完成或者直接注册一个监听**，具体的实现就是通过`Future 和 ChannelFutures`，他们可以注册一个监听，当操作执行成功或失败时监听会自动触发注册的监听事件
 2. 常见的方法有
 	- Channel channel()，返回当前正在进行 IO 操作的通道
 	- ChannelFuture sync()，等待同步操作执行完毕
 
-## 6.3、Channel
+### 6.3、Channel
 1. Netty 网络通信的组件，能够用于执行网络 I/O 操作
 2. 通过Channel 可获得当前网络连接的通道的状态
 3. 通过Channel 可获得 网络连接的配置参数 （例如接收缓冲区大小）
@@ -1999,11 +1999,11 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
 	- NioSctpChannel，异步的客户端 Sctp 连接。
 	- NioSctpServerChannel，异步的 Sctp 服务器端连接，这些通道涵盖了 UDP 和 TCP 网络 IO 以及文件 IO。
 
-## 6.4、Selector
+### 6.4、Selector
 1. Netty 基于 Selector 对象实现 I/O 多路复用，通过 Selector 一个线程可以监听多个连接的 Channel 事件
 2. 当向一个 Selector 中注册 Channel 后，**Selector 内部的机制就可以自动不断地查询(Select) 这些注册的 Channel 是否有已就绪的 I/O 事件（例如可读，可写，网络连接完成等）**，这样程序就可以很简单地使用一个线程高效地管理多个 Channel 
 
-## 6.5、ChannelHandler 及其实现类
+### 6.5、ChannelHandler 及其实现类
 1. ChannelHandler 是一个接口，处理 I/O 事件或拦截 I/O 操作，并将其转发到其 ChannelPipeline(业务处理链)中的下一个处理程序
 2. ChannelHandler 本身并没有提供很多方法，因为这个接口有许多的方法需要实现，方便使用期间，可以继承它的子类
 3. **ChannelHandler 及其实现类一览图**
@@ -2059,7 +2059,7 @@ implements Channel InboundHandler {
 	}
 ~~~
 
-## 6.6、Pipeline和ChannelPipeline 
+### 6.6、Pipeline和ChannelPipeline 
 
 **ChannelPipeline 是一个重点：**
 
@@ -2073,7 +2073,7 @@ implements Channel InboundHandler {
 	- Channel Pipeline addFirst(ChannelHandler... handlers)，把一个业务处理类（handler）添加到链中的第一个位置
 	- Channel Pipeline addLast(ChannelHandler... handlers)，把一个业务处理类（handler）添加到链中的最后一个位置
 
-## 6.7、ChannelHandlerContext
+### 6.7、ChannelHandlerContext
 1. 保存 Channel 相关的所有上下文信息，同时关联一个 ChannelHandler 对象
 2. 即 ChannelHandlerContext 中包含一个具体的事件处理器 ChannelHandler ， 同时ChannelHandlerContext 中也绑定了对应的 pipeline 和 Channel 的信息，方便对 ChannelHandler进行调用
 3. 常用方法
@@ -2082,7 +2082,7 @@ implements Channel InboundHandler {
 	- ChannelFuture writeAndFlush(Object msg) ， 将数据写到 ChannelPipeline 中当前ChannelHandler 的下一个 ChannelHandler 开始处理 **(出站)**
 
  
-## 6.8、ChannelOption
+### 6.8、ChannelOption
 1. Netty 在创建 Channel 实例后,一般都需要设置 ChannelOption 参数
 2. ChannelOption 参数如下:
 	- **ChannelOption.SO_BACKLOG**
@@ -2090,7 +2090,7 @@ implements Channel InboundHandler {
 	- **ChannelOption.SO_KEEPALIVE**
 		- 一直保持连接活动状态
 
-## 6.9、EventLoopGroup 和其实现类 NioEventLoopGroup
+### 6.9、EventLoopGroup 和其实现类 NioEventLoopGroup
 1. EventLoopGroup 是一组 EventLoop 的抽象，Netty为了更好的利用多核 CPU 资源，一般会有多个 EventLoop 同时工作，每个 EventLoop 维护着一个Selector实例
 2. EventLoopGroup 提供 next 接口，可以从组里面按照一定规则获取其中一个 EventLoop来处理任务。在 Netty 服务器端编程中，我们一般都需要提供两个 EventLoopGroup，例如：BossEventLoopGroup 和 WorkerEventLoopGroup
 3. 通常一个服务端口即一个 ServerSocketChannel 对应一个 Selector 和一个 EventLoop 线程。BossEventLoopGroup 负责接收客户端的连接并将 SocketChannel 交给 WorkerEventLoopGroup 来进行 IO 处理，如下图所示
@@ -2102,7 +2102,7 @@ implements Channel InboundHandler {
 	- public NioEventLoopGroup()，构造方法
 	- public Future<> shutdownGracefully()，断开连接，关闭线程
 
- ## 6.10、Unpooled类
+ ### 6.10、Unpooled类
  1. Netty 提供一个专门用来`操作缓冲区`(**即Netty的数据容器**)的工具类
  2. 常用方法如下所示
 	~~~java 
@@ -2208,7 +2208,7 @@ public class NettyByteBuf02 {
 ~~~
 
 
-## 6.11、群聊系统升级
+### 6.11、群聊系统升级
 1. 编写一个 Netty 群聊系统，实现服务器端和客户端之间的数据简单通讯（非阻塞）
 2. 实现多人群聊
 3. 服务器端：可以监测用户上线，离线，并实现消息转发功能
@@ -2448,7 +2448,7 @@ public class GroupChatClientHandler extends SimpleChannelInboundHandler<String> 
 }
 ~~~
 
-## 6.12、Netty心跳检测机制案例
+### 6.12、Netty心跳检测机制案例
 
 实例要求：
 1. 编写一个 Netty心跳检测机制案例, 当服务器超过3秒没有读时，就提示读空闲
@@ -2558,7 +2558,7 @@ public class MyServerHandler extends ChannelInboundHandlerAdapter {
 ~~~
 
 
-## 6.13、Netty 通过WebSocket编程实现服务器和客户端长连接
+### 6.13、Netty 通过WebSocket编程实现服务器和客户端长连接
 
 实例要求：
 1. Http协议是无状态的, 浏览器和服务器间的请求响应一次，下一次会重新创建连接
@@ -2744,15 +2744,15 @@ public class MyTextWebSocketFrameHandler extends SimpleChannelInboundHandler<Tex
 </html>
 ~~~
 
-# 7、Google Protobuf
+## 7、Google Protobuf
 
-## 7.1、编码和解码的基本介绍
+### 7.1、编码和解码的基本介绍
 1. 编写网络应用程序时，因为数据在网络种传输的都是二进制字节码数据，在发送数据时就需要编码，接收数据时就需要解码
 2. codec(编解码器)的组成部分有两个：decoder(解码器)和encoder(编码器)。encoder负责把业务数据转换成字节码数据，decoder负责把字节码数据转换成业务数据
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210924174143.png)
 
-## 7.2、Netty 本身的编码解码的机制和问题分析
+### 7.2、Netty 本身的编码解码的机制和问题分析
 1. Netty 自身提供了一些 codec(编解码器)
 2. Netty 提供的编码器
 	- `StringEncoder`，对字符串数据进行编码
@@ -2767,9 +2767,9 @@ public class MyTextWebSocketFrameHandler extends SimpleChannelInboundHandler<Tex
 
 	=> 引出新的解决方案[Google的Protobuf]
 
- ## 7.3、Protobuf
+ ### 7.3、Protobuf
 
-### 7.3.1、Protobuf基本介绍和使用示意图
+#### 7.3.1、Protobuf基本介绍和使用示意图
 1. Protobuf 是 Google 发布的开源项目，全称 Google Protocol Buffers，是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 **RPC(远程过程调用  remote procedure call)数据交换格式**。
 	
 	目前很多公司 http+json -> tcp+protobuf
@@ -2783,7 +2783,7 @@ public class MyTextWebSocketFrameHandler extends SimpleChannelInboundHandler<Tex
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210924175929.png)
 
-## 7.4、Protobuf快速入门实例1
+### 7.4、Protobuf快速入门实例1
 
 编写程序，使用Protobuf完成如下功能
 1. 客户端可以发送一个Student  PoJo 对象到服务器 (通过 Protobuf 编码)
@@ -3732,7 +3732,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 }
 ~~~
 
-## 7.5、Protobuf快速入门实例2
+### 7.5、Protobuf快速入门实例2
 
 编写程序，使用Protobuf完成如下功能
 1. 客户端可以随机发送Student  PoJo/ Worker PoJo 对象到服务器 (通过 Protobuf 编码) 
@@ -6640,9 +6640,9 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 }
 ~~~
 
-# 8、Netty编解码器和handler的调用机制
+## 8、Netty编解码器和handler的调用机制
 
-## 8.1、基本说明
+### 8.1、基本说明
 1. netty的组件设计：Netty的主要组件有Channel、EventLoop、ChannelFuture、ChannelHandler、ChannelPipe等
 2. ChannelHandler充当了**处理入站和出站数据**的`应用程序逻辑的容器`。例如，实现`ChannelInboundHandler接口`（或ChannelInboundHandlerAdapter），你就可以接收`入站事件`和数据，这些数据会被业务逻辑处理。当要给客户端发送响应时，也可以从ChannelInboundHandler冲刷数据。业务逻辑通常写在一个或者多个ChannelInboundHandler中。`ChannelOutboundHandler`原理一样，只不过它是用来处理`出站数据`的
 3. ChannelPipeline提供了ChannelHandler链的容器。**以客户端应用程序为例**，如果事件的运动方向是`从客户端到服务端的`，那么我们称这些事件为`出站`的，即客户端发送给服务端的数据会通过pipeline中的一系列`ChannelOutboundHandler`，并被这些Handler处理，`反之则称为入站的`
@@ -6653,11 +6653,11 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 	出站对应编码，入站对应解码
 	出站对应写，入站对应读
 	
-## 8.2、编码解码器
+### 8.2、编码解码器
 1. 当Netty发送或者接受一个消息的时候，就将会发生一次数据转换。`入站消息会被解码`：从字节转换为另一种格式（比如java对象）；`如果是出站消息，它会被编码成字节`
 2. Netty提供一系列实用的编解码器，他们都实现了ChannelInboundHadnler或者ChannelOutboundHandler接口。在这些类中，channelRead方法已经被重写了。**以入站为例**，对于每个从入站Channel读取的消息，这个方法会被调用。随后，它将调用由解码器所提供的decode()方法进行解码，并将已经解码的字节转发给ChannelPipeline中的下一个ChannelInboundHandler
 
-## 8.3、解码器-ByteToMessageDecoder
+### 8.3、解码器-ByteToMessageDecoder
 1. 关系继承图
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210925112845.png)
@@ -6684,7 +6684,7 @@ Integer。在调用readInt()方法前必须验证所输入的ByteBuf是否具有
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210925112518.png)
 
-## 8.4、Netty的handler链的调用机制
+### 8.4、Netty的handler链的调用机制
 
 实例要求:  
 1. 使用自定义的编码器和解码器来说明Netty的handler 调用机制，客户端发送long -> 服务器，服务端发送long -> 客户端
@@ -6959,7 +6959,7 @@ public class MyClientHandler extends SimpleChannelInboundHandler<Long> {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210925161418.png)
 
-## 8.5、解码器-ReplayingDecoder
+### 8.5、解码器-ReplayingDecoder
 1. public abstract class ReplayingDecoder< S > extends ByteToMessageDecoder
 2. ReplayingDecoder扩展了ByteToMessageDecoder类，使用这个类，我们不必调用readableBytes()方法。**参数S指定了用户状态管理的类型，其中Void代表不需要状态管理**
 3. **应用实例**：使用ReplayingDecoder 编写解码器，对前面的案例进行简化 [案例演示]
@@ -6987,7 +6987,7 @@ public class MyByteToLongDecoder2 extends ReplayingDecoder<Void> {
 }
 ~~~
 	
-## 8.6、其它编解码器
+### 8.6、其它编解码器
 1. `LineBasedFrameDecoder`：这个类在Netty内部也有使用，它使用行尾控制字符（\n或者\r\n）作为分隔符来解析数据
 2. `DelimiterBasedFrameDecoder`：使用自定义的特殊字符作为消息的分隔符
 3. `HttpObjectDecoder`：一个HTTP数据的解码器
@@ -6995,9 +6995,9 @@ public class MyByteToLongDecoder2 extends ReplayingDecoder<Void> {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210925163347.png)
 
-# 9、TCP 粘包和拆包 及解决方案 
+## 9、TCP 粘包和拆包 及解决方案 
 
-## 9.1、TCP 粘包和拆包基本介绍
+### 9.1、TCP 粘包和拆包基本介绍
 1. TCP是`面向连接的`，`面向流的`，`提供高可靠性服务`。收发两端（客户端和服务器端）都要有一一成对的socket，因此，发送端为了将多个发给接收端的包，更有效的发给对方，使用了优化方法（Nagle算法），将多次间隔较小且数据量小的数据，合并成一个大的数据块，然后进行封包。这样做虽然提高了效率，但是接收端就难于分辨出完整的数据包了，**因为面向流的通信是无消息保护边界的**
 2. 由于TCP无消息保护边界, 需要在接收端处理消息边界问题，也就是我们所说的`粘包、拆包问题`, 看一张图
 3. TCP粘包、拆包图解
@@ -7010,7 +7010,7 @@ public class MyByteToLongDecoder2 extends ReplayingDecoder<Void> {
 3.  服务端分两次读取到了数据包，第一次读取到了完整的D1包和D2包的部分内容，第二次读取到了D2包的剩余内容，这称之为TCP拆包
 4.  服务端分两次读取到了数据包，第一次读取到了D1包的部分内容D1_1，第二次读取到了D1包的剩余部分内容D1_2和完整的D2包。
 
-## 9.2、TCP粘包和拆包案例
+### 9.2、TCP粘包和拆包案例
 
 在编写Netty 程序时，如果没有做处理，就会发生粘包和拆包的问题
 
@@ -7210,7 +7210,7 @@ public class MyClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210925213044.png)
 
-## 9.3、TCP粘包和拆包解决方案
+### 9.3、TCP粘包和拆包解决方案
 1. 使用自定义协议 + 编解码器 来解决
 2. 关键就是要解决 **服务器端每次读取数据长度的问题,** 这个问题解决，就不会出现服务器多读或少读数据的问题，从而避免的TCP 粘包、拆包
 
@@ -7509,21 +7509,21 @@ public class MyClientHandler extends SimpleChannelInboundHandler<MessageProtocol
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210925212618.png)
 
-# 10、Netty核心源码剖析
+## 10、Netty核心源码剖析
 
-## 10.1、基本说明
+### 10.1、基本说明
 1. 只有看过Netty源码，才能说是真的掌握了Netty框架
 2. 在 io.netty.example 包下，有很多Netty源码案例，可以用来分析
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210926102934.png)
 
-## 10.2、Netty 启动过程源码剖析
+### 10.2、Netty 启动过程源码剖析
 
-### 10.2.1、源码剖析目的
+#### 10.2.1、源码剖析目的
 
 用源码分析的方式走一下 Netty （服务器）的启动过程，更好的理解Netty 的整体设计和运行机制
 
-### 10.2.2、源码剖析
+#### 10.2.2、源码剖析
 
 **说明：**
 1. 源码需要剖析到Netty 调用doBind方法， 追踪到 NioServerSocketChannel的doBind
@@ -7531,9 +7531,9 @@ public class MyClientHandler extends SimpleChannelInboundHandler<MessageProtocol
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210926103200.png)
 
-### 10.2.3、源码剖析过程
+#### 10.2.3、源码剖析过程
 
-#### 1、demo源码的基本理解
+##### 1、demo源码的基本理解
 ~~~Java
 /*
  * Copyright 2012 The Netty Project
@@ -7662,7 +7662,7 @@ public final class EchoServer {
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210926110938.png)
 
-#### 2、服务器端处理器代码
+##### 2、服务器端处理器代码
 
 ~~~Java
 /*
@@ -7793,7 +7793,7 @@ protected MultithreadEventExecutorGroup(int nThreads, Executor executor,
 }
 ~~~
 
-#### 3、ServerBootstrap基本使用情况
+##### 3、ServerBootstrap基本使用情况
 
 ~~~Java
 ServerBootstrap b = new ServerBootstrap();
@@ -7821,11 +7821,11 @@ ServerBootstrap b = new ServerBootstrap();
 	4.handler方法传一个一个handler，这个handler只专属于ServerSocketChannel而不是SocketChannel
 	5.childHandler传入一个handler，这个handler将会在每个客户端连接的时候调用。供SocketChannel使用
 	
-#### 4、端口绑定的分析
+##### 4、端口绑定的分析
 
-##### 4.1、服务器就是在这个bind方法里面启动完成的
+###### 4.1、服务器就是在这个bind方法里面启动完成的
 
-##### 4.2、bind方法，追踪到创建了一个端口对象，并做了一些空判断，核心代码doBind
+###### 4.2、bind方法，追踪到创建了一个端口对象，并做了一些空判断，核心代码doBind
 
 ~~~Java
 /**
@@ -7840,7 +7840,7 @@ public ChannelFuture bind(SocketAddress localAddress) {
 }
 ~~~
 
-##### 4.3、doBind 源码剖析，核心是两个方法 initAndRefister 和 doBind()
+###### 4.3、doBind 源码剖析，核心是两个方法 initAndRefister 和 doBind()
 
 ~~~Java
 private ChannelFuture doBind(final SocketAddress localAddress) {
@@ -7884,7 +7884,7 @@ private ChannelFuture doBind(final SocketAddress localAddress) {
 }
 ~~~
 
-##### 4.4、分析说明 initAndRegister
+###### 4.4、分析说明 initAndRegister
 
 ~~~Java
 final ChannelFuture initAndRegister() {
@@ -7947,7 +7947,7 @@ final ChannelFuture initAndRegister() {
 	4.config().group().register(channel) 通过ServerBootstrap 的bossGroup 注册 NioServerSockerChannel
 	5.最后，返回这个异步执行的占位符即regFuture
 
-##### 4.5、init方法会调用 addLast，现在进入到 addLast方法内查看
+###### 4.5、init方法会调用 addLast，现在进入到 addLast方法内查看
 
 ~~~Java
 @Override
@@ -7996,7 +7996,7 @@ public final ChannelPipeline addLast(EventExecutorGroup group, String name, Chan
 	5.将Context 添加到链表中。也就是追加到 tail 节点的前面
 	6.最后，同步或者异步或者晚点异步的调用 callHandlerAdded0(newCtx) 方法
 	
-##### 4.6、前面说了 dobind 方法有两个重要的步骤，initAndRegister说完，解下来看 doBind0()方法，代码如下
+###### 4.6、前面说了 dobind 方法有两个重要的步骤，initAndRegister说完，解下来看 doBind0()方法，代码如下
 
 ~~~Java
 private static void doBind0(
@@ -8077,13 +8077,13 @@ protected void doBind(SocketAddress localAddress) throws Exception {
 
 4、回到 bind 方法，最后一步：safeSetSuccess(promise)，告诉promise 任务成功了。其可以执行监听器的方法了。**到此整个启动过程已经结束了**
 
-## 10.3、Netty接收请求过程源码剖析
+### 10.3、Netty接收请求过程源码剖析
 
-### 10.3.1、源码剖析目的
+#### 10.3.1、源码剖析目的
 1. 服务区启动后肯定要接受客户端请求并返回客户端想要的信息，下面源码分析Netty在启动之后是如何接受客户端请求的
 2. 在 io.netty.example下
 
-### 10.3.2、源码剖析
+#### 10.3.2、源码剖析
 1. 从之前服务器启动的源码中，我们得知，服务器最终注册了一个Accept事件等待客户端连接。我们也知道，NioServerSockerChannel 将自己注册到了boss 单例线程池(reactor线程)上，也就是EventLoop
 2. 简单说下EventLoop的逻辑
 	- EventLoop的作用是一个死循环，该循环中做三件事情
@@ -8343,7 +8343,7 @@ protected void doBeginRead() throws Exception {
 11、执行到这里，针对于这个客户端的连接就完成了，接下来就可以监听事件了
 	
 
-### 10.3.3、Netty接受请求过程
+#### 10.3.3、Netty接受请求过程
 
 **总体流程：**
 
@@ -8354,13 +8354,13 @@ protected void doBeginRead() throws Exception {
 3. 随后执行 `pipeline.fireChannelRead 方法`，`并将自己绑定到一个 chooser 选择器选择`的 workerGroup 中的一个 EventLoop。并且注册一个0，表示注册成功，但并没有注册读（1）事件
 
 
-## 10.4、Pipeline Handler HandlerContext创建源码剖析
+### 10.4、Pipeline Handler HandlerContext创建源码剖析
 
-### 10.4.1、源码剖析目的
+#### 10.4.1、源码剖析目的
 
 Netty 中的 `ChannelPipeline` 、 `ChannelHandler` 和 `ChannelHandlerContext` 是非常核心的组件, 我们从源码来分析Netty 是如何设计这三个核心组件的，并分析是如何创建和协调工作的
 
-### 10.4.2、源码剖析
+#### 10.4.2、源码剖析
 
 1、**ChannelPipeline 、 ChannelHandler 和 ChannelHandlerContext 介绍**
 
@@ -8568,20 +8568,20 @@ pipeline，一对一的关系，创建 pipeline 的时候也会创建 tail 节�
 给定的 handler 创建一个 Context，然后，将这个 Context 插入到链表的尾端(tail前面)
 ~~~
 
-### 10.4.3、Pipeline Handler HandlerContext 创建过程梳理
+#### 10.4.3、Pipeline Handler HandlerContext 创建过程梳理
 
 1. 每当创建 ChannelSocket 的时候都会创建一个绑定 pipeline，一对一的关系，创建 pipeline 的时候也会创建 tail 节点和 head 节点，形成最初的链表
 2. 在调用 pipeline 的 addLast 方法的时候，会根据给定的 handler 创建一个 Context，然后，将这个 Context 插入到链表的尾端(tail前面)
 3. Context 包装 handler，多个 Context 在 pipeline 中形成了双向链表
 4. 入站的方向叫 inbound，由 head 节点开始，出站的方法叫 outbound，由 tail 节点开始
 
-## 10.5、ChannelPipeline 调度 handler 的源码剖析
+### 10.5、ChannelPipeline 调度 handler 的源码剖析
 
-### 10.5.1、源码剖析的目的
+#### 10.5.1、源码剖析的目的
 1.  当一个请求进来的时候，ChannelPipeline 是如何调用内部的这些 handle 的呢？
 2.  首先，当一个请求进来的时候，会第一个调用 pipeline 的相关方法，如果是入站事件，这些方法由 `fire` 开头，表示管道的流动，让后面的 handler 继续处理
 
-### 10.5.2、源码剖析
+#### 10.5.2、源码剖析
 1. 当浏览器输入 http://localhost:8007/，可以看到会执行的handler
 2. 在 Debug 时，可以将断点下在 `DefaultChannelPipeline`类
 
@@ -8593,7 +8593,7 @@ public final ChannelPipeline fireChannelActive() {
 }
 ~~~
 
-### 10.5.3、源码分析
+#### 10.5.3、源码分析
 
 ~~~Java
 pipeline 的 inbound 的 fire 方法实现
@@ -8715,18 +8715,18 @@ public final ChannelFuture disconnect(ChannelPromise promise) {
 	2、然后，静态方法调用 Context 的 invoker 方法，而 invoker 方法内部会调用该 Context 所包含的 Handler 的真正 XXX 
 	方法，调用结束后，如果还需要继续往后传递，就调用 Context 的 fireXXX2 方法，循环往复
 
-### 10.5.4、Channel Pipeline 调度 handler 梳理
+#### 10.5.4、Channel Pipeline 调度 handler 梳理
 1. Context 包装 handler，多个 Context 在 pipeline 中形成了`双向链表`，`入站方向叫 inbound`，**由 head 节点开始**，`出站方法叫 outbound` ，**由 tail 节点开始**
 2. 而节点中间的传递通过 AbstractChannelHandlerContext 类内部的 `fire` 系列方法，找到当前节点的下一个节点不断的循环传播。是一个过滤器形式完成对handler 的调度
 
-## 10.6、Netty 心跳(heartbeat)服务源码剖析
+### 10.6、Netty 心跳(heartbeat)服务源码剖析
 1. 源码剖析目的
 	- Netty 作为一个网络框架，提供了诸多功能，比如编码解码等，Netty 还提供了非常重要的一个服务-----心跳机制heartbeat。通过心跳检查对方是否有效，这是 RPC 框架中是必不可少的功能。下面我们分析一下Netty内部心跳服务源码实现
 2. 源码剖析
 	- Netty 提供了 `IdleStateHandler` ，`ReadTimeoutHandler`，`WriteTimeoutHandler` 三个Handler 检测连接的有效性，**重点分析 IdleStateHandler**
 	- ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210928172415.png)
 
-### 10.6.1、IdleStateHandler 分析
+#### 10.6.1、IdleStateHandler 分析
 
 1. 4 个属性
 ~~~Java
@@ -8940,7 +8940,7 @@ private final class AllIdleTimeoutTask extends AbstractIdleTask {
 3、这里的时间计算是取读写事件中的最大值来的。然后像写事件一样，判断是否发生了写的慢的情况
 ~~~
 
-### 10.6.2、小结Netty的心跳机制
+#### 10.6.2、小结Netty的心跳机制
 
 1. IdleStateHandler 可以实现心跳功能，当服务器和客户端没有任何读写交互时，并超过了给定的时间，则会触发用户 handler 的 userEventTriggered 方法。用户可以在这个方法中尝试向对方发送消息，如果发送失败，则关闭连接
 2. IdleStateHandler 的实现基于 EventLoop 的定时任务，每次读写都会记录一个值，在定时任务运行的时候，通过计算当前时间、设置时间和上次事件发生时间的结果，来判断是否空闲 
@@ -8951,8 +8951,8 @@ private final class AllIdleTimeoutTask extends AbstractIdleTask {
 7. 还有一个注意的地方:就是 `ReadTimeoutHandler` ，**它继承自 IdleStateHandler，当触发读空闲事件的时候，就触发ctx.fireExceptionCaught 方法，并传入一个 ReadTimeoutException，然后关闭Socket**
 8. 而 `WriteTimeoutHandler` 的实现`不是基于 IdleStateHandler 的`，**他的原理是，当调用 write 方法的时候，会创建一个定时任务，任务内容是根据传入的 promise 的完成情况来判断是否超出了写的时间。当定时任务根据指定时间开始运行，发现 promise的 isDone方法返回false，表明还没有写完，说明超时了，则抛出异常。当 write方法完成后，会打断定时任务**
 
-## 10.7、Netty 核心组件 EventLoop 源码剖析
-### 10.7.1、源码剖析
+### 10.7、Netty 核心组件 EventLoop 源码剖析
+#### 10.7.1、源码剖析
 
 1. EventLoop 介绍
 
@@ -9313,9 +9313,9 @@ private void select(boolean oldWakenUp) throws IOException {
 	- 当 processSelectedKeys 方法执行结束后，则按照 ioRatio 的比例执行 runAllTasks方法，默认是IO 任务时间和非IO 任务时间是相同的，你也可以根据你的应用特点进行调优。比如非IO任务比较多，那么你就将 ioRatio 调小一点，这样非IO任务就能执行的长一点，防止队列积攒过多任务
 
 
-## 10.8、Handler 中加入线程池和 Context 中添加线程池的源码剖析
+### 10.8、Handler 中加入线程池和 Context 中添加线程池的源码剖析
 
-### 10.8.1、源码剖析目的
+#### 10.8.1、源码剖析目的
 1. 在Netty中做耗时的，不可预料的操作，比如数据库，网络请求，会严重影响Netty对Socket 的处理速度。
 2. 而解决方法就是将耗时任务添加到异步线程池中。但就添加线程池这步操作来讲，可以有2种方式，而且这2种方式实现的区别也蛮大的
 3. 处理耗时业务的第一种方式---handler中加入线程池
@@ -9323,7 +9323,7 @@ private void select(boolean oldWakenUp) throws IOException {
 5. 我们就来分析下两种方式
 
 
-### 10.8.2、第一种方式
+#### 10.8.2、第一种方式
 
 ~~~ java
 /*
@@ -9423,7 +9423,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 1. 解释一下上图，当 IO 线程轮询到一个 socket 事件，然后，IO 线程开始处理，当走到耗时 handler 的时候，将耗时任务交给业务线程池
 2. 当耗时任务执行完毕再执行 pipeline write 方法的时候，(代码中使用的是 context 的 write方法，上图画的是执行 pipeline 方法，是一个意思)会将这个任务交给IO线程
 
-### 10.8.3、write 方法的源码(在 AbstractChannelHandlerContext 类)
+#### 10.8.3、write 方法的源码(在 AbstractChannelHandlerContext 类)
 
 ~~~Java
 private void write(Object msg, boolean flush, ChannelPromise promise) {
@@ -9458,7 +9458,7 @@ Callable<Object>()在 handler中加入线程池，就会进入到 safeExecute(ex
 行耗时代码，看我准备好的案例即可)
 ~~~
 
-### 10.8.4、第二种方式
+#### 10.8.4、第二种方式
 
 ~~~Java
 static final EventExecutorGroup group = new DefaultEventExecutorGroup(2);
@@ -9512,13 +9512,13 @@ static void invokeChannelRead(final AbstractChannelHandlerContext next, Object m
 2、后面的整个流程就变成和第一个方式一样了
 ~~~
 
-### 10.8.5、两种方式的比较
+#### 10.8.5、两种方式的比较
 1. 第一种方式在 handler 中添加异步，`可能更加的自由`，比如如果需要访问数据库，那我就异步，如果不需要，就不异步，`异步会拖长接口响应时间`。因为需要将任务放进mpscTask 中。如果IO 时间很短，task 很多，能一个循环下来，都没时间执行整个task，导致响应时间达不到指标。
 2. 第二种方式是 Netty 标准方式(即加入到队列)，但是，这么做会将整个handler 都交给业务线程池。`不论耗时不耗时，都加入到队列里，不够灵活`。
 3. 各有优劣，从灵活性考虑，第一种较好
 
-# 11、用 Netty 自己实现 dubbo RPC
-## 11.1、RPC 基本介绍
+## 11、用 Netty 自己实现 dubbo RPC
+### 11.1、RPC 基本介绍
 1. `RPC（Remote Procedure Call）`— 远程过程调用，是一个计算机通信协议。该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程
 2. 两个或多个应用程序都分布在不同的服务器上，它们之间的调用都像是本地方法调用一样(如图)
 
@@ -9526,7 +9526,7 @@ static void invokeChannelRead(final AbstractChannelHandlerContext next, Object m
 
 2. 常见的 RPC 框架有: 比较知名的如阿里的Dubbo、google的g RPC、Go语言的rpcx、Apache的thrift， Spring 旗下的 Spring Cloud
 
-## 11.2、RPC调用流程
+### 11.2、RPC调用流程
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210929173608.png)
 
@@ -9545,13 +9545,13 @@ static void invokeChannelRead(final AbstractChannelHandlerContext next, Object m
 **小结：RPC 的目标就是将 2-8 这些步骤都封装起来，用户无需关心这些细节，可以像调
 用本地方法一样即可完成远程服务调用**
 
-## 11.3、自己实现 dubbo RPC (基于 Netty)
+### 11.3、自己实现 dubbo RPC (基于 Netty)
 
-### 11.3.1、需求说明
+#### 11.3.1、需求说明
 1. dubbo 底层使用了 Netty 作为网络通讯框架，要求用 Netty 实现一个简单的 RPC 框架
 2. 模仿 dubbo，`消费者和提供者约定接口和协议`，消费者远程调用提供者的服务，提供者返回一个字符串，消费者打印提供者返回的数据。底层网络通信使用 Netty 4.1.20
 
-### 11.3.2、设计说明
+#### 11.3.2、设计说明
 1. 创建一个接口，定义抽象方法。用于消费者和提供者之间的约定
 2. 创建一个提供者，该类需要监听消费者的请求，并按照约定返回数据
 3. 创建一个消费者，该类需要透明的调用自己不存在的方法，内部需要使用 Netty 请求提供者返回数据
@@ -9560,7 +9560,7 @@ static void invokeChannelRead(final AbstractChannelHandlerContext next, Object m
 
 	这个里面的难点在于代理对象的创建
 
-## 11.4、代码实现
+### 11.4、代码实现
 
 **公共接口**
 ~~~Java

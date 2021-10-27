@@ -240,7 +240,9 @@ META-INF/spring.factories：自动配置的核心文件
 </code></pre></td></tr></table>
 </div>
 </div><p><strong>所以，自动配置真正实现是从classpath中搜寻所有的<code>/META-INF/spring.factories</code>配置文件，并将其中对应的org.springframework.boot.autoconfigure.包下的配置项，通过反射实例化为对应标注了@Configuration的JavaConfig形式的IOC容器配置类，然后将这些都汇总成为一个实例并加载到IOC容器中</strong></p>
-<pre><code>结论：springboot所有的自动配置都是在启动的时候扫描并加载：`spring.factories`所有的的自动配置类都在这里，但是不一定生效，要判断条件是否成立，只要导入了对应的start就有对应的启动器了，有了启动器，我们自动装配就会生效，然后就配置成功！
+<pre><code>结论：springboot所有的自动配置都是在启动的时候扫描并加载：`spring.factories`所有的的自动配置类都在这里，但是不
+一定生效，要判断条件是否成立，只要导入了对应的start就有对应的启动器了，有了启动器，我们自动装配就会生效，然后
+就配置成功！
 </code></pre>
 <ul>
 <li>1、springboot在启动的时候，从类路径下<code>/META-INF/spring.factories</code>获取指定的值</li>

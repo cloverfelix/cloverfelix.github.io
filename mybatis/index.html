@@ -115,94 +115,110 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#11什么是mybatis">1.1、什么是Mybatis</a></li>
-    <li><a href="#12持久化持久化是一个动作">1.2、持久化（持久化是一个动作）</a></li>
-    <li><a href="#13持久层是一个概念">1.3、持久层（是一个概念）</a></li>
-    <li><a href="#14为什么需要mybatis">1.4、为什么需要Mybatis</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#21搭建环境">2.1、搭建环境</a></li>
-    <li><a href="#22创建一个模块">2.2、创建一个模块</a></li>
-    <li><a href="#23编写代码">2.3、编写代码</a></li>
-    <li><a href="#24测试">2.4、测试</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#31namespace">3.1、namespace</a></li>
-    <li><a href="#32select">3.2、select</a></li>
-    <li><a href="#33insert">3.3、Insert</a></li>
-    <li><a href="#34update">3.4、Update</a></li>
-    <li><a href="#35delete">3.5、delete</a></li>
-    <li><a href="#36万能map">3.6、万能Map</a></li>
-    <li><a href="#37思考题">3.7、思考题</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#41核心配置文件">4.1、核心配置文件</a></li>
-    <li><a href="#42环境配置environment">4.2、环境配置（environment）</a></li>
-    <li><a href="#43属性properties">4.3、属性（properties）</a></li>
-    <li><a href="#44类型别名typealiases">4.4、类型别名（typeAliases）</a></li>
-    <li><a href="#45设置">4.5、设置</a></li>
-    <li><a href="#46其它配置">4.6、其它配置</a></li>
-    <li><a href="#47映射器mappers">4.7、映射器（mappers）</a></li>
-    <li><a href="#48生命周期和作用域">4.8、生命周期和作用域</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#51问题">5.1、问题</a></li>
-    <li><a href="#52resultmap">5.2、resultMap</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#61日志工厂">6.1、日志工厂</a></li>
-    <li><a href="#62log4j">6.2、Log4j</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#71使用limit-分页">7.1、使用Limit 分页</a></li>
-    <li><a href="#72rowbounds分页">7.2、RowBounds分页</a></li>
-    <li><a href="#73分页插件">7.3、分页插件</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#81面向接口编程">8.1、面向接口编程</a></li>
-    <li><a href="#82使用注解开发">8.2、使用注解开发</a></li>
-    <li><a href="#83注解的crud">8.3、注解的CRUD</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#101按照查询嵌套处理">10.1、按照查询嵌套处理</a></li>
-    <li><a href="#102按照结果嵌套处理">10.2、按照结果嵌套处理</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#111按照结果嵌套查询推荐">11.1、按照结果嵌套查询（推荐）</a></li>
-    <li><a href="#112按照查询嵌套处理">11.2、按照查询嵌套处理</a></li>
-    <li><a href="#113小结">11.3、小结</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#121搭建环境">12.1、搭建环境</a></li>
-    <li><a href="#122if">12.2、IF</a></li>
-    <li><a href="#123choosewhenotherwise">12.3、choose（when,otherwise）</a></li>
-    <li><a href="#124trimwhereset">12.4、trim(where，set)</a></li>
-    <li><a href="#125sql片段">12.5、SQL片段</a></li>
-    <li><a href="#126foreach">12.6、Foreach</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#131简介">13.1、简介</a></li>
-    <li><a href="#132mybatis缓存">13.2、Mybatis缓存</a></li>
-    <li><a href="#133一级缓存">13.3、一级缓存</a></li>
-    <li><a href="#134二级缓存">13.4、二级缓存</a></li>
-    <li><a href="#135缓存原理">13.5、缓存原理</a></li>
-    <li><a href="#136自定义缓存-ehcache">13.6、自定义缓存-ehcache</a></li>
+    <li><a href="#1简介">1、简介</a>
+      <ul>
+        <li><a href="#11什么是mybatis">1.1、什么是Mybatis</a></li>
+        <li><a href="#12持久化持久化是一个动作">1.2、持久化（持久化是一个动作）</a></li>
+        <li><a href="#13持久层是一个概念">1.3、持久层（是一个概念）</a></li>
+        <li><a href="#14为什么需要mybatis">1.4、为什么需要Mybatis</a></li>
+      </ul>
+    </li>
+    <li><a href="#2第一个mybatis程序">2、第一个Mybatis程序</a>
+      <ul>
+        <li><a href="#21搭建环境">2.1、搭建环境</a></li>
+        <li><a href="#22创建一个模块">2.2、创建一个模块</a></li>
+        <li><a href="#23编写代码">2.3、编写代码</a></li>
+        <li><a href="#24测试">2.4、测试</a></li>
+      </ul>
+    </li>
+    <li><a href="#3crud">3、CRUD</a>
+      <ul>
+        <li><a href="#31namespace">3.1、namespace</a></li>
+        <li><a href="#32select">3.2、select</a></li>
+        <li><a href="#33insert">3.3、Insert</a></li>
+        <li><a href="#34update">3.4、Update</a></li>
+        <li><a href="#35delete">3.5、delete</a></li>
+        <li><a href="#36万能map">3.6、万能Map</a></li>
+        <li><a href="#37思考题">3.7、思考题</a></li>
+      </ul>
+    </li>
+    <li><a href="#4配置解析">4、配置解析</a>
+      <ul>
+        <li><a href="#41核心配置文件">4.1、核心配置文件</a></li>
+        <li><a href="#42环境配置environment">4.2、环境配置（environment）</a></li>
+        <li><a href="#43属性properties">4.3、属性（properties）</a></li>
+        <li><a href="#44类型别名typealiases">4.4、类型别名（typeAliases）</a></li>
+        <li><a href="#45设置">4.5、设置</a></li>
+        <li><a href="#46其它配置">4.6、其它配置</a></li>
+        <li><a href="#47映射器mappers">4.7、映射器（mappers）</a></li>
+        <li><a href="#48生命周期和作用域">4.8、生命周期和作用域</a></li>
+      </ul>
+    </li>
+    <li><a href="#5解决属性名和字段名不一致的问题">5、解决属性名和字段名不一致的问题</a>
+      <ul>
+        <li><a href="#51问题">5.1、问题</a></li>
+        <li><a href="#52resultmap">5.2、resultMap</a></li>
+      </ul>
+    </li>
+    <li><a href="#6日志">6、日志</a>
+      <ul>
+        <li><a href="#61日志工厂">6.1、日志工厂</a></li>
+        <li><a href="#62log4j">6.2、Log4j</a></li>
+      </ul>
+    </li>
+    <li><a href="#7分页">7、分页</a>
+      <ul>
+        <li><a href="#71使用limit-分页">7.1、使用Limit 分页</a></li>
+        <li><a href="#72rowbounds分页">7.2、RowBounds分页</a></li>
+        <li><a href="#73分页插件">7.3、分页插件</a></li>
+      </ul>
+    </li>
+    <li><a href="#8使用注解开发">8、使用注解开发</a>
+      <ul>
+        <li><a href="#81面向接口编程">8.1、面向接口编程</a></li>
+        <li><a href="#82使用注解开发">8.2、使用注解开发</a></li>
+        <li><a href="#83注解的crud">8.3、注解的CRUD</a></li>
+      </ul>
+    </li>
+    <li><a href="#9lombok">9、Lombok</a></li>
+    <li><a href="#10多对一处理">10、多对一处理</a>
+      <ul>
+        <li><a href="#101按照查询嵌套处理">10.1、按照查询嵌套处理</a></li>
+        <li><a href="#102按照结果嵌套处理">10.2、按照结果嵌套处理</a></li>
+      </ul>
+    </li>
+    <li><a href="#11一对多">11、一对多</a>
+      <ul>
+        <li><a href="#111按照结果嵌套查询推荐">11.1、按照结果嵌套查询（推荐）</a></li>
+        <li><a href="#112按照查询嵌套处理">11.2、按照查询嵌套处理</a></li>
+        <li><a href="#113小结">11.3、小结</a></li>
+      </ul>
+    </li>
+    <li><a href="#12动态sql">12、动态SQL</a>
+      <ul>
+        <li><a href="#121搭建环境">12.1、搭建环境</a></li>
+        <li><a href="#122if">12.2、IF</a></li>
+        <li><a href="#123choosewhenotherwise">12.3、choose（when,otherwise）</a></li>
+        <li><a href="#124trimwhereset">12.4、trim(where，set)</a></li>
+        <li><a href="#125sql片段">12.5、SQL片段</a></li>
+        <li><a href="#126foreach">12.6、Foreach</a></li>
+      </ul>
+    </li>
+    <li><a href="#13缓存了解">13、缓存（了解）</a>
+      <ul>
+        <li><a href="#131简介">13.1、简介</a></li>
+        <li><a href="#132mybatis缓存">13.2、Mybatis缓存</a></li>
+        <li><a href="#133一级缓存">13.3、一级缓存</a></li>
+        <li><a href="#134二级缓存">13.4、二级缓存</a></li>
+        <li><a href="#135缓存原理">13.5、缓存原理</a></li>
+        <li><a href="#136自定义缓存-ehcache">13.6、自定义缓存-ehcache</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h1 id="1简介">1、简介</h1>
-<h2 id="11什么是mybatis">1.1、什么是Mybatis</h2>
-<h2 id="12持久化持久化是一个动作">1.2、持久化（持久化是一个动作）</h2>
+            </div><div class="content" id="content"><h2 id="1简介">1、简介</h2>
+<h3 id="11什么是mybatis">1.1、什么是Mybatis</h3>
+<h3 id="12持久化持久化是一个动作">1.2、持久化（持久化是一个动作）</h3>
 <p><strong>数据持久化</strong></p>
 <ul>
 <li><strong>持久化就是将程序的数据在持久状态和瞬时状态转化的过程</strong></li>
@@ -215,22 +231,22 @@
 <ul>
 <li>另外一个原因也是内存太贵（外在原因）</li>
 </ul>
-<h2 id="13持久层是一个概念">1.3、持久层（是一个概念）</h2>
+<h3 id="13持久层是一个概念">1.3、持久层（是一个概念）</h3>
 <p>Dao层，Service层，Controller层&hellip;等每一个层都有它们自己要做的事情</p>
 <ul>
 <li>完成持久化工作的代码块</li>
 <li>层是界限十分明显</li>
 </ul>
-<h2 id="14为什么需要mybatis">1.4、为什么需要Mybatis</h2>
+<h3 id="14为什么需要mybatis">1.4、为什么需要Mybatis</h3>
 <ul>
 <li>帮助程序员将数据存入到数据库中</li>
 <li>方便</li>
 <li>传统的JDBC代码太复杂了。所以将其简化，出现一个框架</li>
 <li>不用Mybatis也可以。更容易上手。</li>
 </ul>
-<h1 id="2第一个mybatis程序">2、第一个Mybatis程序</h1>
+<h2 id="2第一个mybatis程序">2、第一个Mybatis程序</h2>
 <p>思路：搭建环境&ndash;&gt;导入Mybatis&ndash;&gt;编写代码&ndash;&gt;测试！</p>
-<h2 id="21搭建环境">2.1、搭建环境</h2>
+<h3 id="21搭建环境">2.1、搭建环境</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -318,7 +334,7 @@ INSERT INTO `user`(`id`,`name`,`pwd`) VALUES
     <span class="nt">&lt;/dependencies&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="22创建一个模块">2.2、创建一个模块</h2>
+</div><h3 id="22创建一个模块">2.2、创建一个模块</h3>
 <ul>
 <li>编写mybatis的核心配置文件</li>
 </ul>
@@ -445,7 +461,7 @@ INSERT INTO `user`(`id`,`name`,`pwd`) VALUES
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="23编写代码">2.3、编写代码</h2>
+</div><h3 id="23编写代码">2.3、编写代码</h3>
 <ul>
 <li>实体类</li>
 </ul>
@@ -608,7 +624,7 @@ INSERT INTO `user`(`id`,`name`,`pwd`) VALUES
 </code></pre></td></tr></table>
 </div>
 </div><p><strong>注意点：在使用resultType返回结果时，返回集合中的泛型，不要写集合</strong></p>
-<h2 id="24测试">2.4、测试</h2>
+<h3 id="24测试">2.4、测试</h3>
 <p>注意点：org.apache.ibatis.binding.BindingException: Type interface com.kuang.dao.UserDao is not known to the MapperRegistry.</p>
 <p><strong>MapperRegistry是什么？</strong></p>
 <p>核心配置文件中注册mappers</p>
@@ -766,10 +782,10 @@ INSERT INTO `user`(`id`,`name`,`pwd`) VALUES
 <li>写完实体类后写接口，最后写实体类，用mapper.xml代替了原来的Impl</li>
 </ul>
 <p>每次收到的HTTP请求（也就是连接我们的数据库），就可以打开一个SqlSession，返回一个响应，就关闭它。</p>
-<h1 id="3crud">3、CRUD</h1>
-<h2 id="31namespace">3.1、namespace</h2>
+<h2 id="3crud">3、CRUD</h2>
+<h3 id="31namespace">3.1、namespace</h3>
 <p>namespace中的包名要和Dao/mapper接口的包名一致！</p>
-<h2 id="32select">3.2、select</h2>
+<h3 id="32select">3.2、select</h3>
 <p>选择，查询语句</p>
 <ul>
 <li>id：就是对应的namespace中的方法名</li>
@@ -831,7 +847,7 @@ INSERT INTO `user`(`id`,`name`,`pwd`) VALUES
     <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="33insert">3.3、Insert</h2>
+</div><h3 id="33insert">3.3、Insert</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -846,7 +862,7 @@ INSERT INTO `user`(`id`,`name`,`pwd`) VALUES
 <span class="nt">&lt;/insert&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="34update">3.4、Update</h2>
+</div><h3 id="34update">3.4、Update</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -859,7 +875,7 @@ INSERT INTO `user`(`id`,`name`,`pwd`) VALUES
 <span class="nt">&lt;/update&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="35delete">3.5、delete</h2>
+</div><h3 id="35delete">3.5、delete</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -877,7 +893,7 @@ INSERT INTO `user`(`id`,`name`,`pwd`) VALUES
 <li>增删改需要提交事务，否则添加不进去（代码执行没问题，数据库里面不显示）</li>
 <li>resource绑定mapper，需要使用路径</li>
 </ul>
-<h2 id="36万能map">3.6、万能Map</h2>
+<h3 id="36万能map">3.6、万能Map</h3>
 <p>假设，我们的实体类，或者数据库中的表，字段或者参数过多，我们应当考虑使用Map！</p>
 <p><img
         class="lazyload"
@@ -891,7 +907,7 @@ INSERT INTO `user`(`id`,`name`,`pwd`) VALUES
 <p>对象传递参数，直接在sql中取对象的属性即可！【parameterType=&ldquo;Object&rdquo;】</p>
 <p>只有一个基本类型参数的情况下，可以直接在sql中取到！</p>
 <p>多个参数用Map，<strong>或者注解！</strong></p>
-<h2 id="37思考题">3.7、思考题</h2>
+<h3 id="37思考题">3.7、思考题</h3>
 <p>模糊查询</p>
 <p>​	1.Java代码执行的时候，传递通配符% %</p>
 <div class="highlight"><div class="chroma">
@@ -911,8 +927,8 @@ INSERT INTO `user`(`id`,`name`,`pwd`) VALUES
 <pre class="chroma"><code class="language-xml" data-lang="xml">select * from mybatis.user where name like &#34;%&#34;#{value}&#34;%&#34;
 </code></pre></td></tr></table>
 </div>
-</div><h1 id="4配置解析">4、配置解析</h1>
-<h2 id="41核心配置文件">4.1、核心配置文件</h2>
+</div><h2 id="4配置解析">4、配置解析</h2>
+<h3 id="41核心配置文件">4.1、核心配置文件</h3>
 <ul>
 <li>mybatis-config.xml</li>
 <li>MyBatis 的配置文件包含了会深深影响 MyBatis 行为的设置和属性信息。</li>
@@ -949,13 +965,13 @@ databaseIdProvider（数据库厂商标识）
 mappers（映射器）
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="42环境配置environment">4.2、环境配置（environment）</h2>
+</div><h3 id="42环境配置environment">4.2、环境配置（environment）</h3>
 <p>Mybatis可以配置成适应多种环境</p>
 <p><strong>不过要记住：尽管可以配置多个环境，但每个 SqlSessionFactory 实例只能选择一种环境。</strong></p>
 <p>transactionManager：事务管理器，分为JDBC与MANAGED</p>
 <p>dataSource：数据源，分为UNPOOLED、POOLED、JNDI；最重要的概念就是：<strong>池</strong>：拥有回收机制，即下次可以继续执行</p>
 <p>Mybatis默认的事务管理器就是JDBC，连接池：POOLED</p>
-<h2 id="43属性properties">4.3、属性（properties）</h2>
+<h3 id="43属性properties">4.3、属性（properties）</h3>
 <p>我们可以通过properties属性来实现引用配置文件</p>
 <p>这些属性可以在外部进行配置，并可以进行动态替换。你既可以在典型的 Java 属性文件中配置这些属性，也可以在 properties 元素的子元素中设置。【db.properties】</p>
 <p><img
@@ -1003,7 +1019,7 @@ password=xn123456
 <li>可以在其中增加一些属性配置</li>
 <li>如果两个文件有同一个字段，优先使用外部配置文件的！</li>
 </ul>
-<h2 id="44类型别名typealiases">4.4、类型别名（typeAliases）</h2>
+<h3 id="44类型别名typealiases">4.4、类型别名（typeAliases）</h3>
 <ul>
 <li>类型别名可为 Java 类型设置一个缩写名字。</li>
 <li>意在降低冗余的全限定类名书写。</li>
@@ -1051,7 +1067,7 @@ password=xn123456
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="o">{</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="45设置">4.5、设置</h2>
+</div><h3 id="45设置">4.5、设置</h3>
 <ul>
 <li>这是 MyBatis 中极为重要的调整设置，它们会改变 MyBatis 的运行时行为。</li>
 </ul>
@@ -1071,7 +1087,7 @@ password=xn123456
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601165347.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601165347.png" /></p>
-<h2 id="46其它配置">4.6、其它配置</h2>
+<h3 id="46其它配置">4.6、其它配置</h3>
 <ul>
 <li><a href="https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers" target="_blank" rel="noopener noreffer">typeHandlers（类型处理器）</a></li>
 <li><a href="https://mybatis.org/mybatis-3/zh/configuration.html#objectFactory" target="_blank" rel="noopener noreffer">objectFactory（对象工厂）</a></li>
@@ -1083,7 +1099,7 @@ password=xn123456
 </ul>
 </li>
 </ul>
-<h2 id="47映射器mappers">4.7、映射器（mappers）</h2>
+<h3 id="47映射器mappers">4.7、映射器（mappers）</h3>
 <p>MapperRegistry：绑定注册我们的Mapper文件</p>
 <p><img
         class="lazyload"
@@ -1142,7 +1158,7 @@ password=xn123456
 <li>接口和它的mapper配置文件必须同名</li>
 <li>接口和它的Mapper配置文件必须在同一个包下！</li>
 </ul>
-<h2 id="48生命周期和作用域">4.8、生命周期和作用域</h2>
+<h3 id="48生命周期和作用域">4.8、生命周期和作用域</h3>
 <p>生命周期和作用域是至关重要的，因为错误的使用会导致非常严重的<strong>并发问题</strong>。</p>
 <p><strong>SqlSessionFactoryBuilder：</strong></p>
 <ul>
@@ -1171,8 +1187,8 @@ password=xn123456
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601165423.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601165423.png" /></p>
 <p>这里面的每一个Mapper，就代表一个具体的业务！</p>
-<h1 id="5解决属性名和字段名不一致的问题">5、解决属性名和字段名不一致的问题</h1>
-<h2 id="51问题">5.1、问题</h2>
+<h2 id="5解决属性名和字段名不一致的问题">5、解决属性名和字段名不一致的问题</h2>
+<h3 id="51问题">5.1、问题</h3>
 <p>数据库中的字段</p>
 <p><img
         class="lazyload"
@@ -1235,7 +1251,7 @@ password=xn123456
 <span class="nt">&lt;/select&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="52resultmap">5.2、resultMap</h2>
+</div><h3 id="52resultmap">5.2、resultMap</h3>
 <p>结果集映射</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1270,8 +1286,8 @@ password=xn123456
 <li>ResultMap 的设计思想是，对简单的语句做到零配置，对于复杂一点的语句，只需要描述语句之间的关系就行了。</li>
 <li>ResultMap最优秀的地方在于，虽然你已经对它相当了解了，但是根本iju不需要显示地用到它们。</li>
 </ul>
-<h1 id="6日志">6、日志</h1>
-<h2 id="61日志工厂">6.1、日志工厂</h2>
+<h2 id="6日志">6、日志</h2>
+<h3 id="61日志工厂">6.1、日志工厂</h3>
 <p>如果一个数据库操作，出现了异常。日志就是最好的助手</p>
 <p>曾经：sout、debug</p>
 <p>现在：日志工厂！</p>
@@ -1302,7 +1318,7 @@ password=xn123456
 <span class="nt">&lt;/settings&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="62log4j">6.2、Log4j</h2>
+</div><h3 id="62log4j">6.2、Log4j</h3>
 <p>什么是log4j？</p>
 <ul>
 <li>Log4j是<a href="https://baike.baidu.com/item/Apache/8512995" target="_blank" rel="noopener noreffer">Apache</a>的一个开源项目，通过使用Log4j，我们可以控制日志信息输送的目的地是<a href="https://baike.baidu.com/item/%e6%8e%a7%e5%88%b6%e5%8f%b0/2438626" target="_blank" rel="noopener noreffer">控制台</a>、文件、<a href="https://baike.baidu.com/item/GUI" target="_blank" rel="noopener noreffer">GUI</a>组件</li>
@@ -1510,12 +1526,12 @@ User{id=3, name=&#39;威少&#39;, pwd=&#39;123456&#39;}
 </div>
 </div></li>
 </ol>
-<h1 id="7分页">7、分页</h1>
+<h2 id="7分页">7、分页</h2>
 <p><strong>思考：为什么要分页？</strong></p>
 <ul>
 <li>减少数据的处理量</li>
 </ul>
-<h2 id="71使用limit-分页">7.1、使用Limit 分页</h2>
+<h3 id="71使用limit-分页">7.1、使用Limit 分页</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -1611,7 +1627,7 @@ SELECT * from user limit 3; #类似于[0,n]
 </div>
 </div></li>
 </ol>
-<h2 id="72rowbounds分页">7.2、RowBounds分页</h2>
+<h3 id="72rowbounds分页">7.2、RowBounds分页</h3>
 <p>不再使用sql实现分页</p>
 <ol>
 <li>
@@ -1684,10 +1700,10 @@ SELECT * from user limit 3; #类似于[0,n]
 </div>
 </div></li>
 </ol>
-<h2 id="73分页插件">7.3、分页插件</h2>
+<h3 id="73分页插件">7.3、分页插件</h3>
 <p>了解即可，==Mybatis PageHelper==</p>
-<h1 id="8使用注解开发">8、使用注解开发</h1>
-<h2 id="81面向接口编程">8.1、面向接口编程</h2>
+<h2 id="8使用注解开发">8、使用注解开发</h2>
+<h3 id="81面向接口编程">8.1、面向接口编程</h3>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -1704,7 +1720,7 @@ SELECT * from user limit 3; #类似于[0,n]
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601165534.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601165534.png" /></p>
-<h2 id="82使用注解开发">8.2、使用注解开发</h2>
+<h3 id="82使用注解开发">8.2、使用注解开发</h3>
 <ol>
 <li>
 <p>注解直接在接口上实现</p>
@@ -1788,7 +1804,7 @@ SELECT * from user limit 3; #类似于[0,n]
 </code></pre>
 </li>
 </ol>
-<h2 id="83注解的crud">8.3、注解的CRUD</h2>
+<h3 id="83注解的crud">8.3、注解的CRUD</h3>
 <p>我们可以在工具类创建的时候自动提交事务</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1854,7 +1870,7 @@ SELECT * from user limit 3; #类似于[0,n]
 <li>如果只有一个基本类型的话，可以忽略，但是建议加上去</li>
 <li>我们在SQL中引用的就是我们这里的@Param()中设置的属性名</li>
 </ul>
-<h1 id="9lombok">9、Lombok</h1>
+<h2 id="9lombok">9、Lombok</h2>
 <p>使用步骤：</p>
 <ol>
 <li>
@@ -1896,7 +1912,7 @@ SELECT * from user limit 3; #类似于[0,n]
 @NoArgsConstructor：无参构造
 </code></pre></td></tr></table>
 </div>
-</div><h1 id="10多对一处理">10、多对一处理</h1>
+</div><h2 id="10多对一处理">10、多对一处理</h2>
 <p>多对一:</p>
 <p><img
         class="lazyload"
@@ -2005,7 +2021,7 @@ SELECT * from user limit 3; #类似于[0,n]
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="101按照查询嵌套处理">10.1、按照查询嵌套处理</h2>
+</div><h3 id="101按照查询嵌套处理">10.1、按照查询嵌套处理</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -2089,7 +2105,7 @@ SELECT * from user limit 3; #类似于[0,n]
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601165618.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601165618.png" /></p>
-<h2 id="102按照结果嵌套处理">10.2、按照结果嵌套处理</h2>
+<h3 id="102按照结果嵌套处理">10.2、按照结果嵌套处理</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -2141,7 +2157,7 @@ SELECT * from user limit 3; #类似于[0,n]
 <li>子查询</li>
 <li>联表查询（即第二种方法）</li>
 </ul>
-<h1 id="11一对多">11、一对多</h1>
+<h2 id="11一对多">11、一对多</h2>
 <p>比如：一个老师拥有多个学生</p>
 <p>对于老师而言，就是一对多的关系</p>
 <p>实体类：</p>
@@ -2183,7 +2199,7 @@ SELECT * from user limit 3; #类似于[0,n]
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="111按照结果嵌套查询推荐">11.1、按照结果嵌套查询（推荐）</h2>
+</div><h3 id="111按照结果嵌套查询推荐">11.1、按照结果嵌套查询（推荐）</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -2228,7 +2244,7 @@ SELECT * from user limit 3; #类似于[0,n]
 </div>
 </div><p><strong><code>注意点</code>：一对多，对于按<code>结果</code>查询使用collection时，如果是取出的一个个值，则					需使用ofType来指定其类型，而不使用JavaType</strong></p>
 <p><strong>而对于按<code>查询</code>嵌套使用collection时，我们取出的是一个集合，而不是一个个值，则需要使用JavaType来指定属性的对象类型，同时还得将泛型的信息使用ofType写上</strong></p>
-<h2 id="112按照查询嵌套处理">11.2、按照查询嵌套处理</h2>
+<h3 id="112按照查询嵌套处理">11.2、按照查询嵌套处理</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -2267,7 +2283,7 @@ SELECT * from user limit 3; #类似于[0,n]
 <span class="nt">&lt;/select&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="113小结">11.3、小结</h2>
+</div><h3 id="113小结">11.3、小结</h3>
 <pre><code>1. 关联--assocation   【多对一】
 2. 集合--collection       【一对多】
 3. JavaType        &amp;&amp;        ofType
@@ -2280,9 +2296,9 @@ SELECT * from user limit 3; #类似于[0,n]
 <li>注意一对多和多对一中，属性名和字段的问题</li>
 <li>如果问题不好排查错误，可以使用日志，建议使用Log4j</li>
 </ul>
-<h1 id="12动态sql">12、动态SQL</h1>
+<h2 id="12动态sql">12、动态SQL</h2>
 <p><strong>什么是动态SQL：动态SQL就是根据不同的条件生成不同的语句</strong></p>
-<h2 id="121搭建环境">12.1、搭建环境</h2>
+<h3 id="121搭建环境">12.1、搭建环境</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -2549,7 +2565,7 @@ SELECT * from user limit 3; #类似于[0,n]
 </div>
 </div></li>
 </ol>
-<h2 id="122if">12.2、IF</h2>
+<h3 id="122if">12.2、IF</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -2620,7 +2636,7 @@ SELECT * from user limit 3; #类似于[0,n]
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="123choosewhenotherwise">12.3、choose（when,otherwise）</h2>
+</div><h3 id="123choosewhenotherwise">12.3、choose（when,otherwise）</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -2661,7 +2677,7 @@ SELECT * from user limit 3; #类似于[0,n]
 </div>
 </div><p>**注意点：**使用<code>where</code>的时候，当条件成立的时候where会自动去除<code>and</code>或者<code>or</code></p>
 <p>使用<code>choose</code>时，当条件成立时，只会选择一个语句进行执行，其它语句则不执行，当所有语句都不成立时，则会使用<code>otherwise</code>中的语句；类似与switch-case，执行一个case后面有break，执行完就跳出</p>
-<h2 id="124trimwhereset">12.4、trim(where，set)</h2>
+<h3 id="124trimwhereset">12.4、trim(where，set)</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -2722,7 +2738,7 @@ SELECT * from user limit 3; #类似于[0,n]
 </div>
 </div><p><code>set元素会动态前置SET关键字，同时也会删掉无关的逗号</code></p>
 <p><strong>所谓的动态SQL，本质还是SQL语句，只是我们可以在SQL层面，去执行一个逻辑代码</strong></p>
-<h2 id="125sql片段">12.5、SQL片段</h2>
+<h3 id="125sql片段">12.5、SQL片段</h3>
 <p>有时候，我们可能会将一些功能的部分抽取出来，方便复用</p>
 <ol>
 <li>
@@ -2777,7 +2793,7 @@ SELECT * from user limit 3; #类似于[0,n]
 <li>最好基于单表来定义SQL片段（如果是多表查询会让其效率变低，公共部分的拼接就会很复杂）</li>
 <li>不要存在where标签</li>
 </ul>
-<h2 id="126foreach">12.6、Foreach</h2>
+<h3 id="126foreach">12.6、Foreach</h3>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -2823,8 +2839,8 @@ SELECT * from user limit 3; #类似于[0,n]
 <ul>
 <li>先在Mysql中写出完整的SQL，再对应的去修改成为我们的动态SQL实现通用即可</li>
 </ul>
-<h1 id="13缓存了解">13、缓存（了解）</h1>
-<h2 id="131简介">13.1、简介</h2>
+<h2 id="13缓存了解">13、缓存（了解）</h2>
+<h3 id="131简介">13.1、简介</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -2858,7 +2874,7 @@ SELECT * from user limit 3; #类似于[0,n]
 </ul>
 </li>
 </ol>
-<h2 id="132mybatis缓存">13.2、Mybatis缓存</h2>
+<h3 id="132mybatis缓存">13.2、Mybatis缓存</h3>
 <ul>
 <li>Mybatis包含一个非常强大的查询缓存特性，它可以非常方便的定制和配置缓存。缓存可以极大的提升查询效率</li>
 <li>Mybatis系统中默认定义了两级缓存：<strong>一级缓存</strong>和<strong>二级缓存</strong>
@@ -2869,7 +2885,7 @@ SELECT * from user limit 3; #类似于[0,n]
 </ul>
 </li>
 </ul>
-<h2 id="133一级缓存">13.3、一级缓存</h2>
+<h3 id="133一级缓存">13.3、一级缓存</h3>
 <p>一级缓存也叫本地缓存：SqlSession就是一个一级缓存</p>
 <ul>
 <li>与数据库同一次会话期间查询到的数据会放在本地缓存中。</li>
@@ -2970,7 +2986,7 @@ SELECT * from user limit 3; #类似于[0,n]
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210601165757.png" /></p>
 <p>小结：一级缓存默认是开启的，只在一次Sqlsession中有效，也就是拿到连接到关闭连接这个区间段！</p>
 <p><strong>一级缓存就是一个map</strong></p>
-<h2 id="134二级缓存">13.4、二级缓存</h2>
+<h3 id="134二级缓存">13.4、二级缓存</h3>
 <ul>
 <li>二级缓存也叫全局缓存，一级缓存作用域太低了，所以诞生了二级缓存</li>
 <li>基于namespace级别的缓存，一个名称空间，对应一个二级缓存</li>
@@ -3051,7 +3067,7 @@ SELECT * from user limit 3; #类似于[0,n]
 <li>所有的数据都会先放在一级缓存中</li>
 <li>只有当会话提交，或者关闭的时候，才会提交到二级缓存中！</li>
 </ul>
-<h2 id="135缓存原理">13.5、缓存原理</h2>
+<h3 id="135缓存原理">13.5、缓存原理</h3>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -3066,7 +3082,7 @@ SELECT * from user limit 3; #类似于[0,n]
 <li>再看一级缓存中有没有</li>
 <li>两个都没有，再去查数据库</li>
 </ol>
-<h2 id="136自定义缓存-ehcache">13.6、自定义缓存-ehcache</h2>
+<h3 id="136自定义缓存-ehcache">13.6、自定义缓存-ehcache</h3>
 <p>Ehcache是一种广泛使用的开源Java分布式缓存。主要面向通用缓存</p>
 <p>要在程序中使用Ehcache步骤</p>
 <ol>
