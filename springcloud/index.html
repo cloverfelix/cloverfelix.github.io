@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/springcloud\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  94428 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  94427 ,
         "url": "https:\/\/cloverfelix.github.io\/springcloud\/","datePublished": "2021-10-14T10:38:04+08:00","dateModified": "2021-10-14T10:38:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Springcloud</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/springcloud/"><i class="far fa-folder fa-fw"></i>SpringCloud</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 94428 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 94427 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 189 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -19153,9 +19153,11 @@ config {
 </code></pre></td></tr></table>
 </div>
 </div><p>~~</p>
+</li>
+</ol>
 <ul>
-<li>resources文件夹下新建mapper文件夹后添加</li>
-</ul>
+<li>
+<p>resources文件夹下新建mapper文件夹后添加</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -19212,8 +19214,17 @@ config {
 <span class="nt">&lt;/mapper&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">   
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<ol start="8">
 <li>
 <p>Service接口及实现</p>
 <div class="highlight"><div class="chroma">
@@ -19453,20 +19464,19 @@ config {
 <span class="nd">@RestController</span>
 <span class="nd">@Slf4j</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderController</span> <span class="o">{</span>
-    <span class="nd">@Resource</span>
-    <span class="kd">private</span> <span class="n">OrderService</span> <span class="n">orderService</span><span class="o">;</span>
+	<span class="nd">@Resource</span>
+	<span class="kd">private</span> <span class="n">OrderService</span> <span class="n">orderService</span><span class="o">;</span>
 
-    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;order/create&#34;</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">create</span><span class="o">(</span><span class="n">Order</span> <span class="n">order</span><span class="o">)</span>
-    <span class="o">{</span>
+	<span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;order/create&#34;</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">create</span><span class="o">(</span><span class="n">Order</span> <span class="n">order</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="n">orderService</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">order</span><span class="o">);</span>
         <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">200</span><span class="o">,</span><span class="s">&#34;创建订单成功&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>Config配置</p>
 <div class="highlight"><div class="chroma">

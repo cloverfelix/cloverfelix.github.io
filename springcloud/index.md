@@ -9854,7 +9854,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	}
 	~~~
 	
-	- resources文件夹下新建mapper文件夹后添加
+- resources文件夹下新建mapper文件夹后添加
 	
 	~~~xml
 	<?xml version="1.0" encoding="UTF-8" ?>
@@ -9979,7 +9979,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	}
 	~~~
 
-9. 编写Controller
+09. 编写Controller
 	~~~Java
 	package com.clover.springcloud.alibaba.controller;
 
