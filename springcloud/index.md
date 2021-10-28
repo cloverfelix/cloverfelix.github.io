@@ -4743,32 +4743,32 @@ eureka:
 			2. 编码
 				1. 业务实现：config
 
-				~~~Java
-				package com.clover.springcloud.config;
+					~~~Java
+					package com.clover.springcloud.config;
 
-				import org.springframework.cloud.gateway.route.RouteLocator;
-				import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
-				import org.springframework.context.annotation.Bean;
-				import org.springframework.context.annotation.Configuration;
+					import org.springframework.cloud.gateway.route.RouteLocator;
+					import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+					import org.springframework.context.annotation.Bean;
+					import org.springframework.context.annotation.Configuration;
 
-				@Configuration
-				public class GateWayConfig {
+					@Configuration
+					public class GateWayConfig {
 
-					/**
-					 * 配置了一个id为route-name的路由规则，
-					 * 当访问地址 http://localhost:9527/guonei时会自动转发到地址：http://news.baidu.com/guonei
-					 * @param routeLocatorBuilder
-					 * @return
-					 */
-					@Bean
-					public RouteLocator custom(RouteLocatorBuilder routeLocatorBuilder)
-					{
-						RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
-						routes.route("path_route_clover",r -> r.path("/guonei").uri("http://news.baidu.com/guonei")).build();
-						return routes.build();
+						/**
+						 * 配置了一个id为route-name的路由规则，
+						 * 当访问地址 http://localhost:9527/guonei时会自动转发到地址：http://news.baidu.com/guonei
+						 * @param routeLocatorBuilder
+						 * @return
+						 */
+						@Bean
+						public RouteLocator custom(RouteLocatorBuilder routeLocatorBuilder)
+						{
+							RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
+							routes.route("path_route_clover",r -> r.path("/guonei").uri("http://news.baidu.com/guonei")).build();
+							return routes.build();
+						}
 					}
-				}
-				~~~
+					~~~
 				
 ### 10.5、通过微服务名实现动态路由
 1. 默认情况下Gateway会根据注册中心注册的服务列表，以注册中心上微服务名为路径创建**动态路由进行转发，从而实现动态路由的功能**
@@ -5341,39 +5341,38 @@ eureka:
 3. 常用的GatewayFilter
 	- AddRequestParameter
 	
-	~~~yml
+		~~~yml
+		server:
+		  port: 9588
 
-	server:
-	  port: 9588
+		spring:
+		  application:
+			name: cloud-gateway
+		  cloud:
+			gateway:
+			  discovery:
+				locator:
+				  enabled: true #开启从注册中心动态创建路由的功能
+				  lower-case-service-id: true #使用小写服务名，默认是大写
+			  routes:
+				- id: payment_routh #payment_route #路由的ID，没有固定规则但要求唯一，建议配合服务名
+				  uri: lb://cloud-provider-payment #匹配后的目标服务地址，供服务的路由地址
+				  #uri: http://localhost:8001 #匹配后提供服务的路由地址
+				  filters:
+					- AddRequestParameter=X-Request-Id,1024 #过滤器工厂会在匹配的请求头加上一对请求头，名称为X-Request-Id值为1024
+				  predicates:
+					- Path=/paymentInfo/**        # 断言，路径相匹配的进行路由
+					- Method=GET,POST
 
-	spring:
-	  application:
-		name: cloud-gateway
-	  cloud:
-		gateway:
-		  discovery:
-			locator:
-			  enabled: true #开启从注册中心动态创建路由的功能
-			  lower-case-service-id: true #使用小写服务名，默认是大写
-		  routes:
-			- id: payment_routh #payment_route #路由的ID，没有固定规则但要求唯一，建议配合服务名
-			  uri: lb://cloud-provider-payment #匹配后的目标服务地址，供服务的路由地址
-			  #uri: http://localhost:8001 #匹配后提供服务的路由地址
-			  filters:
-				- AddRequestParameter=X-Request-Id,1024 #过滤器工厂会在匹配的请求头加上一对请求头，名称为X-Request-Id值为1024
-			  predicates:
-				- Path=/paymentInfo/**        # 断言，路径相匹配的进行路由
-				- Method=GET,POST
-
-	eureka:
-	  instance:
-		hostname: cloud-gateway-service
-	  client: #服务提供者provider注册进eureka服务列表内
-		service-url:
-		  register-with-eureka: true
-		  fetch-registry: true
-		  defaultZone: http://eureka7001.com:7001/eureka
-	~~~
+		eureka:
+		  instance:
+			hostname: cloud-gateway-service
+		  client: #服务提供者provider注册进eureka服务列表内
+			service-url:
+			  register-with-eureka: true
+			  fetch-registry: true
+			  defaultZone: http://eureka7001.com:7001/eureka
+		~~~
 	
 4. 自定义过滤器
 	- 自定义全局GlobalFilter
@@ -5382,6 +5381,7 @@ eureka:
 			- 全局日志记录
 			- 统一网关鉴权
 		- 案例代码
+		
 			~~~Java
 			package com.clover.springcloud.filter;
 
@@ -5419,6 +5419,7 @@ eureka:
 				}
 			}
 			~~~
+			
 		- 测试
 			- 正确：http://localhost:9527/payment/lb?uname=clover
 			- 错误
@@ -7810,6 +7811,7 @@ public class ConfigClientController {
 
 			INSERT INTO roles (username, role) VALUES ('nacos', 'ROLE_ADMIN');
 			~~~
+			
 		- nacos-server-1.1.4\nacos\conf目录下找到application.properties
 			~~~sql
 			spring.datasource.platform=mysql
@@ -7819,6 +7821,7 @@ public class ConfigClientController {
 			db.user=root
 			db.password=xn123456
 			~~~
+			
  3. 启动Nacos，可以看到是个全新的空记录界面，以前是记录进derby
 
 #### 16.5.3、Linux版Nacos+MySQL生产环境配置
@@ -7852,6 +7855,7 @@ public class ConfigClientController {
 		db.user=root
 		db.password=xn123456
 		~~~
+		
 3. Linux服务器上nacos的集群配置cluster.conf
 	1. **复制出cluster.conf作为备份，避免自己把数据玩坏了**
 	2. 内容：**这个IP不能写127.0.0.1，必须是Linux命令hostname -i能够识别的IP**
@@ -7880,24 +7884,24 @@ public class ConfigClientController {
 		
 		![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024172904.png)
 		
-		~~~xml
-		upstream cluster{
-				server 127.0.0.1:3333;
-				server 127.0.0.1:4444;
-				server 127.0.0.1:5555;
-			}
+	~~~xml
+	upstream cluster{
+			server 127.0.0.1:3333;
+			server 127.0.0.1:4444;
+			server 127.0.0.1:5555;
+		}
 
-		server {
-				listen       1111;
-				server_name  localhost;
-				#charset koi8-r;
-				#access_log  logs/host.access.log  main;
-				location / {
-					#root   html;
-					#index  index.html index.htm;
-					proxy_pass http://cluster;
-				}
-		~~~
+	server {
+			listen       1111;
+			server_name  localhost;
+			#charset koi8-r;
+			#access_log  logs/host.access.log  main;
+			location / {
+				#root   html;
+				#index  index.html index.htm;
+				proxy_pass http://cluster;
+			}
+	~~~
 	
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024173020.png)
 	

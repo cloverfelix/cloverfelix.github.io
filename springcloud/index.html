@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/springcloud\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  94014 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  94015 ,
         "url": "https:\/\/cloverfelix.github.io\/springcloud\/","datePublished": "2021-10-14T10:38:04+08:00","dateModified": "2021-10-14T10:38:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Springcloud</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/springcloud/"><i class="far fa-folder fa-fw"></i>SpringCloud</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 94014 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 94015 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 188 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -9088,14 +9088,11 @@ List [0] instances = 127.0.0.1:8002
 <ol>
 <li>自己写一个
 <ol>
-<li>
-<p>业务需求：通过9527网关访问到外网的百度新闻网址</p>
-</li>
-<li>
-<p>编码</p>
+<li>业务需求：通过9527网关访问到外网的百度新闻网址</li>
+<li>编码
 <ol>
-<li>业务实现：config</li>
-</ol>
+<li>
+<p>业务实现：config</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -9151,6 +9148,8 @@ List [0] instances = 127.0.0.1:8002
 </code></pre></td></tr></table>
 </div>
 </div><p>~~</p>
+</li>
+</ol>
 </li>
 </ol>
 </li>
@@ -10263,8 +10262,8 @@ eureka:
 <li>
 <p>常用的GatewayFilter</p>
 <ul>
-<li>AddRequestParameter</li>
-</ul>
+<li>
+<p>AddRequestParameter</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -10297,11 +10296,9 @@ eureka:
 </span><span class="lnt">28
 </span><span class="lnt">29
 </span><span class="lnt">30
-</span><span class="lnt">31
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="w">
-</span><span class="w"></span><span class="nt">server</span><span class="p">:</span><span class="w">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">9588</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
@@ -10333,21 +10330,34 @@ eureka:
 </span><span class="w">      </span><span class="nt">defaultZone</span><span class="p">:</span><span class="w"> </span><span class="l">http://eureka7001.com:7001/eureka</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">   
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
 </li>
 <li>
 <p>自定义过滤器</p>
 <ul>
 <li>自定义全局GlobalFilter
 <ul>
-<li>两个主要接口介绍：<strong>GlobalFilter,Ordered</strong></li>
-<li>能干嘛
+<li>
+<p>两个主要接口介绍：<strong>GlobalFilter,Ordered</strong></p>
+</li>
+<li>
+<p>能干嘛</p>
 <ul>
 <li>全局日志记录</li>
 <li>统一网关鉴权</li>
 </ul>
 </li>
-<li>案例代码
+<li>
+<p>案例代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -10426,12 +10436,15 @@ eureka:
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">           
+</code></pre></td></tr></table>
 </div>
 </div></li>
-<li>测试
+<li>
+<p>测试</p>
 <ul>
 <li>正确：http://localhost:9527/payment/lb?uname=clover</li>
 <li>错误
@@ -14484,16 +14497,19 @@ eureka:
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024111610.png" /></p>
 <h4 id="1652nacos持久化配置解释">16.5.2、Nacos持久化配置解释</h4>
 <ol>
-<li>Nacos默认自带的是嵌入式数据库derby
+<li>
+<p>Nacos默认自带的是嵌入式数据库derby</p>
 <ul>
 <li><a href="https://github.com/alibaba/nacos/blob/develop/config/pom.xml" target="_blank" rel="noopener noreffer">去Github源码的pom文件中查看</a></li>
 </ul>
 </li>
-<li>derby到mysql切换配置步骤
+<li>
+<p>derby到mysql切换配置步骤</p>
 <ul>
 <li>nacos-server-1.1.4\nacos\conf目录下找到sql脚本
 <ul>
-<li>nacos-mysql.sql
+<li>
+<p>nacos-mysql.sql</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">  1
@@ -14898,7 +14914,8 @@ eureka:
 </div>
 </div><p>~~</p>
 </li>
-<li>nacos-server-1.1.4\nacos\conf目录下找到application.properties
+<li>
+<p>nacos-server-1.1.4\nacos\conf目录下找到application.properties</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -14919,16 +14936,20 @@ eureka:
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">           
+</code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
 </li>
 </ul>
 </li>
-<li>启动Nacos，可以看到是个全新的空记录界面，以前是记录进derby</li>
+<li>
+<p>启动Nacos，可以看到是个全新的空记录界面，以前是记录进derby</p>
+</li>
 </ol>
 <h4 id="1653linux版nacosmysql生产环境配置">16.5.3、Linux版Nacos+MySQL生产环境配置</h4>
 <p>1、预计需要，1个Nginx+3个nacos注册中心+1个mysql</p>
@@ -15074,6 +15095,8 @@ eureka:
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024172904.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024172904.png" /></p>
+</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -15113,8 +15136,6 @@ server {
 </code></pre></td></tr></table>
 </div>
 </div><p>~~</p>
-</li>
-</ol>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
