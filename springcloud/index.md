@@ -9284,7 +9284,7 @@ public class OrderNacosMain84 {
 
 **一句话**：`一次业务操作需要跨多个数据源或需要跨多个系统进行远程调用，就会产生分布式事务问题`
 
-### 18.2、 Seata简介
+### 18.2、Seata简介
 
 #### 18.2.1、Seata是什么？
 
@@ -9452,9 +9452,10 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 下订单->减库存->扣余额->改(订单)状态
 
 #### 18.5.2、新建订单Order-Module
-1. 新建seata-order-service2001
+
+01. 新建seata-order-service2001
 02. 修改POM
-	~~~pom
+	~~~xml
 	<?xml version="1.0" encoding="UTF-8"?>
 	<project xmlns="http://maven.apache.org/POM/4.0.0"
 			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -10097,9 +10098,10 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 
 
 #### 18.5.3、新建库存Storage-Module
-1. 新建seata-storage-service2002
+
+01. 新建seata-storage-service2002
 02. 修改POM
-	~~~pom
+	~~~xml
 	<?xml version="1.0" encoding="UTF-8"?>
 	<project xmlns="http://maven.apache.org/POM/4.0.0"
 			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -10599,9 +10601,10 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	~~~
 
 #### 18.5.4、新建账户Account-Module
-1. 新建seata-account-service2003
+
+01. 新建seata-account-service2003
 02. 修改POM
-	~~~pom
+	~~~xml
 	<?xml version="1.0" encoding="UTF-8"?>
 	<project xmlns="http://maven.apache.org/POM/4.0.0"
 			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
