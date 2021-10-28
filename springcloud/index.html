@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/springcloud\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  94427 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  94358 ,
         "url": "https:\/\/cloverfelix.github.io\/springcloud\/","datePublished": "2021-10-14T10:38:04+08:00","dateModified": "2021-10-14T10:38:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Springcloud</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/springcloud/"><i class="far fa-folder fa-fw"></i>SpringCloud</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 94427 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 94358 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 189 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -7860,10 +7860,14 @@ List [0] instances = 127.0.0.1:8002
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211020112949.png" /></p>
 <p>混合在一起，每个业务方法都要提供一个</p>
 <ul>
-<li>修改cloud-consumer-feign-hystrix-order80</li>
-<li>根据cloud-consumer-feign-hystrix-order80已经有的PaymentHystrixService接口，重新新建一个类(<strong>PaymentFallbackService</strong>)实现该接口，<strong>统一为接口里面的方法进行异常处理</strong></li>
-<li>PaymentFallbackService类实现PaymentFeignClientService接口</li>
-</ul>
+<li>
+<p>修改cloud-consumer-feign-hystrix-order80</p>
+</li>
+<li>
+<p>根据cloud-consumer-feign-hystrix-order80已经有的PaymentHystrixService接口，重新新建一个类(<strong>PaymentFallbackService</strong>)实现该接口，<strong>统一为接口里面的方法进行异常处理</strong></p>
+</li>
+<li>
+<p>PaymentFallbackService类实现PaymentFeignClientService接口</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -7902,10 +7906,15 @@ List [0] instances = 127.0.0.1:8002
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<ul>
-<li>PaymentFeignClientService接口</li>
-</ul>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>PaymentFeignClientService接口</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -7946,9 +7955,15 @@ List [0] instances = 127.0.0.1:8002
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<ul>
-<li>测试
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>测试</p>
 <ul>
 <li>单个eureka先启动7001</li>
 <li>PaymentHystrixMain8001启动</li>
@@ -9088,8 +9103,11 @@ List [0] instances = 127.0.0.1:8002
 <ol>
 <li>自己写一个
 <ol>
-<li>业务需求：通过9527网关访问到外网的百度新闻网址</li>
-<li>编码
+<li>
+<p>业务需求：通过9527网关访问到外网的百度新闻网址</p>
+</li>
+<li>
+<p>编码</p>
 <ol>
 <li>
 <p>业务实现：config</p>
@@ -9131,24 +9149,23 @@ List [0] instances = 127.0.0.1:8002
 <span class="nd">@Configuration</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">GateWayConfig</span> <span class="o">{</span>
 
-    <span class="cm">/**
+	<span class="cm">/**
 </span><span class="cm">     * 配置了一个id为route-name的路由规则，
 </span><span class="cm">     * 当访问地址 http://localhost:9527/guonei时会自动转发到地址：http://news.baidu.com/guonei
 </span><span class="cm">     * @param routeLocatorBuilder
 </span><span class="cm">     * @return
 </span><span class="cm">     */</span>
-    <span class="nd">@Bean</span>
-    <span class="kd">public</span> <span class="n">RouteLocator</span> <span class="nf">custom</span><span class="o">(</span><span class="n">RouteLocatorBuilder</span> <span class="n">routeLocatorBuilder</span><span class="o">)</span>
-    <span class="o">{</span>
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="n">RouteLocator</span> <span class="nf">custom</span><span class="o">(</span><span class="n">RouteLocatorBuilder</span> <span class="n">routeLocatorBuilder</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="n">RouteLocatorBuilder</span><span class="o">.</span><span class="na">Builder</span> <span class="n">routes</span> <span class="o">=</span> <span class="n">routeLocatorBuilder</span><span class="o">.</span><span class="na">routes</span><span class="o">();</span>
         <span class="n">routes</span><span class="o">.</span><span class="na">route</span><span class="o">(</span><span class="s">&#34;path_route_clover&#34;</span><span class="o">,</span><span class="n">r</span> <span class="o">-&gt;</span> <span class="n">r</span><span class="o">.</span><span class="na">path</span><span class="o">(</span><span class="s">&#34;/guonei&#34;</span><span class="o">).</span><span class="na">uri</span><span class="o">(</span><span class="s">&#34;http://news.baidu.com/guonei&#34;</span><span class="o">)).</span><span class="na">build</span><span class="o">();</span>
         <span class="k">return</span> <span class="n">routes</span><span class="o">.</span><span class="na">build</span><span class="o">();</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 </ol>
 </li>
 </ol>
@@ -11025,13 +11042,12 @@ eureka:
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>修改YML，暴露监控端口</p>
 <div class="highlight"><div class="chroma">
@@ -11047,13 +11063,12 @@ eureka:
 <pre class="chroma"><code class="language-yml" data-lang="yml"><span class="c"># 暴露监控端点</span><span class="w">
 </span><span class="w"></span><span class="nt">management</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">endpoints</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">web</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">web</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">exposure</span><span class="p">:</span><span class="w">
 </span><span class="w">        </span><span class="nt">include</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;*&#34;</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>业务类Controller上加 <strong>@RefreshScope注解</strong></p>
 </li>
@@ -12123,12 +12138,11 @@ Spring Cloud Stream 为一些供应商的消息中间件产品提供了个性化
 <pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.service</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MyMessageProvider</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">send</span><span class="o">();</span>
+	<span class="kd">public</span> <span class="n">String</span> <span class="nf">send</span><span class="o">();</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>发送消息接口实现类</p>
 <div class="highlight"><div class="chroma">
@@ -12174,21 +12188,20 @@ Spring Cloud Stream 为一些供应商的消息中间件产品提供了个性化
 <span class="nd">@EnableBinding</span><span class="o">(</span><span class="n">Source</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="c1">// 可以理解为是一个消息的发送管道的定义
 </span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyMessageProviderImpl</span> <span class="kd">implements</span> <span class="n">MyMessageProvider</span> <span class="o">{</span>
 
-    <span class="nd">@Resource</span>
-    <span class="kd">private</span> <span class="n">MessageChannel</span> <span class="n">output</span><span class="o">;</span><span class="c1">// 消息的发送管道
+	<span class="nd">@Resource</span>
+	<span class="kd">private</span> <span class="n">MessageChannel</span> <span class="n">output</span><span class="o">;</span><span class="c1">// 消息的发送管道
 </span><span class="c1"></span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">send</span><span class="o">()</span> <span class="o">{</span>
+	<span class="nd">@Override</span>
+	<span class="kd">public</span> <span class="n">String</span> <span class="nf">send</span><span class="o">()</span> <span class="o">{</span>
         <span class="n">String</span> <span class="n">serial</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
         <span class="k">this</span><span class="o">.</span><span class="na">output</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">MessageBuilder</span><span class="o">.</span><span class="na">withPayload</span><span class="o">(</span><span class="n">serial</span><span class="o">).</span><span class="na">build</span><span class="o">());</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;*********sreial：&#34;</span> <span class="o">+</span> <span class="n">serial</span><span class="o">);</span>
         <span class="k">return</span> <span class="n">serial</span><span class="o">;</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>Controller</p>
 <div class="highlight"><div class="chroma">
@@ -12226,19 +12239,18 @@ Spring Cloud Stream 为一些供应商的消息中间件产品提供了个性化
 <span class="nd">@RestController</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">SendMessageController</span> <span class="o">{</span>
 
-    <span class="nd">@Resource</span>
-    <span class="kd">private</span> <span class="n">MyMessageProvider</span> <span class="n">myMessageProvider</span><span class="o">;</span>
+	<span class="nd">@Resource</span>
+	<span class="kd">private</span> <span class="n">MyMessageProvider</span> <span class="n">myMessageProvider</span><span class="o">;</span>
 
-    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/sendMessage&#34;</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">send</span><span class="o">()</span>
-    <span class="o">{</span>
+	<span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/sendMessage&#34;</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="n">String</span> <span class="nf">send</span><span class="o">()</span>
+	<span class="o">{</span>
         <span class="k">return</span> <span class="n">myMessageProvider</span><span class="o">.</span><span class="na">send</span><span class="o">();</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 </ol>
 <p>6、测试</p>
 <ul>
@@ -13226,13 +13238,12 @@ eureka:
 <td class="lntd">
 <pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--包含了sleuth+zipkin--&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-zipkin<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-zipkin<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -13247,17 +13258,16 @@ eureka:
 <td class="lntd">
 <pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">spring</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-payment-service</span><span class="w">
+</span><span class="w">	</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-payment-service</span><span class="w">
 </span><span class="w">  </span><span class="nt">zipkin</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">base-url</span><span class="p">:</span><span class="w"> </span><span class="l">http://localhost:9411</span><span class="w">
+</span><span class="w">	</span><span class="nt">base-url</span><span class="p">:</span><span class="w"> </span><span class="l">http://localhost:9411</span><span class="w">
 </span><span class="w">  </span><span class="nt">sleuth</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">sampler</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">sampler</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="c">#采样率值介于 0 到 1 之间，1 则表示全部采集</span><span class="w">
 </span><span class="w">     </span><span class="nt">probability</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p>~</p>
-</li>
+</div></li>
 <li>
 <p>服务消费者(调用方)：cloud-consumer-order80</p>
 <div class="highlight"><div class="chroma">
@@ -13271,13 +13281,12 @@ eureka:
 <td class="lntd">
 <pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--包含了sleuth+zipkin--&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-zipkin<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-zipkin<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -13299,8 +13308,7 @@ eureka:
 </span><span class="w">    </span><span class="nt">probability</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p>~</p>
-</li>
+</div></li>
 <li>
 <p>依次启动eureka7001/8001/80</p>
 <ul>
@@ -15013,8 +15021,7 @@ eureka:
 <span class="n">db</span><span class="p">.</span><span class="n">password</span><span class="o">=</span><span class="n">xn123456</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 </ol>
 </li>
 <li>
@@ -15113,7 +15120,7 @@ eureka:
         server 127.0.0.1:3333;
         server 127.0.0.1:4444;
         server 127.0.0.1:5555;
-    }
+	}
 
 server {
         listen       1111;
@@ -15127,8 +15134,7 @@ server {
         }
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<p><img
+</div><p><img
         class="lazyload"
         src="/svg/loading.min.svg"
         data-src="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024173020.png"
@@ -15177,8 +15183,11 @@ server {
 </ol>
 <p>4、测试</p>
 <ul>
-<li>微服务cloudalibaba-provider-payment9002启动注册进nacos集群</li>
-<li>修改YML
+<li>
+<p>微服务cloudalibaba-provider-payment9002启动注册进nacos集群</p>
+</li>
+<li>
+<p>修改YML</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -15221,12 +15230,16 @@ server {
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">   
+</code></pre></td></tr></table>
 </div>
 </div></li>
-<li>结果</li>
+<li>
+<p>结果</p>
+</li>
 </ul>
 <p>5、高可用小总结</p>
 <p><img
@@ -15677,16 +15690,16 @@ server {
 </ul>
 <h5 id="17422关联">17.4.2.2、关联</h5>
 <ol>
-<li>关联是什么？</li>
-</ol>
+<li>
+<p>关联是什么？</p>
 <ul>
 <li>当关联的资源达到阈值时，就限流自己</li>
 <li>当与A关联的资源B达到阀值后，就限流A自己</li>
 <li>B惹事，A挂了</li>
 </ul>
-<ol start="2">
-<li>配置A</li>
-</ol>
+</li>
+<li>
+<p>配置A</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -15698,9 +15711,12 @@ server {
 <ul>
 <li>设置效果：当关联资源/testB的QPS阀值超过1时，就限流/testA的Rest访问地址，<strong>当关联资源到阈值后限制配置好的资源名</strong></li>
 </ul>
-<ol start="3">
-<li>postman模拟并发密集访问testB</li>
-<li>运行后发现testA挂了
+</li>
+<li>
+<p>postman模拟并发密集访问testB</p>
+</li>
+<li>
+<p>运行后发现testA挂了</p>
 <ul>
 <li>点击访问：http://localhost:8401/testA</li>
 <li>结果：<strong>Blocked by Sentinel (flow limiting)</strong></li>
@@ -15852,8 +15868,8 @@ server {
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026104702.png" /></p>
 <h5 id="17522测试">17.5.2.2、测试</h5>
 <ol>
-<li>代码</li>
-</ol>
+<li>
+<p>代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -15869,14 +15885,14 @@ server {
 <pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/testD&#34;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="n">String</span> <span class="nf">testD</span><span class="o">()</span>
 <span class="o">{</span>
-    <span class="c1">//暂停几秒钟线程
-</span><span class="c1"></span>    <span class="k">try</span> <span class="o">{</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1</span><span class="o">);</span> <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span> <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span> <span class="o">}</span>
-    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;testD 测试RT&#34;</span><span class="o">);</span>
-    <span class="k">return</span> <span class="s">&#34;------testD&#34;</span><span class="o">;</span>
+	<span class="c1">//暂停几秒钟线程
+</span><span class="c1"></span>	<span class="k">try</span> <span class="o">{</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1</span><span class="o">);</span> <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span> <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span> <span class="o">}</span>
+	<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;testD 测试RT&#34;</span><span class="o">);</span>
+	<span class="k">return</span> <span class="s">&#34;------testD&#34;</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><ol start="2">
+</div></li>
 <li>
 <p>配置</p>
 <p><img
@@ -15940,17 +15956,16 @@ server {
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java">    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/testD&#34;</span><span class="o">)</span>
+<pre class="chroma"><code class="language-Java" data-lang="Java">	<span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/testD&#34;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="n">String</span> <span class="nf">testD</span><span class="o">()</span>
 <span class="o">{</span>
-    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;testD 测试RT&#34;</span><span class="o">);</span>
-    <span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="n">10</span><span class="o">/</span><span class="n">0</span><span class="o">;</span>
-    <span class="k">return</span> <span class="s">&#34;------testD&#34;</span><span class="o">;</span>
+	<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;testD 测试RT&#34;</span><span class="o">);</span>
+	<span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="n">10</span><span class="o">/</span><span class="n">0</span><span class="o">;</span>
+	<span class="k">return</span> <span class="s">&#34;------testD&#34;</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>配置</p>
 <p><img
@@ -16009,13 +16024,12 @@ server {
 <pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/testE&#34;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="n">String</span> <span class="nf">testE</span><span class="o">()</span>
 <span class="o">{</span>
-    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;testE 测试异常数&#34;</span><span class="o">);</span>
-    <span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="n">10</span><span class="o">/</span><span class="n">0</span><span class="o">;</span>
-    <span class="k">return</span> <span class="s">&#34;------testE 测试异常数&#34;</span><span class="o">;</span>
+	<span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;testE 测试异常数&#34;</span><span class="o">);</span>
+	<span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="n">10</span><span class="o">/</span><span class="n">0</span><span class="o">;</span>
+	<span class="k">return</span> <span class="s">&#34;------testE 测试异常数&#34;</span><span class="o">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>配置</p>
 <p><img
@@ -16192,14 +16206,13 @@ server {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span><span class="c">&lt;!-- 引入自己定义的api通用包，可以使用Payment支付Entity --&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>cloud-api-commons<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>${project.version}<span class="nt">&lt;/version&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>cloud-api-commons<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;version&gt;</span>${project.version}<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>增加一个业务类：RateLimitController
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -16238,21 +16251,20 @@ server {
 
 <span class="nd">@RestController</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">RateLimitController</span> <span class="o">{</span>
-    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/byResource&#34;</span><span class="o">)</span>
-    <span class="nd">@SentinelResource</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;byResource&#34;</span><span class="o">,</span><span class="n">blockHandler</span> <span class="o">=</span> <span class="s">&#34;handleException&#34;</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">byResource</span><span class="o">()</span>
-    <span class="o">{</span>
+	<span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/byResource&#34;</span><span class="o">)</span>
+	<span class="nd">@SentinelResource</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;byResource&#34;</span><span class="o">,</span><span class="n">blockHandler</span> <span class="o">=</span> <span class="s">&#34;handleException&#34;</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">byResource</span><span class="o">()</span>
+	<span class="o">{</span>
         <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">200</span><span class="o">,</span><span class="s">&#34;按资源名称限流测试OK&#34;</span><span class="o">,</span><span class="k">new</span> <span class="n">Payment</span><span class="o">(</span><span class="n">2020L</span><span class="o">,</span><span class="s">&#34;serial001&#34;</span><span class="o">));</span>
-    <span class="o">}</span>
-    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">handleException</span><span class="o">(</span><span class="n">BlockException</span> <span class="n">exception</span><span class="o">)</span>
-    <span class="o">{</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">handleException</span><span class="o">(</span><span class="n">BlockException</span> <span class="n">exception</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">444</span><span class="o">,</span><span class="n">exception</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getCanonicalName</span><span class="o">()+</span><span class="s">&#34;\t 服务不可用&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 </ol>
 </li>
 <li>
@@ -16309,15 +16321,14 @@ server {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/rateLimit/byUrl&#34;</span><span class="o">)</span>
-    <span class="nd">@SentinelResource</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;byUrl&#34;</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">byUrl</span><span class="o">()</span>
-    <span class="o">{</span>
+	<span class="nd">@SentinelResource</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;byUrl&#34;</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">byUrl</span><span class="o">()</span>
+	<span class="o">{</span>
         <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">200</span><span class="o">,</span><span class="s">&#34;按url限流测试OK&#34;</span><span class="o">,</span><span class="k">new</span> <span class="n">Payment</span><span class="o">(</span><span class="n">2020L</span><span class="o">,</span><span class="s">&#34;serial002&#34;</span><span class="o">));</span>
-    <span class="o">}</span>	
+	<span class="o">}</span>	
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>访问一次 ：http://localhost:8401/rateLimit/byUrl</p>
 </li>
@@ -16378,18 +16389,17 @@ server {
 <span class="kn">import</span> <span class="nn">com.clover.springcloud.entities.CommonResult</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomerBlockHandler</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">CommonResult</span> <span class="nf">handleException</span><span class="o">(</span><span class="n">BlockException</span> <span class="n">exception</span><span class="o">){</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="n">CommonResult</span> <span class="nf">handleException</span><span class="o">(</span><span class="n">BlockException</span> <span class="n">exception</span><span class="o">){</span>
         <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">2020</span><span class="o">,</span><span class="s">&#34;自定义的限流处理信息......CustomerBlockHandler---handleException&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">CommonResult</span> <span class="nf">handleException2</span><span class="o">(</span><span class="n">BlockException</span> <span class="n">exception</span><span class="o">){</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="n">CommonResult</span> <span class="nf">handleException2</span><span class="o">(</span><span class="n">BlockException</span> <span class="n">exception</span><span class="o">){</span>
         <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">2020</span><span class="o">,</span><span class="s">&#34;自定义的限流处理信息......CustomerBlockHandler---handleException2&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>启动微服务后先调用一次</p>
 <ul>
@@ -16511,17 +16521,17 @@ server {
 <span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
          <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
          <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;parent&gt;</span>
+	<span class="nt">&lt;parent&gt;</span>
         <span class="nt">&lt;artifactId&gt;</span>SpringCloud<span class="nt">&lt;/artifactId&gt;</span>
         <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
         <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
-    <span class="nt">&lt;/parent&gt;</span>
-    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+	<span class="nt">&lt;/parent&gt;</span>
+	<span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
 
-    <span class="nt">&lt;artifactId&gt;</span>cloud-alibaba-provider-payment9003<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>cloud-alibaba-provider-payment9003<span class="nt">&lt;/artifactId&gt;</span>
 
 
-    <span class="nt">&lt;dependencies&gt;</span>
+	<span class="nt">&lt;dependencies&gt;</span>
         <span class="c">&lt;!--SpringCloud ailibaba nacos --&gt;</span>
         <span class="nt">&lt;dependency&gt;</span>
             <span class="nt">&lt;groupId&gt;</span>com.alibaba.cloud<span class="nt">&lt;/groupId&gt;</span>
@@ -16552,12 +16562,11 @@ server {
             <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
             <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
         <span class="nt">&lt;/dependency&gt;</span>
-    <span class="nt">&lt;/dependencies&gt;</span>
+	<span class="nt">&lt;/dependencies&gt;</span>
 <span class="nt">&lt;/project&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>编写YML：记得修改不同的端口号
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -16584,21 +16593,20 @@ server {
 </span><span class="w">
 </span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nacos-payment-provider</span><span class="w">
+</span><span class="w">	</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nacos-payment-provider</span><span class="w">
 </span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">nacos</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">nacos</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">discovery</span><span class="p">:</span><span class="w">
 </span><span class="w">        </span><span class="nt">server-addr</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:8848</span><span class="w"> </span><span class="c">#配置Nacos地址</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="nt">management</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">endpoints</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">web</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">web</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">exposure</span><span class="p">:</span><span class="w">
 </span><span class="w">        </span><span class="nt">include</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;*&#39;</span><span class="w">		
 </span></code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>编写主启动类
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -16627,15 +16635,14 @@ server {
 <span class="nd">@SpringBootApplication</span>
 <span class="nd">@EnableDiscoveryClient</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentMain9003</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
-    <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">PaymentMain9003</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
-    <span class="o">}</span> 
+	<span class="o">}</span> 
 <span class="o">}</span>		
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>编写业务类
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -16687,37 +16694,39 @@ server {
 
 <span class="nd">@RestController</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentController</span> <span class="o">{</span>
-    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${server.port}&#34;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">serverPort</span><span class="o">;</span>
+	<span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${server.port}&#34;</span><span class="o">)</span>
+	<span class="kd">private</span> <span class="n">String</span> <span class="n">serverPort</span><span class="o">;</span>
 
-    <span class="c1">// 模拟一个数据库的操作
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Payment</span><span class="o">&gt;</span> <span class="n">hashMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
-    <span class="kd">static</span>
-    <span class="o">{</span>
+	<span class="c1">// 模拟一个数据库的操作
+</span><span class="c1"></span>	<span class="kd">public</span> <span class="kd">static</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Payment</span><span class="o">&gt;</span> <span class="n">hashMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+	<span class="kd">static</span>
+	<span class="o">{</span>
         <span class="n">hashMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">1L</span><span class="o">,</span><span class="k">new</span> <span class="n">Payment</span><span class="o">(</span><span class="n">1L</span><span class="o">,</span><span class="s">&#34;28a8c1e3bc2742d8848569891fb42181&#34;</span><span class="o">));</span>
         <span class="n">hashMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">2L</span><span class="o">,</span><span class="k">new</span> <span class="n">Payment</span><span class="o">(</span><span class="n">2L</span><span class="o">,</span><span class="s">&#34;bba8c1e3bc2742d8848569891ac32182&#34;</span><span class="o">));</span>
         <span class="n">hashMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">3L</span><span class="o">,</span><span class="k">new</span> <span class="n">Payment</span><span class="o">(</span><span class="n">3L</span><span class="o">,</span><span class="s">&#34;6ua8c1e3bc2742d8848569891xt92183&#34;</span><span class="o">));</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 
-    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/paymentSQL/{id}&#34;</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">paymentSQL</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
-    <span class="o">{</span>
+	<span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/paymentSQL/{id}&#34;</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">paymentSQL</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">hashMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
         <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">200</span><span class="o">,</span><span class="s">&#34;from mysql,serverPort:  &#34;</span><span class="o">+</span><span class="n">serverPort</span><span class="o">,</span><span class="n">payment</span><span class="o">);</span>
         <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>		
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>测试地址：http://localhost:9003/paymentSQL/1</li>
 </ol>
 </li>
 <li>消费者84
 <ol>
-<li>新建cloud-alibaba-consumer-nacos-order84</li>
-<li>修改POM
+<li>
+<p>新建cloud-alibaba-consumer-nacos-order84</p>
+</li>
+<li>
+<p>修改POM</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -16778,16 +16787,16 @@ server {
 <span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
          <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
          <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;parent&gt;</span>
+	<span class="nt">&lt;parent&gt;</span>
         <span class="nt">&lt;artifactId&gt;</span>SpringCloud<span class="nt">&lt;/artifactId&gt;</span>
         <span class="nt">&lt;groupId&gt;</span>com.clover.springcloud<span class="nt">&lt;/groupId&gt;</span>
         <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
-    <span class="nt">&lt;/parent&gt;</span>
-    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+	<span class="nt">&lt;/parent&gt;</span>
+	<span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
 
-    <span class="nt">&lt;artifactId&gt;</span>cloud-alibaba-consumer-nacos-order84<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>cloud-alibaba-consumer-nacos-order84<span class="nt">&lt;/artifactId&gt;</span>
 
-    <span class="nt">&lt;dependencies&gt;</span>
+	<span class="nt">&lt;dependencies&gt;</span>
         <span class="c">&lt;!--SpringCloud ailibaba nacos --&gt;</span>
         <span class="nt">&lt;dependency&gt;</span>
             <span class="nt">&lt;groupId&gt;</span>com.alibaba.cloud<span class="nt">&lt;/groupId&gt;</span>
@@ -16824,13 +16833,13 @@ server {
             <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
             <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
         <span class="nt">&lt;/dependency&gt;</span>
-    <span class="nt">&lt;/dependencies&gt;</span>
+	<span class="nt">&lt;/dependencies&gt;</span>
 <span class="nt">&lt;/project&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
-<li>编写YML
+</div></li>
+<li>
+<p>编写YML</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -16863,12 +16872,12 @@ server {
 </span><span class="w">
 </span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nacos-order-consumer</span><span class="w">
+</span><span class="w">	</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nacos-order-consumer</span><span class="w">
 </span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">nacos</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">nacos</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">discovery</span><span class="p">:</span><span class="w">
 </span><span class="w">        </span><span class="nt">server-addr</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:8848</span><span class="w">
-</span><span class="w">    </span><span class="nt">sentinel</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">sentinel</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">transport</span><span class="p">:</span><span class="w">
 </span><span class="w">        </span><span class="c">#配置Sentinel dashboard地址</span><span class="w">
 </span><span class="w">        </span><span class="nt">dashboard</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:8080</span><span class="w">
@@ -16881,9 +16890,9 @@ server {
 </span><span class="w">  </span><span class="nt">nacos-user-service</span><span class="p">:</span><span class="w"> </span><span class="l">http://nacos-payment-provider</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
-<li>编写主启动类
+</div></li>
+<li>
+<p>编写主启动类</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -16911,16 +16920,16 @@ server {
 <span class="nd">@SpringBootApplication</span>
 <span class="nd">@EnableDiscoveryClient</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderNacosMain84</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
-    <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">OrderNacosMain84</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
-<li>编写业务类
+</div></li>
+<li>
+<p>编写业务类</p>
 <ol>
 <li>ApplicationContextConfig
 <div class="highlight"><div class="chroma">
@@ -16952,17 +16961,16 @@ server {
 
 <span class="nd">@Configuration</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ApplicationContextConfig</span> <span class="o">{</span>
-    <span class="nd">@Bean</span>
-    <span class="nd">@LoadBalanced</span>
-    <span class="kd">public</span> <span class="n">RestTemplate</span> <span class="nf">getRestTemplate</span><span class="o">()</span>
-    <span class="o">{</span>
+	<span class="nd">@Bean</span>
+	<span class="nd">@LoadBalanced</span>
+	<span class="kd">public</span> <span class="n">RestTemplate</span> <span class="nf">getRestTemplate</span><span class="o">()</span>
+	<span class="o">{</span>
         <span class="k">return</span> <span class="k">new</span> <span class="n">RestTemplate</span><span class="o">();</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li><strong>CircleBreakerController</strong>
 <ol>
 <li>
@@ -17043,15 +17051,15 @@ server {
 <span class="nd">@RestController</span>
 <span class="nd">@Slf4j</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CircleBreakerController</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">SERVICE_URL</span> <span class="o">=</span> <span class="s">&#34;http://nacos-payment-provider&#34;</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">SERVICE_URL</span> <span class="o">=</span> <span class="s">&#34;http://nacos-payment-provider&#34;</span><span class="o">;</span>
 
-    <span class="nd">@Resource</span>
-    <span class="kd">private</span> <span class="n">RestTemplate</span> <span class="n">restTemplate</span><span class="o">;</span>
+	<span class="nd">@Resource</span>
+	<span class="kd">private</span> <span class="n">RestTemplate</span> <span class="n">restTemplate</span><span class="o">;</span>
 
-    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&#34;/consumer/fallback/{id}&#34;</span><span class="o">)</span>
-    <span class="nd">@SentinelResource</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;fallback&#34;</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">fallback</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
-    <span class="o">{</span>
+	<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&#34;/consumer/fallback/{id}&#34;</span><span class="o">)</span>
+	<span class="nd">@SentinelResource</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;fallback&#34;</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">fallback</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="n">SERVICE_URL</span> <span class="o">+</span> <span class="s">&#34;/paymentSQL/&#34;</span><span class="o">+</span><span class="n">id</span><span class="o">,</span><span class="n">CommonResult</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">id</span><span class="o">);</span>
 
         <span class="k">if</span> <span class="o">(</span><span class="n">id</span> <span class="o">==</span> <span class="n">4</span><span class="o">)</span> <span class="o">{</span>
@@ -17061,12 +17069,11 @@ server {
         <span class="o">}</span>
 
         <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>只配置fallback</p>
 <ul>
@@ -17170,16 +17177,16 @@ server {
 <span class="nd">@RestController</span>
 <span class="nd">@Slf4j</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CircleBreakerController</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">SERVICE_URL</span> <span class="o">=</span> <span class="s">&#34;http://nacos-payment-provider&#34;</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">SERVICE_URL</span> <span class="o">=</span> <span class="s">&#34;http://nacos-payment-provider&#34;</span><span class="o">;</span>
 
-    <span class="nd">@Resource</span>
-    <span class="kd">private</span> <span class="n">RestTemplate</span> <span class="n">restTemplate</span><span class="o">;</span>
+	<span class="nd">@Resource</span>
+	<span class="kd">private</span> <span class="n">RestTemplate</span> <span class="n">restTemplate</span><span class="o">;</span>
 
-    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&#34;/consumer/fallback/{id}&#34;</span><span class="o">)</span>
+	<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&#34;/consumer/fallback/{id}&#34;</span><span class="o">)</span>
 <span class="c1">//    @SentinelResource(value = &#34;fallback&#34;)// 没有配置
-</span><span class="c1"></span>    <span class="nd">@SentinelResource</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;fallback&#34;</span><span class="o">,</span><span class="n">fallback</span> <span class="o">=</span> <span class="s">&#34;handlerFallback&#34;</span><span class="o">)</span> <span class="c1">//fallback负责业务异常
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">fallback</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
-    <span class="o">{</span>
+</span><span class="c1"></span>	<span class="nd">@SentinelResource</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;fallback&#34;</span><span class="o">,</span><span class="n">fallback</span> <span class="o">=</span> <span class="s">&#34;handlerFallback&#34;</span><span class="o">)</span> <span class="c1">//fallback负责业务异常
+</span><span class="c1"></span>	<span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">fallback</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="n">SERVICE_URL</span> <span class="o">+</span> <span class="s">&#34;/paymentSQL/&#34;</span><span class="o">+</span><span class="n">id</span><span class="o">,</span><span class="n">CommonResult</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">id</span><span class="o">);</span>
 
         <span class="k">if</span> <span class="o">(</span><span class="n">id</span> <span class="o">==</span> <span class="n">4</span><span class="o">)</span> <span class="o">{</span>
@@ -17189,18 +17196,17 @@ server {
         <span class="o">}</span>
 
         <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 
-    <span class="c1">// fallback方法
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">handlerFallback</span><span class="o">(</span><span class="nd">@PathVariable</span>  <span class="n">Long</span> <span class="n">id</span><span class="o">,</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+	<span class="c1">// fallback方法
+</span><span class="c1"></span>	<span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">handlerFallback</span><span class="o">(</span><span class="nd">@PathVariable</span>  <span class="n">Long</span> <span class="n">id</span><span class="o">,</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Payment</span><span class="o">(</span><span class="n">id</span><span class="o">,</span><span class="s">&#34;null&#34;</span><span class="o">);</span>
         <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">&lt;&gt;(</span><span class="n">444</span><span class="o">,</span><span class="s">&#34;兜底异常handlerFallback,exception内容  &#34;</span><span class="o">+</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span><span class="n">payment</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>只配置blockHandler</p>
 <ul>
@@ -17297,17 +17303,17 @@ server {
 <span class="nd">@RestController</span>
 <span class="nd">@Slf4j</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CircleBreakerController</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">SERVICE_URL</span> <span class="o">=</span> <span class="s">&#34;http://nacos-payment-provider&#34;</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">SERVICE_URL</span> <span class="o">=</span> <span class="s">&#34;http://nacos-payment-provider&#34;</span><span class="o">;</span>
 
-    <span class="nd">@Resource</span>
-    <span class="kd">private</span> <span class="n">RestTemplate</span> <span class="n">restTemplate</span><span class="o">;</span>
+	<span class="nd">@Resource</span>
+	<span class="kd">private</span> <span class="n">RestTemplate</span> <span class="n">restTemplate</span><span class="o">;</span>
 
-    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&#34;/consumer/fallback/{id}&#34;</span><span class="o">)</span>
+	<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&#34;/consumer/fallback/{id}&#34;</span><span class="o">)</span>
 <span class="c1">//    @SentinelResource(value = &#34;fallback&#34;)// 没有配置
 </span><span class="c1">//    @SentinelResource(value = &#34;fallback&#34;,fallback = &#34;handlerFallback&#34;) //fallback负责业务异常
-</span><span class="c1"></span>    <span class="nd">@SentinelResource</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;fallback&#34;</span><span class="o">,</span><span class="n">blockHandler</span> <span class="o">=</span> <span class="s">&#34;blockHandler&#34;</span><span class="o">)</span> <span class="c1">//blockHandler负责在sentinel里面配置的降级限流
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">fallback</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
-    <span class="o">{</span>
+</span><span class="c1"></span>	<span class="nd">@SentinelResource</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;fallback&#34;</span><span class="o">,</span><span class="n">blockHandler</span> <span class="o">=</span> <span class="s">&#34;blockHandler&#34;</span><span class="o">)</span> <span class="c1">//blockHandler负责在sentinel里面配置的降级限流
+</span><span class="c1"></span>	<span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">fallback</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="n">SERVICE_URL</span> <span class="o">+</span> <span class="s">&#34;/paymentSQL/&#34;</span><span class="o">+</span><span class="n">id</span><span class="o">,</span><span class="n">CommonResult</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">id</span><span class="o">);</span>
 
         <span class="k">if</span> <span class="o">(</span><span class="n">id</span> <span class="o">==</span> <span class="n">4</span><span class="o">)</span> <span class="o">{</span>
@@ -17317,24 +17323,23 @@ server {
         <span class="o">}</span>
 
         <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 
-    <span class="c1">// 本例是fallback
+	<span class="c1">// 本例是fallback
 </span><span class="c1">//    public CommonResult handlerFallback(@PathVariable  Long id,Throwable e) {
 </span><span class="c1">//        Payment payment = new Payment(id,&#34;null&#34;);
 </span><span class="c1">//        return new CommonResult&lt;&gt;(444,&#34;兜底异常handlerFallback,exception内容  &#34;+e.getMessage(),payment);
 </span><span class="c1">//    }
 </span><span class="c1"></span>
-    <span class="c1">// 本例是blockHandler
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">blockHandler</span><span class="o">(</span><span class="nd">@PathVariable</span>  <span class="n">Long</span> <span class="n">id</span><span class="o">,</span> <span class="n">BlockException</span> <span class="n">blockException</span><span class="o">)</span> <span class="o">{</span>
+	<span class="c1">// 本例是blockHandler
+</span><span class="c1"></span>	<span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">blockHandler</span><span class="o">(</span><span class="nd">@PathVariable</span>  <span class="n">Long</span> <span class="n">id</span><span class="o">,</span> <span class="n">BlockException</span> <span class="n">blockException</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Payment</span><span class="o">(</span><span class="n">id</span><span class="o">,</span><span class="s">&#34;null&#34;</span><span class="o">);</span>
         <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">&lt;&gt;(</span><span class="n">445</span><span class="o">,</span><span class="s">&#34;blockHandler-sentinel限流,无此流水: blockException  &#34;</span><span class="o">+</span><span class="n">blockException</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span><span class="n">payment</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>fallback和blockHandler都配置</p>
 <ul>
@@ -17433,18 +17438,18 @@ server {
 <span class="nd">@RestController</span>
 <span class="nd">@Slf4j</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CircleBreakerController</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">SERVICE_URL</span> <span class="o">=</span> <span class="s">&#34;http://nacos-payment-provider&#34;</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">SERVICE_URL</span> <span class="o">=</span> <span class="s">&#34;http://nacos-payment-provider&#34;</span><span class="o">;</span>
 
-    <span class="nd">@Resource</span>
-    <span class="kd">private</span> <span class="n">RestTemplate</span> <span class="n">restTemplate</span><span class="o">;</span>
+	<span class="nd">@Resource</span>
+	<span class="kd">private</span> <span class="n">RestTemplate</span> <span class="n">restTemplate</span><span class="o">;</span>
 
-    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&#34;/consumer/fallback/{id}&#34;</span><span class="o">)</span>
+	<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&#34;/consumer/fallback/{id}&#34;</span><span class="o">)</span>
 <span class="c1">//    @SentinelResource(value = &#34;fallback&#34;)// 没有配置
 </span><span class="c1">//    @SentinelResource(value = &#34;fallback&#34;,fallback = &#34;handlerFallback&#34;) //fallback负责业务异常
 </span><span class="c1">//    @SentinelResource(value = &#34;fallback&#34;,blockHandler = &#34;blockHandler&#34;) //blockHandler负责在sentinel里面配置的降级限流
-</span><span class="c1"></span>    <span class="nd">@SentinelResource</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;fallback&#34;</span><span class="o">,</span><span class="n">fallback</span> <span class="o">=</span> <span class="s">&#34;handlerFallback&#34;</span><span class="o">,</span><span class="n">blockHandler</span> <span class="o">=</span> <span class="s">&#34;blockHandler&#34;</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">fallback</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
-    <span class="o">{</span>
+</span><span class="c1"></span>	<span class="nd">@SentinelResource</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;fallback&#34;</span><span class="o">,</span><span class="n">fallback</span> <span class="o">=</span> <span class="s">&#34;handlerFallback&#34;</span><span class="o">,</span><span class="n">blockHandler</span> <span class="o">=</span> <span class="s">&#34;blockHandler&#34;</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">fallback</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="n">SERVICE_URL</span> <span class="o">+</span> <span class="s">&#34;/paymentSQL/&#34;</span><span class="o">+</span><span class="n">id</span><span class="o">,</span><span class="n">CommonResult</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">id</span><span class="o">);</span>
 
         <span class="k">if</span> <span class="o">(</span><span class="n">id</span> <span class="o">==</span> <span class="n">4</span><span class="o">)</span> <span class="o">{</span>
@@ -17454,24 +17459,23 @@ server {
         <span class="o">}</span>
 
         <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 
-    <span class="c1">// 本例是fallback
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">handlerFallback</span><span class="o">(</span><span class="nd">@PathVariable</span>  <span class="n">Long</span> <span class="n">id</span><span class="o">,</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+	<span class="c1">// 本例是fallback
+</span><span class="c1"></span>	<span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">handlerFallback</span><span class="o">(</span><span class="nd">@PathVariable</span>  <span class="n">Long</span> <span class="n">id</span><span class="o">,</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Payment</span><span class="o">(</span><span class="n">id</span><span class="o">,</span><span class="s">&#34;null&#34;</span><span class="o">);</span>
         <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">&lt;&gt;(</span><span class="n">444</span><span class="o">,</span><span class="s">&#34;兜底异常handlerFallback,exception内容  &#34;</span><span class="o">+</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span><span class="n">payment</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 
-    <span class="c1">// 本例是blockHandler
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">blockHandler</span><span class="o">(</span><span class="nd">@PathVariable</span>  <span class="n">Long</span> <span class="n">id</span><span class="o">,</span> <span class="n">BlockException</span> <span class="n">blockException</span><span class="o">)</span> <span class="o">{</span>
+	<span class="c1">// 本例是blockHandler
+</span><span class="c1"></span>	<span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">blockHandler</span><span class="o">(</span><span class="nd">@PathVariable</span>  <span class="n">Long</span> <span class="n">id</span><span class="o">,</span> <span class="n">BlockException</span> <span class="n">blockException</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Payment</span><span class="o">(</span><span class="n">id</span><span class="o">,</span><span class="s">&#34;null&#34;</span><span class="o">);</span>
         <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">&lt;&gt;(</span><span class="n">445</span><span class="o">,</span><span class="s">&#34;blockHandler-sentinel限流,无此流水: blockException  &#34;</span><span class="o">+</span><span class="n">blockException</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span><span class="n">payment</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>忽略属性&hellip;&hellip;.</p>
 <ol>
@@ -17510,9 +17514,11 @@ server {
 </ol>
 <h4 id="1792feign系列">17.9.2、Feign系列</h4>
 <ol>
-<li>修改84模块</li>
-<li>修改POM</li>
-</ol>
+<li>
+<p>修改84模块</p>
+</li>
+<li>
+<p>修改POM</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -17529,9 +17535,9 @@ server {
 <span class="nt">&lt;/dependency&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><ol start="3">
-<li>修改YML：激活Sentinel对Feign的支持</li>
-</ol>
+</div></li>
+<li>
+<p>修改YML：激活Sentinel对Feign的支持</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -17543,10 +17549,10 @@ server {
 <pre class="chroma"><code class="language-yml" data-lang="yml"><span class="c"># 激活Sentinel对Feign的支持</span><span class="w">
 </span><span class="w"></span><span class="nt">feign</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">sentinel</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">  
+</span><span class="w">	</span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">  
 </span></code></pre></td></tr></table>
 </div>
-</div><ol start="4">
+</div></li>
 <li>
 <p>修改业务类</p>
 <ol>
@@ -17579,13 +17585,12 @@ server {
 
 <span class="nd">@FeignClient</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;nacos-payment-provider&#34;</span><span class="o">,</span><span class="n">fallback</span> <span class="o">=</span> <span class="n">PaymentFallbackService</span><span class="o">.</span><span class="na">class</span><span class="o">)</span><span class="c1">//调用中关闭9003服务提供者
 </span><span class="c1"></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">PaymentService</span> <span class="o">{</span>
-    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/paymentSQL/{id}&#34;</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">paymentSQL</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">);</span>
+	<span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/paymentSQL/{id}&#34;</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">paymentSQL</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p><strong>fallback = PaymentFallbackService.class</strong></p>
 <div class="highlight"><div class="chroma">
@@ -17613,15 +17618,14 @@ server {
 
 <span class="nd">@Component</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">PaymentFallbackService</span> <span class="kd">implements</span> <span class="n">PaymentService</span> <span class="o">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">paymentSQL</span><span class="o">(</span><span class="n">Long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+	<span class="nd">@Override</span>
+	<span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">paymentSQL</span><span class="o">(</span><span class="n">Long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">&lt;&gt;(</span><span class="n">444</span><span class="o">,</span> <span class="s">&#34;服务降级返回,没有该流水信息&#34;</span><span class="o">,</span> <span class="k">new</span> <span class="n">Payment</span><span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="s">&#34;errorSerial......&#34;</span><span class="o">));</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>修改controller</p>
 <div class="highlight"><div class="chroma">
@@ -17648,16 +17652,15 @@ server {
 <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/consumer/openfeign/{id}&#34;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">Payment</span><span class="o">&gt;</span> <span class="nf">paymentSQL</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">id</span><span class="o">)</span>
 <span class="o">{</span>
-    <span class="k">if</span><span class="o">(</span><span class="n">id</span> <span class="o">==</span> <span class="n">4</span><span class="o">)</span>
-    <span class="o">{</span>
+	<span class="k">if</span><span class="o">(</span><span class="n">id</span> <span class="o">==</span> <span class="n">4</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="s">&#34;没有该id&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-    <span class="k">return</span> <span class="n">paymentService</span><span class="o">.</span><span class="na">paymentSQL</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="k">return</span> <span class="n">paymentService</span><span class="o">.</span><span class="na">paymentSQL</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 </ol>
 </li>
 <li>
@@ -17733,13 +17736,12 @@ server {
 <td class="lntd">
 <pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--SpringCloud ailibaba sentinel-datasource-nacos --&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>com.alibaba.csp<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>sentinel-datasource-nacos<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>com.alibaba.csp<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>sentinel-datasource-nacos<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>修改YML</p>
 <ul>
@@ -18154,7 +18156,7 @@ server {
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">t_order</span> <span class="p">(</span>
+<pre class="chroma"><code class="language-SQL" data-lang="SQL"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">t_order</span> <span class="p">(</span>
   <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">BIGINT</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
   <span class="o">`</span><span class="n">user_id</span><span class="o">`</span> <span class="nb">BIGINT</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;用户id&#39;</span><span class="p">,</span>
   <span class="o">`</span><span class="n">product_id</span><span class="o">`</span> <span class="nb">BIGINT</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;产品id&#39;</span><span class="p">,</span>
@@ -18191,7 +18193,7 @@ server {
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">t_storage</span> <span class="p">(</span>
+<pre class="chroma"><code class="language-SQL" data-lang="SQL"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">t_storage</span> <span class="p">(</span>
  <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">BIGINT</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
  <span class="o">`</span><span class="n">product_id</span><span class="o">`</span> <span class="nb">BIGINT</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;产品id&#39;</span><span class="p">,</span>
  <span class="o">`</span><span class="n">total</span><span class="o">`</span> <span class="nb">INT</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;总库存&#39;</span><span class="p">,</span>
@@ -18229,7 +18231,7 @@ server {
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">t_account</span> <span class="p">(</span>
+<pre class="chroma"><code class="language-SQL" data-lang="SQL"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">t_account</span> <span class="p">(</span>
   <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">BIGINT</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">COMMENT</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span>
   <span class="o">`</span><span class="n">user_id</span><span class="o">`</span> <span class="nb">BIGINT</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;用户id&#39;</span><span class="p">,</span>
   <span class="o">`</span><span class="n">total</span><span class="o">`</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;总额度&#39;</span><span class="p">,</span>
@@ -18278,7 +18280,7 @@ server {
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- the table to store seata xid data
+<pre class="chroma"><code class="language-SQL" data-lang="SQL"><span class="c1">-- the table to store seata xid data
 </span><span class="c1">-- 0.7.0+ add context
 </span><span class="c1">-- you must to init this sql for you business databese. the seata server not need it.
 </span><span class="c1">-- 此脚本必须初始化在你当前的业务数据库中，用于AT 模式XID记录。与server端无关（注：业务数据库）
@@ -18410,17 +18412,17 @@ server {
 &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34;
          xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34;
          xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt;
-    &lt;parent&gt;
+	&lt;parent&gt;
         &lt;artifactId&gt;SpringCloud&lt;/artifactId&gt;
         &lt;groupId&gt;com.clover.springcloud&lt;/groupId&gt;
         &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-    &lt;/parent&gt;
-    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+	&lt;/parent&gt;
+	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
-    &lt;artifactId&gt;seata-order-service2001&lt;/artifactId&gt;
+	&lt;artifactId&gt;seata-order-service2001&lt;/artifactId&gt;
 
 
-    &lt;dependencies&gt;
+	&lt;dependencies&gt;
         &lt;!--nacos--&gt;
         &lt;dependency&gt;
             &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
@@ -18482,13 +18484,12 @@ server {
             &lt;artifactId&gt;lombok&lt;/artifactId&gt;
             &lt;optional&gt;true&lt;/optional&gt;
         &lt;/dependency&gt;
-    &lt;/dependencies&gt;
+	&lt;/dependencies&gt;
 
 &lt;/project&gt;
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>编写YML</p>
 <div class="highlight"><div class="chroma">
@@ -18531,36 +18532,35 @@ server {
 </span><span class="w">
 </span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">seata-order-service</span><span class="w">
+</span><span class="w">	</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">seata-order-service</span><span class="w">
 </span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">alibaba</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">alibaba</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">seata</span><span class="p">:</span><span class="w">
 </span><span class="w">        </span><span class="c">#自定义事务组名称需要与seata-server中的对应</span><span class="w">
 </span><span class="w">        </span><span class="nt">tx-service-group</span><span class="p">:</span><span class="w"> </span><span class="l">clover_tx_group</span><span class="w">
-</span><span class="w">    </span><span class="nt">nacos</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">nacos</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">discovery</span><span class="p">:</span><span class="w">
 </span><span class="w">        </span><span class="nt">server-addr</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:8848</span><span class="w">
 </span><span class="w">  </span><span class="nt">datasource</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">driver-class-name</span><span class="p">:</span><span class="w"> </span><span class="l">com.mysql.jdbc.Driver</span><span class="w">
-</span><span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l">jdbc:mysql://localhost:3306/seata_order</span><span class="w">
-</span><span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">root</span><span class="w">
-</span><span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">xn123456</span><span class="w">
+</span><span class="w">	</span><span class="nt">driver-class-name</span><span class="p">:</span><span class="w"> </span><span class="l">com.mysql.jdbc.Driver</span><span class="w">
+</span><span class="w">	</span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l">jdbc:mysql://localhost:3306/seata_order</span><span class="w">
+</span><span class="w">	</span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">root</span><span class="w">
+</span><span class="w">	</span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">xn123456</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="nt">feign</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">hystrix</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="w">	</span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="nt">logging</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">io</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">io</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">seata</span><span class="p">:</span><span class="w"> </span><span class="l">info</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="nt">mybatis</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">mapperLocations</span><span class="p">:</span><span class="w"> </span><span class="l">classpath:mapper/*.xml</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>创建file.conf文件</p>
 <div class="highlight"><div class="chroma">
@@ -18716,21 +18716,21 @@ server {
   heartbeat = true
   #thread factory for netty
   thread-factory {
-    boss-thread-prefix = &#34;NettyBoss&#34;
-    worker-thread-prefix = &#34;NettyServerNIOWorker&#34;
-    server-executor-thread-prefix = &#34;NettyServerBizHandler&#34;
-    share-boss-worker = false
-    client-selector-thread-prefix = &#34;NettyClientSelector&#34;
-    client-selector-thread-size = 1
-    client-worker-thread-prefix = &#34;NettyClientWorkerThread&#34;
-    # netty boss thread size,will not be used for UDT
-    boss-thread-size = 1
-    #auto default pin or 8
-    worker-thread-size = 8
+	boss-thread-prefix = &#34;NettyBoss&#34;
+	worker-thread-prefix = &#34;NettyServerNIOWorker&#34;
+	server-executor-thread-prefix = &#34;NettyServerBizHandler&#34;
+	share-boss-worker = false
+	client-selector-thread-prefix = &#34;NettyClientSelector&#34;
+	client-selector-thread-size = 1
+	client-worker-thread-prefix = &#34;NettyClientWorkerThread&#34;
+	# netty boss thread size,will not be used for UDT
+	boss-thread-size = 1
+	#auto default pin or 8
+	worker-thread-size = 8
   }
   shutdown {
-    # when destroy server, wait seconds
-    wait = 3
+	# when destroy server, wait seconds
+	wait = 3
   }
   serialization = &#34;seata&#34;
   compressor = &#34;none&#34;
@@ -18752,8 +18752,8 @@ service {
 client {
   async.commit.buffer.limit = 10000
   lock {
-    retry.internal = 10
-    retry.times = 30
+	retry.internal = 10
+	retry.times = 30
   }
   report.retry.count = 5
   tm.commit.retry.count = 1
@@ -18767,36 +18767,36 @@ store {
 
   ## file store
   file {
-    dir = &#34;sessionStore&#34;
+	dir = &#34;sessionStore&#34;
 
-    # branch session size , if exceeded first try compress lockkey, still exceeded throws exceptions
-    max-branch-session-size = 16384
-    # globe session size , if exceeded throws exceptions
-    max-global-session-size = 512
-    # file buffer size , if exceeded allocate new buffer
-    file-write-buffer-cache-size = 16384
-    # when recover batch read size
-    session.reload.read_size = 100
-    # async, sync
-    flush-disk-mode = async
+	# branch session size , if exceeded first try compress lockkey, still exceeded throws exceptions
+	max-branch-session-size = 16384
+	# globe session size , if exceeded throws exceptions
+	max-global-session-size = 512
+	# file buffer size , if exceeded allocate new buffer
+	file-write-buffer-cache-size = 16384
+	# when recover batch read size
+	session.reload.read_size = 100
+	# async, sync
+	flush-disk-mode = async
   }
 
   ## database store
   db {
-    ## the implement of javax.sql.DataSource, such as DruidDataSource(druid)/BasicDataSource(dbcp) etc.
-    datasource = &#34;dbcp&#34;
-    ## mysql/oracle/h2/oceanbase etc.
-    db-type = &#34;mysql&#34;
-    driver-class-name = &#34;com.mysql.jdbc.Driver&#34;
-    url = &#34;jdbc:mysql://127.0.0.1:3306/seata&#34;
-    user = &#34;root&#34;
-    password = &#34;xn123456&#34;
-    min-conn = 1
-    max-conn = 3
-    global.table = &#34;global_table&#34;
-    branch.table = &#34;branch_table&#34;
-    lock-table = &#34;lock_table&#34;
-    query-limit = 100
+	## the implement of javax.sql.DataSource, such as DruidDataSource(druid)/BasicDataSource(dbcp) etc.
+	datasource = &#34;dbcp&#34;
+	## mysql/oracle/h2/oceanbase etc.
+	db-type = &#34;mysql&#34;
+	driver-class-name = &#34;com.mysql.jdbc.Driver&#34;
+	url = &#34;jdbc:mysql://127.0.0.1:3306/seata&#34;
+	user = &#34;root&#34;
+	password = &#34;xn123456&#34;
+	min-conn = 1
+	max-conn = 3
+	global.table = &#34;global_table&#34;
+	branch.table = &#34;branch_table&#34;
+	lock-table = &#34;lock_table&#34;
+	query-limit = 100
   }
 }
 lock {
@@ -18804,11 +18804,11 @@ lock {
   mode = &#34;remote&#34;
 
   local {
-    ## store locks in user&#39;s database
+	## store locks in user&#39;s database
   }
 
   remote {
-    ## store locks in the seata&#39;s server
+	## store locks in the seata&#39;s server
   }
 }
 recovery {
@@ -18843,14 +18843,13 @@ metrics {
 support {
   ## spring
   spring {
-    # auto proxy the DataSource bean
-    datasource.autoproxy = false
+	# auto proxy the DataSource bean
+	datasource.autoproxy = false
   }
 }
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>创建registry.conf文件</p>
 <div class="highlight"><div class="chroma">
@@ -18935,44 +18934,44 @@ support {
   type = &#34;nacos&#34;
 
   nacos {
-    serverAddr = &#34;localhost:8848&#34;
-    namespace = &#34;&#34;
-    cluster = &#34;default&#34;
+	serverAddr = &#34;localhost:8848&#34;
+	namespace = &#34;&#34;
+	cluster = &#34;default&#34;
   }
   eureka {
-    serviceUrl = &#34;http://localhost:8761/eureka&#34;
-    application = &#34;default&#34;
-    weight = &#34;1&#34;
+	serviceUrl = &#34;http://localhost:8761/eureka&#34;
+	application = &#34;default&#34;
+	weight = &#34;1&#34;
   }
   redis {
-    serverAddr = &#34;localhost:6379&#34;
-    db = &#34;0&#34;
+	serverAddr = &#34;localhost:6379&#34;
+	db = &#34;0&#34;
   }
   zk {
-    cluster = &#34;default&#34;
-    serverAddr = &#34;127.0.0.1:2181&#34;
-    session.timeout = 6000
-    connect.timeout = 2000
+	cluster = &#34;default&#34;
+	serverAddr = &#34;127.0.0.1:2181&#34;
+	session.timeout = 6000
+	connect.timeout = 2000
   }
   consul {
-    cluster = &#34;default&#34;
-    serverAddr = &#34;127.0.0.1:8500&#34;
+	cluster = &#34;default&#34;
+	serverAddr = &#34;127.0.0.1:8500&#34;
   }
   etcd3 {
-    cluster = &#34;default&#34;
-    serverAddr = &#34;http://localhost:2379&#34;
+	cluster = &#34;default&#34;
+	serverAddr = &#34;http://localhost:2379&#34;
   }
   sofa {
-    serverAddr = &#34;127.0.0.1:9603&#34;
-    application = &#34;default&#34;
-    region = &#34;DEFAULT_ZONE&#34;
-    datacenter = &#34;DefaultDataCenter&#34;
-    cluster = &#34;default&#34;
-    group = &#34;SEATA_GROUP&#34;
-    addressWaitTime = &#34;3000&#34;
+	serverAddr = &#34;127.0.0.1:9603&#34;
+	application = &#34;default&#34;
+	region = &#34;DEFAULT_ZONE&#34;
+	datacenter = &#34;DefaultDataCenter&#34;
+	cluster = &#34;default&#34;
+	group = &#34;SEATA_GROUP&#34;
+	addressWaitTime = &#34;3000&#34;
   }
   file {
-    name = &#34;file.conf&#34;
+	name = &#34;file.conf&#34;
   }
 }
 
@@ -18981,32 +18980,31 @@ config {
   type = &#34;file&#34;
 
   nacos {
-    serverAddr = &#34;localhost&#34;
-    namespace = &#34;&#34;
+	serverAddr = &#34;localhost&#34;
+	namespace = &#34;&#34;
   }
   consul {
-    serverAddr = &#34;127.0.0.1:8500&#34;
+	serverAddr = &#34;127.0.0.1:8500&#34;
   }
   apollo {
-    app.id = &#34;seata-server&#34;
-    apollo.meta = &#34;http://192.168.1.204:8801&#34;
+	app.id = &#34;seata-server&#34;
+	apollo.meta = &#34;http://192.168.1.204:8801&#34;
   }
   zk {
-    serverAddr = &#34;127.0.0.1:2181&#34;
-    session.timeout = 6000
-    connect.timeout = 2000
+	serverAddr = &#34;127.0.0.1:2181&#34;
+	session.timeout = 6000
+	connect.timeout = 2000
   }
   etcd3 {
-    serverAddr = &#34;http://localhost:2379&#34;
+	serverAddr = &#34;http://localhost:2379&#34;
   }
   file {
-    name = &#34;file.conf&#34;
+	name = &#34;file.conf&#34;
   }
 }
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>编写domain</p>
 <div class="highlight"><div class="chroma">
@@ -19052,25 +19050,24 @@ config {
 <span class="nd">@AllArgsConstructor</span>
 <span class="nd">@NoArgsConstructor</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Order</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">Long</span> <span class="n">id</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Long</span> <span class="n">id</span><span class="o">;</span>
 
-    <span class="kd">private</span> <span class="n">Long</span> <span class="n">userId</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Long</span> <span class="n">userId</span><span class="o">;</span>
 
-    <span class="kd">private</span> <span class="n">Long</span> <span class="n">productId</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Long</span> <span class="n">productId</span><span class="o">;</span>
 
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">count</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Integer</span> <span class="n">count</span><span class="o">;</span>
 
-    <span class="kd">private</span> <span class="n">BigDecimal</span> <span class="n">money</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">BigDecimal</span> <span class="n">money</span><span class="o">;</span>
 
-    <span class="cm">/**
+	<span class="cm">/**
 </span><span class="cm">     * 订单状态：0：创建中；1：已完结
 </span><span class="cm">     */</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">status</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Integer</span> <span class="n">status</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -19103,19 +19100,18 @@ config {
 <span class="nd">@AllArgsConstructor</span>
 <span class="nd">@NoArgsConstructor</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommonResult</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">code</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">String</span>  <span class="n">message</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">T</span>       <span class="n">data</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Integer</span> <span class="n">code</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">String</span>  <span class="n">message</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">T</span>       <span class="n">data</span><span class="o">;</span>
 
-    <span class="kd">public</span> <span class="nf">CommonResult</span><span class="o">(</span><span class="n">Integer</span> <span class="n">code</span><span class="o">,</span> <span class="n">String</span> <span class="n">message</span><span class="o">)</span>
-    <span class="o">{</span>
+	<span class="kd">public</span> <span class="nf">CommonResult</span><span class="o">(</span><span class="n">Integer</span> <span class="n">code</span><span class="o">,</span> <span class="n">String</span> <span class="n">message</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="k">this</span><span class="o">(</span><span class="n">code</span><span class="o">,</span><span class="n">message</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>Dao接口及实现</p>
 <div class="highlight"><div class="chroma">
@@ -19144,20 +19140,17 @@ config {
 
 <span class="nd">@Mapper</span>
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">OrderDao</span> <span class="o">{</span>
-    <span class="c1">//1.新建订单
-</span><span class="c1"></span>    <span class="kt">void</span> <span class="nf">create</span><span class="o">(</span><span class="n">Order</span> <span class="n">order</span><span class="o">);</span>
+	<span class="c1">//1.新建订单
+</span><span class="c1"></span>	<span class="kt">void</span> <span class="nf">create</span><span class="o">(</span><span class="n">Order</span> <span class="n">order</span><span class="o">);</span>
 
-    <span class="c1">//2.修改订单状态
-</span><span class="c1"></span>    <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="nd">@Param</span><span class="o">(</span><span class="s">&#34;userId&#34;</span><span class="o">)</span>  <span class="n">Long</span> <span class="n">userId</span><span class="o">,</span> <span class="nd">@Param</span><span class="o">(</span><span class="s">&#34;status&#34;</span><span class="o">)</span>  <span class="n">Integer</span> <span class="n">status</span><span class="o">);</span>
+	<span class="c1">//2.修改订单状态
+</span><span class="c1"></span>	<span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="nd">@Param</span><span class="o">(</span><span class="s">&#34;userId&#34;</span><span class="o">)</span>  <span class="n">Long</span> <span class="n">userId</span><span class="o">,</span> <span class="nd">@Param</span><span class="o">(</span><span class="s">&#34;status&#34;</span><span class="o">)</span>  <span class="n">Integer</span> <span class="n">status</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
-</ol>
-<ul>
-<li>
-<p>resources文件夹下新建mapper文件夹后添加</p>
+</div><ul>
+<li>resources文件夹下新建mapper文件夹后添加</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -19191,40 +19184,30 @@ config {
 <span class="cp">&lt;!DOCTYPE mapper PUBLIC &#34;-//mybatis.org//DTD Mapper 3.0//EN&#34; &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34; &gt;</span>
 
 <span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">&#34;com.clover.springcloud.alibaba.dao.OrderDao&#34;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;resultMap</span> <span class="na">id=</span><span class="s">&#34;baseResultMapper&#34;</span> <span class="na">type=</span><span class="s">&#34;com.clover.springcloud.alibaba.domain.Order&#34;</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;resultMap</span> <span class="na">id=</span><span class="s">&#34;baseResultMapper&#34;</span> <span class="na">type=</span><span class="s">&#34;com.clover.springcloud.alibaba.domain.Order&#34;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;id</span> <span class="na">column=</span><span class="s">&#34;id&#34;</span> <span class="na">property=</span><span class="s">&#34;id&#34;</span> <span class="na">jdbcType=</span><span class="s">&#34;BIGINT&#34;</span><span class="nt">/&gt;</span>
         <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">&#34;user_id&#34;</span> <span class="na">property=</span><span class="s">&#34;userId&#34;</span> <span class="na">jdbcType=</span><span class="s">&#34;BIGINT&#34;</span><span class="nt">/&gt;</span>
         <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">&#34;product_id&#34;</span> <span class="na">property=</span><span class="s">&#34;productId&#34;</span> <span class="na">jdbcType=</span><span class="s">&#34;BIGINT&#34;</span><span class="nt">/&gt;</span>
         <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">&#34;count&#34;</span> <span class="na">property=</span><span class="s">&#34;count&#34;</span> <span class="na">jdbcType=</span><span class="s">&#34;INTEGER&#34;</span><span class="nt">/&gt;</span>
         <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">&#34;money&#34;</span> <span class="na">property=</span><span class="s">&#34;money&#34;</span> <span class="na">jdbcType=</span><span class="s">&#34;DECIMAL&#34;</span><span class="nt">/&gt;</span>
         <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">&#34;status&#34;</span> <span class="na">property=</span><span class="s">&#34;status&#34;</span> <span class="na">jdbcType=</span><span class="s">&#34;INTEGER&#34;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;/resultMap&gt;</span>
+	<span class="nt">&lt;/resultMap&gt;</span>
 
-    <span class="nt">&lt;insert</span> <span class="na">id=</span><span class="s">&#34;create&#34;</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;insert</span> <span class="na">id=</span><span class="s">&#34;create&#34;</span><span class="nt">&gt;</span>
         INSERT INTO t_order (id,user_id,product_id,count,money,status)
         VALUES (null,#{userId},#{productId},#{count},#{money},0);
-    <span class="nt">&lt;/insert&gt;</span>
+	<span class="nt">&lt;/insert&gt;</span>
 
-    <span class="nt">&lt;update</span> <span class="na">id=</span><span class="s">&#34;update&#34;</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;update</span> <span class="na">id=</span><span class="s">&#34;update&#34;</span><span class="nt">&gt;</span>
         update t_order
         set status = 1
         where user_id = #{userId} and status = #{status}
-    <span class="nt">&lt;/update&gt;</span>
+	<span class="nt">&lt;/update&gt;</span>
 
 <span class="nt">&lt;/mapper&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">   
-</code></pre></td></tr></table>
-</div>
 </div></li>
-</ul>
-<ol start="8">
 <li>
 <p>Service接口及实现</p>
 <div class="highlight"><div class="chroma">
@@ -19258,13 +19241,12 @@ config {
 <span class="nd">@FeignClient</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;seata-account-service&#34;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">AccountService</span> <span class="o">{</span>
 
-    <span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/account/decrease&#34;</span><span class="o">)</span>
-    <span class="n">CommonResult</span> <span class="nf">decrease</span><span class="o">(</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;userId&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">userId</span><span class="o">,</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;money&#34;</span><span class="o">)</span> <span class="n">BigDecimal</span> <span class="n">money</span><span class="o">);</span>
+	<span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/account/decrease&#34;</span><span class="o">)</span>
+	<span class="n">CommonResult</span> <span class="nf">decrease</span><span class="o">(</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;userId&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">userId</span><span class="o">,</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;money&#34;</span><span class="o">)</span> <span class="n">BigDecimal</span> <span class="n">money</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -19281,13 +19263,12 @@ config {
 <span class="kn">import</span> <span class="nn">com.clover.springcloud.alibaba.domain.Order</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">OrderService</span> <span class="o">{</span>
-    <span class="c1">//1.创建订单
-</span><span class="c1"></span>    <span class="kt">void</span> <span class="nf">create</span><span class="o">(</span><span class="n">Order</span> <span class="n">order</span><span class="o">);</span>
+	<span class="c1">//1.创建订单
+</span><span class="c1"></span>	<span class="kt">void</span> <span class="nf">create</span><span class="o">(</span><span class="n">Order</span> <span class="n">order</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -19314,13 +19295,12 @@ config {
 <span class="nd">@FeignClient</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;seata-storage-service&#34;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">StorageService</span> <span class="o">{</span>
 
-    <span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/storage/decrease&#34;</span><span class="o">)</span>
-    <span class="n">CommonResult</span> <span class="nf">decrease</span><span class="o">(</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;productId&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">productId</span><span class="o">,</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;count&#34;</span><span class="o">)</span> <span class="n">Integer</span> <span class="n">count</span><span class="o">);</span>
+	<span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/storage/decrease&#34;</span><span class="o">)</span>
+	<span class="n">CommonResult</span> <span class="nf">decrease</span><span class="o">(</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;productId&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">productId</span><span class="o">,</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;count&#34;</span><span class="o">)</span> <span class="n">Integer</span> <span class="n">count</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -19386,18 +19366,18 @@ config {
 <span class="nd">@Slf4j</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderServiceImpl</span> <span class="kd">implements</span> <span class="n">OrderService</span><span class="o">{</span>
 
-    <span class="nd">@Resource</span>
-    <span class="kd">private</span> <span class="n">OrderDao</span> <span class="n">orderDao</span><span class="o">;</span>
+	<span class="nd">@Resource</span>
+	<span class="kd">private</span> <span class="n">OrderDao</span> <span class="n">orderDao</span><span class="o">;</span>
 
-    <span class="nd">@Resource</span>
-    <span class="kd">private</span> <span class="n">AccountService</span> <span class="n">accountService</span><span class="o">;</span>
+	<span class="nd">@Resource</span>
+	<span class="kd">private</span> <span class="n">AccountService</span> <span class="n">accountService</span><span class="o">;</span>
 
-    <span class="nd">@Resource</span>
-    <span class="kd">private</span> <span class="n">StorageService</span> <span class="n">storageService</span><span class="o">;</span>
+	<span class="nd">@Resource</span>
+	<span class="kd">private</span> <span class="n">StorageService</span> <span class="n">storageService</span><span class="o">;</span>
 
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">create</span><span class="o">(</span><span class="n">Order</span> <span class="n">order</span><span class="o">)</span> <span class="o">{</span>
+	<span class="nd">@Override</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">create</span><span class="o">(</span><span class="n">Order</span> <span class="n">order</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;-------&gt;订单开始创建&#34;</span><span class="o">);</span>
         <span class="n">orderDao</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">order</span><span class="o">);</span>
 
@@ -19414,12 +19394,11 @@ config {
         <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;-------&gt;order-service中状态修改结束&#34;</span><span class="o">);</span>
 
         <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;-------&gt;订单创建结束&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>编写Controller</p>
 <div class="highlight"><div class="chroma">
@@ -19728,17 +19707,17 @@ config {
 &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34;
          xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34;
          xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt;
-    &lt;parent&gt;
+	&lt;parent&gt;
         &lt;artifactId&gt;SpringCloud&lt;/artifactId&gt;
         &lt;groupId&gt;com.clover.springcloud&lt;/groupId&gt;
         &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-    &lt;/parent&gt;
-    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+	&lt;/parent&gt;
+	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
-    &lt;artifactId&gt;seata-storage-service2002&lt;/artifactId&gt;
+	&lt;artifactId&gt;seata-storage-service2002&lt;/artifactId&gt;
 
 
-    &lt;dependencies&gt;
+	&lt;dependencies&gt;
         &lt;!--nacos--&gt;
         &lt;dependency&gt;
             &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
@@ -19794,13 +19773,12 @@ config {
             &lt;artifactId&gt;lombok&lt;/artifactId&gt;
             &lt;optional&gt;true&lt;/optional&gt;
         &lt;/dependency&gt;
-    &lt;/dependencies&gt;
+	&lt;/dependencies&gt;
 
 &lt;/project&gt;
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>编写YML</p>
 <div class="highlight"><div class="chroma">
@@ -19843,36 +19821,35 @@ config {
 </span><span class="w">
 </span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">seata-storage-service</span><span class="w">
+</span><span class="w">	</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">seata-storage-service</span><span class="w">
 </span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">alibaba</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">alibaba</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">seata</span><span class="p">:</span><span class="w">
 </span><span class="w">        </span><span class="c">#自定义事务组名称需要与seata-server中的对应</span><span class="w">
 </span><span class="w">        </span><span class="nt">tx-service-group</span><span class="p">:</span><span class="w"> </span><span class="l">clover_tx_group</span><span class="w">
-</span><span class="w">    </span><span class="nt">nacos</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">nacos</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">discovery</span><span class="p">:</span><span class="w">
 </span><span class="w">        </span><span class="nt">server-addr</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:8848</span><span class="w">
 </span><span class="w">  </span><span class="nt">datasource</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">driver-class-name</span><span class="p">:</span><span class="w"> </span><span class="l">com.mysql.jdbc.Driver</span><span class="w">
-</span><span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l">jdbc:mysql://localhost:3306/seata_storage</span><span class="w">
-</span><span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">root</span><span class="w">
-</span><span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">xn123456</span><span class="w">
-</span><span class="w">       
+</span><span class="w">	</span><span class="nt">driver-class-name</span><span class="p">:</span><span class="w"> </span><span class="l">com.mysql.jdbc.Driver</span><span class="w">
+</span><span class="w">	</span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l">jdbc:mysql://localhost:3306/seata_storage</span><span class="w">
+</span><span class="w">	</span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">root</span><span class="w">
+</span><span class="w">	</span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">xn123456</span><span class="w">
+</span><span class="w">		
 </span><span class="w"></span><span class="nt">feign</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">hystrix</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">hystrix</span><span class="p">:</span><span class="w">
 </span><span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-</span><span class="w">           
+</span><span class="w">			
 </span><span class="w"></span><span class="nt">logging</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">io</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">io</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">seata</span><span class="p">:</span><span class="w"> </span><span class="l">info</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="nt">mybatis</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">mapperLocations</span><span class="p">:</span><span class="w"> </span><span class="l">classpath:mapper/*.xml</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>创建file.conf文件</p>
 <div class="highlight"><div class="chroma">
@@ -19959,21 +19936,21 @@ config {
   heartbeat = true
   #thread factory for netty
   thread-factory {
-    boss-thread-prefix = &#34;NettyBoss&#34;
-    worker-thread-prefix = &#34;NettyServerNIOWorker&#34;
-    server-executor-thread-prefix = &#34;NettyServerBizHandler&#34;
-    share-boss-worker = false
-    client-selector-thread-prefix = &#34;NettyClientSelector&#34;
-    client-selector-thread-size = 1
-    client-worker-thread-prefix = &#34;NettyClientWorkerThread&#34;
-    # netty boss thread size,will not be used for UDT
-    boss-thread-size = 1
-    #auto default pin or 8
-    worker-thread-size = 8
+	boss-thread-prefix = &#34;NettyBoss&#34;
+	worker-thread-prefix = &#34;NettyServerNIOWorker&#34;
+	server-executor-thread-prefix = &#34;NettyServerBizHandler&#34;
+	share-boss-worker = false
+	client-selector-thread-prefix = &#34;NettyClientSelector&#34;
+	client-selector-thread-size = 1
+	client-worker-thread-prefix = &#34;NettyClientWorkerThread&#34;
+	# netty boss thread size,will not be used for UDT
+	boss-thread-size = 1
+	#auto default pin or 8
+	worker-thread-size = 8
   }
   shutdown {
-    # when destroy server, wait seconds
-    wait = 3
+	# when destroy server, wait seconds
+	wait = 3
   }
   serialization = &#34;seata&#34;
   compressor = &#34;none&#34;
@@ -19997,8 +19974,8 @@ service {
 client {
   async.commit.buffer.limit = 10000
   lock {
-    retry.internal = 10
-    retry.times = 30
+	retry.internal = 10
+	retry.times = 30
   }
   report.retry.count = 5
   tm.commit.retry.count = 1
@@ -20017,14 +19994,13 @@ transaction {
 support {
   ## spring
   spring {
-    # auto proxy the DataSource bean
-    datasource.autoproxy = false
+	# auto proxy the DataSource bean
+	datasource.autoproxy = false
   }
 }
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>创建registry.conf文件</p>
 <div class="highlight"><div class="chroma">
@@ -20109,44 +20085,44 @@ support {
   type = &#34;nacos&#34;
 
   nacos {
-    serverAddr = &#34;localhost:8848&#34;
-    namespace = &#34;&#34;
-    cluster = &#34;default&#34;
+	serverAddr = &#34;localhost:8848&#34;
+	namespace = &#34;&#34;
+	cluster = &#34;default&#34;
   }
   eureka {
-    serviceUrl = &#34;http://localhost:8761/eureka&#34;
-    application = &#34;default&#34;
-    weight = &#34;1&#34;
+	serviceUrl = &#34;http://localhost:8761/eureka&#34;
+	application = &#34;default&#34;
+	weight = &#34;1&#34;
   }
   redis {
-    serverAddr = &#34;localhost:6379&#34;
-    db = &#34;0&#34;
+	serverAddr = &#34;localhost:6379&#34;
+	db = &#34;0&#34;
   }
   zk {
-    cluster = &#34;default&#34;
-    serverAddr = &#34;127.0.0.1:2181&#34;
-    session.timeout = 6000
-    connect.timeout = 2000
+	cluster = &#34;default&#34;
+	serverAddr = &#34;127.0.0.1:2181&#34;
+	session.timeout = 6000
+	connect.timeout = 2000
   }
   consul {
-    cluster = &#34;default&#34;
-    serverAddr = &#34;127.0.0.1:8500&#34;
+	cluster = &#34;default&#34;
+	serverAddr = &#34;127.0.0.1:8500&#34;
   }
   etcd3 {
-    cluster = &#34;default&#34;
-    serverAddr = &#34;http://localhost:2379&#34;
+	cluster = &#34;default&#34;
+	serverAddr = &#34;http://localhost:2379&#34;
   }
   sofa {
-    serverAddr = &#34;127.0.0.1:9603&#34;
-    application = &#34;default&#34;
-    region = &#34;DEFAULT_ZONE&#34;
-    datacenter = &#34;DefaultDataCenter&#34;
-    cluster = &#34;default&#34;
-    group = &#34;SEATA_GROUP&#34;
-    addressWaitTime = &#34;3000&#34;
+	serverAddr = &#34;127.0.0.1:9603&#34;
+	application = &#34;default&#34;
+	region = &#34;DEFAULT_ZONE&#34;
+	datacenter = &#34;DefaultDataCenter&#34;
+	cluster = &#34;default&#34;
+	group = &#34;SEATA_GROUP&#34;
+	addressWaitTime = &#34;3000&#34;
   }
   file {
-    name = &#34;file.conf&#34;
+	name = &#34;file.conf&#34;
   }
 }
 
@@ -20155,32 +20131,31 @@ config {
   type = &#34;file&#34;
 
   nacos {
-    serverAddr = &#34;localhost&#34;
-    namespace = &#34;&#34;
+	serverAddr = &#34;localhost&#34;
+	namespace = &#34;&#34;
   }
   consul {
-    serverAddr = &#34;127.0.0.1:8500&#34;
+	serverAddr = &#34;127.0.0.1:8500&#34;
   }
   apollo {
-    app.id = &#34;seata-server&#34;
-    apollo.meta = &#34;http://192.168.1.204:8801&#34;
+	app.id = &#34;seata-server&#34;
+	apollo.meta = &#34;http://192.168.1.204:8801&#34;
   }
   zk {
-    serverAddr = &#34;127.0.0.1:2181&#34;
-    session.timeout = 6000
-    connect.timeout = 2000
+	serverAddr = &#34;127.0.0.1:2181&#34;
+	session.timeout = 6000
+	connect.timeout = 2000
   }
   etcd3 {
-    serverAddr = &#34;http://localhost:2379&#34;
+	serverAddr = &#34;http://localhost:2379&#34;
   }
   file {
-    name = &#34;file.conf&#34;
+	name = &#34;file.conf&#34;
   }
 }
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>编写domain</p>
 <div class="highlight"><div class="chroma">
@@ -20216,19 +20191,18 @@ config {
 <span class="nd">@AllArgsConstructor</span>
 <span class="nd">@NoArgsConstructor</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommonResult</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">code</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">String</span>  <span class="n">message</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">T</span>       <span class="n">data</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Integer</span> <span class="n">code</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">String</span>  <span class="n">message</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">T</span>       <span class="n">data</span><span class="o">;</span>
 
-    <span class="kd">public</span> <span class="nf">CommonResult</span><span class="o">(</span><span class="n">Integer</span> <span class="n">code</span><span class="o">,</span> <span class="n">String</span> <span class="n">message</span><span class="o">)</span>
-    <span class="o">{</span>
+	<span class="kd">public</span> <span class="nf">CommonResult</span><span class="o">(</span><span class="n">Integer</span> <span class="n">code</span><span class="o">,</span> <span class="n">String</span> <span class="n">message</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="k">this</span><span class="o">(</span><span class="n">code</span><span class="o">,</span><span class="n">message</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -20274,32 +20248,31 @@ config {
 <span class="nd">@AllArgsConstructor</span>
 <span class="nd">@NoArgsConstructor</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Storage</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">Long</span> <span class="n">id</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Long</span> <span class="n">id</span><span class="o">;</span>
 
-    <span class="cm">/**
+	<span class="cm">/**
 </span><span class="cm">     * 产品id
 </span><span class="cm">     */</span>
-    <span class="kd">private</span> <span class="n">Long</span> <span class="n">productId</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Long</span> <span class="n">productId</span><span class="o">;</span>
 
-    <span class="cm">/**
+	<span class="cm">/**
 </span><span class="cm">     * 总库存
 </span><span class="cm">     */</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">total</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Integer</span> <span class="n">total</span><span class="o">;</span>
 
-    <span class="cm">/**
+	<span class="cm">/**
 </span><span class="cm">     * 已用库存
 </span><span class="cm">     */</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">used</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Integer</span> <span class="n">used</span><span class="o">;</span>
 
-    <span class="cm">/**
+	<span class="cm">/**
 </span><span class="cm">     * 剩余库存
 </span><span class="cm">     */</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">residue</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Integer</span> <span class="n">residue</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>Dao接口及实现</p>
 <div class="highlight"><div class="chroma">
@@ -20324,12 +20297,11 @@ config {
 <span class="nd">@Mapper</span>
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">StorageDao</span> <span class="o">{</span>
 
-    <span class="kt">void</span> <span class="nf">decrease</span><span class="o">(</span><span class="nd">@Param</span><span class="o">(</span><span class="s">&#34;productId&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">productId</span><span class="o">,</span><span class="nd">@Param</span><span class="o">(</span><span class="s">&#34;count&#34;</span><span class="o">)</span> <span class="n">Integer</span> <span class="n">count</span><span class="o">);</span>
+	<span class="kt">void</span> <span class="nf">decrease</span><span class="o">(</span><span class="nd">@Param</span><span class="o">(</span><span class="s">&#34;productId&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">productId</span><span class="o">,</span><span class="nd">@Param</span><span class="o">(</span><span class="s">&#34;count&#34;</span><span class="o">)</span> <span class="n">Integer</span> <span class="n">count</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<ul>
+</div><ul>
 <li>resources文件夹下新建mapper文件夹后添加</li>
 </ul>
 <div class="highlight"><div class="chroma">
@@ -20360,24 +20332,23 @@ config {
 
 <span class="o">&lt;</span><span class="n">mapper</span> <span class="n">namespace</span><span class="o">=</span><span class="s">&#34;com.clover.springcloud.alibaba.dao.StorageDao&#34;</span><span class="o">&gt;</span>
 
-    <span class="o">&lt;</span><span class="n">resultMap</span> <span class="n">id</span><span class="o">=</span><span class="s">&#34;BaseResultMap&#34;</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;com.clover.springcloud.alibaba.domain.Storage&#34;</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">resultMap</span> <span class="n">id</span><span class="o">=</span><span class="s">&#34;BaseResultMap&#34;</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;com.clover.springcloud.alibaba.domain.Storage&#34;</span><span class="o">&gt;</span>
         <span class="o">&lt;</span><span class="n">id</span> <span class="n">column</span><span class="o">=</span><span class="s">&#34;id&#34;</span> <span class="n">property</span><span class="o">=</span><span class="s">&#34;id&#34;</span> <span class="n">jdbcType</span><span class="o">=</span><span class="s">&#34;BIGINT&#34;</span><span class="o">/&gt;</span>
         <span class="o">&lt;</span><span class="n">result</span> <span class="n">column</span><span class="o">=</span><span class="s">&#34;product_id&#34;</span> <span class="n">property</span><span class="o">=</span><span class="s">&#34;productId&#34;</span> <span class="n">jdbcType</span><span class="o">=</span><span class="s">&#34;BIGINT&#34;</span><span class="o">/&gt;</span>
         <span class="o">&lt;</span><span class="n">result</span> <span class="n">column</span><span class="o">=</span><span class="s">&#34;total&#34;</span> <span class="n">property</span><span class="o">=</span><span class="s">&#34;total&#34;</span> <span class="n">jdbcType</span><span class="o">=</span><span class="s">&#34;INTEGER&#34;</span><span class="o">/&gt;</span>
         <span class="o">&lt;</span><span class="n">result</span> <span class="n">column</span><span class="o">=</span><span class="s">&#34;used&#34;</span> <span class="n">property</span><span class="o">=</span><span class="s">&#34;used&#34;</span> <span class="n">jdbcType</span><span class="o">=</span><span class="s">&#34;INTEGER&#34;</span><span class="o">/&gt;</span>
         <span class="o">&lt;</span><span class="n">result</span> <span class="n">column</span><span class="o">=</span><span class="s">&#34;residue&#34;</span> <span class="n">property</span><span class="o">=</span><span class="s">&#34;residue&#34;</span> <span class="n">jdbcType</span><span class="o">=</span><span class="s">&#34;INTEGER&#34;</span><span class="o">/&gt;</span>
-    <span class="o">&lt;/</span><span class="n">resultMap</span><span class="o">&gt;</span>
+	<span class="o">&lt;/</span><span class="n">resultMap</span><span class="o">&gt;</span>
 
-    <span class="o">&lt;</span><span class="n">update</span> <span class="n">id</span><span class="o">=</span><span class="s">&#34;decrease&#34;</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">update</span> <span class="n">id</span><span class="o">=</span><span class="s">&#34;decrease&#34;</span><span class="o">&gt;</span>
         <span class="n">update</span> <span class="n">t_storage</span>
         <span class="n">set</span> <span class="n">used</span> <span class="o">=</span> <span class="n">used</span> <span class="o">+</span> <span class="err">#</span><span class="o">{</span><span class="n">count</span><span class="o">},</span><span class="n">residue</span> <span class="o">=</span> <span class="n">residue</span> <span class="o">-</span> <span class="err">#</span><span class="o">{</span><span class="n">count</span><span class="o">}</span>
         <span class="n">where</span> <span class="n">product_id</span> <span class="o">=</span> <span class="err">#</span><span class="o">{</span><span class="n">productId</span><span class="o">}</span>
-    <span class="o">&lt;/</span><span class="n">update</span><span class="o">&gt;</span>
+	<span class="o">&lt;/</span><span class="n">update</span><span class="o">&gt;</span>
 <span class="o">&lt;/</span><span class="n">mapper</span><span class="o">&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>Service接口及实现</p>
 <div class="highlight"><div class="chroma">
@@ -20393,13 +20364,12 @@ config {
 <pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.springcloud.alibaba.service</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">StorageService</span> <span class="o">{</span>
-    <span class="c1">//扣减库存
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">decrease</span><span class="o">(</span><span class="n">Long</span> <span class="n">productId</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">count</span><span class="o">);</span>
+	<span class="c1">//扣减库存
+</span><span class="c1"></span>	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">decrease</span><span class="o">(</span><span class="n">Long</span> <span class="n">productId</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">count</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -20439,20 +20409,19 @@ config {
 <span class="nd">@Slf4j</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">StorageServiceImpl</span> <span class="kd">implements</span> <span class="n">StorageService</span> <span class="o">{</span>
 
-    <span class="nd">@Resource</span>
-    <span class="kd">private</span> <span class="n">StorageDao</span> <span class="n">storageDao</span><span class="o">;</span>
+	<span class="nd">@Resource</span>
+	<span class="kd">private</span> <span class="n">StorageDao</span> <span class="n">storageDao</span><span class="o">;</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">decrease</span><span class="o">(</span><span class="n">Long</span> <span class="n">productId</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">count</span><span class="o">)</span> <span class="o">{</span>
+	<span class="nd">@Override</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">decrease</span><span class="o">(</span><span class="n">Long</span> <span class="n">productId</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">count</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;-------&gt;storage-service中扣减库存开始&#34;</span><span class="o">);</span>
         <span class="n">storageDao</span><span class="o">.</span><span class="na">decrease</span><span class="o">(</span><span class="n">productId</span><span class="o">,</span><span class="n">count</span><span class="o">);</span>
         <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;-------&gt;storage-service中扣减库存结束&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>编写Controller</p>
 <div class="highlight"><div class="chroma">
@@ -20493,20 +20462,19 @@ config {
 
 <span class="nd">@RestController</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">StorageController</span> <span class="o">{</span>
-    <span class="nd">@Resource</span>
-    <span class="kd">private</span> <span class="n">StorageService</span> <span class="n">storageService</span><span class="o">;</span>
+	<span class="nd">@Resource</span>
+	<span class="kd">private</span> <span class="n">StorageService</span> <span class="n">storageService</span><span class="o">;</span>
 
-    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&#34;/storage/decrease&#34;</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">decrease</span><span class="o">(</span><span class="n">Long</span> <span class="n">productId</span><span class="o">,</span><span class="n">Integer</span> <span class="n">count</span><span class="o">)</span>
-    <span class="o">{</span>
+	<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&#34;/storage/decrease&#34;</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">decrease</span><span class="o">(</span><span class="n">Long</span> <span class="n">productId</span><span class="o">,</span><span class="n">Integer</span> <span class="n">count</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="n">storageService</span><span class="o">.</span><span class="na">decrease</span><span class="o">(</span><span class="n">productId</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
         <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">200</span><span class="o">,</span><span class="s">&#34;扣减库存成功&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>Config配置</p>
 <div class="highlight"><div class="chroma">
@@ -20754,17 +20722,17 @@ config {
 &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34;
          xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34;
          xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt;
-    &lt;parent&gt;
+	&lt;parent&gt;
         &lt;artifactId&gt;SpringCloud&lt;/artifactId&gt;
         &lt;groupId&gt;com.clover.springcloud&lt;/groupId&gt;
         &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-    &lt;/parent&gt;
-    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+	&lt;/parent&gt;
+	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
-    &lt;artifactId&gt;seata-account-service2003&lt;/artifactId&gt;
+	&lt;artifactId&gt;seata-account-service2003&lt;/artifactId&gt;
 
 
-    &lt;dependencies&gt;
+	&lt;dependencies&gt;
         &lt;!--nacos--&gt;
         &lt;dependency&gt;
             &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
@@ -20820,13 +20788,12 @@ config {
             &lt;artifactId&gt;lombok&lt;/artifactId&gt;
             &lt;optional&gt;true&lt;/optional&gt;
         &lt;/dependency&gt;
-    &lt;/dependencies&gt;
+	&lt;/dependencies&gt;
 
 &lt;/project&gt;
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>编写YML</p>
 <div class="highlight"><div class="chroma">
@@ -20868,35 +20835,34 @@ config {
 </span><span class="w">
 </span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">seata-account-service</span><span class="w">
+</span><span class="w">	</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">seata-account-service</span><span class="w">
 </span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">alibaba</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">alibaba</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">seata</span><span class="p">:</span><span class="w">
 </span><span class="w">        </span><span class="nt">tx-service-group</span><span class="p">:</span><span class="w"> </span><span class="l">clover_tx_group</span><span class="w">
-</span><span class="w">    </span><span class="nt">nacos</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">nacos</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">discovery</span><span class="p">:</span><span class="w">
 </span><span class="w">        </span><span class="nt">server-addr</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:8848</span><span class="w">
 </span><span class="w">  </span><span class="nt">datasource</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">driver-class-name</span><span class="p">:</span><span class="w"> </span><span class="l">com.mysql.jdbc.Driver</span><span class="w">
-</span><span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l">jdbc:mysql://localhost:3306/seata_account</span><span class="w">
-</span><span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">root</span><span class="w">
-</span><span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">xn123456</span><span class="w">
+</span><span class="w">	</span><span class="nt">driver-class-name</span><span class="p">:</span><span class="w"> </span><span class="l">com.mysql.jdbc.Driver</span><span class="w">
+</span><span class="w">	</span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l">jdbc:mysql://localhost:3306/seata_account</span><span class="w">
+</span><span class="w">	</span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">root</span><span class="w">
+</span><span class="w">	</span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">xn123456</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="nt">feign</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">hystrix</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="w">	</span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="nt">logging</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">io</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">io</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">seata</span><span class="p">:</span><span class="w"> </span><span class="l">info</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="nt">mybatis</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">mapperLocations</span><span class="p">:</span><span class="w"> </span><span class="l">classpath:mapper/*.xml</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>创建file.conf文件</p>
 <div class="highlight"><div class="chroma">
@@ -21052,21 +21018,21 @@ config {
   heartbeat = true
   #thread factory for netty
   thread-factory {
-    boss-thread-prefix = &#34;NettyBoss&#34;
-    worker-thread-prefix = &#34;NettyServerNIOWorker&#34;
-    server-executor-thread-prefix = &#34;NettyServerBizHandler&#34;
-    share-boss-worker = false
-    client-selector-thread-prefix = &#34;NettyClientSelector&#34;
-    client-selector-thread-size = 1
-    client-worker-thread-prefix = &#34;NettyClientWorkerThread&#34;
-    # netty boss thread size,will not be used for UDT
-    boss-thread-size = 1
-    #auto default pin or 8
-    worker-thread-size = 8
+	boss-thread-prefix = &#34;NettyBoss&#34;
+	worker-thread-prefix = &#34;NettyServerNIOWorker&#34;
+	server-executor-thread-prefix = &#34;NettyServerBizHandler&#34;
+	share-boss-worker = false
+	client-selector-thread-prefix = &#34;NettyClientSelector&#34;
+	client-selector-thread-size = 1
+	client-worker-thread-prefix = &#34;NettyClientWorkerThread&#34;
+	# netty boss thread size,will not be used for UDT
+	boss-thread-size = 1
+	#auto default pin or 8
+	worker-thread-size = 8
   }
   shutdown {
-    # when destroy server, wait seconds
-    wait = 3
+	# when destroy server, wait seconds
+	wait = 3
   }
   serialization = &#34;seata&#34;
   compressor = &#34;none&#34;
@@ -21088,8 +21054,8 @@ service {
 client {
   async.commit.buffer.limit = 10000
   lock {
-    retry.internal = 10
-    retry.times = 30
+	retry.internal = 10
+	retry.times = 30
   }
   report.retry.count = 5
   tm.commit.retry.count = 1
@@ -21103,36 +21069,36 @@ store {
 
   ## file store
   file {
-    dir = &#34;sessionStore&#34;
+	dir = &#34;sessionStore&#34;
 
-    # branch session size , if exceeded first try compress lockkey, still exceeded throws exceptions
-    max-branch-session-size = 16384
-    # globe session size , if exceeded throws exceptions
-    max-global-session-size = 512
-    # file buffer size , if exceeded allocate new buffer
-    file-write-buffer-cache-size = 16384
-    # when recover batch read size
-    session.reload.read_size = 100
-    # async, sync
-    flush-disk-mode = async
+	# branch session size , if exceeded first try compress lockkey, still exceeded throws exceptions
+	max-branch-session-size = 16384
+	# globe session size , if exceeded throws exceptions
+	max-global-session-size = 512
+	# file buffer size , if exceeded allocate new buffer
+	file-write-buffer-cache-size = 16384
+	# when recover batch read size
+	session.reload.read_size = 100
+	# async, sync
+	flush-disk-mode = async
   }
 
   ## database store
   db {
-    ## the implement of javax.sql.DataSource, such as DruidDataSource(druid)/BasicDataSource(dbcp) etc.
-    datasource = &#34;dbcp&#34;
-    ## mysql/oracle/h2/oceanbase etc.
-    db-type = &#34;mysql&#34;
-    driver-class-name = &#34;com.mysql.jdbc.Driver&#34;
-    url = &#34;jdbc:mysql://127.0.0.1:3306/seata&#34;
-    user = &#34;root&#34;
-    password = &#34;xn123456&#34;
-    min-conn = 1
-    max-conn = 3
-    global.table = &#34;global_table&#34;
-    branch.table = &#34;branch_table&#34;
-    lock-table = &#34;lock_table&#34;
-    query-limit = 100
+	## the implement of javax.sql.DataSource, such as DruidDataSource(druid)/BasicDataSource(dbcp) etc.
+	datasource = &#34;dbcp&#34;
+	## mysql/oracle/h2/oceanbase etc.
+	db-type = &#34;mysql&#34;
+	driver-class-name = &#34;com.mysql.jdbc.Driver&#34;
+	url = &#34;jdbc:mysql://127.0.0.1:3306/seata&#34;
+	user = &#34;root&#34;
+	password = &#34;xn123456&#34;
+	min-conn = 1
+	max-conn = 3
+	global.table = &#34;global_table&#34;
+	branch.table = &#34;branch_table&#34;
+	lock-table = &#34;lock_table&#34;
+	query-limit = 100
   }
 }
 lock {
@@ -21140,11 +21106,11 @@ lock {
   mode = &#34;remote&#34;
 
   local {
-    ## store locks in user&#39;s database
+	## store locks in user&#39;s database
   }
 
   remote {
-    ## store locks in the seata&#39;s server
+	## store locks in the seata&#39;s server
   }
 }
 recovery {
@@ -21179,14 +21145,13 @@ metrics {
 support {
   ## spring
   spring {
-    # auto proxy the DataSource bean
-    datasource.autoproxy = false
+	# auto proxy the DataSource bean
+	datasource.autoproxy = false
   }
 }
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>创建registry.conf文件</p>
 <div class="highlight"><div class="chroma">
@@ -21271,44 +21236,44 @@ support {
   type = &#34;nacos&#34;
 
   nacos {
-    serverAddr = &#34;localhost:8848&#34;
-    namespace = &#34;&#34;
-    cluster = &#34;default&#34;
+	serverAddr = &#34;localhost:8848&#34;
+	namespace = &#34;&#34;
+	cluster = &#34;default&#34;
   }
   eureka {
-    serviceUrl = &#34;http://localhost:8761/eureka&#34;
-    application = &#34;default&#34;
-    weight = &#34;1&#34;
+	serviceUrl = &#34;http://localhost:8761/eureka&#34;
+	application = &#34;default&#34;
+	weight = &#34;1&#34;
   }
   redis {
-    serverAddr = &#34;localhost:6379&#34;
-    db = &#34;0&#34;
+	serverAddr = &#34;localhost:6379&#34;
+	db = &#34;0&#34;
   }
   zk {
-    cluster = &#34;default&#34;
-    serverAddr = &#34;127.0.0.1:2181&#34;
-    session.timeout = 6000
-    connect.timeout = 2000
+	cluster = &#34;default&#34;
+	serverAddr = &#34;127.0.0.1:2181&#34;
+	session.timeout = 6000
+	connect.timeout = 2000
   }
   consul {
-    cluster = &#34;default&#34;
-    serverAddr = &#34;127.0.0.1:8500&#34;
+	cluster = &#34;default&#34;
+	serverAddr = &#34;127.0.0.1:8500&#34;
   }
   etcd3 {
-    cluster = &#34;default&#34;
-    serverAddr = &#34;http://localhost:2379&#34;
+	cluster = &#34;default&#34;
+	serverAddr = &#34;http://localhost:2379&#34;
   }
   sofa {
-    serverAddr = &#34;127.0.0.1:9603&#34;
-    application = &#34;default&#34;
-    region = &#34;DEFAULT_ZONE&#34;
-    datacenter = &#34;DefaultDataCenter&#34;
-    cluster = &#34;default&#34;
-    group = &#34;SEATA_GROUP&#34;
-    addressWaitTime = &#34;3000&#34;
+	serverAddr = &#34;127.0.0.1:9603&#34;
+	application = &#34;default&#34;
+	region = &#34;DEFAULT_ZONE&#34;
+	datacenter = &#34;DefaultDataCenter&#34;
+	cluster = &#34;default&#34;
+	group = &#34;SEATA_GROUP&#34;
+	addressWaitTime = &#34;3000&#34;
   }
   file {
-    name = &#34;file.conf&#34;
+	name = &#34;file.conf&#34;
   }
 }
 
@@ -21317,32 +21282,31 @@ config {
   type = &#34;file&#34;
 
   nacos {
-    serverAddr = &#34;localhost&#34;
-    namespace = &#34;&#34;
+	serverAddr = &#34;localhost&#34;
+	namespace = &#34;&#34;
   }
   consul {
-    serverAddr = &#34;127.0.0.1:8500&#34;
+	serverAddr = &#34;127.0.0.1:8500&#34;
   }
   apollo {
-    app.id = &#34;seata-server&#34;
-    apollo.meta = &#34;http://192.168.1.204:8801&#34;
+	app.id = &#34;seata-server&#34;
+	apollo.meta = &#34;http://192.168.1.204:8801&#34;
   }
   zk {
-    serverAddr = &#34;127.0.0.1:2181&#34;
-    session.timeout = 6000
-    connect.timeout = 2000
+	serverAddr = &#34;127.0.0.1:2181&#34;
+	session.timeout = 6000
+	connect.timeout = 2000
   }
   etcd3 {
-    serverAddr = &#34;http://localhost:2379&#34;
+	serverAddr = &#34;http://localhost:2379&#34;
   }
   file {
-    name = &#34;file.conf&#34;
+	name = &#34;file.conf&#34;
   }
 }
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>编写domain</p>
 <div class="highlight"><div class="chroma">
@@ -21378,19 +21342,18 @@ config {
 <span class="nd">@AllArgsConstructor</span>
 <span class="nd">@NoArgsConstructor</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommonResult</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">code</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">String</span>  <span class="n">message</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">T</span>       <span class="n">data</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Integer</span> <span class="n">code</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">String</span>  <span class="n">message</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">T</span>       <span class="n">data</span><span class="o">;</span>
 
-    <span class="kd">public</span> <span class="nf">CommonResult</span><span class="o">(</span><span class="n">Integer</span> <span class="n">code</span><span class="o">,</span> <span class="n">String</span> <span class="n">message</span><span class="o">)</span>
-    <span class="o">{</span>
+	<span class="kd">public</span> <span class="nf">CommonResult</span><span class="o">(</span><span class="n">Integer</span> <span class="n">code</span><span class="o">,</span> <span class="n">String</span> <span class="n">message</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="k">this</span><span class="o">(</span><span class="n">code</span><span class="o">,</span><span class="n">message</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -21440,32 +21403,31 @@ config {
 <span class="nd">@AllArgsConstructor</span>
 <span class="nd">@NoArgsConstructor</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Account</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">Long</span> <span class="n">id</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Long</span> <span class="n">id</span><span class="o">;</span>
 
-    <span class="cm">/**
+	<span class="cm">/**
 </span><span class="cm">     * 用户id
 </span><span class="cm">     */</span>
-    <span class="kd">private</span> <span class="n">Long</span> <span class="n">userId</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Long</span> <span class="n">userId</span><span class="o">;</span>
 
-    <span class="cm">/**
+	<span class="cm">/**
 </span><span class="cm">     * 总额度
 </span><span class="cm">     */</span>
-    <span class="kd">private</span> <span class="n">BigDecimal</span> <span class="n">total</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">BigDecimal</span> <span class="n">total</span><span class="o">;</span>
 
-    <span class="cm">/**
+	<span class="cm">/**
 </span><span class="cm">     * 已用额度
 </span><span class="cm">     */</span>
-    <span class="kd">private</span> <span class="n">BigDecimal</span> <span class="n">used</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">BigDecimal</span> <span class="n">used</span><span class="o">;</span>
 
-    <span class="cm">/**
+	<span class="cm">/**
 </span><span class="cm">     * 剩余额度
 </span><span class="cm">     */</span>
-    <span class="kd">private</span> <span class="n">BigDecimal</span> <span class="n">residue</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">BigDecimal</span> <span class="n">residue</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>Dao接口及实现</p>
 <div class="highlight"><div class="chroma">
@@ -21492,12 +21454,11 @@ config {
 
 <span class="nd">@Mapper</span>
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">AccountDao</span> <span class="o">{</span>
-    <span class="kt">void</span> <span class="nf">decrease</span><span class="o">(</span><span class="nd">@Param</span><span class="o">(</span><span class="s">&#34;userId&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">userId</span><span class="o">,</span> <span class="nd">@Param</span><span class="o">(</span><span class="s">&#34;money&#34;</span><span class="o">)</span> <span class="n">BigDecimal</span> <span class="n">money</span><span class="o">);</span>
+	<span class="kt">void</span> <span class="nf">decrease</span><span class="o">(</span><span class="nd">@Param</span><span class="o">(</span><span class="s">&#34;userId&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">userId</span><span class="o">,</span> <span class="nd">@Param</span><span class="o">(</span><span class="s">&#34;money&#34;</span><span class="o">)</span> <span class="n">BigDecimal</span> <span class="n">money</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -21528,27 +21489,26 @@ config {
 
 <span class="o">&lt;</span><span class="n">mapper</span> <span class="n">namespace</span><span class="o">=</span><span class="s">&#34;com.clover.springcloud.alibaba.dao.AccountDao&#34;</span><span class="o">&gt;</span>
 
-    <span class="o">&lt;</span><span class="n">resultMap</span> <span class="n">id</span><span class="o">=</span><span class="s">&#34;BaseResultMap&#34;</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;com.clover.springcloud.alibaba.domain.Account&#34;</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">resultMap</span> <span class="n">id</span><span class="o">=</span><span class="s">&#34;BaseResultMap&#34;</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;com.clover.springcloud.alibaba.domain.Account&#34;</span><span class="o">&gt;</span>
         <span class="o">&lt;</span><span class="n">id</span> <span class="n">column</span><span class="o">=</span><span class="s">&#34;id&#34;</span> <span class="n">property</span><span class="o">=</span><span class="s">&#34;id&#34;</span> <span class="n">jdbcType</span><span class="o">=</span><span class="s">&#34;BIGINT&#34;</span><span class="o">/&gt;</span>
         <span class="o">&lt;</span><span class="n">result</span> <span class="n">column</span><span class="o">=</span><span class="s">&#34;user_id&#34;</span> <span class="n">property</span><span class="o">=</span><span class="s">&#34;userId&#34;</span> <span class="n">jdbcType</span><span class="o">=</span><span class="s">&#34;BIGINT&#34;</span><span class="o">/&gt;</span>
         <span class="o">&lt;</span><span class="n">result</span> <span class="n">column</span><span class="o">=</span><span class="s">&#34;total&#34;</span> <span class="n">property</span><span class="o">=</span><span class="s">&#34;total&#34;</span> <span class="n">jdbcType</span><span class="o">=</span><span class="s">&#34;DECIMAL&#34;</span><span class="o">/&gt;</span>
         <span class="o">&lt;</span><span class="n">result</span> <span class="n">column</span><span class="o">=</span><span class="s">&#34;used&#34;</span> <span class="n">property</span><span class="o">=</span><span class="s">&#34;used&#34;</span> <span class="n">jdbcType</span><span class="o">=</span><span class="s">&#34;DECIMAL&#34;</span><span class="o">/&gt;</span>
         <span class="o">&lt;</span><span class="n">result</span> <span class="n">column</span><span class="o">=</span><span class="s">&#34;residue&#34;</span> <span class="n">property</span><span class="o">=</span><span class="s">&#34;residue&#34;</span> <span class="n">jdbcType</span><span class="o">=</span><span class="s">&#34;DECIMAL&#34;</span><span class="o">/&gt;</span>
-    <span class="o">&lt;/</span><span class="n">resultMap</span><span class="o">&gt;</span>
+	<span class="o">&lt;/</span><span class="n">resultMap</span><span class="o">&gt;</span>
 
-    <span class="o">&lt;</span><span class="n">update</span> <span class="n">id</span><span class="o">=</span><span class="s">&#34;decrease&#34;</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">update</span> <span class="n">id</span><span class="o">=</span><span class="s">&#34;decrease&#34;</span><span class="o">&gt;</span>
         <span class="n">UPDATE</span> <span class="n">t_account</span>
         <span class="n">SET</span>
           <span class="n">residue</span> <span class="o">=</span> <span class="n">residue</span> <span class="o">-</span> <span class="err">#</span><span class="o">{</span><span class="n">money</span><span class="o">},</span><span class="n">used</span> <span class="o">=</span> <span class="n">used</span> <span class="o">+</span> <span class="err">#</span><span class="o">{</span><span class="n">money</span><span class="o">}</span>
         <span class="n">WHERE</span>
           <span class="n">user_id</span> <span class="o">=</span> <span class="err">#</span><span class="o">{</span><span class="n">userId</span><span class="o">};</span>
-    <span class="o">&lt;/</span><span class="n">update</span><span class="o">&gt;</span>
+	<span class="o">&lt;/</span><span class="n">update</span><span class="o">&gt;</span>
 
 <span class="o">&lt;/</span><span class="n">mapper</span><span class="o">&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>Service接口及实现</p>
 <div class="highlight"><div class="chroma">
@@ -21576,17 +21536,16 @@ config {
 <span class="kn">import</span> <span class="nn">java.math.BigDecimal</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">AccountService</span> <span class="o">{</span>
-    <span class="cm">/**
+	<span class="cm">/**
 </span><span class="cm">     * 扣减账户余额
 </span><span class="cm">     * @param userId 用户id
 </span><span class="cm">     * @param money 金额
 </span><span class="cm">     */</span>
-    <span class="kt">void</span> <span class="nf">decrease</span><span class="o">(</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;userId&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">userId</span><span class="o">,</span> <span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;money&#34;</span><span class="o">)</span> <span class="n">BigDecimal</span> <span class="n">money</span><span class="o">);</span>
+	<span class="kt">void</span> <span class="nf">decrease</span><span class="o">(</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;userId&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">userId</span><span class="o">,</span> <span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;money&#34;</span><span class="o">)</span> <span class="n">BigDecimal</span> <span class="n">money</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -21626,20 +21585,19 @@ config {
 <span class="nd">@Service</span>
 <span class="nd">@Slf4j</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountServiceImpl</span> <span class="kd">implements</span> <span class="n">AccountService</span><span class="o">{</span>
-    <span class="nd">@Resource</span>
-    <span class="kd">private</span> <span class="n">AccountDao</span> <span class="n">accountDao</span><span class="o">;</span>
+	<span class="nd">@Resource</span>
+	<span class="kd">private</span> <span class="n">AccountDao</span> <span class="n">accountDao</span><span class="o">;</span>
 
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">decrease</span><span class="o">(</span><span class="n">Long</span> <span class="n">userId</span><span class="o">,</span> <span class="n">BigDecimal</span> <span class="n">money</span><span class="o">)</span>
-    <span class="o">{</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">decrease</span><span class="o">(</span><span class="n">Long</span> <span class="n">userId</span><span class="o">,</span> <span class="n">BigDecimal</span> <span class="n">money</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;-------&gt;account-service中扣减账户余额开始&#34;</span><span class="o">);</span>
         <span class="n">accountDao</span><span class="o">.</span><span class="na">decrease</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span> <span class="n">money</span><span class="o">);</span>
         <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;-------&gt;account-service中扣减账户余额结束&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>编写Controller</p>
 <div class="highlight"><div class="chroma">
@@ -21684,20 +21642,19 @@ config {
 <span class="nd">@RestController</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountController</span> <span class="o">{</span>
 
-    <span class="nd">@Resource</span>
-    <span class="kd">private</span> <span class="n">AccountService</span> <span class="n">accountService</span><span class="o">;</span>
+	<span class="nd">@Resource</span>
+	<span class="kd">private</span> <span class="n">AccountService</span> <span class="n">accountService</span><span class="o">;</span>
 
-    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&#34;/account/decrease&#34;</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">decrease</span><span class="o">(</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;userId&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">userId</span><span class="o">,</span> <span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;money&#34;</span><span class="o">)</span> <span class="n">BigDecimal</span> <span class="n">money</span><span class="o">)</span>
-    <span class="o">{</span>
+	<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&#34;/account/decrease&#34;</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">decrease</span><span class="o">(</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;userId&#34;</span><span class="o">)</span> <span class="n">Long</span> <span class="n">userId</span><span class="o">,</span> <span class="nd">@RequestParam</span><span class="o">(</span><span class="s">&#34;money&#34;</span><span class="o">)</span> <span class="n">BigDecimal</span> <span class="n">money</span><span class="o">)</span>
+	<span class="o">{</span>
         <span class="n">accountService</span><span class="o">.</span><span class="na">decrease</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span> <span class="n">money</span><span class="o">);</span>
         <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">200</span><span class="o">,</span><span class="s">&#34;扣减账户余额成功&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-</li>
+</div></li>
 <li>
 <p>Config配置</p>
 <div class="highlight"><div class="chroma">

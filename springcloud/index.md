@@ -4047,7 +4047,7 @@ public class OrderHystirxController {
 }
 ~~~
 
-2. 和业务逻辑混一起？？？混乱
+02. 和业务逻辑混一起？？？混乱
 
 	- **服务降级，客户端去调用服务端，碰上服务端宕机或关闭**
 	- 本次案例服务降级处理是`在客户端80实现完成的`，与服务端8001没有关系只需要为Feign客户端定义的接口添加一个服务降级处理的实现类即可实现解耦
@@ -4065,45 +4065,45 @@ public class OrderHystirxController {
 	- 根据cloud-consumer-feign-hystrix-order80已经有的PaymentHystrixService接口，重新新建一个类(**PaymentFallbackService**)实现该接口，**统一为接口里面的方法进行异常处理**
 	- PaymentFallbackService类实现PaymentFeignClientService接口
 
-	~~~Java
-	package com.clover.springcloud.service;
+		~~~Java
+		package com.clover.springcloud.service;
 
-	import org.springframework.stereotype.Component;
+		import org.springframework.stereotype.Component;
 
-	@Component
-	public class PaymentFallbackService implements PaymentHystrixService {
-		@Override
-		public String paymentInfo_OK(Integer id) {
-			return "服务调用失败，提示来自：cloud-consumer-feign-order80的paymentInfo_OK";
+		@Component
+		public class PaymentFallbackService implements PaymentHystrixService {
+			@Override
+			public String paymentInfo_OK(Integer id) {
+				return "服务调用失败，提示来自：cloud-consumer-feign-order80的paymentInfo_OK";
+			}
+
+			@Override
+			public String paymentInfo_Timeout(Integer id) {
+				return "服务调用失败，提示来自：cloud-consumer-feign-order80的paymentInfo_Timeout";
+			}
 		}
-
-		@Override
-		public String paymentInfo_Timeout(Integer id) {
-			return "服务调用失败，提示来自：cloud-consumer-feign-order80的paymentInfo_Timeout";
-		}
-	}
-	~~~
+		~~~
 	- PaymentFeignClientService接口
 
-	~~~Java
-	package com.clover.springcloud.service;  
+		~~~Java
+		package com.clover.springcloud.service;  
 
-	import org.springframework.cloud.openfeign.FeignClient;  
-	import org.springframework.stereotype.Component;  
-	import org.springframework.web.bind.annotation.GetMapping;  
-	import org.springframework.web.bind.annotation.PathVariable;  
+		import org.springframework.cloud.openfeign.FeignClient;  
+		import org.springframework.stereotype.Component;  
+		import org.springframework.web.bind.annotation.GetMapping;  
+		import org.springframework.web.bind.annotation.PathVariable;  
 
-	@Component  
-	@FeignClient(value = "CLOUD-PROVIDER-HYSTRIX-PAYMENT",fallback = PaymentFallbackService.class)  
-	public interface PaymentHystrixService {  
+		@Component  
+		@FeignClient(value = "CLOUD-PROVIDER-HYSTRIX-PAYMENT",fallback = PaymentFallbackService.class)  
+		public interface PaymentHystrixService {  
 
-	 @GetMapping("/payment/hystrix/ok/{id}")  
-	 public String paymentInfo_OK(@PathVariable("id") Integer id);  
+		 @GetMapping("/payment/hystrix/ok/{id}")  
+		 public String paymentInfo_OK(@PathVariable("id") Integer id);  
 
-		@GetMapping("/payment/hystrix/timeout/{id}")  
-	 public String paymentInfo_Timeout(@PathVariable("id") Integer id);  
-	}
-	~~~
+			@GetMapping("/payment/hystrix/timeout/{id}")  
+		 public String paymentInfo_Timeout(@PathVariable("id") Integer id);  
+		}
+		~~~
 	- 测试
 		- 单个eureka先启动7001
 		- PaymentHystrixMain8001启动
@@ -4741,7 +4741,8 @@ eureka:
 		1. 自己写一个
 			1. 业务需求：通过9527网关访问到外网的百度新闻网址
 			2. 编码
-				1. 业务实现：config
+				
+				01. 业务实现：config
 				
 					~~~Java
 					package com.clover.springcloud.config;
@@ -5734,7 +5735,7 @@ public class ConfigClientController {
 
 1、动态刷新
 1. 修改3355模块
-2. POM引入actuator监控
+02. POM引入actuator监控
 
 	~~~xml
 	<dependency>
@@ -5743,7 +5744,7 @@ public class ConfigClientController {
 	</dependency>
 	~~~
 	
-3. 修改YML，暴露监控端口
+03. 修改YML，暴露监控端口
 
 	~~~yml
 	# 暴露监控端点
@@ -6328,7 +6329,8 @@ public class StreamMQMain8801 {
 ~~~
 
 5、编写业务类
-1. 发送消息接口
+
+01. 发送消息接口
 
 	~~~Java
 	package com.clover.springcloud.service;
@@ -6338,7 +6340,7 @@ public class StreamMQMain8801 {
 	}
 	~~~
 
-2. 发送消息接口实现类
+02. 发送消息接口实现类
 
 	~~~Java
 	package com.clover.springcloud.service.Impl;
@@ -6368,7 +6370,7 @@ public class StreamMQMain8801 {
 	}
 	~~~
 
-3. Controller
+03. Controller
 
 	~~~Java
 	package com.clover.springcloud.controller;
@@ -6895,7 +6897,7 @@ public class ReceiveMessageListener {
 				- Trace:类似于树结构的Span集合，表示一条调用链路，存在唯一标识
 				- span:表示调用链路来源，通俗的理解span就是一次请求信息
 
-2. 服务提供者：cloud-provider-payment8001
+02. 服务提供者：cloud-provider-payment8001
 	
 	~~~xml
 	<!--包含了sleuth+zipkin-->
@@ -6916,7 +6918,7 @@ public class ReceiveMessageListener {
 		  #采样率值介于 0 到 1 之间，1 则表示全部采集
 		 probability: 1
 	~~~ 
-3. 服务消费者(调用方)：cloud-consumer-order80
+03. 服务消费者(调用方)：cloud-consumer-order80
 	~~~xml
 	<!--包含了sleuth+zipkin-->
 	<dependency>
@@ -7847,7 +7849,7 @@ public class ConfigClientController {
 		
 		![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024161542.png)
 		
-	2. 内容
+	02. 内容
 		~~~sql
 		spring.datasource.platform=mysql
 
@@ -7879,9 +7881,9 @@ public class ConfigClientController {
 	
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024164843.png)
 	
-5. Nginx的配置，由它作为负载均衡器
+05. Nginx的配置，由它作为负载均衡器
 	1. 修改nginx的配置文件：`/usr/local/nginx/conf`
-	2. 修改nginx.conf
+	02. 修改nginx.conf
 		
 		![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024172904.png)
 		
@@ -7929,6 +7931,7 @@ public class ConfigClientController {
 4、测试
 - 微服务cloudalibaba-provider-payment9002启动注册进nacos集群
 - 修改YML
+
 	~~~yml
 	server:
 	  port: 9002
@@ -7948,6 +7951,7 @@ public class ConfigClientController {
 		  exposure:
 			include: '*'
 	~~~
+	
 - 结果 
 
 5、高可用小总结
@@ -8189,15 +8193,15 @@ public class FlowLimitController {
 ##### 17.4.2.2、关联
 
 1. 关联是什么？
-- 当关联的资源达到阈值时，就限流自己
-- 当与A关联的资源B达到阀值后，就限流A自己
-- B惹事，A挂了
+	- 当关联的资源达到阈值时，就限流自己
+	- 当与A关联的资源B达到阀值后，就限流A自己
+	- B惹事，A挂了
 
 2. 配置A
 
-![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025212346.png)
+	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211025212346.png)
 
-- 设置效果：当关联资源/testB的QPS阀值超过1时，就限流/testA的Rest访问地址，**当关联资源到阈值后限制配置好的资源名**
+	- 设置效果：当关联资源/testB的QPS阀值超过1时，就限流/testA的Rest访问地址，**当关联资源到阈值后限制配置好的资源名**
 
 3. postman模拟并发密集访问testB
 4. 运行后发现testA挂了
@@ -8283,18 +8287,18 @@ public class FlowLimitController {
 
 ##### 17.5.2.2、测试
 
-1. 代码
+01. 代码
 
-~~~Java
-@GetMapping("/testD")
-public String testD()
-{
-    //暂停几秒钟线程
-    try { TimeUnit.SECONDS.sleep(1); } catch (InterruptedException e) { e.printStackTrace(); }
-    log.info("testD 测试RT");
-    return "------testD";
-}
-~~~
+	~~~Java
+	@GetMapping("/testD")
+	public String testD()
+	{
+		//暂停几秒钟线程
+		try { TimeUnit.SECONDS.sleep(1); } catch (InterruptedException e) { e.printStackTrace(); }
+		log.info("testD 测试RT");
+		return "------testD";
+	}
+	~~~
 
 2.  配置
 	
@@ -8317,7 +8321,7 @@ public String testD()
 
 ##### 17.5.2.4、测试
 
-1. 代码
+01. 代码
 	~~~Java
 		@GetMapping("/testD")
 	public String testD()
@@ -8347,7 +8351,7 @@ public String testD()
 
 ##### 17.5.2.6、测试
 
-1. 代码
+01. 代码
 	~~~Java
 	@GetMapping("/testE")
 	public String testE()
@@ -8456,7 +8460,8 @@ public String dealHandler_testHotKey(String p1,String p2,BlockException exceptio
 1. 启动Nacos成功
 2. 启动Sentinel成功：java -jar sentinel-dashboard-1.7.0.jar
 3. 修改cloud-alibaba-sentinel-service8401
-	1. 修改POM，引入我们自定义的实体类
+	
+	01. 修改POM，引入我们自定义的实体类
 		~~~xml
 		<dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->
 			<groupId>com.clover.springcloud</groupId>
@@ -8464,7 +8469,7 @@ public String dealHandler_testHotKey(String p1,String p2,BlockException exceptio
 			<version>${project.version}</version>
 		</dependency>
 		~~~
-	2. 增加一个业务类：RateLimitController
+	02. 增加一个业务类：RateLimitController
 		~~~Java
 		package com.clover.springcloud.alibaba.controller;
 
@@ -8505,7 +8510,7 @@ public String dealHandler_testHotKey(String p1,String p2,BlockException exceptio
 
 #### 17.8.2、按照URL地址限流+后续处理
 1. 通过访问的URL来限流，会返回Sentinel自带默认的限流处理信息
-2. 修改业务类RateLimitController
+02. 修改业务类RateLimitController
 	~~~Java
 	@GetMapping("/rateLimit/byUrl")
 		@SentinelResource(value = "byUrl")
@@ -8535,7 +8540,7 @@ public String dealHandler_testHotKey(String p1,String p2,BlockException exceptio
 #### 17.8.4、客户自定义限流处理逻辑
 
 1. 创建CustomerBlockHandler类用于自定义限流处理逻辑
-2. 自定义限流处理类：CustomerBlockHandler
+02. 自定义限流处理类：CustomerBlockHandler
 	~~~Java
 	package com.clover.springcloud.alibaba.myhandler;
 
@@ -8582,7 +8587,7 @@ sentinel整合ribbon+openFeign+fallback
 1. 启动nacos和sentinel
 2. 提供者9003/9004
 	1. 新建cloud-alibaba-provider-payment9003/9004两个一样的做法
-	2. 修改POM
+	02. 修改POM
 		~~~xml
 		<?xml version="1.0" encoding="UTF-8"?>
 		<project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -8632,7 +8637,7 @@ sentinel整合ribbon+openFeign+fallback
 			</dependencies>
 		</project>
 		~~~
-	3. 编写YML：记得修改不同的端口号
+	03. 编写YML：记得修改不同的端口号
 		~~~yml
 		server:
 		  port: 9003
@@ -8651,7 +8656,7 @@ sentinel整合ribbon+openFeign+fallback
 			  exposure:
 				include: '*'		
 		~~~
-	4. 编写主启动类
+	04. 编写主启动类
 		~~~Java
 		package com.clover.springcloud.alibaba;
 
@@ -8668,7 +8673,7 @@ sentinel整合ribbon+openFeign+fallback
 			} 
 		}		
 		~~~
-	5. 编写业务类
+	05. 编写业务类
 		~~~Java
 		package com.clover.springcloud.alibaba.controller;
 
@@ -8707,7 +8712,7 @@ sentinel整合ribbon+openFeign+fallback
 	6. 测试地址：http://localhost:9003/paymentSQL/1
 3. 消费者84
 	1. 新建cloud-alibaba-consumer-nacos-order84
-	2. 修改POM	
+	02. 修改POM	
 		~~~xml
 		<?xml version="1.0" encoding="UTF-8"?>
 		<project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -8762,7 +8767,7 @@ sentinel整合ribbon+openFeign+fallback
 			</dependencies>
 		</project>
 		~~~
-	3. 编写YML
+	03. 编写YML
 		~~~yml
 		server:
 		  port: 84
@@ -8787,7 +8792,7 @@ sentinel整合ribbon+openFeign+fallback
 		service-url:
 		  nacos-user-service: http://nacos-payment-provider
 		~~~
-	4. 编写主启动类
+	04. 编写主启动类
 		~~~Java
 		package com.clover.springcloud.alibaba;
 
@@ -8805,7 +8810,8 @@ sentinel整合ribbon+openFeign+fallback
 		}
 		~~~
 	5. 编写业务类
-		1. ApplicationContextConfig
+		
+		01. ApplicationContextConfig
 			~~~Java
 			package com.clover.springcloud.alibaba.config;
 
@@ -8832,7 +8838,7 @@ sentinel整合ribbon+openFeign+fallback
 				- fallback管运行异常
 				- blockHandler管配置违规
 			3. 测试地址：http://localhost:84/consumer/fallback/1
-			4. 没有任何配置
+			04. 没有任何配置
 				- 给客户error页面，不友好
 				~~~Java
 				package com.clover.springcloud.alibaba.controller;
@@ -8872,7 +8878,7 @@ sentinel整合ribbon+openFeign+fallback
 					}
 				}
 				~~~
-			5. 只配置fallback
+			05. 只配置fallback
 				- 本例sentinel无配置
 				
 				![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026202550.png)
@@ -8927,7 +8933,7 @@ sentinel整合ribbon+openFeign+fallback
 					}
 				}
 				~~~
-			6. 只配置blockHandler
+			06. 只配置blockHandler
 				- 本例sentinel需要配置，随意配置哪一个都可以
 				
 				![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026203447.png)
@@ -8989,7 +8995,7 @@ sentinel整合ribbon+openFeign+fallback
 				}
 				~~~
 				
-			7. fallback和blockHandler都配置
+			07. fallback和blockHandler都配置
 				- 本例sentinel需要配置，随意配置哪一个都可以
 				
 				![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026204231.png)
@@ -9064,23 +9070,25 @@ sentinel整合ribbon+openFeign+fallback
 #### 17.9.2、Feign系列
 
 1. 修改84模块
-2. 修改POM
-~~~xml
-<!--SpringCloud openfeign -->
-<dependency>
-	<groupId>org.springframework.cloud</groupId>
-	<artifactId>spring-cloud-starter-openfeign</artifactId>
-</dependency>
-~~~
-3. 修改YML：激活Sentinel对Feign的支持
-~~~yml
-# 激活Sentinel对Feign的支持
-feign:
-  sentinel:
-    enabled: true  
-~~~
+02. 修改POM
+	~~~xml
+	<!--SpringCloud openfeign -->
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-openfeign</artifactId>
+	</dependency>
+	~~~
+03. 修改YML：激活Sentinel对Feign的支持
+	~~~yml
+	# 激活Sentinel对Feign的支持
+	feign:
+	  sentinel:
+		enabled: true  
+	~~~
+
 4. 修改业务类
-	1. 带`@FeignClient注解的业务接口`
+	
+	01. 带`@FeignClient注解的业务接口`
 	
 		~~~Java
 		package com.clover.springcloud.alibaba.service;
@@ -9098,7 +9106,7 @@ feign:
 		}
 		~~~
 		
-	2. **fallback = PaymentFallbackService.class**
+	02. **fallback = PaymentFallbackService.class**
 		~~~Java
 		package com.clover.springcloud.alibaba.service;
 
@@ -9115,7 +9123,7 @@ feign:
 		}
 		~~~
 	
-	3. 修改controller
+	03. 修改controller
 		~~~Java
 		//==================OpenFeign
 		@Resource
@@ -9163,7 +9171,7 @@ public class OrderNacosMain84 {
 #### 17.10.1、持久化步骤
 
 1. 修改cloud-alibaba-sentinel-service8401
-2. 修改POM
+02. 修改POM
 	~~~xml
 	<!--SpringCloud ailibaba sentinel-datasource-nacos -->
 	<dependency>
@@ -9369,7 +9377,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	- `seata_account`：存储账户信息的数据库
 4. 按照上述3库分别建对应业务表
 	- seata_order库下建t_order表
-		~~~sql
+		~~~SQL
 		CREATE TABLE t_order (
 		  `id` BIGINT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		  `user_id` BIGINT(11) DEFAULT NULL COMMENT '用户id',
@@ -9382,7 +9390,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 		SELECT * FROM t_order;	
 		~~~
 	- seata_storage库下建t_storage 表
-		~~~sql
+		~~~SQL
 		CREATE TABLE t_storage (
 		 `id` BIGINT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		 `product_id` BIGINT(11) DEFAULT NULL COMMENT '产品id',
@@ -9398,7 +9406,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 		SELECT * FROM t_storage;
 		~~~
 	- seata_account库下建t_account 
-		~~~sql
+		~~~SQL
 		CREATE TABLE t_account (
 		  `id` BIGINT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'id',
 		  `user_id` BIGINT(11) DEFAULT NULL COMMENT '用户id',
@@ -9414,7 +9422,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 5. 按照上述3库分别建对应的回滚日志表
 	- 订单-库存-账户3个库下都需要建各自的回滚日志表
 	- \seata-server-0.9.0\seata\conf目录下的db_undo_log.sql
-		~~~sql
+		~~~SQL
 		-- the table to store seata xid data
 		-- 0.7.0+ add context
 		-- you must to init this sql for you business databese. the seata server not need it.
@@ -9445,7 +9453,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 
 #### 18.5.2、新建订单Order-Module
 1. 新建seata-order-service2001
-2. 修改POM
+02. 修改POM
 	~~~pom
 	<?xml version="1.0" encoding="UTF-8"?>
 	<project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -9528,7 +9536,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	</project>
 	~~~
 	
-3. 编写YML
+03. 编写YML
 	~~~yml
 	server:
 	  port: 2001
@@ -9563,7 +9571,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	  mapperLocations: classpath:mapper/*.xml
 	~~~
 	
-4. 创建file.conf文件
+04. 创建file.conf文件
 	~~~conf
 	transport {
 	  # tcp udt unix-domain-socket
@@ -9707,7 +9715,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	}
 	~~~
 	
-5. 创建registry.conf文件
+05. 创建registry.conf文件
 	~~~conf
 	registry {
 	  # file 、nacos 、eureka、redis、zk、consul、etcd3、sofa
@@ -9784,7 +9792,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	}
 	~~~
 	
-6. 编写domain
+06. 编写domain
 	~~~Java
 	package com.clover.springcloud.alibaba.domain;
 
@@ -9836,7 +9844,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 		}
 	}
 	~~~
-7. Dao接口及实现
+07. Dao接口及实现
 	~~~Java
 	package com.clover.springcloud.alibaba.dao;
 
@@ -9854,7 +9862,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	}
 	~~~
 	
-- resources文件夹下新建mapper文件夹后添加
+	- resources文件夹下新建mapper文件夹后添加
 	
 	~~~xml
 	<?xml version="1.0" encoding="UTF-8" ?>
@@ -9884,7 +9892,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	</mapper>
 	~~~
 	
-8. Service接口及实现
+08. Service接口及实现
 	~~~Java
 	package com.clover.springcloud.alibaba.service;
 
@@ -10090,7 +10098,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 
 #### 18.5.3、新建库存Storage-Module
 1. 新建seata-storage-service2002
-2. 修改POM
+02. 修改POM
 	~~~pom
 	<?xml version="1.0" encoding="UTF-8"?>
 	<project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -10167,7 +10175,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	</project>
 	~~~
 	
-3. 编写YML
+03. 编写YML
 	~~~yml
 	server:
 	  port: 2002
@@ -10202,7 +10210,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	  mapperLocations: classpath:mapper/*.xml
 	~~~
 	
-4. 创建file.conf文件
+04. 创建file.conf文件
 	~~~conf
 	transport {
 	  # tcp udt unix-domain-socket
@@ -10277,7 +10285,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	}
 	~~~
 	
-5. 创建registry.conf文件
+05. 创建registry.conf文件
 	~~~conf
 	registry {
 	  # file 、nacos 、eureka、redis、zk、consul、etcd3、sofa
@@ -10354,7 +10362,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	}
 	~~~
 	
-6. 编写domain
+06. 编写domain
 	~~~Java
 	package com.clover.springcloud.alibaba.domain;
 
@@ -10412,7 +10420,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	}
 	~~~
 	
-7. Dao接口及实现
+07. Dao接口及实现
 	~~~Java
 	package com.clover.springcloud.alibaba.dao;
 
@@ -10450,7 +10458,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	</mapper>
 	~~~
 	
-8. Service接口及实现
+08. Service接口及实现
 	~~~Java
 	package com.clover.springcloud.alibaba.service;
 
@@ -10486,7 +10494,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	}
 	~~~
 
-9. 编写Controller
+09. 编写Controller
 	~~~Java
 	package com.clover.springcloud.alibaba.controller;
 
@@ -10592,7 +10600,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 
 #### 18.5.4、新建账户Account-Module
 1. 新建seata-account-service2003
-2. 修改POM
+02. 修改POM
 	~~~pom
 	<?xml version="1.0" encoding="UTF-8"?>
 	<project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -10669,7 +10677,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	</project>
 	~~~
 	
-3. 编写YML
+03. 编写YML
 	~~~yml
 	server:
 	  port: 2003
@@ -10703,7 +10711,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	  mapperLocations: classpath:mapper/*.xml
 	~~~
 	
-4. 创建file.conf文件
+04. 创建file.conf文件
 	~~~conf
 	transport {
 	  # tcp udt unix-domain-socket
@@ -10847,7 +10855,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	}
 	~~~
 	
-5. 创建registry.conf文件
+05. 创建registry.conf文件
 	~~~conf
 	registry {
 	  # file 、nacos 、eureka、redis、zk、consul、etcd3、sofa
@@ -10924,7 +10932,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	}
 	~~~
 	
-6. 编写domain
+06. 编写domain
 	~~~Java
 	package com.clover.springcloud.alibaba.domain;
 
@@ -10984,7 +10992,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	}
 	~~~
 
-7. Dao接口及实现
+07. Dao接口及实现
 	~~~Java
 	package com.clover.springcloud.alibaba.dao;
 
@@ -11024,7 +11032,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	</mapper>
 	~~~
 	
-8. Service接口及实现
+08. Service接口及实现
 	~~~Java
 	package com.clover.springcloud.alibaba.service;
 
@@ -11068,7 +11076,7 @@ Seata是一款开源的分布式事务解决方案，致力于在微服务架构
 	}
 	~~~
 
-9. 编写Controller
+09. 编写Controller
 	~~~Java
 	package com.clover.springcloud.alibaba.controller;
 
