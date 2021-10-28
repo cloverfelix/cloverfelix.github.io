@@ -4742,7 +4742,7 @@ eureka:
 			1. 业务需求：通过9527网关访问到外网的百度新闻网址
 			2. 编码
 				1. 业务实现：config
-
+				
 					~~~Java
 					package com.clover.springcloud.config;
 
@@ -4769,6 +4769,7 @@ eureka:
 						}
 					}
 					~~~
+					
 				
 ### 10.5、通过微服务名实现动态路由
 1. 默认情况下Gateway会根据注册中心注册的服务列表，以注册中心上微服务名为路径创建**动态路由进行转发，从而实现动态路由的功能**
@@ -5741,6 +5742,7 @@ public class ConfigClientController {
 		<artifactId>spring-boot-starter-actuator</artifactId>
 	</dependency>
 	~~~
+	
 3. 修改YML，暴露监控端口
 
 	~~~yml
@@ -5751,6 +5753,7 @@ public class ConfigClientController {
 		  exposure:
 			include: "*"
 	~~~
+	
 4. 业务类Controller上加 **@RefreshScope注解**
 5. 此时修改GitHub-->访问3344-->访问3355
 	- 但是，此时3355并没有改变
@@ -6771,7 +6774,7 @@ public class ReceiveMessageListener {
 4. 8802/8803都变成相同组，group两个相同
 	-   **group: cloverA**
 	-   8802修改YML
-		~~~xml
+		~~~yml
 		server:
 		  port: 8802
 
@@ -6807,7 +6810,7 @@ public class ReceiveMessageListener {
 			prefer-ip-address: true     # 访问的路径变为IP地址
 		~~~
 	-   8803修改YML
-		~~~xml
+		~~~yml
 		server:
 		  port: 8802
 
@@ -7811,7 +7814,6 @@ public class ConfigClientController {
 
 			INSERT INTO roles (username, role) VALUES ('nacos', 'ROLE_ADMIN');
 			~~~
-			
 		- nacos-server-1.1.4\nacos\conf目录下找到application.properties
 			~~~sql
 			spring.datasource.platform=mysql
@@ -7821,7 +7823,6 @@ public class ConfigClientController {
 			db.user=root
 			db.password=xn123456
 			~~~
-			
  3. 启动Nacos，可以看到是个全新的空记录界面，以前是记录进derby
 
 #### 16.5.3、Linux版Nacos+MySQL生产环境配置
@@ -7872,7 +7873,7 @@ public class ConfigClientController {
 		
 		![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024162100.png)
 		
-		`注意：此处要注意空格，格式对其，不要写错了！！！！`
+		`注意：此处要注意空格，格式对其，不要写错了！！！！-Dserver.port=${PORT}1`
 		
 	4. 执行方式
 	
@@ -7929,7 +7930,7 @@ public class ConfigClientController {
 - 微服务cloudalibaba-provider-payment9002启动注册进nacos集群
 - 修改YML
 	~~~yml
-		server:
+	server:
 	  port: 9002
 
 	spring:
@@ -7947,7 +7948,7 @@ public class ConfigClientController {
 		  exposure:
 			include: '*'
 	~~~
-- 结果
+- 结果 
 
 5、高可用小总结
 
@@ -8823,8 +8824,8 @@ sentinel整合ribbon+openFeign+fallback
 				}
 			}
 			~~~
-		2. **CircleBreakerController **
-			1. 修改后轻重启微服务
+		2. **CircleBreakerController**
+			1. 修改后请重启微服务
 				- 热部署对java代码级生效及时
 				- 对@SentinelResource注解内属性，有时效果不好
 			2. 目的
@@ -9080,53 +9081,56 @@ feign:
 ~~~
 4. 修改业务类
 	1. 带`@FeignClient注解的业务接口`
-	~~~Java
-	package com.clover.springcloud.alibaba.service;
+	
+		~~~Java
+		package com.clover.springcloud.alibaba.service;
 
-	import com.clover.springcloud.entities.CommonResult;
-	import com.clover.springcloud.entities.Payment;
-	import org.springframework.cloud.openfeign.FeignClient;
-	import org.springframework.web.bind.annotation.GetMapping;
-	import org.springframework.web.bind.annotation.PathVariable;
+		import com.clover.springcloud.entities.CommonResult;
+		import com.clover.springcloud.entities.Payment;
+		import org.springframework.cloud.openfeign.FeignClient;
+		import org.springframework.web.bind.annotation.GetMapping;
+		import org.springframework.web.bind.annotation.PathVariable;
 
-	@FeignClient(value = "nacos-payment-provider",fallback = PaymentFallbackService.class)//调用中关闭9003服务提供者
-	public interface PaymentService {
-		@GetMapping(value = "/paymentSQL/{id}")
-		public CommonResult<Payment> paymentSQL(@PathVariable("id") Long id);
-	}
-	~~~
+		@FeignClient(value = "nacos-payment-provider",fallback = PaymentFallbackService.class)//调用中关闭9003服务提供者
+		public interface PaymentService {
+			@GetMapping(value = "/paymentSQL/{id}")
+			public CommonResult<Payment> paymentSQL(@PathVariable("id") Long id);
+		}
+		~~~
+		
 	2. **fallback = PaymentFallbackService.class**
-	~~~Java
-	package com.clover.springcloud.alibaba.service;
+		~~~Java
+		package com.clover.springcloud.alibaba.service;
 
-	import com.clover.springcloud.entities.CommonResult;
-	import com.clover.springcloud.entities.Payment;
-	import org.springframework.stereotype.Component;
+		import com.clover.springcloud.entities.CommonResult;
+		import com.clover.springcloud.entities.Payment;
+		import org.springframework.stereotype.Component;
 
-	@Component
-	public class PaymentFallbackService implements PaymentService {
-		@Override
-		public CommonResult<Payment> paymentSQL(Long id) {
-			return new CommonResult<>(444, "服务降级返回,没有该流水信息", new Payment(id, "errorSerial......"));
+		@Component
+		public class PaymentFallbackService implements PaymentService {
+			@Override
+			public CommonResult<Payment> paymentSQL(Long id) {
+				return new CommonResult<>(444, "服务降级返回,没有该流水信息", new Payment(id, "errorSerial......"));
+			}
 		}
-	}
-	~~~
+		~~~
+	
 	3. 修改controller
-	~~~Java
-	//==================OpenFeign
-	@Resource
-	private PaymentService paymentService;
+		~~~Java
+		//==================OpenFeign
+		@Resource
+		private PaymentService paymentService;
 
-	@GetMapping(value = "/consumer/openfeign/{id}")
-	public CommonResult<Payment> paymentSQL(@PathVariable("id") Long id)
-	{
-		if(id == 4)
+		@GetMapping(value = "/consumer/openfeign/{id}")
+		public CommonResult<Payment> paymentSQL(@PathVariable("id") Long id)
 		{
-			throw new RuntimeException("没有该id");
+			if(id == 4)
+			{
+				throw new RuntimeException("没有该id");
+			}
+			return paymentService.paymentSQL(id);
 		}
-		return paymentService.paymentSQL(id);
-	}
-	~~~
+		~~~
 	
 5. 修改主启动类：添加 **@EnableFeignClients** 启动Feign的功能
 ~~~Java
@@ -9169,71 +9173,72 @@ public class OrderNacosMain84 {
 	~~~
 3. 修改YML
 	- 添加Nacos数据源配置
-	~~~yml
-	spring:
-	  cloud:
-		sentinel:
-		  datasource:
-			ds1:
-			  nacos:
-				server-addr: localhost:8848
-				dataId: ${spring.application.name}
-				groupId: DEFAULT_GROUP
-				data-type: json
-				rule-type: flow
-	~~~
+		~~~yml
+		spring:
+		  cloud:
+			sentinel:
+			  datasource:
+				ds1:
+				  nacos:
+					server-addr: localhost:8848
+					dataId: ${spring.application.name}
+					groupId: DEFAULT_GROUP
+					data-type: json
+					rule-type: flow
+		~~~
 	
-	~~~yml
-	server:
-	  port: 8401
+		~~~yml
+		server:
+		  port: 8401
 
-	spring:
-	  application:
-		name: cloud-alibaba-sentinel-service
-	  cloud:
-		nacos:
-		  discovery:
-			#Nacos服务注册中心地址
-			server-addr: localhost:8848
-		sentinel:
-		  transport:
-			#配置Sentinel dashboard地址
-			dashboard: localhost:8080
-			#默认8719端口，假如被占用会自动从8719开始依次+1扫描,直至找到未被占用的端口
-			port: 8719
-		  datasource:
-			ds1:
-			  nacos:
+		spring:
+		  application:
+			name: cloud-alibaba-sentinel-service
+		  cloud:
+			nacos:
+			  discovery:
+				#Nacos服务注册中心地址
 				server-addr: localhost:8848
-				dataId: cloud-alibaba-sentinel-service
-				groupId: DEFAULT_GROUP
-				data-type: json
-				rule-type: flow
+			sentinel:
+			  transport:
+				#配置Sentinel dashboard地址
+				dashboard: localhost:8080
+				#默认8719端口，假如被占用会自动从8719开始依次+1扫描,直至找到未被占用的端口
+				port: 8719
+			  datasource:
+				ds1:
+				  nacos:
+					server-addr: localhost:8848
+					dataId: cloud-alibaba-sentinel-service
+					groupId: DEFAULT_GROUP
+					data-type: json
+					rule-type: flow
 
-	management:
-	  endpoints:
-		web:
-		  exposure:
-			include: '*'
-	~~~
+		management:
+		  endpoints:
+			web:
+			  exposure:
+				include: '*'
+		~~~
+	
 4. 添加Nacos业务规则配置
 	
 	![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026213636.png)
 	
 	- 内容解析
-	~~~json
-	[
-		{
-			"resource": "/rateLimit/byUrl",
-			"limitApp": "default",
-			"grade": 1,
-			"count": 1,
-			"strategy": 0,
-			"controlBehavior": 0,
-			"clusterMode": false
-		}
-	]
-	~~~
+		~~~json
+		[
+			{
+				"resource": "/rateLimit/byUrl",
+				"limitApp": "default",
+				"grade": 1,
+				"count": 1,
+				"strategy": 0,
+				"controlBehavior": 0,
+				"clusterMode": false
+			}
+		]
+		~~~
 	
 	- resource：资源名称；
 	- limitApp：来源应用；

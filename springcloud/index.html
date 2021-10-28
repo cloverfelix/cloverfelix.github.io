@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/springcloud\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  94015 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringCloud","wordcount":  94428 ,
         "url": "https:\/\/cloverfelix.github.io\/springcloud\/","datePublished": "2021-10-14T10:38:04+08:00","dateModified": "2021-10-14T10:38:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Springcloud</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/springcloud/"><i class="far fa-folder fa-fw"></i>SpringCloud</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 94015 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 188 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-14">2021-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 94428 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 189 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -13006,40 +13006,40 @@ eureka:
 </span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml">server:
-  port: 8802
-
-spring:
-  application:
-	name: cloud-stream-consumer
-  cloud:
-      stream:
-        binders: # 在此处配置要绑定的rabbitmq的服务信息；
-          defaultRabbit: # 表示定义的名称，用于于binding整合
-            type: rabbit # 消息组件类型
-            environment: # 设置rabbitmq的相关的环境配置
-              spring:
-                rabbitmq:
-                  host: localhost
-                  port: 5672
-                  username: guest
-                  password: guest
-        bindings: # 服务的整合处理
-          input: # 这个名字是一个通道的名称，在分析具体源代码的时候会进行说明
-            destination: studyExchange # 表示要使用的Exchange名称定义
-            content-type: application/json # 设置消息类型，本次为对象json，如果是文本则设置“text/plain”
-       binder: defaultRabbit # 设置要绑定的消息服务的具体设置
-             group: cloverA
-eureka:
-  client: # 客户端进行Eureka注册的配置
-	service-url:
-      defaultZone: http://localhost:7001/eureka
-  instance:
-	lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认是30秒）
-	lease-expiration-duration-in-seconds: 5 # 如果现在超过了5秒的间隔（默认是90秒）
-	instance-id: receive-8802.com  # 在信息列表时显示主机名称
-	prefer-ip-address: true     # 访问的路径变为IP地址
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8802</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-stream-consumer</span><span class="w">
+</span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">stream</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">binders</span><span class="p">:</span><span class="w"> </span><span class="c"># 在此处配置要绑定的rabbitmq的服务信息；</span><span class="w">
+</span><span class="w">          </span><span class="nt">defaultRabbit</span><span class="p">:</span><span class="w"> </span><span class="c"># 表示定义的名称，用于于binding整合</span><span class="w">
+</span><span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">rabbit</span><span class="w"> </span><span class="c"># 消息组件类型</span><span class="w">
+</span><span class="w">            </span><span class="nt">environment</span><span class="p">:</span><span class="w"> </span><span class="c"># 设置rabbitmq的相关的环境配置</span><span class="w">
+</span><span class="w">              </span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">                </span><span class="nt">rabbitmq</span><span class="p">:</span><span class="w">
+</span><span class="w">                  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l">localhost</span><span class="w">
+</span><span class="w">                  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">5672</span><span class="w">
+</span><span class="w">                  </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">guest</span><span class="w">
+</span><span class="w">                  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">guest</span><span class="w">
+</span><span class="w">        </span><span class="nt">bindings</span><span class="p">:</span><span class="w"> </span><span class="c"># 服务的整合处理</span><span class="w">
+</span><span class="w">          </span><span class="nt">input</span><span class="p">:</span><span class="w"> </span><span class="c"># 这个名字是一个通道的名称，在分析具体源代码的时候会进行说明</span><span class="w">
+</span><span class="w">            </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l">studyExchange</span><span class="w"> </span><span class="c"># 表示要使用的Exchange名称定义</span><span class="w">
+</span><span class="w">            </span><span class="nt">content-type</span><span class="p">:</span><span class="w"> </span><span class="l">application/json</span><span class="w"> </span><span class="c"># 设置消息类型，本次为对象json，如果是文本则设置“text/plain”</span><span class="w">
+</span><span class="w">       </span><span class="nt">binder</span><span class="p">:</span><span class="w"> </span><span class="l">defaultRabbit</span><span class="w"> </span><span class="c"># 设置要绑定的消息服务的具体设置</span><span class="w">
+</span><span class="w">             </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">cloverA</span><span class="w">
+</span><span class="w"></span><span class="nt">eureka</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">client</span><span class="p">:</span><span class="w"> </span><span class="c"># 客户端进行Eureka注册的配置</span><span class="w">
+</span><span class="w">	</span><span class="nt">service-url</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">defaultZone</span><span class="p">:</span><span class="w"> </span><span class="l">http://localhost:7001/eureka</span><span class="w">
+</span><span class="w">  </span><span class="nt">instance</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">lease-renewal-interval-in-seconds</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c"># 设置心跳的时间间隔（默认是30秒）</span><span class="w">
+</span><span class="w">	</span><span class="nt">lease-expiration-duration-in-seconds</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="c"># 如果现在超过了5秒的间隔（默认是90秒）</span><span class="w">
+</span><span class="w">	</span><span class="nt">instance-id</span><span class="p">:</span><span class="w"> </span><span class="l">receive-8802.com </span><span class="w"> </span><span class="c"># 在信息列表时显示主机名称</span><span class="w">
+</span><span class="w">	</span><span class="nt">prefer-ip-address</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">     </span><span class="c"># 访问的路径变为IP地址</span><span class="w">
+</span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>8803修改YML
@@ -13080,40 +13080,40 @@ eureka:
 </span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml">server:
-  port: 8802
-
-spring:
-  application:
-	name: cloud-stream-consumer
-  cloud:
-      stream:
-        binders: # 在此处配置要绑定的rabbitmq的服务信息；
-          defaultRabbit: # 表示定义的名称，用于于binding整合
-            type: rabbit # 消息组件类型
-            environment: # 设置rabbitmq的相关的环境配置
-              spring:
-                rabbitmq:
-                  host: localhost
-                  port: 5672
-                  username: guest
-                  password: guest
-        bindings: # 服务的整合处理
-          input: # 这个名字是一个通道的名称，在分析具体源代码的时候会进行说明
-            destination: studyExchange # 表示要使用的Exchange名称定义
-            content-type: application/json # 设置消息类型，本次为对象json，如果是文本则设置“text/plain”
-       binder: defaultRabbit # 设置要绑定的消息服务的具体设置
-             group: cloverA
-eureka:
-  client: # 客户端进行Eureka注册的配置
-	service-url:
-      defaultZone: http://localhost:7001/eureka
-  instance:
-	lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认是30秒）
-	lease-expiration-duration-in-seconds: 5 # 如果现在超过了5秒的间隔（默认是90秒）
-	instance-id: receive-8802.com  # 在信息列表时显示主机名称
-	prefer-ip-address: true     # 访问的路径变为IP地址
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8802</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-stream-consumer</span><span class="w">
+</span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">stream</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">binders</span><span class="p">:</span><span class="w"> </span><span class="c"># 在此处配置要绑定的rabbitmq的服务信息；</span><span class="w">
+</span><span class="w">          </span><span class="nt">defaultRabbit</span><span class="p">:</span><span class="w"> </span><span class="c"># 表示定义的名称，用于于binding整合</span><span class="w">
+</span><span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">rabbit</span><span class="w"> </span><span class="c"># 消息组件类型</span><span class="w">
+</span><span class="w">            </span><span class="nt">environment</span><span class="p">:</span><span class="w"> </span><span class="c"># 设置rabbitmq的相关的环境配置</span><span class="w">
+</span><span class="w">              </span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">                </span><span class="nt">rabbitmq</span><span class="p">:</span><span class="w">
+</span><span class="w">                  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l">localhost</span><span class="w">
+</span><span class="w">                  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">5672</span><span class="w">
+</span><span class="w">                  </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">guest</span><span class="w">
+</span><span class="w">                  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">guest</span><span class="w">
+</span><span class="w">        </span><span class="nt">bindings</span><span class="p">:</span><span class="w"> </span><span class="c"># 服务的整合处理</span><span class="w">
+</span><span class="w">          </span><span class="nt">input</span><span class="p">:</span><span class="w"> </span><span class="c"># 这个名字是一个通道的名称，在分析具体源代码的时候会进行说明</span><span class="w">
+</span><span class="w">            </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l">studyExchange</span><span class="w"> </span><span class="c"># 表示要使用的Exchange名称定义</span><span class="w">
+</span><span class="w">            </span><span class="nt">content-type</span><span class="p">:</span><span class="w"> </span><span class="l">application/json</span><span class="w"> </span><span class="c"># 设置消息类型，本次为对象json，如果是文本则设置“text/plain”</span><span class="w">
+</span><span class="w">       </span><span class="nt">binder</span><span class="p">:</span><span class="w"> </span><span class="l">defaultRabbit</span><span class="w"> </span><span class="c"># 设置要绑定的消息服务的具体设置</span><span class="w">
+</span><span class="w">             </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">cloverA</span><span class="w">
+</span><span class="w"></span><span class="nt">eureka</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">client</span><span class="p">:</span><span class="w"> </span><span class="c"># 客户端进行Eureka注册的配置</span><span class="w">
+</span><span class="w">	</span><span class="nt">service-url</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">defaultZone</span><span class="p">:</span><span class="w"> </span><span class="l">http://localhost:7001/eureka</span><span class="w">
+</span><span class="w">  </span><span class="nt">instance</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">lease-renewal-interval-in-seconds</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c"># 设置心跳的时间间隔（默认是30秒）</span><span class="w">
+</span><span class="w">	</span><span class="nt">lease-expiration-duration-in-seconds</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="c"># 如果现在超过了5秒的间隔（默认是90秒）</span><span class="w">
+</span><span class="w">	</span><span class="nt">instance-id</span><span class="p">:</span><span class="w"> </span><span class="l">receive-8802.com </span><span class="w"> </span><span class="c"># 在信息列表时显示主机名称</span><span class="w">
+</span><span class="w">	</span><span class="nt">prefer-ip-address</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">     </span><span class="c"># 访问的路径变为IP地址</span><span class="w">
+</span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>结论：<code>同一个组的多个微服务实例，每次只会有一个拿到</code></li>
@@ -14497,19 +14497,16 @@ eureka:
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024111610.png" /></p>
 <h4 id="1652nacos持久化配置解释">16.5.2、Nacos持久化配置解释</h4>
 <ol>
-<li>
-<p>Nacos默认自带的是嵌入式数据库derby</p>
+<li>Nacos默认自带的是嵌入式数据库derby
 <ul>
 <li><a href="https://github.com/alibaba/nacos/blob/develop/config/pom.xml" target="_blank" rel="noopener noreffer">去Github源码的pom文件中查看</a></li>
 </ul>
 </li>
-<li>
-<p>derby到mysql切换配置步骤</p>
+<li>derby到mysql切换配置步骤
 <ul>
 <li>nacos-server-1.1.4\nacos\conf目录下找到sql脚本
 <ul>
-<li>
-<p>nacos-mysql.sql</p>
+<li>nacos-mysql.sql
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">  1
@@ -14914,8 +14911,7 @@ eureka:
 </div>
 </div><p>~~</p>
 </li>
-<li>
-<p>nacos-server-1.1.4\nacos\conf目录下找到application.properties</p>
+<li>nacos-server-1.1.4\nacos\conf目录下找到application.properties
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -14936,20 +14932,16 @@ eureka:
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
+<pre class="chroma"><code></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">           
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
 </li>
 </ul>
 </li>
-<li>
-<p>启动Nacos，可以看到是个全新的空记录界面，以前是记录进derby</p>
-</li>
+<li>启动Nacos，可以看到是个全新的空记录界面，以前是记录进derby</li>
 </ol>
 <h4 id="1653linux版nacosmysql生产环境配置">16.5.3、Linux版Nacos+MySQL生产环境配置</h4>
 <p>1、预计需要，1个Nginx+3个nacos注册中心+1个mysql</p>
@@ -15064,7 +15056,7 @@ eureka:
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024162100.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211024162100.png" /></p>
-<p><code>注意：此处要注意空格，格式对其，不要写错了！！！！</code></p>
+<p><code>注意：此处要注意空格，格式对其，不要写错了！！！！-Dserver.port=${PORT}1</code></p>
 </li>
 <li>
 <p>执行方式</p>
@@ -15208,7 +15200,7 @@ server {
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="w">    </span><span class="nt">server</span><span class="p">:</span><span class="w">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">9002</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
@@ -16971,10 +16963,10 @@ server {
 </div>
 </div><p>~~</p>
 </li>
-<li>**CircleBreakerController **
+<li><strong>CircleBreakerController</strong>
 <ol>
 <li>
-<p>修改后轻重启微服务</p>
+<p>修改后请重启微服务</p>
 <ul>
 <li>热部署对java代码级生效及时</li>
 <li>对@SentinelResource注解内属性，有时效果不好</li>
@@ -17558,8 +17550,8 @@ server {
 <li>
 <p>修改业务类</p>
 <ol>
-<li>带<code>@FeignClient注解的业务接口</code></li>
-</ol>
+<li>
+<p>带<code>@FeignClient注解的业务接口</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -17592,8 +17584,10 @@ server {
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~
-2. <strong>fallback = PaymentFallbackService.class</strong></p>
+</div><p>~~</p>
+</li>
+<li>
+<p><strong>fallback = PaymentFallbackService.class</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -17626,8 +17620,10 @@ server {
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~
-3. 修改controller</p>
+</div><p>~~</p>
+</li>
+<li>
+<p>修改controller</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -17661,6 +17657,8 @@ server {
 </code></pre></td></tr></table>
 </div>
 </div><p>~~</p>
+</li>
+</ol>
 </li>
 <li>
 <p>修改主启动类：添加 <strong>@EnableFeignClients</strong> 启动Feign的功能</p>
@@ -17745,8 +17743,7 @@ server {
 <li>
 <p>修改YML</p>
 <ul>
-<li>添加Nacos数据源配置</li>
-</ul>
+<li>添加Nacos数据源配置
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -17775,8 +17772,7 @@ server {
 </span><span class="w">            </span><span class="nt">rule-type</span><span class="p">:</span><span class="w"> </span><span class="l">flow</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -17809,42 +17805,55 @@ server {
 </span><span class="lnt">29
 </span><span class="lnt">30
 </span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8401</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-alibaba-sentinel-service</span><span class="w">
-</span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">nacos</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">discovery</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="c">#Nacos服务注册中心地址</span><span class="w">
-</span><span class="w">        </span><span class="nt">server-addr</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:8848</span><span class="w">
-</span><span class="w">    </span><span class="nt">sentinel</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">transport</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="c">#配置Sentinel dashboard地址</span><span class="w">
-</span><span class="w">        </span><span class="nt">dashboard</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:8080</span><span class="w">
-</span><span class="w">        </span><span class="c">#默认8719端口，假如被占用会自动从8719开始依次+1扫描,直至找到未被占用的端口</span><span class="w">
-</span><span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8719</span><span class="w">
-</span><span class="w">      </span><span class="nt">datasource</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="nt">ds1</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="nt">nacos</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="nt">server-addr</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:8848</span><span class="w">
-</span><span class="w">            </span><span class="nt">dataId</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-alibaba-sentinel-service</span><span class="w">
-</span><span class="w">            </span><span class="nt">groupId</span><span class="p">:</span><span class="w"> </span><span class="l">DEFAULT_GROUP</span><span class="w">
-</span><span class="w">            </span><span class="nt">data-type</span><span class="p">:</span><span class="w"> </span><span class="l">json</span><span class="w">
-</span><span class="w">            </span><span class="nt">rule-type</span><span class="p">:</span><span class="w"> </span><span class="l">flow</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="nt">management</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">endpoints</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">web</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">exposure</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="nt">include</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;*&#39;</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">   
+ ~~~yml
+ server:
+   port: 8401
+
+ spring:
+   application:
+     name: cloud-alibaba-sentinel-service
+   cloud:
+     nacos:
+       discovery:
+         #Nacos服务注册中心地址
+         server-addr: localhost:8848
+     sentinel:
+       transport:
+         #配置Sentinel dashboard地址
+         dashboard: localhost:8080
+         #默认8719端口，假如被占用会自动从8719开始依次+1扫描,直至找到未被占用的端口
+         port: 8719
+       datasource:
+         ds1:
+           nacos:
+             server-addr: localhost:8848
+             dataId: cloud-alibaba-sentinel-service
+             groupId: DEFAULT_GROUP
+             data-type: json
+             rule-type: flow
+
+ management:
+   endpoints:
+     web:
+       exposure:
+         include: &#39;*&#39;
+</code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">   
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
 </li>
 <li>
 <p>添加Nacos业务规则配置</p>
@@ -17857,8 +17866,8 @@ server {
         alt="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026213636.png"
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211026213636.png" /></p>
 <ul>
-<li>内容解析</li>
-</ul>
+<li>
+<p>内容解析</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -17887,15 +17896,36 @@ server {
 <span class="p">]</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>~~</p>
-<ul>
-<li>resource：资源名称；</li>
-<li>limitApp：来源应用；</li>
-<li>grade：阈值类型，0表示线程数，1表示QPS；</li>
-<li>count：单机阈值；</li>
-<li>strategy：流控模式，0表示直接，1表示关联，2表示链路；</li>
-<li>controlBehavior：流控效果，0表示快速失败，1表示Warm Up，2表示排队等待；</li>
-<li>clusterMode：是否集群</li>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">   
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>resource：资源名称；</p>
+</li>
+<li>
+<p>limitApp：来源应用；</p>
+</li>
+<li>
+<p>grade：阈值类型，0表示线程数，1表示QPS；</p>
+</li>
+<li>
+<p>count：单机阈值；</p>
+</li>
+<li>
+<p>strategy：流控模式，0表示直接，1表示关联，2表示链路；</p>
+</li>
+<li>
+<p>controlBehavior：流控效果，0表示快速失败，1表示Warm Up，2表示排队等待；</p>
+</li>
+<li>
+<p>clusterMode：是否集群</p>
+</li>
 </ul>
 </li>
 <li>
