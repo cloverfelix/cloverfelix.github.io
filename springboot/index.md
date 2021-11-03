@@ -8,7 +8,7 @@
 	1、使用@RestController注解
 	2、使用RequestMapping+ResponseBody注解
 
-**pom.xml **
+**pom.xml**
 - spring-boot-dependencies：核心依赖在父工程中
 - 我们在写或者引入一些Springboot依赖的时候，不需要指定版本，就因为有这些版本仓库
 

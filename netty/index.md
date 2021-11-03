@@ -1317,7 +1317,7 @@ public class NewIOClient {
 
 ### 3.15、Java AIO基本介绍
 1. JDK7引入了Asynchronous I/O，即AIO。在进行I/O编程中，常用到两种模式：Reactor和Proactor。Java 的NIO就是Reactor，当有时间触发时，服务器端得到通知，进行相应的处理
-2. AIO即NIO2.0，叫做异步不阻塞的IO。即AIO引入异步通道的概念，采用了Proactor模式，简化了程序编写，有效的请求才启动线程，它的特点时先由操作系统完成后才通知服务端程序启动线程区处理，一般适用于连接数较多且连接时间较长的应用
+2. AIO即NIO2.0，叫做异步不阻塞的IO。即AIO引入异步通道的概念，采用了Proactor模式，简化了程序编写，有效的请求才启动线程，它的特点是先由操作系统完成后才通知服务端程序启动线程区处理，一般适用于连接数较多且连接时间较长的应用
 3. 目前AIO还没有广泛应用，Netty也是基于NIO，而不是AIO，因此我们就不详解AIO了，有兴趣的同学可以参考[Java新一代网络编程模型AIO原理及Linux系统AIO介绍](http://www.52im.net/thread-306-1-1.html)
 
 ### 3.16、BIO、NIO、AIO对比表

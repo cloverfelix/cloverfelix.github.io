@@ -3,7 +3,14 @@
         <title>SpringBoot - 标签 - clover</title>
         <link>https://cloverfelix.github.io/tags/springboot/</link>
         <description>SpringBoot - 标签 - clover</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 04 Jul 2021 16:38:24 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/tags/springboot/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 02 Nov 2021 21:50:29 &#43;0800</lastBuildDate><atom:link href="https://cloverfelix.github.io/tags/springboot/" rel="self" type="application/rss+xml" /><item>
+    <title>Springboot2</title>
+    <link>https://cloverfelix.github.io/springboot2/</link>
+    <pubDate>Tue, 02 Nov 2021 21:50:29 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://cloverfelix.github.io/springboot2/</guid>
+    <description><![CDATA[SpringBoot2]]></description>
+</item><item>
     <title>Springboot</title>
     <link>https://cloverfelix.github.io/springboot/</link>
     <pubDate>Sun, 04 Jul 2021 16:38:24 &#43;0800</pubDate>
