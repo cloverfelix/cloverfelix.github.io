@@ -731,7 +731,7 @@ public void test4()
 
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20211031104706.png)
 
-4. **bean的后置处理器，bean生命周期有七步 **
+4. **bean的后置处理器，bean生命周期有七步**
 	1. 通过构造器创建bean实例  (调用无参构造函数)
 	2. 未bean的属性设置值和对其它bean引用  (调用set方法)
 	3. 把 bean 实例传递 bean 后置处理器的方法 postProcessBeforeInitialization 
