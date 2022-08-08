@@ -9,7 +9,7 @@
     <pubDate>Wed, 18 Aug 2021 11:18:38 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://cloverfelix.github.io/dockerdeploy/</guid>
-    <description><![CDATA[使用Dockers部署若依项目 1、先进行docker安装 2、安装mysql 1 2 3 docker run -p 3307:3306 --name mysql01 -v /home/westbrook/mysql/log:/var/log/mysql \ -v /home/westbrook/mysql/conf/my.cnf:/etc/mysql/my.cnf \ -v /home/westbrook/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=xn123456 -d mysql:5.7.33 执行成功后 注意：如果第一]]></description>
+    <description><![CDATA[使用Dockers部署若依项目 1、先进行docker安装 2、安装mysql 在执行命令之前，先在服务器上创建好对应的文件目录，在执行命令，否则]]></description>
 </item><item>
     <title>Docker</title>
     <link>https://cloverfelix.github.io/docker/</link>

@@ -673,7 +673,7 @@ public void test3()
 	1. 从对象创建到对象销毁的过程
 2. **bean 生命周期**
 	1. 通过构造器创建bean实例  (调用无参构造函数)
-	2. 未bean的属性设置值和对其它bean引用  (调用set方法)
+	2. 为bean的属性设置值和对其它bean引用  (调用set方法)
 	3. 调用bean的初始化方法  (需要进行配置初始化的方法)
 	4. bean可以使用了  (对象获取到了)
 	5. 当容器关闭的时候，调用bean的销毁方法  (需要进行配置销毁的方法)
@@ -733,7 +733,7 @@ public void test4()
 
 4. **bean的后置处理器，bean生命周期有七步**
 	1. 通过构造器创建bean实例  (调用无参构造函数)
-	2. 未bean的属性设置值和对其它bean引用  (调用set方法)
+	2. 为bean的属性设置值和对其它bean引用  (调用set方法)
 	3. 把 bean 实例传递 bean 后置处理器的方法 postProcessBeforeInitialization 
 	4. 调用bean的初始化方法  (需要进行配置初始化的方法)
 	5. 把 bean 实例传递 bean 后置处理器的方法 postProcessAfterInitialization

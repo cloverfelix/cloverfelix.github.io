@@ -8,6 +8,8 @@
 
 ## 2、安装mysql
 
+**在执行命令之前，先在服务器上创建好对应的文件目录，在执行命令，否则会报错！！！！**
+
 ~~~bash
 docker run -p 3307:3306 --name mysql01 -v /home/westbrook/mysql/log:/var/log/mysql  \
 -v /home/westbrook/mysql/conf/my.cnf:/etc/mysql/my.cnf  \
@@ -25,6 +27,7 @@ docker run -p 3307:3306 --name mysql01 -v /home/westbrook/mysql/log:/var/log/mys
 1、先查看用户信息
 
 ~~~bash
+docker exec -it mysql01 /bin/bash
 select host,user,plugin,authentication_string from mysql.user;
 ~~~
 ![](https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210818113227.png)
