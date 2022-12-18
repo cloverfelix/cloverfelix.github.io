@@ -9,8 +9,8 @@
 <meta property="og:description" content="springboot" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://cloverfelix.github.io/springboot/" /><meta property="og:image" content="https://cloverfelix.github.io/RW.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-07-04T16:38:24&#43;08:00" />
-<meta property="article:modified_time" content="2021-07-04T16:38:24&#43;08:00" />
+<meta property="article:published_time" content="2021-07-04T16:38:24+08:00" />
+<meta property="article:modified_time" content="2021-07-04T16:38:24+08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://cloverfelix.github.io/RW.png"/>
@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/cloverfelix.github.io\/springboot\/"
-        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringBoot","wordcount":  10754 ,
+        },"image": ["https:\/\/cloverfelix.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "SpringBoot","wordcount":  10770 ,
         "url": "https:\/\/cloverfelix.github.io\/springboot\/","datePublished": "2021-07-04T16:38:24+08:00","dateModified": "2021-07-04T16:38:24+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "clover","logo": "https:\/\/cloverfelix.github.io\/images\/RW.png"},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Springboot</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Clover</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/springboot/"><i class="far fa-folder fa-fw"></i>SpringBoot</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10754 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-04">2021-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10770 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 22 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -146,17 +146,17 @@
 <p><strong>启动器</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>  
- 	<span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>  
- 	<span class="nt">&lt;artifactId&gt;</span>spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>  
-<span class="nt">&lt;/dependency&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>  
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>  
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;artifactId&gt;</span>spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>  
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>启动器：说白了就是SpringBoot的启动场景</li>
@@ -167,7 +167,7 @@
 <p><strong>主程序</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -179,24 +179,24 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">// @SpringBootApplication ：标注这这个类是一个SpringBoot的应用   启动类下的所有资源被导入
-</span><span class="c1"></span><span class="nd">@SpringBootApplication</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DemoApplication</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">// 将Springboot启动
-</span><span class="c1"></span>        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">DemoApplication</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="c1">// @SpringBootApplication ：标注这这个类是一个SpringBoot的应用   启动类下的所有资源被导入
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@SpringBootApplication</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DemoApplication</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 将Springboot启动
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">DemoApplication</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>注解</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -204,19 +204,17 @@
 </span><span class="lnt">6
 </span><span class="lnt">7
 </span><span class="lnt">8
-</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml">@SpringBootConfiguration 	： springboot的配置
-	@Configuration	：spring的配置类
-		@Component	：说明这也是一个spring的组件
-
-@EnableAutoConfiguration	：自动配置
-	@AutoConfigurationPackage	：自动配置包
-		@Import(AutoConfigurationPackages.Registrar.class)	：自动配置包注册
-	@Import(AutoConfigurationImportSelector.class)	：自动配置导入选择
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">@SpringBootConfiguration 	： springboot的配置
+</span></span><span class="line"><span class="cl">	@Configuration	：spring的配置类
+</span></span><span class="line"><span class="cl">		@Component	：说明这也是一个spring的组件
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@EnableAutoConfiguration	：自动配置
+</span></span><span class="line"><span class="cl">	@AutoConfigurationPackage	：自动配置包
+</span></span><span class="line"><span class="cl">		@Import(AutoConfigurationPackages.Registrar.class)	：自动配置包注册
+</span></span><span class="line"><span class="cl">	@Import(AutoConfigurationImportSelector.class)	：自动配置导入选择
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>@SpringBootApplication 集成了所有注解，当它启动的时候，它所集成的资源都会被导入
 META-INF/spring.factories：自动配置的核心文件
@@ -231,13 +229,13 @@ META-INF/spring.factories：自动配置的核心文件
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210810102522.png" /></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml">Properties properties = PropertiesLoaderUtils.loadProperties(resource)
-//所有资源加载到配置类中！
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">Properties properties = PropertiesLoaderUtils.loadProperties(resource)
+</span></span><span class="line"><span class="cl">//所有资源加载到配置类中！
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>所以，自动配置真正实现是从classpath中搜寻所有的<code>/META-INF/spring.factories</code>配置文件，并将其中对应的org.springframework.boot.autoconfigure.包下的配置项，通过反射实例化为对应标注了@Configuration的JavaConfig形式的IOC容器配置类，然后将这些都汇总成为一个实例并加载到IOC容器中</strong></p>
 <pre><code>结论：springboot所有的自动配置都是在启动的时候扫描并加载：`spring.factories`所有的的自动配置类都在这里，但是不
@@ -294,11 +292,11 @@ META-INF/spring.factories：自动配置的核心文件
 <p>字面量直接卸载后面就可以，字符串默认不用加上双引号或者单引号</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml">k: v
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">k: v
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>注意：</p>
 <ul>
@@ -321,7 +319,7 @@ META-INF/spring.factories：自动配置的核心文件
 <p>2、编写一个实体类Dog；</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -333,22 +331,22 @@ META-INF/spring.factories：自动配置的核心文件
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Component</span>			<span class="c1">//注册bean到容器中
-</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Dog</span> <span class="o">{</span>
-
-    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;wangcai&#34;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;3&#34;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
-	
-	<span class="c1">// 有参无参构造、get、set方法、toString()方法
-</span><span class="c1"></span><span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="nd">@Component</span>			<span class="c1">//注册bean到容器中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Dog</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;wangcai&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;3&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="c1">// 有参无参构造、get、set方法、toString()方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>3、思考我们原来是如何给bean注入属性值的！@Value，给狗狗类测试一下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -357,19 +355,19 @@ META-INF/spring.factories：自动配置的核心文件
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Component</span> <span class="c1">//注册bean 
-</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Dog</span> <span class="o">{</span> 
-	<span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;阿黄&#34;</span><span class="o">)</span> 
-	<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-	<span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;18&#34;</span><span class="o">)</span> 
-	<span class="kd">private</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">;</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="nd">@Component</span> <span class="c1">//注册bean 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Dog</span> <span class="o">{</span> 
+</span></span><span class="line"><span class="cl">	<span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;阿黄&#34;</span><span class="o">)</span> 
+</span></span><span class="line"><span class="cl">	<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">	<span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;18&#34;</span><span class="o">)</span> 
+</span></span><span class="line"><span class="cl">	<span class="kd">private</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>4、在springboot的测试类下注入狗狗类并输出一下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -381,17 +379,17 @@ META-INF/spring.factories：自动配置的核心文件
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@SpringBootTest</span>
-<span class="kd">class</span> <span class="nc">DemoApplicationTests</span> <span class="o">{</span>
-	<span class="nd">@Autowired</span> <span class="c1">//将狗狗自动注入进来
-</span><span class="c1"></span>	<span class="kd">private</span> <span class="n">Dog</span> <span class="n">dog</span><span class="o">;</span>
-	
-	<span class="nd">@Test</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">contextLoads</span><span class="o">()</span> <span class="o">{</span>
-	<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dog</span><span class="o">);</span> <span class="c1">//打印看下狗狗对象
-</span><span class="c1"></span>	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="nd">@SpringBootTest</span>
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">DemoApplicationTests</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nd">@Autowired</span> <span class="c1">//将狗狗自动注入进来
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kd">private</span> <span class="n">Dog</span> <span class="n">dog</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="nd">@Test</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">contextLoads</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dog</span><span class="o">);</span> <span class="c1">//打印看下狗狗对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>结果成功输出，@Value注入成功，这是我们原来的方法</p>
 <p><img
@@ -405,7 +403,7 @@ META-INF/spring.factories：自动配置的核心文件
 <p>5、在编写一个复杂一点的实体类：Person类</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -418,23 +416,23 @@ META-INF/spring.factories：自动配置的核心文件
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Component</span> 	<span class="c1">//注册bean到容器中
-</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
-		<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-		<span class="kd">private</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">;</span>
-		<span class="kd">private</span> <span class="n">Boolean</span> <span class="n">happy</span><span class="o">;</span>
-		<span class="kd">private</span> <span class="n">Date</span> <span class="n">birth</span><span class="o">;</span>
-		<span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">maps</span><span class="o">;</span>
-		<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">lists</span><span class="o">;</span>
-		<span class="kd">private</span> <span class="n">Dog</span> <span class="n">dog</span><span class="o">;</span>
-		<span class="c1">//有参无参构造、get、set方法、toString()方法
-</span><span class="c1"></span><span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="n">Component</span> 	<span class="c1">//注册bean到容器中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="n">Boolean</span> <span class="n">happy</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="n">Date</span> <span class="n">birth</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">maps</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">lists</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="n">Dog</span> <span class="n">dog</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//有参无参构造、get、set方法、toString()方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>6、我们来使用yaml配置的方法进行注入，写的时候要注意区别和优势，编写一个yaml配置</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -448,24 +446,24 @@ META-INF/spring.factories：自动配置的核心文件
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">person</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">clover</span><span class="w">
-</span><span class="w">  </span><span class="nt">age</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
-</span><span class="w">  </span><span class="nt">happy</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-</span><span class="w">  </span><span class="nt">birth</span><span class="p">:</span><span class="w"> </span><span class="m">1996</span><span class="l">/08/24</span><span class="w">
-</span><span class="w">  </span><span class="nt">maps</span><span class="p">:</span><span class="w"> </span>{<span class="nt">k1: v1,k2</span><span class="p">:</span><span class="w"> </span><span class="l">v2}</span><span class="w">
-</span><span class="w">  </span><span class="nt">lists</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="l">code</span><span class="w">
-</span><span class="w">    </span>- <span class="l">music</span><span class="w">
-</span><span class="w">  </span><span class="nt">dog</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">wangcai</span><span class="w">
-</span><span class="w">    </span><span class="nt">age</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">person</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">clover</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">age</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">happy</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">birth</span><span class="p">:</span><span class="w"> </span><span class="m">1996</span><span class="l">/08/24</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">maps</span><span class="p">:</span><span class="w"> </span>{<span class="nt">k1: v1,k2</span><span class="p">:</span><span class="w"> </span><span class="l">v2}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">lists</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="l">code</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="l">music</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">dog</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">wangcai</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">age</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>7、把刚刚写好的Person对象所有的值，注入到我们的类中</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -490,30 +488,30 @@ META-INF/spring.factories：自动配置的核心文件
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Component</span>
-
-<span class="cm">/*
-</span><span class="cm">    @ConfigurationProperties作用：
-</span><span class="cm">    将配置文件中配置的每一个属性的值，映射到这个组件中；
-</span><span class="cm">    告诉SpringBoot将本类中的所有属性和配置文件中相关的配置进行绑定
-</span><span class="cm">    参数 prefix = &#34;person&#34; ：将配置文件中的person下面的所有属性一一对应
-</span><span class="cm">
-</span><span class="cm">    只有这个组件是容器中的组件，才能使用容器提供的@ConfigurationProperties功能
-</span><span class="cm">*/</span>
-
-<span class="nd">@ConfigurationProperties</span><span class="o">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;person&#34;</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
-
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">happy</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">Date</span> <span class="n">birth</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">maps</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">lists</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">Dog</span> <span class="n">dog</span><span class="o">;</span>
-	
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="nd">@Component</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">    @ConfigurationProperties作用：
+</span></span></span><span class="line"><span class="cl"><span class="cm">    将配置文件中配置的每一个属性的值，映射到这个组件中；
+</span></span></span><span class="line"><span class="cl"><span class="cm">    告诉SpringBoot将本类中的所有属性和配置文件中相关的配置进行绑定
+</span></span></span><span class="line"><span class="cl"><span class="cm">    参数 prefix = &#34;person&#34; ：将配置文件中的person下面的所有属性一一对应
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">    只有这个组件是容器中的组件，才能使用容器提供的@ConfigurationProperties功能
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@ConfigurationProperties</span><span class="o">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;person&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">happy</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Date</span> <span class="n">birth</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">maps</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">lists</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Dog</span> <span class="n">dog</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>8、IDEA提示，SpringBoot配置注解处理器没有找到，让我们查看文档，我们查看文档，可以找到一个依赖</p>
 <p><img
@@ -534,7 +532,7 @@ META-INF/spring.factories：自动配置的核心文件
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210811092345.png" /></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -542,18 +540,18 @@ META-INF/spring.factories：自动配置的核心文件
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml"> <span class="c">&lt;!-- 导入配置文件处理器，配置文件进行绑定就会有提示，需要重启 --&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
-	<span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-	<span class="nt">&lt;artifactId&gt;</span>spring-boot-configuration-processor<span class="nt">&lt;/artifactId&gt;</span>
-	<span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"> <span class="c">&lt;!-- 导入配置文件处理器，配置文件进行绑定就会有提示，需要重启 --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;artifactId&gt;</span>spring-boot-configuration-processor<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>9、确认以上配置都OK之后，去测试类中测试一下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -566,18 +564,18 @@ META-INF/spring.factories：自动配置的核心文件
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@SpringBootTest</span>
-<span class="kd">class</span> <span class="nc">Springboot02ConfigApplicationTests</span> <span class="o">{</span>
-    <span class="nd">@Autowired</span>
-    <span class="kd">private</span> <span class="n">Person</span> <span class="n">person</span><span class="o">;</span>		<span class="c1">//将person自动注入进来
-</span><span class="c1"></span>
-    <span class="nd">@Test</span>
-    <span class="kt">void</span> <span class="nf">contextLoads</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dog</span><span class="o">);</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="nd">@SpringBootTest</span>
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Springboot02ConfigApplicationTests</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Autowired</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Person</span> <span class="n">person</span><span class="o">;</span>		<span class="c1">//将person自动注入进来
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Test</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">contextLoads</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dog</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>结果：所有值全部注入成功</p>
 <p><img
@@ -629,22 +627,22 @@ META-INF/spring.factories：自动配置的核心文件
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml">在配置文件中能配置的东西，都存在一个固有的规律
-比如：xxxxAutoConfiguration：都有一个默认值   xxxProperties  和  配置文件进行绑定，我们就可以使用自定义的配置了
-
-xxxProperties中存在一些默认值，也就是xxxxAutoConfiguration的默认值，如果我们想要修改值，就必须让xxxProperties与配置文件绑定，然后就可以通过其中的属性修改默认值
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">在配置文件中能配置的东西，都存在一个固有的规律
+</span></span><span class="line"><span class="cl">比如：xxxxAutoConfiguration：都有一个默认值   xxxProperties  和  配置文件进行绑定，我们就可以使用自定义的配置了
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">xxxProperties中存在一些默认值，也就是xxxxAutoConfiguration的默认值，如果我们想要修改值，就必须让xxxProperties与配置文件绑定，然后就可以通过其中的属性修改默认值
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>以<strong>HttpEncodingAutoConfiguration（Http编码自动配置）</strong> 为例解释自动配置原理；</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -690,51 +688,51 @@ xxxProperties中存在一些默认值，也就是xxxxAutoConfiguration的默认�
 </span><span class="lnt">44
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//表示这是一个配置类，和以前编写的配置文件一样，也可以给容器中添加组件；
-</span><span class="c1"></span><span class="nd">@Configuration</span>
-
-<span class="c1">//启动指定类的ConfigurationProperties功能；
-</span><span class="c1"></span>		<span class="c1">//进入这个HttpProperties查看，将配置文件中对应的值和HttpProperties绑定起来；
-</span><span class="c1"></span>		<span class="c1">//并把HttpProperties加入到ioc容器中
-</span><span class="c1"></span><span class="nd">@EnableConfigurationProperties</span><span class="o">({</span><span class="n">HttpProperties</span><span class="o">.</span><span class="na">class</span><span class="o">})</span>
-
-<span class="c1">//Spring底层@Conditional注解
-</span><span class="c1"></span>		<span class="c1">//根据不同的条件判断，如果满足指定的条件，整个配置类里面的配置就会生效；
-</span><span class="c1"></span>		<span class="c1">//这里的意思就是判断当前应用是否是web应用，如果是，当前配置类生效
-</span><span class="c1"></span><span class="nd">@ConditionalOnWebApplication</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">ConditionalOnWebApplication</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">SERVLET</span><span class="o">)</span>
-
-<span class="c1">//判断当前项目有没有这个类CharacterEncodingFilter；SpringMVC中进行乱码解决的过滤器；
-</span><span class="c1"></span><span class="nd">@ConditionalOnClass</span><span class="o">({</span><span class="n">CharacterEncodingFilter</span><span class="o">.</span><span class="na">class</span><span class="o">})</span>
-
-<span class="c1">//判断配置文件中是否存在某个配置：spring.http.encoding.enabled；
-</span><span class="c1"></span>	<span class="c1">//如果不存在，判断也是成立的
-</span><span class="c1"></span>	<span class="c1">//即使我们配置文件中不配置pring.http.encoding.enabled=true，也是默认生效的；
-</span><span class="c1"></span><span class="nd">@ConditionalOnProperty</span><span class="o">(</span>
-<span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;spring.http.encoding&#34;</span><span class="o">,</span>
-<span class="n">value</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;enabled&#34;</span><span class="o">},</span>
-<span class="n">matchIfMissing</span> <span class="o">=</span> <span class="kc">true</span>
-<span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HttpEncodingAutoConfiguration</span> <span class="o">{</span>
-		<span class="c1">//他已经和SpringBoot的配置文件映射了
-</span><span class="c1"></span>		<span class="kd">private</span> <span class="kd">final</span> <span class="n">Encoding</span> <span class="n">properties</span><span class="o">;</span>
-		
-		<span class="c1">//只有一个有参构造器的情况下，参数的值就会从容器中拿
-</span><span class="c1"></span>		<span class="kd">public</span> <span class="nf">HttpEncodingAutoConfiguration</span><span class="o">(</span><span class="n">HttpProperties</span> <span class="n">properties</span><span class="o">)</span> <span class="o">{</span>
-			<span class="k">this</span><span class="o">.</span><span class="na">properties</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="na">getEncoding</span><span class="o">();</span>
-		<span class="o">}</span>
-		<span class="c1">//给容器中添加一个组件，这个组件的某些值需要从properties中获取
-</span><span class="c1"></span>		<span class="nd">@Bean</span>
-		<span class="nd">@ConditionalOnMissingBean</span> <span class="c1">//判断容器没有这个组件？
-</span><span class="c1"></span>		<span class="kd">public</span> <span class="n">CharacterEncodingFilter</span> <span class="nf">characterEncodingFilter</span><span class="o">()</span> <span class="o">{</span>
-		<span class="n">CharacterEncodingFilter</span> <span class="n">filter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OrderedCharacterEncodingFilter</span><span class="o">();</span>
-		<span class="n">filter</span><span class="o">.</span><span class="na">setEncoding</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">getCharset</span><span class="o">().</span><span class="na">name</span><span class="o">());</span>
-		<span class="n">filter</span><span class="o">.</span><span class="na">setForceRequestEncoding</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">shouldForce</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">.</span><span class="na">autoconfigure</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">HttpProperties</span><span class="o">.</span><span class="na">Encoding</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">REQUEST</span><span class="o">));</span>   
-		<span class="n">filter</span><span class="o">.</span><span class="na">setForceResponseEncoding</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">shouldForce</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">springframe</span> <span class="n">work</span><span class="o">.</span><span class="na">boot</span><span class="o">.</span><span class="na">autoconfigure</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">HttpProperties</span><span class="o">.</span><span class="na">Encoding</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">RESPONSE</span><span class="o">));</span> 
-		<span class="k">return</span> <span class="n">filter</span><span class="o">;</span>
-		<span class="o">}</span> <span class="c1">//。。。。。。。 
-</span><span class="c1"></span><span class="o">}</span>
-		
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="c1">//表示这是一个配置类，和以前编写的配置文件一样，也可以给容器中添加组件；
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@Configuration</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//启动指定类的ConfigurationProperties功能；
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">//进入这个HttpProperties查看，将配置文件中对应的值和HttpProperties绑定起来；
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">//并把HttpProperties加入到ioc容器中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@EnableConfigurationProperties</span><span class="o">({</span><span class="n">HttpProperties</span><span class="o">.</span><span class="na">class</span><span class="o">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//Spring底层@Conditional注解
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">//根据不同的条件判断，如果满足指定的条件，整个配置类里面的配置就会生效；
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">//这里的意思就是判断当前应用是否是web应用，如果是，当前配置类生效
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@ConditionalOnWebApplication</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">ConditionalOnWebApplication</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">SERVLET</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//判断当前项目有没有这个类CharacterEncodingFilter；SpringMVC中进行乱码解决的过滤器；
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@ConditionalOnClass</span><span class="o">({</span><span class="n">CharacterEncodingFilter</span><span class="o">.</span><span class="na">class</span><span class="o">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//判断配置文件中是否存在某个配置：spring.http.encoding.enabled；
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//如果不存在，判断也是成立的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//即使我们配置文件中不配置pring.http.encoding.enabled=true，也是默认生效的；
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@ConditionalOnProperty</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl"><span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;spring.http.encoding&#34;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl"><span class="n">value</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;enabled&#34;</span><span class="o">},</span>
+</span></span><span class="line"><span class="cl"><span class="n">matchIfMissing</span> <span class="o">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HttpEncodingAutoConfiguration</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//他已经和SpringBoot的配置文件映射了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="kd">private</span> <span class="kd">final</span> <span class="n">Encoding</span> <span class="n">properties</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		
+</span></span><span class="line"><span class="cl">		<span class="c1">//只有一个有参构造器的情况下，参数的值就会从容器中拿
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="kd">public</span> <span class="nf">HttpEncodingAutoConfiguration</span><span class="o">(</span><span class="n">HttpProperties</span> <span class="n">properties</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">this</span><span class="o">.</span><span class="na">properties</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="na">getEncoding</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">		<span class="o">}</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//给容器中添加一个组件，这个组件的某些值需要从properties中获取
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nd">@Bean</span>
+</span></span><span class="line"><span class="cl">		<span class="nd">@ConditionalOnMissingBean</span> <span class="c1">//判断容器没有这个组件？
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="kd">public</span> <span class="n">CharacterEncodingFilter</span> <span class="nf">characterEncodingFilter</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">CharacterEncodingFilter</span> <span class="n">filter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OrderedCharacterEncodingFilter</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">		<span class="n">filter</span><span class="o">.</span><span class="na">setEncoding</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">getCharset</span><span class="o">().</span><span class="na">name</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">		<span class="n">filter</span><span class="o">.</span><span class="na">setForceRequestEncoding</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">shouldForce</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">.</span><span class="na">autoconfigure</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">HttpProperties</span><span class="o">.</span><span class="na">Encoding</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">REQUEST</span><span class="o">));</span>   
+</span></span><span class="line"><span class="cl">		<span class="n">filter</span><span class="o">.</span><span class="na">setForceResponseEncoding</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">shouldForce</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">springframe</span> <span class="n">work</span><span class="o">.</span><span class="na">boot</span><span class="o">.</span><span class="na">autoconfigure</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">HttpProperties</span><span class="o">.</span><span class="na">Encoding</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">RESPONSE</span><span class="o">));</span> 
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">filter</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="o">}</span> <span class="c1">//。。。。。。。 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">}</span>
+</span></span><span class="line"><span class="cl">		
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>一句话总结：根据当前不同的条件判断，决定这个配置类是否生效！</strong></p>
 <ul>
@@ -745,19 +743,19 @@ xxxProperties中存在一些默认值，也就是xxxxAutoConfiguration的默认�
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//从配置文件中获取指定的值和bean的属性进行绑定
-</span><span class="c1"></span><span class="nd">@ConfigurationProperties</span><span class="o">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;spring.http&#34;</span><span class="o">)</span>
-		<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HttpProperties</span> <span class="o">{</span>
-		<span class="c1">// .....
-</span><span class="c1"></span><span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//从配置文件中获取指定的值和bean的属性进行绑定
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@ConfigurationProperties</span><span class="o">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;spring.http&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HttpProperties</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// .....
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="自动配置原理再理解">自动配置原理再理解</h2>
 <p>SpringBoot类启动的时候有一个<code>@SpringBootApplication</code>注解</p>
@@ -891,7 +889,7 @@ and classes can be searched.</p>
 <p>有一个方法<code>addResourceHandlers</code>添加资源处理</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -917,31 +915,31 @@ and classes can be searched.</p>
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Override</span>
-		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addResourceHandlers</span><span class="o">(</span><span class="n">ResourceHandlerRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
-			<span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="na">resourceProperties</span><span class="o">.</span><span class="na">isAddMappings</span><span class="o">())</span> <span class="o">{</span>
-				<span class="c1">// 已禁用默认资源处理
-</span><span class="c1"></span>				<span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">&#34;Default resource handling disabled&#34;</span><span class="o">);</span>
-				<span class="k">return</span><span class="o">;</span>
-			<span class="o">}</span>
-			<span class="c1">// 缓存控制
-</span><span class="c1"></span>			<span class="n">Duration</span> <span class="n">cachePeriod</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">resourceProperties</span><span class="o">.</span><span class="na">getCache</span><span class="o">().</span><span class="na">getPeriod</span><span class="o">();</span>
-			<span class="n">CacheControl</span> <span class="n">cacheControl</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">resourceProperties</span><span class="o">.</span><span class="na">getCache</span><span class="o">().</span><span class="na">getCachecontrol</span><span class="o">().</span><span class="na">toHttpCacheControl</span><span class="o">();</span>
-			<span class="c1">// webjars 配置
-</span><span class="c1"></span>			<span class="k">if</span> <span class="o">(!</span><span class="n">registry</span><span class="o">.</span><span class="na">hasMappingForPattern</span><span class="o">(</span><span class="s">&#34;/webjars/**&#34;</span><span class="o">))</span> <span class="o">{</span>
-				<span class="n">customizeResourceHandlerRegistration</span><span class="o">(</span><span class="n">registry</span><span class="o">.</span><span class="na">addResourceHandler</span><span class="o">(</span><span class="s">&#34;/webjars/**&#34;</span><span class="o">)</span>
-						<span class="o">.</span><span class="na">addResourceLocations</span><span class="o">(</span><span class="s">&#34;classpath:/META-INF/resources/webjars/&#34;</span><span class="o">)</span>
-						<span class="o">.</span><span class="na">setCachePeriod</span><span class="o">(</span><span class="n">getSeconds</span><span class="o">(</span><span class="n">cachePeriod</span><span class="o">)).</span><span class="na">setCacheControl</span><span class="o">(</span><span class="n">cacheControl</span><span class="o">));</span>
-			<span class="o">}</span>
-			<span class="c1">// 静态资源配置
-</span><span class="c1"></span>			<span class="n">String</span> <span class="n">staticPathPattern</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">mvcProperties</span><span class="o">.</span><span class="na">getStaticPathPattern</span><span class="o">();</span>
-			<span class="k">if</span> <span class="o">(!</span><span class="n">registry</span><span class="o">.</span><span class="na">hasMappingForPattern</span><span class="o">(</span><span class="n">staticPathPattern</span><span class="o">))</span> <span class="o">{</span>
-				<span class="n">customizeResourceHandlerRegistration</span><span class="o">(</span><span class="n">registry</span><span class="o">.</span><span class="na">addResourceHandler</span><span class="o">(</span><span class="n">staticPathPattern</span><span class="o">)</span>
-						<span class="o">.</span><span class="na">addResourceLocations</span><span class="o">(</span><span class="n">getResourceLocations</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">resourceProperties</span><span class="o">.</span><span class="na">getStaticLocations</span><span class="o">()))</span>
-						<span class="o">.</span><span class="na">setCachePeriod</span><span class="o">(</span><span class="n">getSeconds</span><span class="o">(</span><span class="n">cachePeriod</span><span class="o">)).</span><span class="na">setCacheControl</span><span class="o">(</span><span class="n">cacheControl</span><span class="o">));</span>
-			<span class="o">}</span>
-		<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addResourceHandlers</span><span class="o">(</span><span class="n">ResourceHandlerRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="na">resourceProperties</span><span class="o">.</span><span class="na">isAddMappings</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">				<span class="c1">// 已禁用默认资源处理
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">&#34;Default resource handling disabled&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">				<span class="k">return</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">			<span class="o">}</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// 缓存控制
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="n">Duration</span> <span class="n">cachePeriod</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">resourceProperties</span><span class="o">.</span><span class="na">getCache</span><span class="o">().</span><span class="na">getPeriod</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">			<span class="n">CacheControl</span> <span class="n">cacheControl</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">resourceProperties</span><span class="o">.</span><span class="na">getCache</span><span class="o">().</span><span class="na">getCachecontrol</span><span class="o">().</span><span class="na">toHttpCacheControl</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// webjars 配置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="k">if</span> <span class="o">(!</span><span class="n">registry</span><span class="o">.</span><span class="na">hasMappingForPattern</span><span class="o">(</span><span class="s">&#34;/webjars/**&#34;</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">				<span class="n">customizeResourceHandlerRegistration</span><span class="o">(</span><span class="n">registry</span><span class="o">.</span><span class="na">addResourceHandler</span><span class="o">(</span><span class="s">&#34;/webjars/**&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">						<span class="o">.</span><span class="na">addResourceLocations</span><span class="o">(</span><span class="s">&#34;classpath:/META-INF/resources/webjars/&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">						<span class="o">.</span><span class="na">setCachePeriod</span><span class="o">(</span><span class="n">getSeconds</span><span class="o">(</span><span class="n">cachePeriod</span><span class="o">)).</span><span class="na">setCacheControl</span><span class="o">(</span><span class="n">cacheControl</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">			<span class="o">}</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// 静态资源配置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="n">String</span> <span class="n">staticPathPattern</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">mvcProperties</span><span class="o">.</span><span class="na">getStaticPathPattern</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="o">(!</span><span class="n">registry</span><span class="o">.</span><span class="na">hasMappingForPattern</span><span class="o">(</span><span class="n">staticPathPattern</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">				<span class="n">customizeResourceHandlerRegistration</span><span class="o">(</span><span class="n">registry</span><span class="o">.</span><span class="na">addResourceHandler</span><span class="o">(</span><span class="n">staticPathPattern</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">						<span class="o">.</span><span class="na">addResourceLocations</span><span class="o">(</span><span class="n">getResourceLocations</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">resourceProperties</span><span class="o">.</span><span class="na">getStaticLocations</span><span class="o">()))</span>
+</span></span><span class="line"><span class="cl">						<span class="o">.</span><span class="na">setCachePeriod</span><span class="o">(</span><span class="n">getSeconds</span><span class="o">(</span><span class="n">cachePeriod</span><span class="o">)).</span><span class="na">setCacheControl</span><span class="o">(</span><span class="n">cacheControl</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">			<span class="o">}</span>
+</span></span><span class="line"><span class="cl">		<span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>读源码：</p>
 <ul>
@@ -956,19 +954,19 @@ and classes can be searched.</p>
 <p>要使用jQuery，我们只要要引入jQuery对应版本的pom依赖即可！</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
-	<span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-	<span class="nt">&lt;artifactId&gt;</span>jquery<span class="nt">&lt;/artifactId&gt;</span>
-	<span class="nt">&lt;version&gt;</span>3.4.1<span class="nt">&lt;/version&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;artifactId&gt;</span>jquery<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;version&gt;</span>3.4.1<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>查看webjars目录结构，并访问jQuery.js文件</p>
 <p><img
@@ -987,7 +985,7 @@ and classes can be searched.</p>
 <p>我们去找<code>staticPathPattern</code>发现第二种映射规则 ：<code> /**</code> , 访问当前的项目任意资源，它会去找 <code>resourceProperties</code> 这个类，我们可以点进去看一下分析：.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1002,36 +1000,36 @@ and classes can be searched.</p>
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 进入方法
-</span><span class="c1"></span><span class="kd">public</span> <span class="n">String</span><span class="o">[]</span> <span class="nf">getStaticLocations</span><span class="o">()</span> <span class="o">{</span>
-	<span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">staticLocations</span><span class="o">;</span>
-<span class="o">}</span>
-<span class="c1">// 找到对应的值
-</span><span class="c1"></span><span class="kd">private</span> <span class="n">String</span><span class="o">[]</span> <span class="n">staticLocations</span> <span class="o">=</span> <span class="n">CLASSPATH_RESOURCE_LOCATIONS</span><span class="o">;</span>
-<span class="c1">// 找到路径
-</span><span class="c1"></span><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">CLASSPATH_RESOURCE_LOCATIONS</span> <span class="o">=</span> <span class="o">{</span>
-		<span class="s">&#34;classpath:/META-INF/resources/&#34;</span><span class="o">,</span>
-		<span class="s">&#34;classpath:/resources/&#34;</span><span class="o">,</span>
-		<span class="s">&#34;classpath:/static/&#34;</span><span class="o">,</span>
-		<span class="s">&#34;classpath:/public/&#34;</span>
-<span class="o">};</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 进入方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">public</span> <span class="n">String</span><span class="o">[]</span> <span class="nf">getStaticLocations</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">staticLocations</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 找到对应的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">private</span> <span class="n">String</span><span class="o">[]</span> <span class="n">staticLocations</span> <span class="o">=</span> <span class="n">CLASSPATH_RESOURCE_LOCATIONS</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 找到路径
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">CLASSPATH_RESOURCE_LOCATIONS</span> <span class="o">=</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;classpath:/META-INF/resources/&#34;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;classpath:/resources/&#34;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;classpath:/static/&#34;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;classpath:/public/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">};</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>ResourceProperties</code> 可以设置和我们静态资源有关的参数；这里面指向了它会去寻找资源的文件夹，即 上面数组的内容。</p>
 <p>所以有四个目录存放的静态资源可以被我们识别</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml">&#34;classpath:/META-INF/resources/&#34;,
-&#34;classpath:/resources/&#34;,
-&#34;classpath:/static/&#34;,
-&#34;classpath:/public/&#34;
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">&#34;classpath:/META-INF/resources/&#34;,
+</span></span><span class="line"><span class="cl">&#34;classpath:/resources/&#34;,
+</span></span><span class="line"><span class="cl">&#34;classpath:/static/&#34;,
+</span></span><span class="line"><span class="cl">&#34;classpath:/public/&#34;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>总结：</p>
 <ul>
@@ -1047,7 +1045,7 @@ and classes can be searched.</p>
 <p>/* 与 /** 的区别：</p>
 <ul>
 <li>/*   ：会匹配所有的url(<code>只匹配当前文件夹下文件，不匹配子文件夹下文件</code>)，包括*.jsp页面</li>
-<li>/** ：会匹配所有的url(<code>匹配当前文件夹下文件和子文件夹下文件</code>)；路径型的和后缀型的url(包括/login，*.jsp，*.js，*.html等)</li>
+<li>/** ：会匹配所有的url(<code>匹配当前文件夹下文件和子文件夹下文件</code>)；路径型的和后缀型的url(包括/login，<em>.jsp，</em>.js，*.html等)</li>
 </ul>
 <h2 id="模板引擎">模板引擎</h2>
 <p>思想：</p>
@@ -1069,19 +1067,19 @@ and classes can be searched.</p>
 <p>找到对应的pom依赖：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--thymeleaf--&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
-	<span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-	<span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="c">&lt;!--thymeleaf--&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Maven会自动下载jar包，我们可以去看看下载的东西</p>
 <p><img
@@ -1100,7 +1098,7 @@ and classes can be searched.</p>
 <p>我们去找一下Thymeleaf的自动配置类：ThymeleafProperties</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1116,21 +1114,21 @@ and classes can be searched.</p>
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@ConfigurationProperties</span><span class="o">(</span>
-		<span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;spring.thymeleaf&#34;</span>
-<span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ThymeleafProperties</span> <span class="o">{</span>
-		<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Charset</span> <span class="n">DEFAULT_ENCODING</span><span class="o">;</span>
-		<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">DEFAULT_PREFIX</span> <span class="o">=</span> <span class="s">&#34;classpath:/templates/&#34;</span><span class="o">;</span>
-		<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">DEFAULT_SUFFIX</span> <span class="o">=</span> <span class="s">&#34;.html&#34;</span><span class="o">;</span>
-		<span class="kd">private</span> <span class="kt">boolean</span> <span class="n">checkTemplate</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-		<span class="kd">private</span> <span class="kt">boolean</span> <span class="n">checkTemplateLocation</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-		<span class="kd">private</span> <span class="n">String</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;classpath:/templates/&#34;</span><span class="o">;</span>
-		<span class="kd">private</span> <span class="n">String</span> <span class="n">suffix</span> <span class="o">=</span> <span class="s">&#34;.html&#34;</span><span class="o">;</span>
-		<span class="kd">private</span> <span class="n">String</span> <span class="n">mode</span> <span class="o">=</span> <span class="s">&#34;HTML&#34;</span><span class="o">;</span>
-		<span class="kd">private</span> <span class="n">Charset</span> <span class="n">encoding</span><span class="o">;</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="nd">@ConfigurationProperties</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">		<span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;spring.thymeleaf&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ThymeleafProperties</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Charset</span> <span class="n">DEFAULT_ENCODING</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">DEFAULT_PREFIX</span> <span class="o">=</span> <span class="s">&#34;classpath:/templates/&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">DEFAULT_SUFFIX</span> <span class="o">=</span> <span class="s">&#34;.html&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="kt">boolean</span> <span class="n">checkTemplate</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="kt">boolean</span> <span class="n">checkTemplateLocation</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="n">String</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;classpath:/templates/&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="n">String</span> <span class="n">suffix</span> <span class="o">=</span> <span class="s">&#34;.html&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="n">String</span> <span class="n">mode</span> <span class="o">=</span> <span class="s">&#34;HTML&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="n">Charset</span> <span class="n">encoding</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>我们可以在其中看到默认的前缀和后缀！</p>
 <p>我们只需要把我们的html页面放在类路径下的templates下，thymeleaf就可以帮我们自动渲染了。</p>
@@ -1142,7 +1140,7 @@ and classes can be searched.</p>
 <p><a href="https://docs.spring.io/spring-boot/docs/2.2.5.RELEASE/reference/htmlsingle/#boot-features-spring-mvc-auto-configuration" target="_blank" rel="noopener noreffer">官方文档</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1191,54 +1189,54 @@ and classes can be searched.</p>
 </span><span class="lnt">47
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml">Spring MVC Auto-configuration
-// Spring Boot为Spring MVC提供了自动配置，它可以很好地与大多数应用程序一起工作。
-Spring Boot provides auto-configuration for Spring MVC that works well with most applications.
-
-// 自动配置在Spring默认设置的基础上添加了以下功能：
-The auto-configuration adds the following features on top of Spring&#39;s defaults:
-
-// 包含视图解析器
-Inclusion of ContentNegotiatingViewResolver and BeanNameViewResolver beans.
-
-// 支持静态资源文件夹的路径，以及webjars
-Support for serving static resources, including support for WebJars
-
-// 自动注册了Converter：
-// 转换器，这就是我们网页提交数据到后台自动封装成为对象的东西，比如把&#34;1&#34;字符串自动转换为 int类型
-// Formatter：【格式化器，比如页面给我们了一个2019-8-10，它会给我们自动格式化为Date对象】
-Automatic registration of Converter, GenericConverter, and Formatter beans.
-
-// HttpMessageConverters
-// SpringMVC用来转换Http请求和响应的的，比如我们要把一个User对象转换为JSON字符串，可以去看官网文档解释；
-Support for HttpMessageConverters (covered later in this document).
-
-// 定义错误代码生成规则的
-Automatic registration of MessageCodesResolver (covered later in this document).
-
-// 首页定制
-Static index.html support.
-
-// 图标定制
-Custom Favicon support (covered later in this document).
-
-// 初始化数据绑定器：帮我们把请求数据绑定到JavaBean中！
-Automatic use of a ConfigurableWebBindingInitializer bean (covered later in this document).
-
-/*
-如果您希望保留Spring Boot MVC功能，并且希望添加其他MVC配置（拦截器、格式化程序、视图控制器和其他功能），
-则可以添加自己的@configuration类，类型为webmvcconfiguer，但不添加@EnableWebMvc。如果希望提供
-RequestMappingHandlerMapping、RequestMappingHandlerAdapter或
-ExceptionHandlerExceptionResolver的自定义实例，则可以声明WebMVCregistrationAdapter实例来提供此类组件。
-*/
-If you want to keep Spring Boot MVC features and you want to add additional MVC configuration
-(interceptors, formatters, view controllers, and other features), you can add your own@Configuration class 
-of type WebMvcConfigurer but without @EnableWebMvc.If you wish to provide custom instances of 
-RequestMappingHandlerMapping,RequestMappingHandlerAdapter, orExceptionHandlerExceptionResolver, 
-you can declare a WebMvcRegistrationsAdapter instance to provide such components.
-// 如果您想完全控制Spring MVC，可以添加自己的@Configuration，并用@EnableWebMvc进行注释。
-If you want to take complete control of Spring MVC, you can add your own @Configuration annotated with @EnableWebMvc.
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">Spring MVC Auto-configuration
+</span></span><span class="line"><span class="cl">// Spring Boot为Spring MVC提供了自动配置，它可以很好地与大多数应用程序一起工作。
+</span></span><span class="line"><span class="cl">Spring Boot provides auto-configuration for Spring MVC that works well with most applications.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 自动配置在Spring默认设置的基础上添加了以下功能：
+</span></span><span class="line"><span class="cl">The auto-configuration adds the following features on top of Spring&#39;s defaults:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 包含视图解析器
+</span></span><span class="line"><span class="cl">Inclusion of ContentNegotiatingViewResolver and BeanNameViewResolver beans.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 支持静态资源文件夹的路径，以及webjars
+</span></span><span class="line"><span class="cl">Support for serving static resources, including support for WebJars
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 自动注册了Converter：
+</span></span><span class="line"><span class="cl">// 转换器，这就是我们网页提交数据到后台自动封装成为对象的东西，比如把&#34;1&#34;字符串自动转换为 int类型
+</span></span><span class="line"><span class="cl">// Formatter：【格式化器，比如页面给我们了一个2019-8-10，它会给我们自动格式化为Date对象】
+</span></span><span class="line"><span class="cl">Automatic registration of Converter, GenericConverter, and Formatter beans.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// HttpMessageConverters
+</span></span><span class="line"><span class="cl">// SpringMVC用来转换Http请求和响应的的，比如我们要把一个User对象转换为JSON字符串，可以去看官网文档解释；
+</span></span><span class="line"><span class="cl">Support for HttpMessageConverters (covered later in this document).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 定义错误代码生成规则的
+</span></span><span class="line"><span class="cl">Automatic registration of MessageCodesResolver (covered later in this document).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 首页定制
+</span></span><span class="line"><span class="cl">Static index.html support.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 图标定制
+</span></span><span class="line"><span class="cl">Custom Favicon support (covered later in this document).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 初始化数据绑定器：帮我们把请求数据绑定到JavaBean中！
+</span></span><span class="line"><span class="cl">Automatic use of a ConfigurableWebBindingInitializer bean (covered later in this document).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/*
+</span></span><span class="line"><span class="cl">如果您希望保留Spring Boot MVC功能，并且希望添加其他MVC配置（拦截器、格式化程序、视图控制器和其他功能），
+</span></span><span class="line"><span class="cl">则可以添加自己的@configuration类，类型为webmvcconfiguer，但不添加@EnableWebMvc。如果希望提供
+</span></span><span class="line"><span class="cl">RequestMappingHandlerMapping、RequestMappingHandlerAdapter或
+</span></span><span class="line"><span class="cl">ExceptionHandlerExceptionResolver的自定义实例，则可以声明WebMVCregistrationAdapter实例来提供此类组件。
+</span></span><span class="line"><span class="cl">*/
+</span></span><span class="line"><span class="cl">If you want to keep Spring Boot MVC features and you want to add additional MVC configuration
+</span></span><span class="line"><span class="cl">(interceptors, formatters, view controllers, and other features), you can add your own@Configuration class 
+</span></span><span class="line"><span class="cl">of type WebMvcConfigurer but without @EnableWebMvc.If you wish to provide custom instances of 
+</span></span><span class="line"><span class="cl">RequestMappingHandlerMapping,RequestMappingHandlerAdapter, orExceptionHandlerExceptionResolver, 
+</span></span><span class="line"><span class="cl">you can declare a WebMvcRegistrationsAdapter instance to provide such components.
+</span></span><span class="line"><span class="cl">// 如果您想完全控制Spring MVC，可以添加自己的@Configuration，并用@EnableWebMvc进行注释。
+</span></span><span class="line"><span class="cl">If you want to take complete control of Spring MVC, you can add your own @Configuration annotated with @EnableWebMvc.
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>ContentNegotiatingViewResolver 内容协商视图解析器</p>
@@ -1248,7 +1246,7 @@ If you want to take complete control of Spring MVC, you can add your own @Config
 <p>先查看一下源码：找到WebMvcAutoConfiguration，然后搜索ContentNegotiatingViewResolver。找到如下方法！</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1264,21 +1262,21 @@ If you want to take complete control of Spring MVC, you can add your own @Config
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Bean</span>
-<span class="nd">@ConditionalOnBean</span><span class="o">(</span><span class="n">ViewResolver</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-<span class="nd">@ConditionalOnMissingBean</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#34;viewResolver&#34;</span><span class="o">,</span> <span class="n">value</span> <span class="o">=</span>
-<span class="n">ContentNegotiatingViewResolver</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-<span class="kd">public</span> <span class="n">ContentNegotiatingViewResolver</span> <span class="nf">viewResolver</span><span class="o">(</span><span class="n">BeanFactory</span> <span class="n">beanFactory</span><span class="o">)</span>
-<span class="o">{</span>
-	<span class="n">ContentNegotiatingViewResolver</span> <span class="n">resolver</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ContentNegotiatingViewResolver</span><span class="o">();</span>
-	
-	<span class="n">resolver</span><span class="o">.</span><span class="na">setContentNegotiationManager</span><span class="o">(</span><span class="n">beanFactory</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="n">ContentNegotiationManager</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
-	
-	<span class="c1">// ContentNegotiatingViewResolver使用所有其他视图解析器来定位视图，因此它应该具有较高的优先级
-</span><span class="c1"></span>	<span class="n">resolver</span><span class="o">.</span><span class="na">setOrder</span><span class="o">(</span><span class="n">Ordered</span><span class="o">.</span><span class="na">HIGHEST_PRECEDENCE</span><span class="o">);</span>
-	<span class="k">return</span> <span class="n">resolver</span><span class="o">;</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="nd">@Bean</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@ConditionalOnBean</span><span class="o">(</span><span class="n">ViewResolver</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@ConditionalOnMissingBean</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#34;viewResolver&#34;</span><span class="o">,</span> <span class="n">value</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl"><span class="n">ContentNegotiatingViewResolver</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="n">ContentNegotiatingViewResolver</span> <span class="nf">viewResolver</span><span class="o">(</span><span class="n">BeanFactory</span> <span class="n">beanFactory</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">ContentNegotiatingViewResolver</span> <span class="n">resolver</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ContentNegotiatingViewResolver</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="n">resolver</span><span class="o">.</span><span class="na">setContentNegotiationManager</span><span class="o">(</span><span class="n">beanFactory</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="n">ContentNegotiationManager</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="c1">// ContentNegotiatingViewResolver使用所有其他视图解析器来定位视图，因此它应该具有较高的优先级
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">resolver</span><span class="o">.</span><span class="na">setOrder</span><span class="o">(</span><span class="n">Ordered</span><span class="o">.</span><span class="na">HIGHEST_PRECEDENCE</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">resolver</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img
         class="lazyload"
@@ -1291,7 +1289,7 @@ If you want to take complete control of Spring MVC, you can add your own @Config
 <p>可以点击这个类(<code>ContentNegotiatingViewResolver</code>)看看，找到对应的解析视图的代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1310,34 +1308,34 @@ If you want to take complete control of Spring MVC, you can add your own @Config
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Nullable</span> <span class="c1">// 注解说明：@Nullable 即参数可为null
-</span><span class="c1"></span><span class="kd">public</span> <span class="n">View</span> <span class="nf">resolveViewName</span><span class="o">(</span><span class="n">String</span> <span class="n">viewName</span><span class="o">,</span> <span class="n">Locale</span> <span class="n">locale</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span>
-<span class="o">{</span>
-		<span class="n">RequestAttributes</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">RequestContextHolder</span><span class="o">.</span><span class="na">getRequestAttributes</span><span class="o">();</span>
-		<span class="n">Assert</span><span class="o">.</span><span class="na">state</span><span class="o">(</span><span class="n">attrs</span> <span class="k">instanceof</span> <span class="n">ServletRequestAttributes</span><span class="o">,</span> <span class="s">&#34;No currentServletRequestAttributes&#34;</span><span class="o">);</span>
-		<span class="n">List</span><span class="o">&lt;</span><span class="n">MediaType</span><span class="o">&gt;</span> <span class="n">requestedMediaTypes</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getMediaTypes</span><span class="o">(((</span><span class="n">ServletRequestAttributes</span><span class="o">)</span><span class="n">attrs</span><span class="o">).</span><span class="na">getRequest</span><span class="o">());</span>
-		<span class="k">if</span> <span class="o">(</span><span class="n">requestedMediaTypes</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-			<span class="c1">// 获取候选的视图对象
-</span><span class="c1"></span>			<span class="n">List</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;</span> <span class="n">candidateViews</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getCandidateViews</span><span class="o">(</span><span class="n">viewName</span><span class="o">,</span> <span class="n">locale</span><span class="o">,</span><span class="n">requestedMediaTypes</span><span class="o">);</span>
-			<span class="c1">// 选择一个最适合的视图对象，然后把这个对象返回
-</span><span class="c1"></span>			<span class="n">View</span> <span class="n">bestView</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getBestView</span><span class="o">(</span><span class="n">candidateViews</span><span class="o">,</span> <span class="n">requestedMediaTypes</span><span class="o">,</span> <span class="n">attrs</span><span class="o">);</span>
-			<span class="k">if</span> <span class="o">(</span><span class="n">bestView</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span> 		
-					<span class="k">return</span> <span class="n">bestView</span><span class="o">;</span> 
-			<span class="o">}</span>
-		<span class="o">}</span> 
-		<span class="c1">// .....
-</span><span class="c1"></span><span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="nd">@Nullable</span> <span class="c1">// 注解说明：@Nullable 即参数可为null
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">public</span> <span class="n">View</span> <span class="nf">resolveViewName</span><span class="o">(</span><span class="n">String</span> <span class="n">viewName</span><span class="o">,</span> <span class="n">Locale</span> <span class="n">locale</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span>
+</span></span><span class="line"><span class="cl"><span class="o">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">RequestAttributes</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">RequestContextHolder</span><span class="o">.</span><span class="na">getRequestAttributes</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Assert</span><span class="o">.</span><span class="na">state</span><span class="o">(</span><span class="n">attrs</span> <span class="k">instanceof</span> <span class="n">ServletRequestAttributes</span><span class="o">,</span> <span class="s">&#34;No currentServletRequestAttributes&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">List</span><span class="o">&lt;</span><span class="n">MediaType</span><span class="o">&gt;</span> <span class="n">requestedMediaTypes</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getMediaTypes</span><span class="o">(((</span><span class="n">ServletRequestAttributes</span><span class="o">)</span><span class="n">attrs</span><span class="o">).</span><span class="na">getRequest</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="o">(</span><span class="n">requestedMediaTypes</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// 获取候选的视图对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="n">List</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;</span> <span class="n">candidateViews</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getCandidateViews</span><span class="o">(</span><span class="n">viewName</span><span class="o">,</span> <span class="n">locale</span><span class="o">,</span><span class="n">requestedMediaTypes</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// 选择一个最适合的视图对象，然后把这个对象返回
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="n">View</span> <span class="n">bestView</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getBestView</span><span class="o">(</span><span class="n">candidateViews</span><span class="o">,</span> <span class="n">requestedMediaTypes</span><span class="o">,</span> <span class="n">attrs</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="o">(</span><span class="n">bestView</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span> 		
+</span></span><span class="line"><span class="cl">					<span class="k">return</span> <span class="n">bestView</span><span class="o">;</span> 
+</span></span><span class="line"><span class="cl">			<span class="o">}</span>
+</span></span><span class="line"><span class="cl">		<span class="o">}</span> 
+</span></span><span class="line"><span class="cl">		<span class="c1">// .....
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>继续点击查看，是如何获取视图的呢？</p>
 <p><code>getCandidateViews</code>中看到他是把所有的视图解析器拿来，进行while循环，挨个解析！</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Iterator</span> <span class="n">var5</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">viewResolvers</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="n">Iterator</span> <span class="n">var5</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">viewResolvers</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img
         class="lazyload"
@@ -1351,7 +1349,7 @@ If you want to take complete control of Spring MVC, you can add your own @Config
 <p>再去研究下他的组合逻辑，看到有个属性viewResolvers，看看它是在哪里进行赋值的！</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1364,18 +1362,18 @@ If you want to take complete control of Spring MVC, you can add your own @Config
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">initServletContext</span><span class="o">(</span><span class="n">ServletContext</span> <span class="n">servletContext</span><span class="o">)</span> <span class="o">{</span>
-	<span class="c1">// 这里它是从beanFactory工具中获取容器中的所有视图解析器
-</span><span class="c1"></span>	<span class="c1">// ViewRescolver.class 把所有的视图解析器来组合的
-</span><span class="c1"></span>	<span class="n">Collection</span><span class="o">&lt;</span><span class="n">ViewResolver</span><span class="o">&gt;</span> <span class="n">matchingBeans</span> <span class="o">=</span> <span class="n">BeanFactoryUtils</span><span class="o">.</span><span class="na">beansOfTypeIncludingAncestors</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">obtainApplicationContext</span><span class="o">(),</span> <span class="n">ViewResolver</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">values</span><span class="o">();</span>
-	
-	<span class="n">ViewResolver</span> <span class="n">viewResolver</span><span class="o">;</span>
-	<span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">viewResolvers</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-			<span class="k">this</span><span class="o">.</span><span class="na">viewResolvers</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">(</span><span class="n">matchingBeans</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
-	<span class="o">}</span>
-	<span class="c1">// ...............
-</span><span class="c1"></span><span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">initServletContext</span><span class="o">(</span><span class="n">ServletContext</span> <span class="n">servletContext</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 这里它是从beanFactory工具中获取容器中的所有视图解析器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// ViewRescolver.class 把所有的视图解析器来组合的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">Collection</span><span class="o">&lt;</span><span class="n">ViewResolver</span><span class="o">&gt;</span> <span class="n">matchingBeans</span> <span class="o">=</span> <span class="n">BeanFactoryUtils</span><span class="o">.</span><span class="na">beansOfTypeIncludingAncestors</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">obtainApplicationContext</span><span class="o">(),</span> <span class="n">ViewResolver</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">values</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="n">ViewResolver</span> <span class="n">viewResolver</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">viewResolvers</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">this</span><span class="o">.</span><span class="na">viewResolvers</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">(</span><span class="n">matchingBeans</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">	<span class="o">}</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// ...............
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img
         class="lazyload"
@@ -1397,7 +1395,7 @@ If you want to take complete control of Spring MVC, you can add your own @Config
 <p>1、在主程序中新建一个config的package，在里面写一个自己的解析器</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1429,37 +1427,37 @@ If you want to take complete control of Spring MVC, you can add your own @Config
 </span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kn">package</span> <span class="nn">com.clover.config</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.View</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.ViewResolver</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.config.annotation.WebMvcConfigurer</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.util.Locale</span><span class="o">;</span>
-
-<span class="c1">// 扩展SpringMVC
-</span><span class="c1"></span><span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyMvcConfig</span> <span class="kd">implements</span> <span class="n">WebMvcConfigurer</span> <span class="o">{</span>
-
-    <span class="c1">// ViewResolver 实现了视图解析器接口的类，我们就可以把它看作视图解析器
-</span><span class="c1"></span>
-    <span class="nd">@Bean</span>   <span class="c1">// 放入到Bean中
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">ViewResolver</span> <span class="nf">getViewResolver</span><span class="o">(){</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">MyViewResolver</span><span class="o">();</span>
-    <span class="o">}</span>
-
-    <span class="c1">// 自定义了一个自己的视图解析器 MyViewResolver
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">MyViewResolver</span> <span class="kd">implements</span> <span class="n">ViewResolver</span><span class="o">{</span>
-
-        <span class="nd">@Override</span>
-        <span class="kd">public</span> <span class="n">View</span> <span class="nf">resolveViewName</span><span class="o">(</span><span class="n">String</span> <span class="n">viewName</span><span class="o">,</span> <span class="n">Locale</span> <span class="n">locale</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">com.clover.config</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.springframework.web.servlet.View</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.springframework.web.servlet.ViewResolver</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.springframework.web.servlet.config.annotation.WebMvcConfigurer</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.Locale</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 扩展SpringMVC
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyMvcConfig</span> <span class="kd">implements</span> <span class="n">WebMvcConfigurer</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// ViewResolver 实现了视图解析器接口的类，我们就可以把它看作视图解析器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Bean</span>   <span class="c1">// 放入到Bean中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">public</span> <span class="n">ViewResolver</span> <span class="nf">getViewResolver</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="k">new</span> <span class="n">MyViewResolver</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 自定义了一个自己的视图解析器 MyViewResolver
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">MyViewResolver</span> <span class="kd">implements</span> <span class="n">ViewResolver</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">public</span> <span class="n">View</span> <span class="nf">resolveViewName</span><span class="o">(</span><span class="n">String</span> <span class="n">viewName</span><span class="o">,</span> <span class="n">Locale</span> <span class="n">locale</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>2、查看我们的自己写的解析视图器是否起作用</p>
 <p>给DispatchServlet中的doDispatch方法加个断点进行调试一下，因为所有请求都会走到这个方法中</p>
@@ -1501,7 +1499,7 @@ If you want to take complete control of Spring MVC, you can add your own @Config
 <p>有如下代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1514,36 +1512,36 @@ If you want to take complete control of Spring MVC, you can add your own @Config
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DelegatingWebMvcConfiguration</span> <span class="kd">extends</span>
-<span class="n">WebMvcConfigurationSupport</span> <span class="o">{</span>
-	<span class="kd">private</span> <span class="kd">final</span> <span class="n">WebMvcConfigurerComposite</span> <span class="n">configurers</span> <span class="o">=</span> <span class="n">newWebMvcConfigurerComposite</span><span class="o">();</span>
-	<span class="c1">// 从容器中获取所有的webmvcConfigurer
-</span><span class="c1"></span>	<span class="nd">@Autowired</span><span class="o">(</span><span class="n">required</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setConfigurers</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">WebMvcConfigurer</span><span class="o">&gt;</span> <span class="n">configurers</span><span class="o">)</span> <span class="o">{</span>
-		<span class="k">if</span> <span class="o">(!</span><span class="n">CollectionUtils</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="n">configurers</span><span class="o">))</span> <span class="o">{</span>
-			<span class="k">this</span><span class="o">.</span><span class="na">configurers</span><span class="o">.</span><span class="na">addWebMvcConfigurers</span><span class="o">(</span><span class="n">configurers</span><span class="o">);</span>
-		<span class="o">}</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DelegatingWebMvcConfiguration</span> <span class="kd">extends</span>
+</span></span><span class="line"><span class="cl"><span class="n">WebMvcConfigurationSupport</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">private</span> <span class="kd">final</span> <span class="n">WebMvcConfigurerComposite</span> <span class="n">configurers</span> <span class="o">=</span> <span class="n">newWebMvcConfigurerComposite</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 从容器中获取所有的webmvcConfigurer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nd">@Autowired</span><span class="o">(</span><span class="n">required</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setConfigurers</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">WebMvcConfigurer</span><span class="o">&gt;</span> <span class="n">configurers</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="o">(!</span><span class="n">CollectionUtils</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="n">configurers</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">this</span><span class="o">.</span><span class="na">configurers</span><span class="o">.</span><span class="na">addWebMvcConfigurers</span><span class="o">(</span><span class="n">configurers</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">		<span class="o">}</span>
+</span></span><span class="line"><span class="cl">	<span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>4、可以在这个类中去寻找一个我们刚才设置的viewController当做参考，发现它调用了一个</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">addViewControllers</span><span class="o">(</span><span class="n">ViewControllerRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span> 		
-	<span class="k">this</span><span class="o">.</span><span class="na">configurers</span><span class="o">.</span><span class="na">addViewControllers</span><span class="o">(</span><span class="n">registry</span><span class="o">);</span> 
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">addViewControllers</span><span class="o">(</span><span class="n">ViewControllerRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span> 		
+</span></span><span class="line"><span class="cl">	<span class="k">this</span><span class="o">.</span><span class="na">configurers</span><span class="o">.</span><span class="na">addViewControllers</span><span class="o">(</span><span class="n">registry</span><span class="o">);</span> 
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>5、点进去查看</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1553,15 +1551,15 @@ If you want to take complete control of Spring MVC, you can add your own @Config
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">addViewControllers</span><span class="o">(</span><span class="n">ViewControllerRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
-	<span class="n">Iterator</span> <span class="n">var2</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">delegates</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
-	<span class="k">while</span><span class="o">(</span><span class="n">var2</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
-		<span class="c1">// 将所有的WebMvcConfigurer相关配置来一起调用！包括我们自己配置的和Spring给我们配置的
-</span><span class="c1"></span>		<span class="n">WebMvcConfigurer</span> <span class="n">delegate</span> <span class="o">=</span> <span class="o">(</span><span class="n">WebMvcConfigurer</span><span class="o">)</span><span class="n">var2</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
-		<span class="n">delegate</span><span class="o">.</span><span class="na">addViewControllers</span><span class="o">(</span><span class="n">registry</span><span class="o">);</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">addViewControllers</span><span class="o">(</span><span class="n">ViewControllerRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Iterator</span> <span class="n">var2</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">delegates</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">	<span class="k">while</span><span class="o">(</span><span class="n">var2</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// 将所有的WebMvcConfigurer相关配置来一起调用！包括我们自己配置的和Spring给我们配置的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="n">WebMvcConfigurer</span> <span class="n">delegate</span> <span class="o">=</span> <span class="o">(</span><span class="n">WebMvcConfigurer</span><span class="o">)</span><span class="n">var2</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">		<span class="n">delegate</span><span class="o">.</span><span class="na">addViewControllers</span><span class="o">(</span><span class="n">registry</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">	<span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>结论：</p>
 <pre><code>所有的WebMvcConfiguration都会被调用，不止Spring自己的配置类，我们自己的类当然也会被调用
@@ -1574,35 +1572,35 @@ If you want to take complete control of Spring MVC, you can add your own @Config
 <p>1、发现这个注解导入了一个类，点进去查看</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Import</span><span class="o">({</span><span class="n">DelegatingWebMvcConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">})</span>
-<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">EnableWebMvc</span> <span class="o">{</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="nd">@Import</span><span class="o">({</span><span class="n">DelegatingWebMvcConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">})</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">EnableWebMvc</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>2、它继承了一个父类<code>WebMvcConfigurationSupport</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DelegatingWebMvcConfiguration</span> <span class="kd">extends</span> <span class="n">WebMvcConfigurationSupport</span>
-<span class="o">{</span>
-	<span class="c1">// ......
-</span><span class="c1"></span><span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DelegatingWebMvcConfiguration</span> <span class="kd">extends</span> <span class="n">WebMvcConfigurationSupport</span>
+</span></span><span class="line"><span class="cl"><span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// ......
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>3、查看WebMvc自动配置类</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1615,18 +1613,18 @@ If you want to take complete control of Spring MVC, you can add your own @Config
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Configuration</span><span class="o">(</span><span class="n">proxyBeanMethods</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
-<span class="nd">@ConditionalOnWebApplication</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">Type</span><span class="o">.</span><span class="na">SERVLET</span><span class="o">)</span>
-<span class="nd">@ConditionalOnClass</span><span class="o">({</span> <span class="n">Servlet</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">DispatcherServlet</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">WebMvcConfigurer</span><span class="o">.</span><span class="na">class</span> <span class="o">})</span>
-
-<span class="c1">// 这个注解的意思就是：容器中没有这个组件的时候，这个自动配置类才生效
-</span><span class="c1"></span><span class="nd">@ConditionalOnMissingBean</span><span class="o">(</span><span class="n">WebMvcConfigurationSupport</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-<span class="nd">@AutoConfigureOrder</span><span class="o">(</span><span class="n">Ordered</span><span class="o">.</span><span class="na">HIGHEST_PRECEDENCE</span> <span class="o">+</span> <span class="n">10</span><span class="o">)</span>
-<span class="nd">@AutoConfigureAfter</span><span class="o">({</span> <span class="n">DispatcherServletAutoConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
-<span class="n">TaskExecutionAutoConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">ValidationAutoConfiguration</span><span class="o">.</span><span class="na">class</span> <span class="o">})</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcAutoConfiguration</span> <span class="o">{</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="nd">@Configuration</span><span class="o">(</span><span class="n">proxyBeanMethods</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@ConditionalOnWebApplication</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">Type</span><span class="o">.</span><span class="na">SERVLET</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@ConditionalOnClass</span><span class="o">({</span> <span class="n">Servlet</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">DispatcherServlet</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">WebMvcConfigurer</span><span class="o">.</span><span class="na">class</span> <span class="o">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 这个注解的意思就是：容器中没有这个组件的时候，这个自动配置类才生效
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@ConditionalOnMissingBean</span><span class="o">(</span><span class="n">WebMvcConfigurationSupport</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@AutoConfigureOrder</span><span class="o">(</span><span class="n">Ordered</span><span class="o">.</span><span class="na">HIGHEST_PRECEDENCE</span> <span class="o">+</span> <span class="n">10</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@AutoConfigureAfter</span><span class="o">({</span> <span class="n">DispatcherServletAutoConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl"><span class="n">TaskExecutionAutoConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">ValidationAutoConfiguration</span><span class="o">.</span><span class="na">class</span> <span class="o">})</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcAutoConfiguration</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>总结一句话：<code>@EnableWebMvc</code>将WebMvcConfigurationSupport组件导入进来了；</p>
 <p>而导入的WebMvcConfigurationSupport只是SpringMVC最基本的功能！</p>

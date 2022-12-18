@@ -9,8 +9,8 @@
 <meta property="og:description" content="Frp" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://cloverfelix.github.io/frp/" /><meta property="og:image" content="https://cloverfelix.github.io/RW.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-07-06T17:53:29&#43;08:00" />
-<meta property="article:modified_time" content="2021-07-06T17:53:29&#43;08:00" />
+<meta property="article:published_time" content="2021-07-06T17:53:29+08:00" />
+<meta property="article:modified_time" content="2021-07-06T17:53:29+08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://cloverfelix.github.io/RW.png"/>
@@ -151,52 +151,52 @@
 <p>下载完传到Linux服务器上，并且在<code>/etc/local</code>目录下创建frp文件夹，并且将frp解压至该文件下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">mkdir /usr/local/frp
-<span class="nb">cd</span> frp
-tar -zxvf /root/frp_0.37.0_linux_amd64.tar.gz -C ./
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir /usr/local/frp
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> frp
+</span></span><span class="line"><span class="cl">tar -zxvf /root/frp_0.37.0_linux_amd64.tar.gz -C ./
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>进入解压目录cd frp_0.13.0_linux_amd64，这里主要关注4个文件，分别是<code>frpc</code>、<code>frpc.ini</code>和<code>frps</code>、</p>
 <p><code>frps.ini</code>，**前者两个文件是<code>客户端</code>**所关注文件，**后者两个文件是<code>服务端</code>**所关注两个文件。</p>
 <p>配置服务端（<code>公网服务器</code>），首先删掉<code>frpc、frpc.ini</code>两个文件，然后再进行配置，<code>vi ./frps.ini</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>common<span class="o">]</span>
-    
-<span class="nv">bind_port</span> <span class="o">=</span> <span class="m">7000</span> <span class="c1">#与客户端绑定的进行通信的端口</span>
-    
-<span class="nv">vhost_http_port</span> <span class="o">=</span> <span class="m">7081</span> <span class="c1">#访问客户端web服务自定义的端口号</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>common<span class="o">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="nv">bind_port</span> <span class="o">=</span> <span class="m">7000</span> <span class="c1">#与客户端绑定的进行通信的端口</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="nv">vhost_http_port</span> <span class="o">=</span> <span class="m">7081</span> <span class="c1">#访问客户端web服务自定义的端口号</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>保存然后启动服务，这是前台启动，</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">./frps -c ./frps.ini
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./frps -c ./frps.ini
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>后台启动命令为</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">nohup ./frps -c ./frps.ini <span class="p">&amp;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nohup ./frps -c ./frps.ini <span class="p">&amp;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>启动成功后的样子：</p>
 <p><img
@@ -210,7 +210,7 @@ tar -zxvf /root/frp_0.37.0_linux_amd64.tar.gz -C ./
 <p>配置客户端（<code>内网服务器</code>），首先删掉<code>frps、frps.ini</code>两个文件,然后再进行配置，<code>vi ./frpc.ini</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -228,41 +228,41 @@ tar -zxvf /root/frp_0.37.0_linux_amd64.tar.gz -C ./
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>common<span class="o">]</span>
-<span class="nv">server_addr</span> <span class="o">=</span> 192.168.167.227   <span class="c1"># 公网服务器IP</span>
-<span class="nv">server_port</span> <span class="o">=</span> <span class="m">7000</span>              		<span class="c1"># 与服务端bind_port一致</span>
-
-<span class="c1"># 公网通过ssh访问内部服务器</span>
-<span class="o">[</span>ssh<span class="o">]</span>
-<span class="nb">type</span> <span class="o">=</span> tcp                     				  <span class="c1"># 连接协议</span>
-<span class="nv">local_ip</span> <span class="o">=</span> 192.168.167.117          <span class="c1"># 内网服务器ip</span>
-<span class="nv">local_port</span> <span class="o">=</span> <span class="m">22</span>                			  <span class="c1"># ssh默认端口号</span>
-<span class="nv">remote_port</span> <span class="o">=</span> <span class="m">7088</span>              	<span class="c1"># 自定义的访问内部ssh端口号</span>
-
-<span class="c1"># 公网访问内部web服务器以http方式</span>
-<span class="o">[</span>web<span class="o">]</span>
-<span class="nb">type</span> <span class="o">=</span> http                     						<span class="c1"># 访问协议</span>
-<span class="nv">local_prot</span> <span class="o">=</span> <span class="m">8081</span>               					<span class="c1"># 内部web服务的端口号</span>
-<span class="nv">custom_domains</span> <span class="o">=</span> repo.clover.com     <span class="c1"># 所绑定的公网服务器域名，一级、二级域名都可以</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>common<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">server_addr</span> <span class="o">=</span> 192.168.167.227   <span class="c1"># 公网服务器IP</span>
+</span></span><span class="line"><span class="cl"><span class="nv">server_port</span> <span class="o">=</span> <span class="m">7000</span>              		<span class="c1"># 与服务端bind_port一致</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 公网通过ssh访问内部服务器</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>ssh<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">type</span> <span class="o">=</span> tcp                     				  <span class="c1"># 连接协议</span>
+</span></span><span class="line"><span class="cl"><span class="nv">local_ip</span> <span class="o">=</span> 192.168.167.117          <span class="c1"># 内网服务器ip</span>
+</span></span><span class="line"><span class="cl"><span class="nv">local_port</span> <span class="o">=</span> <span class="m">22</span>                			  <span class="c1"># ssh默认端口号</span>
+</span></span><span class="line"><span class="cl"><span class="nv">remote_port</span> <span class="o">=</span> <span class="m">7088</span>              	<span class="c1"># 自定义的访问内部ssh端口号</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 公网访问内部web服务器以http方式</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>web<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">type</span> <span class="o">=</span> http                     						<span class="c1"># 访问协议</span>
+</span></span><span class="line"><span class="cl"><span class="nv">local_prot</span> <span class="o">=</span> <span class="m">8081</span>               					<span class="c1"># 内部web服务的端口号</span>
+</span></span><span class="line"><span class="cl"><span class="nv">custom_domains</span> <span class="o">=</span> repo.clover.com     <span class="c1"># 所绑定的公网服务器域名，一级、二级域名都可以</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>保存然后执行启动，这是前台启动，</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">./frpc -c ./frpc.ini
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./frpc -c ./frpc.ini
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>后台启动命令为</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">nohup ./frpc -c ./frpc.ini <span class="p">&amp;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nohup ./frpc -c ./frpc.ini <span class="p">&amp;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这种方法，我没有做成功，我换到使用隧道代理的方法上去了，以后有了计网的基础后，再来实践</p>
 <p>这是隧道代理的信息</p>

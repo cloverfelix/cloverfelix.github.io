@@ -9,8 +9,8 @@
 <meta property="og:description" content="linux" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://cloverfelix.github.io/linux/" /><meta property="og:image" content="https://cloverfelix.github.io/RW.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-07-04T16:31:22&#43;08:00" />
-<meta property="article:modified_time" content="2021-07-04T16:31:22&#43;08:00" />
+<meta property="article:published_time" content="2021-07-04T16:31:22+08:00" />
+<meta property="article:modified_time" content="2021-07-04T16:31:22+08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://cloverfelix.github.io/RW.png"/>
@@ -366,11 +366,11 @@ cd  ..：退回到上一级目录</p>
 </code></pre>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">chgrp <span class="se">\[</span>-R<span class="se">\]</span> 属组名 文件名
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">chgrp <span class="se">\[</span>-R<span class="se">\]</span> 属组名 文件名
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img
         class="lazyload"
@@ -384,13 +384,13 @@ cd  ..：退回到上一级目录</p>
 <p><strong>2、chown：更改文件属主，也可以同时更改文件属组</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">chown  <span class="se">\[</span>–R<span class="se">\]</span> 属主名 文件名  
-chown  <span class="se">\[</span>-R<span class="se">\]</span> 属主名：属组名 文件名 
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">chown  <span class="se">\[</span>–R<span class="se">\]</span> 属主名 文件名  
+</span></span><span class="line"><span class="cl">chown  <span class="se">\[</span>-R<span class="se">\]</span> 属主名：属组名 文件名 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img
         class="lazyload"
@@ -403,11 +403,11 @@ chown  <span class="se">\[</span>-R<span class="se">\]</span> 属主名：属组
 <p><strong>3、chmod：更改文件9个属性</strong>   ==（必须掌握）==</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">chmod  <span class="se">\[</span>-R<span class="se">\]</span> xyz 文件或目
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">chmod  <span class="se">\[</span>-R<span class="se">\]</span> xyz 文件或目
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Linux文件属性有两种设置方法，<strong>一种是数字，一种是符号。</strong></p>
 <p>Linux文件的基本权限就有九个，分别是<strong>owner/group/others</strong>三种身份各有自己的<strong>read/write/execute</strong>权限。</p>
@@ -431,11 +431,11 @@ chown  <span class="se">\[</span>-R<span class="se">\]</span> 属主名：属组
         title="https://cdn.jsdelivr.net/gh/cloverfelix/image/image/20210524184817.png" /></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">chmod <span class="m">770</span> filename
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">chmod <span class="m">770</span> filename
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以自己下去多进行测试！</p>
 <h3 id="文件内容查看">文件内容查看</h3>
@@ -521,7 +521,7 @@ chown  <span class="se">\[</span>-R<span class="se">\]</span> 属主名：属组
 <p><code>echo</code> 输入字符串</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -551,41 +551,41 @@ chown  <span class="se">\[</span>-R<span class="se">\]</span> 属主名：属组
 </span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ /<span class="o">]</span><span class="c1"># cd home</span>
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ls</span>
-www
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ln f1</span>
-ln: failed to access ‘f1’: No such file or directory
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># touch f1            # 创建一个f1文件</span>
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ls</span>
-f1  www
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ln f1 f2				# 创建一个硬链接 f2</span>
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ls</span>
-f1  f2  www
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ln -s f1 f3		   # 创建一个软链接 f3</span>
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ls</span>
-f1  f2  f3  www
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ll</span>
-total <span class="m">4</span>
--rw-r--r-- <span class="m">2</span> root root    <span class="m">0</span> May <span class="m">25</span> 20:49 f1
--rw-r--r-- <span class="m">2</span> root root    <span class="m">0</span> May <span class="m">25</span> 20:49 f2
-lrwxrwxrwx <span class="m">1</span> root root    <span class="m">2</span> May <span class="m">25</span> 20:49 f3 -&gt; f1
-drwx------ <span class="m">3</span> www  www  <span class="m">4096</span> May  <span class="m">9</span> 17:03 www
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># echo &#34;yeziqi hanhan&#34; &gt;&gt; f1 # 给f1文件中写入一些字符串！</span>
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># cat f1				# 查看f1</span>
-yeziqi hanhan
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># cat f2				# 查看f2</span>
-yeziqi hanhan
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># cat f3				# 查看f3</span>
-yeziqi hanhan
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ /<span class="o">]</span><span class="c1"># cd home</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ls</span>
+</span></span><span class="line"><span class="cl">www
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ln f1</span>
+</span></span><span class="line"><span class="cl">ln: failed to access ‘f1’: No such file or directory
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># touch f1            # 创建一个f1文件</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ls</span>
+</span></span><span class="line"><span class="cl">f1  www
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ln f1 f2				# 创建一个硬链接 f2</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ls</span>
+</span></span><span class="line"><span class="cl">f1  f2  www
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ln -s f1 f3		   # 创建一个软链接 f3</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ls</span>
+</span></span><span class="line"><span class="cl">f1  f2  f3  www
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ll</span>
+</span></span><span class="line"><span class="cl">total <span class="m">4</span>
+</span></span><span class="line"><span class="cl">-rw-r--r-- <span class="m">2</span> root root    <span class="m">0</span> May <span class="m">25</span> 20:49 f1
+</span></span><span class="line"><span class="cl">-rw-r--r-- <span class="m">2</span> root root    <span class="m">0</span> May <span class="m">25</span> 20:49 f2
+</span></span><span class="line"><span class="cl">lrwxrwxrwx <span class="m">1</span> root root    <span class="m">2</span> May <span class="m">25</span> 20:49 f3 -&gt; f1
+</span></span><span class="line"><span class="cl">drwx------ <span class="m">3</span> www  www  <span class="m">4096</span> May  <span class="m">9</span> 17:03 www
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># echo &#34;yeziqi hanhan&#34; &gt;&gt; f1 # 给f1文件中写入一些字符串！</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># cat f1				# 查看f1</span>
+</span></span><span class="line"><span class="cl">yeziqi hanhan
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># cat f2				# 查看f2</span>
+</span></span><span class="line"><span class="cl">yeziqi hanhan
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># cat f3				# 查看f3</span>
+</span></span><span class="line"><span class="cl">yeziqi hanhan
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>删除f1之后，查看f2和f3的区别
 </code></pre>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -594,14 +594,14 @@ yeziqi hanhan
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># rm -rf f1</span>
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ls</span>
-f2  f3  www
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># cat f2				#f2硬链接还在</span>
-yeziqi hanhan
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># cat f3				#f3（软链接、符号链接失效）快捷方式失效</span>
-cat: f3: No such file or directory
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># rm -rf f1</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ls</span>
+</span></span><span class="line"><span class="cl">f2  f3  www
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># cat f2				#f2硬链接还在</span>
+</span></span><span class="line"><span class="cl">yeziqi hanhan
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># cat f3				#f3（软链接、符号链接失效）快捷方式失效</span>
+</span></span><span class="line"><span class="cl">cat: f3: No such file or directory
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="vim编辑器">Vim编辑器</h3>
 <p>vim通过一些插件可以实现和IDE一样的功能！</p>
@@ -612,7 +612,7 @@ cat: f3: No such file or directory
 <p>简单的来说， vi 是老式的字处理器，不过功能已经很齐全了，但是还是有可以进步的地方。</p>
 <p>vim 则可以说是程序开发者的一项很好用的工具。</p>
 <p>所有的 Unix Like 系统都会内建 vi 文书编辑器，其他的文书编辑器则不一定会存在。</p>
-<p>连 vim 的官方网站 (<a href="http://www.vim.org">http://www.vim.org</a>) 自己也说 vim 是一个程序开发工具而不是文字处理软件。</p>
+<p>连 vim 的官方网站 (<a href="http://www.vim.org" target="_blank" rel="noopener noreffer">http://www.vim.org</a>) 自己也说 vim 是一个程序开发工具而不是文字处理软件。</p>
 <p>vim键盘图：</p>
 <p><img
         class="lazyload"
@@ -1045,19 +1045,19 @@ cat: f3: No such file or directory
 
   用户名 :
   
-    指定新账号的登录名。
+ 	指定新账号的登录名。
 </code></pre>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># useradd -m wei</span>
-<span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ls</span>
-wei  www
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># useradd -m wei</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@iZ8vb8plggk0dqs0rr5kzfZ home<span class="o">]</span><span class="c1"># ls</span>
+</span></span><span class="line"><span class="cl">wei  www
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>理解一下本质：Linux中一切皆文件，这里的添加用户说白了就是往某一个文件中写入用户信息了！/etc/passwd</p>
 <p><img
@@ -1086,11 +1086,11 @@ wei  www
 <p>修改用户 usermod 对应修改的内容  修改的用户</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">usermod -d /home/test wei
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">usermod -d /home/test wei
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>在进行修改某一个用户时，也要修改其文件的时候，应当先创建要移动到的文件，否则可能当前目录不显示移动后的文件，但是在配置文件中是存在的！
 </code></pre>
@@ -1145,13 +1145,13 @@ wei  www
 <p>root一旦冻结这个账号，这个人就登录不上系统了！</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">passwd -l wei			 <span class="c1">#锁定之后这个用户也就不能登录了</span>
-passwd -d wei			<span class="c1">#没有密码也不能登录</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">passwd -l wei			 <span class="c1">#锁定之后这个用户也就不能登录了</span>
+</span></span><span class="line"><span class="cl">passwd -d wei			<span class="c1">#没有密码也不能登录</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="用户组管理">用户组管理</h3>
 <p>属主（属于那一个主人）、属组</p>
@@ -1163,11 +1163,11 @@ passwd -d wei			<span class="c1">#没有密码也不能登录</span>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">groupadd wei
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">groupadd wei
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>创建完用户组后可以得到一个Id，这个Id是可以指定的！<code>-g 520</code> 如果不指定就是自增1</p>
 <blockquote>
@@ -1175,13 +1175,13 @@ passwd -d wei			<span class="c1">#没有密码也不能登录</span>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 登录当前用户  wei
-$ newgrp root
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 登录当前用户  wei
+</span></span><span class="line"><span class="cl">$ newgrp root
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这样转换的前提是你得需要有这个权限，否则切换不成功！</p>
 <blockquote>
@@ -1189,11 +1189,11 @@ $ newgrp root
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">groupdel wei
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">groupdel wei
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>修改与用户组的权限信息和名字 groupmod</p>
@@ -1207,11 +1207,11 @@ $ newgrp root
 <p><code>/etc/passwd</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="nl">用户名:</span><span class="n">口令</span><span class="o">:</span><span class="n">用户标识号</span><span class="o">:</span><span class="n">组标识号</span><span class="o">:</span><span class="n">注释性描述</span><span class="o">:</span><span class="n">主目录</span><span class="o">:</span><span class="n">登录Shell</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nl">用户名:</span><span class="n">口令</span><span class="o">:</span><span class="n">用户标识号</span><span class="o">:</span><span class="n">组标识号</span><span class="o">:</span><span class="n">注释性描述</span><span class="o">:</span><span class="n">主目录</span><span class="o">:</span><span class="n">登录Shell</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这个文件中的灭有一行都代表这一个用户，我们可以用从这里看出这个用户的主目录在哪里，可以看到属于哪一个组！</p>
 <p>登录口令：把真正的加密后的用户口令字存放到/etc/shadow文件中</p>
@@ -1275,23 +1275,23 @@ $ newgrp root
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">ps -aux 查看所有的进程
-ps -aux <span class="p">|</span>grep mysql
-<span class="c1"># |  在Linux中这个叫做管道符</span>
-<span class="c1"># grep 查找文件中符合条件的字符串(相当于过滤)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ps -aux 查看所有的进程
+</span></span><span class="line"><span class="cl">ps -aux <span class="p">|</span>grep mysql
+</span></span><span class="line"><span class="cl"><span class="c1"># |  在Linux中这个叫做管道符</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># grep 查找文件中符合条件的字符串(相当于过滤)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>对于我们来说, 这里目前只需要记住一个命令即可  ps -xx|grep 进程名字!过滤进程信息!</p>
 <p><strong>ps -ef: 可以查看到父进程的信息</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1299,13 +1299,13 @@ ps -aux <span class="p">|</span>grep mysql
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">ps -ef<span class="p">|</span>grep mysql   <span class="c1">#  看父进程我们一般可以通过目录树结构来查看！</span>
-
-<span class="c1">#  进程树</span>
-pstree -pu
-		-p    显示父id
-		-u    显示用户组
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ps -ef<span class="p">|</span>grep mysql   <span class="c1">#  看父进程我们一般可以通过目录树结构来查看！</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#  进程树</span>
+</span></span><span class="line"><span class="cl">pstree -pu
+</span></span><span class="line"><span class="cl">		-p    显示父id
+</span></span><span class="line"><span class="cl">		-u    显示用户组
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img
         class="lazyload"
@@ -1319,11 +1319,11 @@ pstree -pu
 <p>kill -9 进程的id</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">kill</span> -9 进程的id
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">kill</span> -9 进程的id
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>表示强制结束进程</p>
 <h3 id="环境安装">环境安装</h3>
@@ -1340,7 +1340,7 @@ pstree -pu
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1351,38 +1351,38 @@ pstree -pu
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 检测当前系统是否存在Java环境！  Java -version
-# 如果有的话就需要先卸载
-# rpm -qa|grep jdk   # 检测JDK版本信息
-# rpm -e --nodeps jdk所在文件夹    # --nodeps  代表强制删除
-
-# 卸载完毕后即可安装JDK
-# rpm -ivh rpm包
-
-# 配置环境变量
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 检测当前系统是否存在Java环境！  Java -version
+</span></span><span class="line"><span class="cl"># 如果有的话就需要先卸载
+</span></span><span class="line"><span class="cl"># rpm -qa|grep jdk   # 检测JDK版本信息
+</span></span><span class="line"><span class="cl"># rpm -e --nodeps jdk所在文件夹    # --nodeps  代表强制删除
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 卸载完毕后即可安装JDK
+</span></span><span class="line"><span class="cl"># rpm -ivh rpm包
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 配置环境变量
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>配置环境变量：<code>etc/profile</code>在文件的最后面增加Java的配置和Windows安装环境变量一样</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">JAVA_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">jdk</span>															  <span class="err">#</span>  <span class="n">Java根路径</span>
-<span class="n">CLASSPATH</span><span class="o">=%</span><span class="n">JAVA_HOME</span><span class="o">%/</span><span class="n">lib</span><span class="o">:%</span><span class="n">JAVA_HOME</span><span class="o">%/</span><span class="n">jre</span><span class="o">/</span><span class="n">lib</span>		   <span class="err">#</span> <span class="n">类路径文件</span>
-<span class="n">PATH</span><span class="o">=</span><span class="n">$JAVA_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">:</span><span class="n">$JAVA_HOME</span><span class="o">/</span><span class="n">jre</span><span class="o">/</span><span class="n">bin</span>               			<span class="err">#</span> <span class="n">环境变量文件</span>
-<span class="n">export</span> <span class="n">PATH</span> <span class="n">CLASSPATH</span> <span class="n">JAVA_HOME</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">JAVA_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">jdk</span>															  <span class="err">#</span>  <span class="n">Java根路径</span>
+</span></span><span class="line"><span class="cl"><span class="n">CLASSPATH</span><span class="o">=%</span><span class="n">JAVA_HOME</span><span class="o">%/</span><span class="n">lib</span><span class="o">:%</span><span class="n">JAVA_HOME</span><span class="o">%/</span><span class="n">jre</span><span class="o">/</span><span class="n">lib</span>		   <span class="err">#</span> <span class="n">类路径文件</span>
+</span></span><span class="line"><span class="cl"><span class="n">PATH</span><span class="o">=</span><span class="n">$JAVA_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">:</span><span class="n">$JAVA_HOME</span><span class="o">/</span><span class="n">jre</span><span class="o">/</span><span class="n">bin</span>               			<span class="err">#</span> <span class="n">环境变量文件</span>
+</span></span><span class="line"><span class="cl"><span class="n">export</span> <span class="n">PATH</span> <span class="n">CLASSPATH</span> <span class="n">JAVA_HOME</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>让这个配置文件生效！<code>source /etc/profile</code></p>
 <pre><code>确保Linux的防火墙端口是开启的，如果是阿里云，需要保证阿里云的安全组策略是开放的！
 </code></pre>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1407,30 +1407,30 @@ pstree -pu
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 查看firewall服务状态  </span>
-systemctl status firewalld  
-  
-<span class="c1"># 开启、重启、关闭、firewalld.service服务  </span>
-<span class="c1"># 开启  </span>
-service firewalld start  
-<span class="c1"># 重启  </span>
-service firewalld restart  
-<span class="c1"># 关闭  </span>
-service firewalld stop  
-  
-<span class="c1"># 查看防火墙规则  </span>
-firewall-cmd --list-all    <span class="c1"># 查看全部信息  </span>
-firewall-cmd --list-ports  <span class="c1"># 只看端口信息  </span>
-  
-<span class="c1"># 开启端口  </span>
-开端口命令：firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span>80/tcp --permanent  
-重启防火墙：systemctl restart firewalld.service  
-  
-命令含义：  
---zone <span class="c1">#作用域  </span>
---add-port<span class="o">=</span>80/tcp  <span class="c1">#添加端口，格式为：端口/通讯协议  </span>
---permanent   <span class="c1">#永久生效，没有此参数重启后失效</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 查看firewall服务状态  </span>
+</span></span><span class="line"><span class="cl">systemctl status firewalld  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"><span class="c1"># 开启、重启、关闭、firewalld.service服务  </span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 开启  </span>
+</span></span><span class="line"><span class="cl">service firewalld start  
+</span></span><span class="line"><span class="cl"><span class="c1"># 重启  </span>
+</span></span><span class="line"><span class="cl">service firewalld restart  
+</span></span><span class="line"><span class="cl"><span class="c1"># 关闭  </span>
+</span></span><span class="line"><span class="cl">service firewalld stop  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看防火墙规则  </span>
+</span></span><span class="line"><span class="cl">firewall-cmd --list-all    <span class="c1"># 查看全部信息  </span>
+</span></span><span class="line"><span class="cl">firewall-cmd --list-ports  <span class="c1"># 只看端口信息  </span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"><span class="c1"># 开启端口  </span>
+</span></span><span class="line"><span class="cl">开端口命令：firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span>80/tcp --permanent  
+</span></span><span class="line"><span class="cl">重启防火墙：systemctl restart firewalld.service  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">命令含义：  
+</span></span><span class="line"><span class="cl">--zone <span class="c1">#作用域  </span>
+</span></span><span class="line"><span class="cl">--add-port<span class="o">=</span>80/tcp  <span class="c1">#添加端口，格式为：端口/通讯协议  </span>
+</span></span><span class="line"><span class="cl">--permanent   <span class="c1">#永久生效，没有此参数重启后失效</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="tomcat安装">Tomcat安装</h4>
 <ol>
@@ -1439,43 +1439,43 @@ firewall-cmd --list-ports  <span class="c1"># 只看端口信息  </span>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">root@kuangshen kuangshen<span class="o">]</span><span class="c1"># mv apache-tomcat-9.0.22.tar.gz /usr  </span>
-<span class="o">[</span>root@kuangshen kuangshen<span class="o">]</span><span class="c1"># cd /usr  </span>
-<span class="o">[</span>root@kuangshen usr<span class="o">]</span><span class="c1"># ls  </span>
-apache-tomcat-9.0.22.tar.gz  
-<span class="o">[</span>root@kuangshen usr<span class="o">]</span><span class="c1"># tar -zxvf apache-tomcat-9.0.22.tar.gz   # 解压</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kuangshen kuangshen<span class="o">]</span><span class="c1"># mv apache-tomcat-9.0.22.tar.gz /usr  </span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@kuangshen kuangshen<span class="o">]</span><span class="c1"># cd /usr  </span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@kuangshen usr<span class="o">]</span><span class="c1"># ls  </span>
+</span></span><span class="line"><span class="cl">apache-tomcat-9.0.22.tar.gz  
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@kuangshen usr<span class="o">]</span><span class="c1"># tar -zxvf apache-tomcat-9.0.22.tar.gz   # 解压</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="3">
 <li>运行Tomcat，进入bin目录，和我们以前在Windows下看的都是一样的</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 执行：startup.sh --&gt;启动tomcat  </span>
-<span class="c1"># 执行：shutdown.sh --&gt;关闭tomcat  </span>
-./startup.sh  
-./shutdown.sh
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 执行：startup.sh --&gt;启动tomcat  </span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 执行：shutdown.sh --&gt;关闭tomcat  </span>
+</span></span><span class="line"><span class="cl">./startup.sh  
+</span></span><span class="line"><span class="cl">./shutdown.sh
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="4">
 <li>确保Linux的防火墙端口是开启的，如果是阿里云，需要保证阿里云的安全组策略是开放的！</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1500,30 +1500,30 @@ apache-tomcat-9.0.22.tar.gz
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 查看firewall服务状态  </span>
-systemctl status firewalld  
-  
-<span class="c1"># 开启、重启、关闭、firewalld.service服务  </span>
-<span class="c1"># 开启  </span>
-service firewalld start  
-<span class="c1"># 重启  </span>
-service firewalld restart  
-<span class="c1"># 关闭  </span>
-service firewalld stop  
-  
-<span class="c1"># 查看防火墙规则  </span>
-firewall-cmd --list-all    <span class="c1"># 查看全部信息  </span>
-firewall-cmd --list-ports  <span class="c1"># 只看端口信息  </span>
-  
-<span class="c1"># 开启端口  </span>
-开端口命令：firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span>80/tcp --permanent  
-重启防火墙：systemctl restart firewalld.service  
-  
-命令含义：  
---zone <span class="c1">#作用域  </span>
---add-port<span class="o">=</span>80/tcp  <span class="c1">#添加端口，格式为：端口/通讯协议  </span>
---permanent   <span class="c1">#永久生效，没有此参数重启后失效</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 查看firewall服务状态  </span>
+</span></span><span class="line"><span class="cl">systemctl status firewalld  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"><span class="c1"># 开启、重启、关闭、firewalld.service服务  </span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 开启  </span>
+</span></span><span class="line"><span class="cl">service firewalld start  
+</span></span><span class="line"><span class="cl"><span class="c1"># 重启  </span>
+</span></span><span class="line"><span class="cl">service firewalld restart  
+</span></span><span class="line"><span class="cl"><span class="c1"># 关闭  </span>
+</span></span><span class="line"><span class="cl">service firewalld stop  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看防火墙规则  </span>
+</span></span><span class="line"><span class="cl">firewall-cmd --list-all    <span class="c1"># 查看全部信息  </span>
+</span></span><span class="line"><span class="cl">firewall-cmd --list-ports  <span class="c1"># 只看端口信息  </span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"><span class="c1"># 开启端口  </span>
+</span></span><span class="line"><span class="cl">开端口命令：firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span>80/tcp --permanent  
+</span></span><span class="line"><span class="cl">重启防火墙：systemctl restart firewalld.service  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">命令含义：  
+</span></span><span class="line"><span class="cl">--zone <span class="c1">#作用域  </span>
+</span></span><span class="line"><span class="cl">--add-port<span class="o">=</span>80/tcp  <span class="c1">#添加端口，格式为：端口/通讯协议  </span>
+</span></span><span class="line"><span class="cl">--permanent   <span class="c1">#永久生效，没有此参数重启后失效</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>域名解析完毕后，如果端口是80 -http或者443 -https，可以直接访问，如果是9000 8080，就需要通过Apache或者Nginx做一下反向代理即可，配置文件即可。</p>
 </div><div class="post-footer" id="post-footer">

@@ -9,8 +9,8 @@
 <meta property="og:description" content="Linux部署" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://cloverfelix.github.io/mutinodelinux/" /><meta property="og:image" content="https://cloverfelix.github.io/RW.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-07-04T16:35:24&#43;08:00" />
-<meta property="article:modified_time" content="2021-07-04T16:35:24&#43;08:00" />
+<meta property="article:published_time" content="2021-07-04T16:35:24+08:00" />
+<meta property="article:modified_time" content="2021-07-04T16:35:24+08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://cloverfelix.github.io/RW.png"/>
@@ -233,11 +233,11 @@
 <p>由于我们使用的是root权限所以我们在前面加上<code>--unsafe-perm</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">npm install --unsafe-perm --registry<span class="o">=</span>https://registry.npm.taobao.org
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">npm install --unsafe-perm --registry<span class="o">=</span>https://registry.npm.taobao.org
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img
         class="lazyload"
@@ -379,7 +379,7 @@
 <p>所以，我们就得去nginx中的配置文件进行配置请求路径，将它的请求路径转到后端上，与之对应</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -388,14 +388,14 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">location /prod-api/ <span class="o">{</span>
-		proxy_set_header Host <span class="nv">$http_host</span><span class="p">;</span>
-		proxy_set_header X-Real-IP <span class="nv">$remote_addr</span><span class="p">;</span>
-		proxy_set_header REMOTE-HOST <span class="nv">$remote_addr</span><span class="p">;</span>
-		proxy_set_header X-Forwarded-For <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
-		proxy_pass http://121.89.242.18:8081/<span class="p">;</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">location /prod-api/ <span class="o">{</span>
+</span></span><span class="line"><span class="cl">		proxy_set_header Host <span class="nv">$http_host</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		proxy_set_header X-Real-IP <span class="nv">$remote_addr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		proxy_set_header REMOTE-HOST <span class="nv">$remote_addr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		proxy_set_header X-Forwarded-For <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		proxy_pass http://121.89.242.18:8081/<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>由于我部署的服务器部署到最后的时候前端连接后端一直超时，没有找到解决问题的原因，所以我暂时放置在这一步了</p>
 <p>后续想法：搭载两台虚拟机进行再次搭建</p>
